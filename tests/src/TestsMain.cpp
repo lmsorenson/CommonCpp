@@ -6,14 +6,41 @@
 using namespace std;
 
 
-class FooTest : public ::testing::Test
+class CSVTest : public ::testing::Test
 {
 protected:
     
-    FooTest() {
+    CSVTest() {
     }
     
-    virtual ~FooTest() {
+    virtual ~CSVTest() {
+        // You can do clean-up work that doesn't throw exceptions here.
+    }
+    
+    // If the constructor and destructor are not enough for setting up
+    // and cleaning up each test, you can define the following methods:
+    
+    virtual void SetUp() {
+        // Code here will be called immediately after the constructor (right
+        // before each test).
+    }
+    
+    virtual void TearDown() {
+        // Code here will be called immediately after each test (right
+        // before the destructor).
+    }
+    
+    // Objects declared here can be used by all tests in the test case for Foo.
+};
+
+class Test : public ::testing::Test
+{
+protected:
+    
+    Test() {
+    }
+    
+    virtual ~Test() {
         // You can do clean-up work that doesn't throw exceptions here.
     }
     
@@ -34,29 +61,30 @@ protected:
 };
 
 
-TEST_F(FooTest, MethodBarDoesAbc)
+TEST_F(CSVTest, Test1)
+{
+    ASSERT_EQ(true, false);
+}
+
+TEST_F(CSVTest, Test2)
 {
     
-    //Foo f;
-    EXPECT_EQ(0, 0);
+    ASSERT_EQ(true, false);
 }
 
-TEST_F(FooTest, DoesXyz)
+TEST_F(CSVTest, Test3)
 {
-    
-    ASSERT_TRUE(true);
+    ASSERT_EQ(true, false);
 }
 
-TEST_F(FooTest, HelloWorld)
+TEST_F(Test, Test4)
 {
-    float x = 2+3;
-    EXPECT_EQ(x, 5);
+    ASSERT_EQ(true, false);
 }
-
 
 int main(int argc, char **argv)
 {
-	cout << "This was compiled with Cmake" << endl;
+
     ::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }
