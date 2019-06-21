@@ -2,6 +2,9 @@
 #include <iostream>
 
 #include <gtest/gtest.h>
+#include <testThis.h>
+#include <loadText.h>
+#include <csv.h>
 
 using namespace std;
 
@@ -63,18 +66,23 @@ protected:
 
 TEST_F(CSVTest, Test1)
 {
-    ASSERT_EQ(true, false);
+    int ret = ans::fun(1);
+
+    ASSERT_EQ(ret, 1);
 }
 
 TEST_F(CSVTest, Test2)
 {
-    
+    std::string str = std::string(loadText("/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv"));
+    printf("Hello: \n%s",str.c_str());
     ASSERT_EQ(true, false);
 }
 
 TEST_F(CSVTest, Test3)
 {
-    ASSERT_EQ(true, false);
+    CSV csv_file = file::loadCSV("/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ASSERT_EQ(csv_file[0][1], "testdata");
+    ASSERT_EQ(csv_file[1][1], "testdata2");
 }
 
 TEST_F(Test, Test4)

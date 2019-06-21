@@ -1,9 +1,24 @@
-# cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.6)
 
 project (tests)
 
 set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
+set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
+include_directories(
+    ${PROJECT_SOURCE_DIR}/../FileLib/include/
+)
+add_subdirectory(
+	${PROJECT_SOURCE_DIR}/../FileLib/src/
+	lib/
+)
+
+
+include_directories(
+	tests
+	${PROJECT_SOURCE_DIR}/../submodules/googletest/googletest/include
+)
 add_subdirectory(
 	${PROJECT_SOURCE_DIR}/../submodules/googletest/googletest 
 	lib/
@@ -19,12 +34,8 @@ add_executable(tests ${PROJECT_SOURCE_DIR}/src/TestsMain.cpp)
 target_link_libraries(
 	tests
 	gtest
-	# ${PROJECT_SOURCE_DIR}/local/lib/libgtest.a
+	Files
 )
 
 
-include_directories(
-	tests
-	${PROJECT_SOURCE_DIR}/../submodules/googletest/googletest/include
-	# ${PROJECT_SOURCE_DIR}/local/include/
-)
+
