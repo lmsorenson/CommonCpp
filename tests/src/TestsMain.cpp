@@ -5,6 +5,7 @@
 #include <testThis.h>
 #include <loadText.h>
 #include <csv.h>
+#include <file_inst.h>
 
 using namespace std;
 
@@ -87,6 +88,14 @@ TEST_F(CSVTest, Test3)
 
 TEST_F(Test, Test4)
 {
+    Filum().read_file();
+
+    ASSERT_EQ(true, false);
+}
+
+TEST_F(Test, Test5)
+{
+    Filum().write_file();
     ASSERT_EQ(true, false);
 }
 
