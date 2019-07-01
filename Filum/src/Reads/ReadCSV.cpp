@@ -2,13 +2,15 @@
 
 
 
-void ReadCSV::parse()
+using namespace std;
+
+vector<string> ReadCSV::parse()
 {
 
 }
 
 
-void ReadCSV::select()
+string ReadCSV::select()
 {
 
 }

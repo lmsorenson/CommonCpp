@@ -4,6 +4,6 @@
 
 class ReadCSV : public ReadStrategy
 {
-    virtual void parse();
-    virtual void select();
+    virtual std::vector<std::string> parse();
+    virtual std::string select();
 };

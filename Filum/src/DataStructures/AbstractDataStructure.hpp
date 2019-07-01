@@ -4,5 +4,6 @@
 
 class AbstractDataStructure
 {
-
+public:
+    void assign();
 };
