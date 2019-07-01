@@ -5,14 +5,14 @@
 
 using namespace std;
 
-AbstractDataStructure ReadStrategy::run(const char * path)
+AbstractDataStructure * ReadStrategy::run(const char * path)
 {
     cout << "Running read strategy." << endl; 
 
     string str = loadText(path);
 
-    parse();
-    select();
+    // parse();
+    // select();
 
-    return AbstractDataStructure();
+    return new AbstractDataStructure();
 }

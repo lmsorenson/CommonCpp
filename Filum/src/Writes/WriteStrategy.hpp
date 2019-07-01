@@ -4,7 +4,7 @@
 
 class WriteStrategy
 {
-    virtual void parse() = 0;
+    // virtual void parse() = 0;
 public:
-    AbstractDataStructure run();
+    AbstractDataStructure run(const char * path);
 };

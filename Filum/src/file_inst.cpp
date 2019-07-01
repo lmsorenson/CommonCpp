@@ -3,8 +3,8 @@
 #include <iostream>
 #include <string>
 
-#include "DataStructures/AbstractDataStructure.hpp"
-#include "Factories/AbstractFactory.hpp"
+#include "DataStructures/CSVData.hpp"
+#include "Factories/CSV_Factory.hpp"
 
 using namespace std;
 
@@ -15,9 +15,10 @@ int32_t Filum::read_file()
     string file_extension;
 
     //STEP 1 -- FACTORY
-    AbstractFactory factory; //TODO--> make factory producer
+    CSV_Factory factory; //TODO-->make factory producer
+    auto data = factory.MakeData();
     
-    factory.MakeRead();//TODO --> substitute real path
+    data = factory.MakeRead()->run("path");//TODO --> substitute real path
 
     cout << "DEBUG: done reading file." << endl;
     return 0;

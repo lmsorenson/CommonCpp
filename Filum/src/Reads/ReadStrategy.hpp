@@ -8,5 +8,5 @@ class ReadStrategy
     virtual void select() = 0;
 
 public:
-    AbstractDataStructure run(const char * path);
+    AbstractDataStructure * run(const char * path);
 };
