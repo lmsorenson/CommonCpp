@@ -6,7 +6,7 @@
 
 class ReadStrategy
 {
-    virtual std::vector<std::string> parse() = 0;
+    virtual std::vector<std::vector<std::string>> parse(const char * file_contents) = 0;
     virtual std::string select() = 0;
 
 public:

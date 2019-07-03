@@ -20,5 +20,6 @@ WriteStrategy * CSV_Factory::MakeWrite()
 
 AbstractDataStructure * CSV_Factory::MakeData()
 {
+    cout << "Make csv data" << endl;
     return new CSVData();
 }

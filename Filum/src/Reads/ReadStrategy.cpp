@@ -6,17 +6,17 @@
 
 using namespace std;
 
-AbstractDataStructure * ReadStrategy::run(const char * path)
+AbstractDataStructure * ReadStrategy::run(const char * filepath)
 {
     cout << "Running read strategy." << endl; 
 
     AbstractDataStructure ds;
 
     //load text
-    string str = loadText(path);
+    string file_contents = loadText(filepath);
 
     //parse text
-    vector<string> arr = parse();
+    vector<vector<string>> arr = parse(file_contents.c_str());
 
     //select fields
     string sel = select();

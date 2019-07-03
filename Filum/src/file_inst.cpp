@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int32_t Filum::read_file()
+int32_t Filum::read_file(const char * filepath)
 {
     cout << "DEBUG: reading file. . . " << endl;
 
@@ -16,10 +16,12 @@ int32_t Filum::read_file()
 
     //STEP 1 -- FACTORY
     CSV_Factory factory; //TODO-->make factory producer
-    
+
+    cout << "Construct" << endl;
     auto data = factory.MakeData();
     
-    data = factory.MakeRead()->run("path");//TODO --> substitute real path
+    cout << "Run" << endl;
+    data = factory.MakeRead()->run(filepath);//TODO --> substitute real path
 
     cout << "DEBUG: done reading file." << endl;
     return 0;
