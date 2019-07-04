@@ -13,10 +13,11 @@ set( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR} )
 file( 
     GLOB Mods 
     ${PROJECT_SOURCE_DIR}/*.cpp 
-    ${PROJECT_SOURCE_DIR}/Factories/*.cpp
-    ${PROJECT_SOURCE_DIR}/DataStructures/*.cpp
-    ${PROJECT_SOURCE_DIR}/Reads/*.cpp
-    ${PROJECT_SOURCE_DIR}/Writes/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/Factories/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/DataStructures/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/Reads/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
+    ${PROJECT_SOURCE_DIR}/concrete/csv/*.cpp
     )
 
 add_library(Filum ${Mods})

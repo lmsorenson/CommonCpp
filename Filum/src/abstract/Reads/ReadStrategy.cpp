@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../../include/loadText.h"
+#include "../../../include/loadText.h"
 
 using namespace std;
 

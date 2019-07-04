@@ -3,8 +3,8 @@
 #include <iostream>
 #include <string>
 
-#include "DataStructures/CSVData.hpp"
-#include "Factories/CSV_Factory.hpp"
+#include "concrete/csv/CSVData.hpp"
+#include "concrete/csv/CSV_Factory.hpp"
 
 using namespace std;
 

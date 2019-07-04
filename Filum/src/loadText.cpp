@@ -8,7 +8,7 @@ using namespace std;
 const char * loadText(const char * filepath)
 {
     //return file
-    char * text = new char[1024];
+    char * output = new char[1024];
     
     string line;
     
@@ -18,8 +18,8 @@ const char * loadText(const char * filepath)
     {
         while ( getline(file,line) )
         {
-            strcat(text, line.c_str());
-            strcat(text, "\n");
+            strcat(output, line.c_str());
+            strcat(output, "\n");
         }
 
         file.close();
@@ -28,6 +28,5 @@ const char * loadText(const char * filepath)
     {
         return LOAD_ERROR_STR;
     }
-    	return text;
+    	return output;
 }
-

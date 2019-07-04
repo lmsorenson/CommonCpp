@@ -1,6 +1,6 @@
 #include "CSV_Factory.hpp"
-#include "../Reads/ReadCSV.hpp"
-#include "../DataStructures/CSVData.hpp"
+#include "ReadCSV.hpp"
+#include "CSVData.hpp"
 #include <iostream>
 
 
