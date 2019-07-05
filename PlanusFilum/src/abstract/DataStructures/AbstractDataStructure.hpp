@@ -5,5 +5,8 @@
 class AbstractDataStructure
 {
 public:
-    void assign();
+    AbstractDataStructure();
+    ~AbstractDataStructure();
+
+    virtual void assign();
 };

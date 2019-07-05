@@ -4,5 +4,9 @@
 
 class CSVData : public AbstractDataStructure
 {
+public:
+    CSVData();
+    ~CSVData();
 
+    virtual void assign();
 };

@@ -6,11 +6,9 @@
 
 using namespace std;
 
-AbstractDataStructure * ReadStrategy::Execute(const char * filepath)
+int32_t ReadStrategy::Execute(const char * filepath, AbstractDataStructure &ds)
 {
     cout << "Running read strategy." << endl; 
-
-    AbstractDataStructure ds;
 
     //load text
     string file_contents = loadText(filepath);
@@ -24,5 +22,5 @@ AbstractDataStructure * ReadStrategy::Execute(const char * filepath)
     //assign fields
     ds.assign();
 
-    return new AbstractDataStructure();
+    return 0;
 }

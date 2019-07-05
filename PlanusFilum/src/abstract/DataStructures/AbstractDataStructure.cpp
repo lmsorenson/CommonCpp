@@ -4,7 +4,17 @@
 
 using namespace std;
 
+AbstractDataStructure::AbstractDataStructure()
+{
+    cout << "constructing data structure. . ." << endl;
+}
+
+AbstractDataStructure::~AbstractDataStructure()
+{
+    cout << "destructing data structure. . ." << endl;
+}
+
 void AbstractDataStructure::assign()
 {
-    cout << "assign" << endl;
+    cout << "Abstract Data" << endl;
 }
