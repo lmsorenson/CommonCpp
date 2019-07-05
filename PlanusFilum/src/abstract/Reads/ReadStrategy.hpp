@@ -10,5 +10,5 @@ class ReadStrategy
     virtual std::string select() = 0;
 
 public:
-    AbstractDataStructure * run(const char * path);
+    AbstractDataStructure * Execute(const char * path);
 };

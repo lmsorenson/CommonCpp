@@ -6,7 +6,7 @@
 
 using namespace std;
 
-AbstractDataStructure * ReadStrategy::run(const char * filepath)
+AbstractDataStructure * ReadStrategy::Execute(const char * filepath)
 {
     cout << "Running read strategy." << endl; 
 

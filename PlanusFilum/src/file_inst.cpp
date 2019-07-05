@@ -17,11 +17,13 @@ int32_t Filum::read_file(const char * filepath)
     //STEP 1 -- FACTORY
     CSV_Factory factory; //TODO-->make factory producer
 
-    cout << "Construct" << endl;
-    auto data = factory.MakeData();
     
+    //use the factory to initialize the data variable.
+    auto data = factory.MakeData();
+    cout << "Construct" << endl;
+
     cout << "Run" << endl;
-    data = factory.MakeRead()->run(filepath);//TODO --> substitute real path
+    data = factory.MakeRead()->Execute(filepath);
 
     cout << "DEBUG: done reading file." << endl;
     return 0;

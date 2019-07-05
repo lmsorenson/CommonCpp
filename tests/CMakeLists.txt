@@ -7,10 +7,10 @@ set (CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
 set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/../Filum/include/
+    ${PROJECT_SOURCE_DIR}/../PlanusFilum/include/
 )
 add_subdirectory(
-	${PROJECT_SOURCE_DIR}/../Filum/src/
+	${PROJECT_SOURCE_DIR}/../PlanusFilum/src/
 	lib/
 )
 
@@ -34,7 +34,7 @@ add_executable(tests ${PROJECT_SOURCE_DIR}/src/TestsMain.cpp)
 target_link_libraries(
 	tests
 	gtest
-	Filum
+	PlanusFilum
 )
 
 

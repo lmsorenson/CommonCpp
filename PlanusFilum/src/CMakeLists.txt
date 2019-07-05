@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 
-project (Filum)
+project (PlanusFilum)
 
 set (CMAKE_CXX_STANDARD 11)
 set (CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
@@ -20,5 +20,5 @@ file(
     ${PROJECT_SOURCE_DIR}/concrete/csv/*.cpp
     )
 
-add_library(Filum ${Mods})
+add_library(PlanusFilum ${Mods})
 
