@@ -11,26 +11,28 @@ using namespace std;
 int32_t Filum::read_file(const char * filepath)
 {
     cout << "DEBUG: reading file. . . " << endl;
-    
+
     string file_extension;
 
     //STEP 1 -- FACTORY
-    CSV_Factory factory; //TODO-->make factory producer
-
-    //use the factory to initialize the data variable.
-    auto data = factory.MakeData();
+    CSV_Factory factory;                    //TODO-->make factory producer
+    auto data = factory.MakeData();         //use the factory to initialize the data variable.
+    auto strategy = factory.MakeRead();     //initialize appropriate read strategy
     cout << "Type: " << typeid(data).name() << endl;
 
     //Execute read
-    if(factory.MakeRead()->Execute(filepath, *data))
+    if(strategy->execute_read(filepath, *data))
     {
-        cout << "ERROR: Execute failed." << endl;
+        //return 1 on execution failure.
+        cout << "ERROR: read execution failed." << endl;    
+        return 1;
     }
 
     cout << "DEBUG: done reading file." << endl;
 
-    //free stuff
+    //free pointers
     delete(data);
+    delete(strategy);
 
     //return 0 on success
     return 0;

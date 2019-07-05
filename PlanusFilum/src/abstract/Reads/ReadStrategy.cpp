@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int32_t ReadStrategy::Execute(const char * filepath, AbstractDataStructure &ds)
+int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure &ds)
 {
     cout << "Running read strategy." << endl; 
 

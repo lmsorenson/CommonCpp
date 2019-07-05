@@ -4,6 +4,18 @@
 
 using namespace std;
 
+
+ReadCSV::ReadCSV()
+{
+    cout << "constructing csv read strategy. . . " << endl;
+}
+
+ReadCSV::~ReadCSV()
+{
+    cout << "destructing csv read strategy. . . " << endl;
+}
+
+
 vector<vector<string>> SeparateLines(const char * text);
 vector<string> SeparateValues(const char * text);
 
