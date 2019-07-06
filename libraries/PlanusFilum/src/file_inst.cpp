@@ -12,15 +12,21 @@ int32_t Filum::read_file(const char * filepath)
 {
     cout << "DEBUG: reading file. . . " << endl;
 
-    string file_extension;
+    //-----------------------|   Parse file path   |-----------------------//
 
 
+
+
+    //-----------------------|   Generate strategies & Data   |-----------------------//
     CSV_Factory factory;                    //TODO-->make factory producer
     auto data = factory.MakeData();         //use the factory to initialize the data variable.
     auto strategy = factory.MakeRead();     //initialize appropriate read strategy
     cout << "data type: " << typeid(data).name() << endl;
 
-    //Execute read
+
+    
+
+    //-----------------------|   Execute read   |-----------------------//
     if(strategy->execute_read(filepath, *data))
     {
         //return 1 on execution failure.
@@ -28,13 +34,14 @@ int32_t Filum::read_file(const char * filepath)
         return 1;
     }
 
+    //-----------------------|   Clean up   |-----------------------//
     cout << "DEBUG: done reading file." << endl;
 
     //free pointers
     delete(data);
     delete(strategy);
 
-    //return 0 on success
+    //-----------------------|   Return   |-----------------------//
     return 0;
 }
 

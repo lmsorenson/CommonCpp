@@ -7,10 +7,10 @@ set (CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
 set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/../PlanusFilum/include/
+    ${PROJECT_SOURCE_DIR}/../libraries/PlanusFilum/include/
 )
 add_subdirectory(
-	${PROJECT_SOURCE_DIR}/../PlanusFilum/src/
+	${PROJECT_SOURCE_DIR}/../libraries/PlanusFilum/src/
 	lib/
 )
 
