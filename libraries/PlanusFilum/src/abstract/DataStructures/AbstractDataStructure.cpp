@@ -1,6 +1,6 @@
+// Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "AbstractDataStructure.hpp"
 #include <iostream>
-
 
 using namespace std;
 

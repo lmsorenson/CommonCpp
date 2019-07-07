@@ -1,3 +1,4 @@
+// Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "CSVData.hpp"
 #include <iostream>
 

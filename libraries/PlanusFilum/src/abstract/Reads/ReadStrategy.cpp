@@ -1,3 +1,4 @@
+// Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "ReadStrategy.hpp"
 #include <iostream>
 #include <string>
@@ -13,8 +14,15 @@ int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure 
     //load text
     string file_contents = loadText(filepath);
 
+    //decrypt
+
+    //Configure pipeline
+    ParserPipeline pipeline;
+    this->ConfigurePipeline(pipeline);
+    pipeline.execute(file_contents.c_str());
+
     //parse text
-    vector<vector<string>> arr = parse(file_contents.c_str());
+    // vector<vector<string>> arr = parse(file_contents.c_str());
 
     //select fields
     string sel = select();

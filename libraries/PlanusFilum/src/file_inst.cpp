@@ -1,3 +1,4 @@
+// Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "../include/file_inst.h"
 
 #include <iostream>
@@ -23,7 +24,6 @@ int32_t Filum::read_file(const char * filepath)
     auto strategy = factory.MakeRead();     //initialize appropriate read strategy
     cout << "data type: " << typeid(data).name() << endl;
 
-
     
 
     //-----------------------|   Execute read   |-----------------------//
@@ -36,7 +36,6 @@ int32_t Filum::read_file(const char * filepath)
 
     //-----------------------|   Clean up   |-----------------------//
     cout << "DEBUG: done reading file." << endl;
-
     //free pointers
     delete(data);
     delete(strategy);

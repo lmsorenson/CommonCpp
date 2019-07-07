@@ -1,6 +1,8 @@
+// Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "ReadCSV.hpp"
 #include <iostream>
 #include "../../../include/loadText.h"
+#include "CSVFilters.hpp"
 
 using namespace std;
 
@@ -19,6 +21,12 @@ ReadCSV::~ReadCSV()
 vector<vector<string>> SeparateLines(const char * text);
 vector<string> SeparateValues(const char * text);
 
+void ReadCSV::ConfigurePipeline(ParserPipeline &pipeline)
+{
+    cout << "configure csv pipeline: " << endl;
+    pipeline.AddFilter(shared_ptr<RecordFilter> (new RecordFilter()));
+    pipeline.AddFilter(shared_ptr<FieldFilter> (new FieldFilter()));
+}
 
 vector<vector<string>> ReadCSV::parse(const char * file_contents)
 {

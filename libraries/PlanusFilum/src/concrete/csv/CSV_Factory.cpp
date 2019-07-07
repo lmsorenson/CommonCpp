@@ -1,3 +1,4 @@
+// Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "CSV_Factory.hpp"
 #include "ReadCSV.hpp"
 #include "CSVData.hpp"
