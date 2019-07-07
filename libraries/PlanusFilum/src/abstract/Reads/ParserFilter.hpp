@@ -13,6 +13,6 @@ public:
     ParserFilter();
     ~ParserFilter();
 
-    virtual void execute(const char * text) = 0;
+    virtual std::vector<std::string> execute(const char * text) = 0;
     virtual const char * name();
 };
