@@ -1,9 +1,8 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-
-
+#pragma once
 
 class ParserOutput
 {
 public:
-    void execute();
+    virtual void execute() = 0;
 };

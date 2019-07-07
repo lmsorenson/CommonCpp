@@ -1,6 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include "../../abstract/Reads/ParserFilter.hpp"
+#include "../../abstract/Reads/ParserOutput.hpp"
 
 class RecordFilter : public ParserFilter
 {
@@ -21,4 +22,10 @@ public:
 
     virtual std::vector<std::string> execute(const char * text) override;
     virtual const char * name() override;
+};
+
+
+class CSVOutput : public ParserOutput
+{
+    virtual void execute() override;
 };

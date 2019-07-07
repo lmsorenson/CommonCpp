@@ -30,20 +30,23 @@ void ParserPipeline::execute(vector<string> text)
     cout << "executing pipeline. . . " << endl;
     cout << "number of filters: " << filters.size() << endl;
     
-    vector<string> text_buffer;
-    vector<string> new_text_buffer = text;
+    vector<string> in_text_buffer;
+    vector<string> out_text_buffer = text;
+    
 
     //Execute filters
     for(int i=0; i < filters.size(); ++i)
     {
-        text_buffer = new_text_buffer;
+        //out text buffer from previous iteration becomes new in text buffer
+        in_text_buffer = out_text_buffer;
 
         cout << "running filter: " << filters[i]->name() << endl;
-        cout << "number of strings: " << text_buffer.size() << endl;
+        cout << "number of strings: " << in_text_buffer.size() << endl;
+        
         //Apply filters to strings
-        for (int k=0; k < text_buffer.size(); ++k)
+        for (int k=0; k < in_text_buffer.size(); ++k)
         {
-            new_text_buffer = filters[i]->execute(text_buffer[k].c_str());
+            out_text_buffer = filters[i]->execute(in_text_buffer[k].c_str());
         }
     }
 
