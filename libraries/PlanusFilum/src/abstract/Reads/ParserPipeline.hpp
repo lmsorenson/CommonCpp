@@ -17,5 +17,5 @@ public:
 
     int32_t AddFilter(std::shared_ptr<ParserFilter> filter);
 
-    void execute(const char * text);
+    void execute(std::vector<std::string> text);
 };

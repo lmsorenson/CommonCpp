@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
-
+#include <vector>
 
 
 
@@ -13,6 +13,6 @@ public:
     ParserFilter();
     ~ParserFilter();
 
-    virtual void execute() = 0;
+    virtual void execute(const char * text) = 0;
     virtual const char * name();
 };

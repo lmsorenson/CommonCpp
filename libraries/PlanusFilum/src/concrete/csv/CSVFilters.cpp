@@ -9,9 +9,9 @@
     RecordFilter::RecordFilter(){}
     RecordFilter::~RecordFilter(){ cout <<"deconstructing record filter. "<< endl; }
 
-    void RecordFilter::execute()
+    void RecordFilter::execute(const char * text)
     {
-        istringstream f("line1\nline2\nline3");
+        istringstream f(text);
         string line;    
         while (std::getline(f, line)) {
             cout << line << endl;
@@ -29,7 +29,7 @@
     FieldFilter::FieldFilter(){}
     FieldFilter::~FieldFilter(){ cout <<"deconstructing field filter. "<< endl; }
 
-    void FieldFilter::execute()
+    void FieldFilter::execute(const char * text)
     {
 
     }

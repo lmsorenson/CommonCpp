@@ -1,3 +1,4 @@
+// Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include "../Reads/ReadStrategy.hpp"
 #include "../Writes/WriteStrategy.hpp"

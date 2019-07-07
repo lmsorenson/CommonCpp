@@ -12,14 +12,15 @@ int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure 
     cout << "Running read strategy." << endl; 
 
     //load text
-    string file_contents = loadText(filepath);
+    vector<string> file_contents;
+    file_contents.push_back(loadText(filepath));
 
     //decrypt
 
     //Configure pipeline
     ParserPipeline pipeline;
     this->ConfigurePipeline(pipeline);
-    pipeline.execute(file_contents.c_str());
+    pipeline.execute(file_contents);
 
     //parse text
     // vector<vector<string>> arr = parse(file_contents.c_str());

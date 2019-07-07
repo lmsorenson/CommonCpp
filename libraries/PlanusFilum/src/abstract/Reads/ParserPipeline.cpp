@@ -1,6 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "ParserPipeline.hpp"
 #include <iostream>
+#include <vector>
 
 
 using namespace std;
@@ -18,7 +19,7 @@ int32_t ParserPipeline::AddFilter(shared_ptr<ParserFilter> filter)
     return 0;
 }
 
-void ParserPipeline::execute(const char * text)
+void ParserPipeline::execute(vector<string> text)
 {
     cout << "executing pipeline. . . " << endl;
     cout << "number of filters: " << filters.size() << endl;
@@ -26,7 +27,12 @@ void ParserPipeline::execute(const char * text)
     for(int i=0; i < filters.size(); ++i)
     {
         cout << "running filter: " << filters[i]->name() << endl;
-        filters[i]->execute();
+        cout << "number of strings: " << text.size() << endl;
+        //Apply filters to strings
+        for (int k=0; k < text.size(); ++k)
+        {
+            filters[i]->execute(text[k].c_str());
+        }
     }
 
     //message the output

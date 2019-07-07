@@ -1,3 +1,4 @@
+// Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "WriteStrategy.hpp"
 
 #include <iostream>

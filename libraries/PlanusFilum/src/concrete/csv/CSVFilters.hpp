@@ -8,7 +8,7 @@ public:
     RecordFilter();
     ~RecordFilter();
 
-    virtual void execute() override;
+    virtual void execute(const char * text) override;
     virtual const char * name() override;
 };
 
@@ -19,6 +19,6 @@ public:
     FieldFilter();
     ~FieldFilter();
 
-    virtual void execute() override;
+    virtual void execute(const char * text) override;
     virtual const char * name() override;
 };
