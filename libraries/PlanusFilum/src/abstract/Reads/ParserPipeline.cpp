@@ -19,6 +19,12 @@ int32_t ParserPipeline::AddFilter(shared_ptr<ParserFilter> filter)
     return 0;
 }
 
+int32_t ParserPipeline::AddOutput(shared_ptr<ParserOutput> output)
+{
+    this->output = output;
+    return 0;
+}
+
 void ParserPipeline::execute(vector<string> text)
 {
     cout << "executing pipeline. . . " << endl;
@@ -42,4 +48,5 @@ void ParserPipeline::execute(vector<string> text)
     }
 
     //message the output
+    output->execute();
 }

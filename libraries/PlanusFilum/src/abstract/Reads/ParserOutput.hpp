@@ -2,12 +2,8 @@
 
 
 
-
-
-
-
-
 class ParserOutput
 {
-
+public:
+    void execute();
 };

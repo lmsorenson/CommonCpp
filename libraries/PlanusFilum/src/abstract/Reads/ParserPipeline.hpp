@@ -10,12 +10,13 @@
 class ParserPipeline
 {
     std::vector<std::shared_ptr<ParserFilter>> filters;
+    std::shared_ptr<ParserOutput> output;
     
 public:
     ParserPipeline();
     ~ParserPipeline();
 
     int32_t AddFilter(std::shared_ptr<ParserFilter> filter);
-
+    int32_t AddOutput(std::shared_ptr<ParserOutput> output);
     void execute(std::vector<std::string> text);
 };
