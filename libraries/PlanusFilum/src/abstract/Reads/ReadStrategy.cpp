@@ -12,8 +12,9 @@ int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure 
     cout << "Running read strategy." << endl; 
 
     //load text
-    vector<string> file_contents;
-    file_contents.push_back(loadText(filepath));
+    vector<node> file_contents;
+    node n = node(loadText(filepath));
+    file_contents.push_back(n);
 
     //decrypt
 

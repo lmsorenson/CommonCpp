@@ -13,16 +13,17 @@
     RecordFilter::RecordFilter(){}
     RecordFilter::~RecordFilter(){ cout <<"deconstructing record filter. "<< endl; }
 
-    std::vector<std::string> RecordFilter::execute(const char * text)
+    std::vector<node> RecordFilter::execute(const char * text)
     {
-        vector<string> output;
+        vector<node> output;
 
         istringstream file(text);
         string line;
 
         while (std::getline(file, line)) {
             cout << line << endl;
-            output.push_back(line);
+            node n = node(line.c_str());
+            output.push_back(n);
         }
 
         return output;
@@ -40,9 +41,9 @@
     FieldFilter::FieldFilter(){}
     FieldFilter::~FieldFilter(){ cout <<"deconstructing field filter. "<< endl; }
 
-    std::vector<std::string> FieldFilter::execute(const char * text)
+    std::vector<node> FieldFilter::execute(const char * text)
     {
-        vector<string> output;
+        vector<node> output;
 
         char * pch;
 
@@ -52,7 +53,8 @@
         while (pch != NULL)
         {
             cout << pch << endl;
-            output.push_back(string(pch));
+            node n = node(pch);
+            output.push_back(n);
             pch = strtok(NULL, ", ");
         }
 

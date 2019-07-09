@@ -9,7 +9,7 @@ public:
     RecordFilter();
     ~RecordFilter();
 
-    virtual std::vector<std::string> execute(const char * text) override;
+    virtual std::vector<node> execute(const char * text) override;
     virtual const char * name() override;
 };
 
@@ -20,7 +20,7 @@ public:
     FieldFilter();
     ~FieldFilter();
 
-    virtual std::vector<std::string> execute(const char * text) override;
+    virtual std::vector<node> execute(const char * text) override;
     virtual const char * name() override;
 };
 

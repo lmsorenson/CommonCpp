@@ -1,10 +1,10 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <vector>
+#include <string>
 #include "ParserFilter.hpp"
 #include "ParserOutput.hpp"
-
-
+#include "node.hpp"
 
 
 class ParserPipeline
@@ -18,5 +18,5 @@ public:
 
     int32_t AddFilter(std::shared_ptr<ParserFilter> filter);
     int32_t AddOutput(std::shared_ptr<ParserOutput> output);
-    void execute(std::vector<std::string> text);
+    void execute(std::vector<node> text);
 };
