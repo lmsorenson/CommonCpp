@@ -32,8 +32,6 @@ void ParserPipeline::execute(std::shared_ptr<node>& text)
     cout << "executing pipeline. . . " << endl;
     cout << "number of filters: " << filters.size() << endl;
 
-    vector<shared_ptr<node>> filter_result_set;
-
     vector<vector<shared_ptr<node>>> in_buffer;
     vector<vector<shared_ptr<node>>> out_buffer;
     
@@ -52,7 +50,7 @@ void ParserPipeline::execute(std::shared_ptr<node>& text)
     //Execute filters
     for(int i=0; i < filters.size(); ++i)
     {
-        // out text buffer from previous iteration becomes new in text buffer
+        // out text buffer from previous filter becomes new in text buffer
         in_buffer = out_buffer;
         out_buffer.clear();
 
@@ -71,6 +69,8 @@ void ParserPipeline::execute(std::shared_ptr<node>& text)
                 string str = in_buffer[j][k]->GetValue();
                 cout << "NODE: extract string - " << str << endl;
                 
+
+                vector<shared_ptr<node>> filter_result_set;
                 vector<node> vn = filters[i]->execute(str.c_str());
 
                 //Breakup the filter output.
@@ -100,5 +100,5 @@ void ParserPipeline::execute(std::shared_ptr<node>& text)
     out_buffer.clear();
     cout << "done clearing vectors" << endl;
     //message the output
-    // output->execute();
+    output->execute(text);
 }
