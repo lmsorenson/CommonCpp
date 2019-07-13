@@ -1,6 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "CSVData.hpp"
 #include <iostream>
+#include "../../colortext.hpp"
 
 
 using namespace std;
@@ -8,12 +9,12 @@ using namespace std;
 
 CSVData::CSVData()
 {
-    cout << "constructing csv data . . . " << endl;
+    cout << SetColor(CYAN, "constructing csv data . . . ") << endl;
 }
 
 CSVData::~CSVData()
 {
-    cout << "destructing csv data . . . " << endl;
+    cout << SetColor(RED, "destructing csv data . . . ") << endl;
 }
 
 void CSVData::assign()

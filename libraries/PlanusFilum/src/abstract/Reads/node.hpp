@@ -7,12 +7,26 @@ class node
 {
 public:
     node(const char * text);
+    // node(const node &node);
     ~node();
 
+    //Get and set the value on the node.
     std::string GetValue();
-    std::shared_ptr<std::vector<node>> GetChildren();
-    void AddChildren(std::vector<node> n);
+    void SetValue(const char * text);
+    
+    //Get Children
+    std::shared_ptr<node> GetChild(int32_t index);
+    // std::shared_ptr<std::vector<node>> GetChildren();
+
+    //Add Children
+    void AddChild(node n);
+    // void AddChildren(std::vector<node> vn);
+
+    //Printing
+    void Print();
+    
 private:
     std::string value;
-    std::vector<node> children;
+    std::vector<std::shared_ptr<node>> children;
+     
 };

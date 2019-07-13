@@ -2,6 +2,7 @@
 #include "ReadCSV.hpp"
 #include <iostream>
 #include "../../../include/loadText.h"
+#include "../../colortext.hpp"
 #include "CSVFilters.hpp"
 
 using namespace std;
@@ -9,12 +10,12 @@ using namespace std;
 
 ReadCSV::ReadCSV()
 {
-    cout << "constructing csv read strategy. . . " << endl;
+    cout << SetColor(CYAN, "constructing csv read strategy. . . ") << endl;
 }
 
 ReadCSV::~ReadCSV()
 {
-    cout << "destructing csv read strategy. . . " << endl;
+    cout << SetColor(RED, "destructing csv read strategy. . . ") << endl;
 }
 
 

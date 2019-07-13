@@ -13,19 +13,21 @@
     RecordFilter::RecordFilter(){}
     RecordFilter::~RecordFilter(){ cout <<"deconstructing record filter. "<< endl; }
 
-    std::vector<node> RecordFilter::execute(const char * text)
+    vector<node> RecordFilter::execute(const char * text)
     {
+        cout << "record: start" << endl;
         vector<node> output;
 
         istringstream file(text);
         string line;
 
         while (std::getline(file, line)) {
-            cout << line << endl;
-            node n = node(line.c_str());
-            output.push_back(n);
+            cout << "record: new line" << endl;
+            output.push_back(node(line.c_str()));
+            cout << "record: end of loop" << endl;
         }
-
+        
+        cout << "record: nearly done" << endl;
         return output;
     }
     
@@ -41,7 +43,7 @@
     FieldFilter::FieldFilter(){}
     FieldFilter::~FieldFilter(){ cout <<"deconstructing field filter. "<< endl; }
 
-    std::vector<node> FieldFilter::execute(const char * text)
+    vector<node> FieldFilter::execute(const char * text)
     {
         vector<node> output;
 
@@ -52,9 +54,8 @@
 
         while (pch != NULL)
         {
-            cout << pch << endl;
-            node n = node(pch);
-            output.push_back(n);
+            // cout << pch << endl;
+            output.push_back(node(pch));
             pch = strtok(NULL, ", ");
         }
 
@@ -72,5 +73,6 @@
     //---------------------------------------------------------------------------//
     void CSVOutput::execute()
     {
-        cout << "Pipeline finished." << endl;
+        cout << "CSV Output" << endl;
+        // (*n)[0].Print();
     }
