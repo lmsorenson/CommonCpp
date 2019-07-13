@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+#include <cstdio>
+#include <ctime>
 
 #include <gtest/gtest.h>
 #include <file_inst.h>
@@ -62,7 +64,7 @@ protected:
 };
 
 
-TEST_F(Test, Test4)
+TEST_F(CSVTest, read)
 {
     
     Filum().read_file("/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
@@ -70,7 +72,23 @@ TEST_F(Test, Test4)
     ASSERT_EQ(true, false);
 }
 
-TEST_F(Test, Test5)
+TEST_F(CSVTest, read_performance)
+{
+    std::clock_t start;
+    double duration;
+
+    start = std::clock();
+
+    Filum().read_file("/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+
+    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+
+    cout << "Time elapsed: " << duration * 1000 << "ms" << endl;
+
+    ASSERT_LT(duration, 16);
+}
+
+TEST_F(CSVTest, Test5)
 {
     Filum().write_file();
     ASSERT_EQ(true, false);
