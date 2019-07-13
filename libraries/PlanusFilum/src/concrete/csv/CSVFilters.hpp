@@ -27,5 +27,5 @@ public:
 
 class CSVOutput : public ParserOutput
 {
-    virtual void execute() override;
+    virtual void execute(std::shared_ptr<node>& text) override;
 };
