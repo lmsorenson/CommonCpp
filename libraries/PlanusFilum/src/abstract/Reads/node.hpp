@@ -7,7 +7,7 @@ class node
 {
 public:
     node(const char * text);
-    // node(const node &node);
+    node(const node &node);
     ~node();
 
     //Get and set the value on the node.

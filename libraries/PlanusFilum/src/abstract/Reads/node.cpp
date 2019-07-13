@@ -12,12 +12,12 @@ node::node(const char * text)
 
 }
 
-// node::node(const node &node)
-// {
-//     cout << SetColor(YELLOW, "copying node:" ) << node.value << endl;
-//     value = node.value;
-//     children = node.children;
-// }
+node::node(const node &node)
+{
+    cout << SetColor(YELLOW, "copying node:" ) << node.value << endl;
+    value = node.value;
+    children = node.children;
+}
 
 node::~node()
 {
