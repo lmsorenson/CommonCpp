@@ -6,5 +6,5 @@
 class ParserOutput
 {
 public:
-    virtual void execute() = 0;
+    virtual void execute(std::shared_ptr<node>& text) = 0;
 };
