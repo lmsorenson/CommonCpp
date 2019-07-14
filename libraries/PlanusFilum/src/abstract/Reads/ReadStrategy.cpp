@@ -25,6 +25,10 @@ int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure 
 
     n->Print();
 
+     ds.hash_table.Insert("hello", "Val");
+
+     cout << "HASH return: " << ds.hash_table.Get("hello") << endl;
+
     cout << "pipeline done."  << endl;
 
     //parse text

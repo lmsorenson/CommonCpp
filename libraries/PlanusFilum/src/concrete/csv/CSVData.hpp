@@ -12,7 +12,7 @@ class CSVData : public AbstractDataStructure
     csv_file file;
 
 public:
-    CSVData();
+    CSVData(int32_t hash_table_size);
     ~CSVData();
 
     virtual void assign();

@@ -36,9 +36,6 @@ int32_t Filum::read_file(const char * filepath)
 
     //-----------------------|   Clean up   |-----------------------//
     cout << "DEBUG: done reading file." << endl;
-    //free pointers
-    delete(data);
-    delete(strategy);
 
     //-----------------------|   Return   |-----------------------//
     return 0;

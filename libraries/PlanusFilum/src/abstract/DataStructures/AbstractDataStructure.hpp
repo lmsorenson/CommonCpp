@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <vector>
-#include "Entity.hpp"
+#include "Hash.hpp"
 
 using namespace std;
 
@@ -9,12 +9,10 @@ using namespace std;
 
 class AbstractDataStructure
 {
-    vector<Entity> EntitySet;
-
 
 public:
-    AbstractDataStructure();
-    ~AbstractDataStructure();
+    hTable hash_table;
 
-    virtual void assign();
+    AbstractDataStructure(int32_t hash_table_size);
+    ~AbstractDataStructure();
 };

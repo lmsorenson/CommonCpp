@@ -12,5 +12,5 @@ AbstractDataStructure WriteStrategy::run(const char * path)
 {
 
 
-    return AbstractDataStructure();
+    return AbstractDataStructure(100);
 }

@@ -7,7 +7,8 @@
 using namespace std;
 
 
-CSVData::CSVData()
+CSVData::CSVData(int32_t hash_table_size)
+: AbstractDataStructure(hash_table_size)
 {
     cout << SetColor(CYAN, "constructing csv data . . . ") << endl;
 }

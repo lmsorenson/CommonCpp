@@ -7,7 +7,7 @@
 class CSV_Factory : public AbstractFactory
 {
 public:
-    virtual ReadStrategy * MakeRead() override;
-    virtual WriteStrategy * MakeWrite() override;
-    virtual AbstractDataStructure * MakeData() override;
+    virtual std::shared_ptr<ReadStrategy> MakeRead() override;
+    virtual std::shared_ptr<WriteStrategy> MakeWrite() override;
+    virtual std::shared_ptr<AbstractDataStructure> MakeData() override;
 };

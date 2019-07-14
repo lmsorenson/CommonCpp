@@ -7,17 +7,17 @@
 
 using namespace std;
 
-ReadStrategy * CSV_Factory::MakeRead()
+std::shared_ptr<ReadStrategy> CSV_Factory::MakeRead()
 {
-    return new ReadCSV();
+    return make_shared<ReadCSV>(ReadCSV());
 }
 
-WriteStrategy * CSV_Factory::MakeWrite()
+std::shared_ptr<WriteStrategy> CSV_Factory::MakeWrite()
 {
-    return new WriteStrategy();
+    return make_shared<WriteStrategy>(WriteStrategy());
 }
 
-AbstractDataStructure * CSV_Factory::MakeData()
+std::shared_ptr<AbstractDataStructure> CSV_Factory::MakeData()
 {
-    return new CSVData();
+    return make_shared<CSVData>(CSVData(100));
 }
