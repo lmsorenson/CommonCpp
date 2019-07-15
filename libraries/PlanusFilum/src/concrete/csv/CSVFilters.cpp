@@ -71,8 +71,34 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    void CSVOutput::execute(std::shared_ptr<node>& text)
+    void CSVOutput::execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store)
     {
         cout << "CSV Output" << endl;
-        text->Print();
+
+        //set of nodes to check
+        vector<node> n;
+        n.push_back(*text);
+
+        //loop through a node set
+        for (int i=0; i<n.size(); ++i)
+        { 
+            //if the node has children:
+            if (n[i]->HasChildren())
+            {
+                //loop through all children
+                for(int j=0; j<n[i]->GetNumberOfChildren(); ++j)
+                {
+                    //add them to a new vector.
+                    vector<node> n2;
+                    n2.push_back(n[i].GetChild(j));
+                }
+            }
+            //if not:
+            else
+            {
+                //add the node value to the hash table.
+                // data_store.Set("Hello", "World!");
+            }
+        }
+        // text->Print();
     }

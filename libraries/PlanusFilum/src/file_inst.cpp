@@ -22,9 +22,6 @@ int32_t Filum::read_file(const char * filepath)
     CSV_Factory factory;                    //TODO-->make factory producer
     auto data = factory.MakeData();         //use the factory to initialize the data variable.
     auto strategy = factory.MakeRead();     //initialize appropriate read strategy
-    cout << "data type: " << typeid(data).name() << endl;
-
-    
 
     //-----------------------|   Execute read   |-----------------------//
     if(strategy->execute_read(filepath, *data))

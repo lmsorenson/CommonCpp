@@ -9,10 +9,12 @@ using namespace std;
 
 class AbstractDataStructure
 {
-
-public:
     hTable hash_table;
 
+public:
     AbstractDataStructure(int32_t hash_table_size);
     ~AbstractDataStructure();
+
+    std::string Get(std::string key);
+    int32_t Set(std::string key, std::string value);
 };

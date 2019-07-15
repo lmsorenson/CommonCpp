@@ -16,11 +16,11 @@ public:
     
     //Get Children
     std::shared_ptr<node> GetChild(int32_t index);
-    // std::shared_ptr<std::vector<node>> GetChildren();
+    int32_t GetNumberOfChildren();
+    bool HasChildren();
 
     //Add Children
     void AddChild(node n);
-    // void AddChildren(std::vector<node> vn);
 
     //Printing
     void Print();

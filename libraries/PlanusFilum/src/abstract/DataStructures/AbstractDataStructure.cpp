@@ -14,3 +14,13 @@ AbstractDataStructure::~AbstractDataStructure()
 {
     cout << "destructing data structure. . ." << endl;
 }
+
+std::string AbstractDataStructure::Get(std::string key)
+{
+   return hash_table.Get(key);
+}
+
+int32_t AbstractDataStructure::Set(std::string key, std::string value)
+{
+    hash_table.Insert(key, value);
+}

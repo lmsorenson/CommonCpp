@@ -27,7 +27,7 @@ int32_t ParserPipeline::AddOutput(shared_ptr<ParserOutput> output)
     return 0;
 }
 
-void ParserPipeline::execute(std::shared_ptr<node>& text)
+void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store)
 {
     cout << "executing pipeline. . . " << endl;
     cout << "number of filters: " << filters.size() << endl;
@@ -99,6 +99,7 @@ void ParserPipeline::execute(std::shared_ptr<node>& text)
     in_buffer.clear();
     out_buffer.clear();
     cout << "done clearing vectors" << endl;
+    
     //message the output
-    output->execute(text);
+    output->execute(text, data_store);
 }

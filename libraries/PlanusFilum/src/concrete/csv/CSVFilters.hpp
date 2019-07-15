@@ -27,5 +27,5 @@ public:
 
 class CSVOutput : public ParserOutput
 {
-    virtual void execute(std::shared_ptr<node>& text) override;
+    virtual void execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store) override;
 };

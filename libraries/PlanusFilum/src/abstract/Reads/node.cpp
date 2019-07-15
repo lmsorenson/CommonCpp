@@ -24,50 +24,23 @@ node::~node()
     cout << SetColor(RED, "deleting node:" ) << value << endl;
 }
 
-string node::GetValue()
-{
-    return value;
-}
+string node::GetValue(){return value;}
+void node::SetValue(const char * text){value = text;}
 
-void node::SetValue(const char * text)
-{
-    value = text;
-}
+void node::AddChild(node n){children.push_back(make_shared<node>(n));}
+shared_ptr<node> node::GetChild(int32_t index){return this->children[index];}
 
-// shared_ptr<vector<node>> node::GetChildren()
-// {
-//     return make_shared<vector<node>>(children);
-// }
+int32_t node::GetNumberOfChildren(){return children.size();}
+bool node::HasChildren(){return (children.size()>0);}
 
-void node::AddChild(node n)
-{
-    cout << "Adding child. . . " << endl;
-    children.push_back(make_shared<node>(n));
-}
-
-// void node::AddChildren(vector<node> vn)
-// {
-//     cout << "Adding children. . . " << endl;
-//     children.insert(children.end(), vn.begin(), vn.end());
-// }
-
-shared_ptr<node> node::GetChild(int32_t index)
-{
-    return this->children[index];
-}
 
 void node::Print()
 {
-    // cout << SetColor(BLUE, string(this->GetValue()).c_str()) << endl;
     cout << "Print: " << value << endl;
-    
-    // if (children != nullptr)
-    // {
-        cout << SetColor(BLUE, "CHILDREN SIZE: ") << children.size() << endl;
-        for (int i=0; i < children.size(); ++i)
-        {
-            children[i]->Print();
-        }
-    // }
-    
+
+    cout << SetColor(BLUE, "CHILDREN SIZE: ") << children.size() << endl;
+    for (int i=0; i < children.size(); ++i)
+    {
+        children[i]->Print();
+    }
 }

@@ -14,7 +14,6 @@ public:
     std::vector<std::shared_ptr<hElement>> table;                //storage for the table.
     int32_t ComputeIndex(std::string value);    //hash function.
 
-
     hTable(int32_t aHTableSize);
     ~hTable();
 
