@@ -20,12 +20,12 @@ ReadCSV::~ReadCSV()
 
 
 
-void ReadCSV::ConfigurePipeline(ParserPipeline &pipeline)
+void ReadCSV::configure_pipeline(ParserPipeline &pipeline)
 {
     cout << "configure csv pipeline: " << endl;
-    pipeline.AddFilter(shared_ptr<RecordFilter> (new RecordFilter("R")));
-    pipeline.AddFilter(shared_ptr<FieldFilter> (new FieldFilter("F")));
-    pipeline.AddOutput(shared_ptr<CSVOutput> (new CSVOutput()));
+    pipeline.add_filter(shared_ptr<RecordFilter> (new RecordFilter("R")));
+    pipeline.add_filter(shared_ptr<FieldFilter> (new FieldFilter("F")));
+    pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 
 vector<vector<string>> ReadCSV::parse(const char * file_contents)

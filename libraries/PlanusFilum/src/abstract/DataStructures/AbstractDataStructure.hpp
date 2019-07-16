@@ -15,6 +15,6 @@ public:
     AbstractDataStructure(int32_t hash_table_size);
     ~AbstractDataStructure();
 
-    std::string Get(std::string key);
-    int32_t Set(std::string key, std::string value);
+    std::string get(std::string key);
+    int32_t set(std::string key, std::string value);
 };

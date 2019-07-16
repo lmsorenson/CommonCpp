@@ -8,7 +8,7 @@
 class AbstractFactory
 {
 public:
-    virtual std::shared_ptr<ReadStrategy> MakeRead() = 0;
-    virtual std::shared_ptr<WriteStrategy> MakeWrite() = 0;
-    virtual std::shared_ptr<AbstractDataStructure> MakeData() = 0;
+    virtual std::shared_ptr<ReadStrategy> make_read() = 0;
+    virtual std::shared_ptr<WriteStrategy> make_write() = 0;
+    virtual std::shared_ptr<AbstractDataStructure> make_data() = 0;
 };

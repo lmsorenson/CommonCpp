@@ -7,7 +7,7 @@
 
 class ReadStrategy
 {
-    virtual void ConfigurePipeline(ParserPipeline &pipeline) = 0;
+    virtual void configure_pipeline(ParserPipeline &pipeline) = 0;
     virtual std::vector<std::vector<std::string>> parse(const char * file_contents) = 0;
     virtual std::string select() = 0;
 

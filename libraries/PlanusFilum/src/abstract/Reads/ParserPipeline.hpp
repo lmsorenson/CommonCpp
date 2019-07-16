@@ -17,7 +17,7 @@ public:
     ParserPipeline();
     ~ParserPipeline();
 
-    int32_t AddFilter(std::shared_ptr<ParserFilter> filter);
-    int32_t AddOutput(std::shared_ptr<ParserOutput> output);
+    int32_t add_filter(std::shared_ptr<ParserFilter> filter);
+    int32_t add_output(std::shared_ptr<ParserOutput> output);
     void execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store);
 };

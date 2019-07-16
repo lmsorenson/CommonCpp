@@ -20,7 +20,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure 
 
     //Configure pipeline
     ParserPipeline pipeline;
-    this->ConfigurePipeline(pipeline);
+    this->configure_pipeline(pipeline);
     pipeline.execute(n, ds);
 
     n->Print();

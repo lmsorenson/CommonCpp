@@ -103,7 +103,7 @@
                 else
                 {
                     //add the node value to the hash table.
-                    data_store.Set(in[i]->GetID(), in[i]->GetValue());
+                    data_store.set(in[i]->GetID(), in[i]->GetValue());
                 }
             }//i
         }

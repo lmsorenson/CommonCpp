@@ -5,7 +5,7 @@
 
 class ReadCSV : public ReadStrategy
 {
-    virtual void ConfigurePipeline(ParserPipeline &pipeline);
+    virtual void configure_pipeline(ParserPipeline &pipeline);
     virtual std::vector<std::vector<std::string>> parse(const char * file_contents);
     virtual std::string select();
 

@@ -15,13 +15,13 @@ ParserPipeline::~ParserPipeline()
 
 }
 
-int32_t ParserPipeline::AddFilter(shared_ptr<ParserFilter> filter)
+int32_t ParserPipeline::add_filter(shared_ptr<ParserFilter> filter)
 {
     filters.push_back(filter);
     return 0;
 }
 
-int32_t ParserPipeline::AddOutput(shared_ptr<ParserOutput> output)
+int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
 {
     this->output = output;
     return 0;

@@ -4,9 +4,9 @@
 
 using namespace std;
 
-hTable::hTable(int32_t aHTableSize)
+hTable::hTable(int32_t table_size_arg)
 {
-    hTableSize = aHTableSize;
+    hTableSize = table_size_arg;
     table.resize(hTableSize);
 }
 
@@ -16,7 +16,7 @@ hTable::~hTable()
 }
 
 
-int32_t hTable::ComputeIndex(std::string value)
+int32_t hTable::compute_index(std::string value)
 {
     int index = 1;
 
@@ -31,20 +31,20 @@ int32_t hTable::ComputeIndex(std::string value)
 }
 
 
-int32_t hTable::Insert(string key, string value)
+int32_t hTable::insert(string key, string value)
 {
-    int32_t index = ComputeIndex(key);
+    int32_t index = compute_index(key);
     shared_ptr<hElement> e (table[index]);
 
     if (e!=nullptr)
     {
         //Find the last element
-        while(e->HasNext())
+        while(e->has_next())
         {
-            e = e->Next();
+            e = e->next();
         }
 
-        e->SetNext(hElement(value));
+        e->set_next(hElement(value));
     }
     else
     {
@@ -55,35 +55,31 @@ int32_t hTable::Insert(string key, string value)
     return 0;
 }
 
-std::string hTable::Get(std::string key)
+std::string hTable::get(std::string key)
 {
-    if (table[ComputeIndex(key)]->HasNext())
-    {
-        cout << "HAS NEXT" << endl;
-    }
-    return table[ComputeIndex(key)]->GetValue();
+    return table[compute_index(key)]->get_value();
 }
 
 
 hElement::hElement(std::string aValue) : value(aValue){}
 hElement::~hElement(){}
 
-std::shared_ptr<hElement> hElement::Next()
+std::shared_ptr<hElement> hElement::next()
 {
-    return next;
+    return next_element;
 }
 
-bool hElement::HasNext()
+bool hElement::has_next()
 {
-    return (this->Next() != nullptr);
+    return (this->next() != nullptr);
 }
 
-void hElement::SetNext(hElement e)
+void hElement::set_next(hElement e)
 {
-    next = make_shared<hElement>(e);
+    next_element = make_shared<hElement>(e);
 }
 
-string hElement::GetValue()
+string hElement::get_value()
 {
     return value;
 }

@@ -20,8 +20,8 @@ int32_t Filum::read_file(const char * filepath)
 
     //-----------------------|   Generate strategies & Data   |-----------------------//
     CSV_Factory factory;                    //TODO-->make factory producer
-    auto data = factory.MakeData();         //use the factory to initialize the data variable.
-    auto strategy = factory.MakeRead();     //initialize appropriate read strategy
+    auto data = factory.make_data();         //use the factory to initialize the data variable.
+    auto strategy = factory.make_read();     //initialize appropriate read strategy
 
     //-----------------------|   Execute read   |-----------------------//
     if(strategy->execute_read(filepath, *data))
@@ -31,7 +31,7 @@ int32_t Filum::read_file(const char * filepath)
         return 1;
     }
 
-    cout << "TEST: " << data->Get("R0F1") << endl;
+    cout << "TEST: " << data->get("R0F1") << endl;
 
     //-----------------------|   Clean up   |-----------------------//
     cout << "DEBUG: done reading file." << endl;
