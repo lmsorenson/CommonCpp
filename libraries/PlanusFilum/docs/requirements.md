@@ -7,8 +7,11 @@
 >1.3. Read by data structure.  
   
   
-2. No two hash filters can have the same ID.  
-3. A read should take less than 1/60th of a second.
+2. No two  parse filters can have the same ID stem.
+3. A 10,000 line read should take less than 1/60th of a second.
+4. If an invalid path is used the system shall indicate the error.
+5. If the supplied File path begins with a slash, read the path as an absolute path.
+6. If the supplied file path begins with a letter or a period treat the path as a relative path.
 
 2. write file.  
 >2.1. write entire file.  
