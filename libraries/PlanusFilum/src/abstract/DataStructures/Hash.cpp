@@ -57,6 +57,10 @@ int32_t hTable::Insert(string key, string value)
 
 std::string hTable::Get(std::string key)
 {
+    if (table[ComputeIndex(key)]->HasNext())
+    {
+        cout << "HAS NEXT" << endl;
+    }
     return table[ComputeIndex(key)]->GetValue();
 }
 

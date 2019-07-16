@@ -68,7 +68,6 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
                 //assign the results of the filter to the children vector.
                 string str = in_buffer[j][k]->GetValue();
                 cout << "NODE: extract string - " << str << endl;
-                
 
                 vector<shared_ptr<node>> filter_result_set;
                 vector<node> vn = filters[i]->execute(str.c_str());
@@ -76,18 +75,20 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
                 //Breakup the filter output.
                 for(int l = 0; l < vn.size(); ++l)
                 {
-                    cout << "FILTER: " << vn[l].GetValue() << endl;
-                    
-                    //Add this to the child
-                    in_buffer[j][k]->AddChild(node(vn[l].GetValue().c_str()));
+                    node newNode = node(vn[l].GetValue().c_str());
+                        newNode.AppendID(in_buffer[j][k]->GetID());
+                        newNode.AppendID(filters[i]->GetID(l));
 
-                    //Will be added to the output buffer
+                    //Add this to the child set.
+                    in_buffer[j][k]->AddChild(newNode);
+
+                    //Will be added to the output buffer.
                     filter_result_set.push_back(in_buffer[j][k]->GetChild(l));
                 }
 
                 cout << "NODE: filter result size - " << filter_result_set.size() << endl;
 
-                out_buffer.push_back(filter_result_set);//output of first step should be 1 set of two nodes
+                out_buffer.push_back(filter_result_set);
                 cout << "NODE: NUMBER OF SETS: "<< out_buffer.size() << endl;
 
                 filter_result_set.clear();

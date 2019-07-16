@@ -10,7 +10,7 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    RecordFilter::RecordFilter(){}
+    RecordFilter::RecordFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
     RecordFilter::~RecordFilter(){ cout <<"deconstructing record filter. "<< endl; }
 
     vector<node> RecordFilter::execute(const char * text)
@@ -40,7 +40,7 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    FieldFilter::FieldFilter(){}
+    FieldFilter::FieldFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
     FieldFilter::~FieldFilter(){ cout <<"deconstructing field filter. "<< endl; }
 
     vector<node> FieldFilter::execute(const char * text)
@@ -54,7 +54,6 @@
 
         while (pch != NULL)
         {
-            // cout << pch << endl;
             output.push_back(node(pch));
             pch = strtok(NULL, ", ");
         }
@@ -76,29 +75,38 @@
         cout << "CSV Output" << endl;
 
         //set of nodes to check
-        vector<node> n;
-        n.push_back(*text);
+        vector<shared_ptr<node>> in;
+        vector<shared_ptr<node>> out;
+        out.push_back(text);
 
-        //loop through a node set
-        for (int i=0; i<n.size(); ++i)
-        { 
-            //if the node has children:
-            if (n[i]->HasChildren())
-            {
-                //loop through all children
-                for(int j=0; j<n[i]->GetNumberOfChildren(); ++j)
+        //run the following loop while there are nodes still nodes to parse.
+        while(out.size() > 0)
+        {
+            in.clear();     //clear i
+            in = out;       //set i equal to the previous o
+            out.clear();    //clear o for new nodes.
+
+            //loop through a node set
+            for (int i=0; i<in.size(); ++i)
+            { 
+                //if the node has children:
+                if (in[i]->HasChildren())
                 {
-                    //add them to a new vector.
-                    vector<node> n2;
-                    n2.push_back(n[i].GetChild(j));
+                    //loop through all children
+                    for(int j=0; j<in[i]->GetNumberOfChildren(); ++j)
+                    {
+                        //add them to a new set of nodes to parse.
+                        out.push_back(in[i]->GetChild(j));
+                    }//j
                 }
-            }
-            //if not:
-            else
-            {
-                //add the node value to the hash table.
-                // data_store.Set("Hello", "World!");
-            }
+                //if not:
+                else
+                {
+                    //add the node value to the hash table.
+                    data_store.Set(in[i]->GetID(), in[i]->GetValue());
+                }
+            }//i
         }
+
         // text->Print();
     }

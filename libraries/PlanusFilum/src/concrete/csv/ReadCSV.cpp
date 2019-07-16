@@ -23,8 +23,8 @@ ReadCSV::~ReadCSV()
 void ReadCSV::ConfigurePipeline(ParserPipeline &pipeline)
 {
     cout << "configure csv pipeline: " << endl;
-    pipeline.AddFilter(shared_ptr<RecordFilter> (new RecordFilter()));
-    pipeline.AddFilter(shared_ptr<FieldFilter> (new FieldFilter()));
+    pipeline.AddFilter(shared_ptr<RecordFilter> (new RecordFilter("R")));
+    pipeline.AddFilter(shared_ptr<FieldFilter> (new FieldFilter("F")));
     pipeline.AddOutput(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 

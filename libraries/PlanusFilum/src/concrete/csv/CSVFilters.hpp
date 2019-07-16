@@ -6,7 +6,7 @@
 class RecordFilter : public ParserFilter
 {
 public:
-    RecordFilter();
+    RecordFilter(std::string new_filter_id);
     ~RecordFilter();
 
     std::vector<node> execute(const char * text) override;
@@ -17,7 +17,7 @@ public:
 class FieldFilter : public ParserFilter
 {
 public:
-    FieldFilter();
+    FieldFilter(std::string new_filter_id);
     ~FieldFilter();
 
     virtual std::vector<node> execute(const char * text) override;

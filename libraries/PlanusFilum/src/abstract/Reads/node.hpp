@@ -13,6 +13,8 @@ public:
     //Get and set the value on the node.
     std::string GetValue();
     void SetValue(const char * text);
+    std::string GetID();
+    node AppendID(std::string new_id);
     
     //Get Children
     std::shared_ptr<node> GetChild(int32_t index);
@@ -26,6 +28,7 @@ public:
     void Print();
     
 private:
+    std::string id;
     std::string value;
     std::vector<std::shared_ptr<node>> children;
      

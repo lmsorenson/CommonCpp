@@ -9,10 +9,14 @@
 
 class ParserFilter
 {
+    std::string id;
+
 public:
-    ParserFilter();
+    ParserFilter(std::string new_filter_id);
     ~ParserFilter();
 
     virtual std::vector<node> execute(const char * text) = 0;
     virtual const char * name();
+
+    std::string GetID(int index);
 };

@@ -31,6 +31,8 @@ int32_t Filum::read_file(const char * filepath)
         return 1;
     }
 
+    cout << "TEST: " << data->Get("R0F1") << endl;
+
     //-----------------------|   Clean up   |-----------------------//
     cout << "DEBUG: done reading file." << endl;
 
