@@ -13,6 +13,8 @@
 5. If the supplied File path begins with a slash, read the path as an absolute path.
 6. If the supplied file path begins with a letter or a period treat the path as a relative path.
 
+7. When accessing the data structure if a key does not exist then return an error.
+
 2. write file.  
 >2.1. write entire file.  
 >2.2. write line.  
