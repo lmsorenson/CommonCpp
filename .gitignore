@@ -1,4 +1,5 @@
 \bin/
+\cmake/
 .DS_Store
 \.vscode/
 \out/

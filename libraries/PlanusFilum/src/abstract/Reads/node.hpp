@@ -6,7 +6,7 @@
 class node
 {
 public:
-    node(const char * text);
+    node(std::string text);
     node(const node &node);
     ~node();
 

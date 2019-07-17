@@ -90,7 +90,7 @@ TEST_F(CSVTest, TestR3)
 
     AbstractDataStructure ds;
 
-    Filum().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    Filum().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test2.csv");
 
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 

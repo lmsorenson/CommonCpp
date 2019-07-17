@@ -5,10 +5,10 @@
 
 using namespace std;
 
-node::node(const char * text)
+node::node(string text)
 {
     // cout << SetColor(CYAN, "constructing node: ") << text << endl;
-    value = string(text);
+    value = text;
 }
 
 node::node(const node &node)

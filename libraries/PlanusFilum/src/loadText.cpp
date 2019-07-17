@@ -2,31 +2,35 @@
 
 #include <iostream>
 #include <fstream>
+#include "sys/types.h"
+#include "unistd.h"
+#include <fcntl.h>
 
 using namespace std;
 
-const char * loadText(const char * filepath)
+string loadText(string filepath)
 {
     //return file
-    char * output = new char[1024];
+    string output;
     
     string line;
     
     //open file
-    ifstream file (filepath);
+    ifstream file (filepath.c_str());
     if (file.is_open())
     {
-        while ( getline(file,line) )
+        while ( getline(file,line), file.good() )
         {
-            strcat(output, line.c_str());
-            strcat(output, "\n");
+            output
+            .append(line)
+            .append("\r\n");
         }
 
         file.close();
     }
     else
     {
-        return LOAD_ERROR_STR;
+        return string(LOAD_ERROR_STR);
     }
     	return output;
 }

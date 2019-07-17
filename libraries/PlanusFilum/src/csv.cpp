@@ -9,7 +9,8 @@ vector<string> SeparateValues(const char * text);
 
 CSV file::loadCSV(const char * filepath)
 {
-    CSV ret_value = SeparateLines(loadText(filepath));
+    CSV ret_value;
+    //  = SeparateLines(loadText(filepath));
 
     return ret_value;
 }
