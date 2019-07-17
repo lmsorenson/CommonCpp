@@ -13,7 +13,7 @@ ParserFilter::ParserFilter(string new_filter_id)
 }
 ParserFilter::~ParserFilter()
 {
-    cout << "deconstructing filter" << endl;
+    cout << "deconstructing filter" << '\r' << flush;
 }
 
 const char * ParserFilter::name()

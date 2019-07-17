@@ -7,13 +7,13 @@ using namespace std;
 
 node::node(const char * text)
 {
-    cout << SetColor(CYAN, "constructing node: ") << text << endl;
+    // cout << SetColor(CYAN, "constructing node: ") << text << endl;
     value = string(text);
 }
 
 node::node(const node &node)
 {
-    cout << SetColor(YELLOW, "copying node:" ) << node.value << endl;
+    // cout << SetColor(YELLOW, "copying node:" ) << node.value << endl;
     id = node.id;
     value = node.value;
     children = node.children;
@@ -21,7 +21,7 @@ node::node(const node &node)
 
 node::~node()
 {
-    cout << SetColor(RED, "deleting node:" ) << value << endl;
+    // cout << SetColor(RED, "deleting node:" ) << value << endl;
 }
 
 string node::GetValue(){return value;}
@@ -41,10 +41,10 @@ bool node::HasChildren(){return (children.size()>0);}
 
 void node::Print()
 {
-    cout << "Print: " << value << endl;
-    cout << "ID: " << id << endl;
+    cout << "Print: " << value << '\r' << flush;
+    cout << "ID: " << id << '\r' << flush;
 
-    cout << SetColor(BLUE, "CHILDREN SIZE: ") << children.size() << endl;
+    cout << SetColor(BLUE, "CHILDREN SIZE: ") << children.size() << '\r' << flush;
     for (int i=0; i < children.size(); ++i)
     {
         children[i]->Print();

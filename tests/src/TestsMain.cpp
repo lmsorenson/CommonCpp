@@ -64,22 +64,33 @@ protected:
 };
 
 
-TEST_F(CSVTest, read)
+TEST_F(CSVTest, TestR1)
 {
+    AbstractDataStructure ds;
     
-    Filum().read_file("/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    Filum().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+
+    string str = ds.get("R0F0");
+
+    ASSERT_EQ(str, "January");
+}
+
+TEST_F(CSVTest, TestR2)
+{
 
     ASSERT_EQ(true, false);
 }
 
-TEST_F(CSVTest, read_performance)
+TEST_F(CSVTest, TestR3)
 {
     std::clock_t start;
     double duration;
 
     start = std::clock();
 
-    Filum().read_file("/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    AbstractDataStructure ds;
+
+    Filum().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
 
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
@@ -88,15 +99,39 @@ TEST_F(CSVTest, read_performance)
     ASSERT_LT(duration, 16);
 }
 
-TEST_F(CSVTest, Test5)
+TEST_F(CSVTest, TestR4)
 {
-    Filum().write_file();
+    AbstractDataStructure ds;
+    
+    int32_t exit_code = Filum().read_file(ds, "Invalid-Path");
+    
+    ASSERT_EQ(exit_code, 1);
+}
+
+TEST_F(CSVTest, TestR5)
+{
     ASSERT_EQ(true, false);
+}
+
+TEST_F(CSVTest, TestR6)
+{
+    ASSERT_EQ(true, false);
+}
+
+TEST_F(CSVTest, TestR7)
+{
+    AbstractDataStructure ds;
+    
+    int32_t exit_code = Filum().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    
+    string str = ds.get("R100000F0");
+    
+
+    ASSERT_EQ(str, "ERROR");
 }
 
 int main(int argc, char **argv)
 {
-
     ::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }

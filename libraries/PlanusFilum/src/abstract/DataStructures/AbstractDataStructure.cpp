@@ -7,12 +7,12 @@ using namespace std;
 AbstractDataStructure::AbstractDataStructure(int32_t hash_table_size)
 : hash_table(hash_table_size)
 {
-    cout << "constructing data structure. . ." << endl;
+    cout << "constructing data structure. . ." << '\r' << flush;
 }
 
 AbstractDataStructure::~AbstractDataStructure()
 {
-    cout << "destructing data structure. . ." << endl;
+    cout << "destructing data structure. . ." << '\r' << flush;
 }
 
 std::string AbstractDataStructure::get(std::string key)

@@ -55,13 +55,20 @@ int32_t hTable::insert(string key, string value)
     return 0;
 }
 
-std::string hTable::get(std::string key)
+string hTable::get(string key)
 {
-    return table[compute_index(key)]->get_value();
+    string ret = "ERROR";
+
+    if (table[compute_index(key)]!=nullptr)
+    {
+        ret = table[compute_index(key)]->get_value();
+    }
+    
+    return ret;
 }
 
 
-hElement::hElement(std::string aValue) : value(aValue){}
+hElement::hElement(string aValue) : value(aValue){}
 hElement::~hElement(){}
 
 std::shared_ptr<hElement> hElement::next()

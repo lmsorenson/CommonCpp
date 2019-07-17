@@ -12,6 +12,7 @@ class AbstractDataStructure
     hTable hash_table;
 
 public:
+    AbstractDataStructure() = default;
     AbstractDataStructure(int32_t hash_table_size);
     ~AbstractDataStructure();
 

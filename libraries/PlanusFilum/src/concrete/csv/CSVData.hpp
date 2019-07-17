@@ -12,6 +12,7 @@ class CSVData : public AbstractDataStructure
     csv_file file;
 
 public:
+    CSVData() = default;
     CSVData(int32_t hash_table_size);
     ~CSVData();
 

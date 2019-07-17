@@ -11,23 +11,23 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     RecordFilter::RecordFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
-    RecordFilter::~RecordFilter(){ cout <<"deconstructing record filter. "<< endl; }
+    RecordFilter::~RecordFilter(){ cout <<"deconstructing record filter. " << '\r' << flush; }
 
     vector<node> RecordFilter::execute(const char * text)
     {
-        cout << "record: start" << endl;
+        cout << "record: start" << '\r' << flush;
         vector<node> output;
 
         istringstream file(text);
         string line;
 
         while (std::getline(file, line)) {
-            cout << "record: new line" << endl;
+            cout << "record: new line" << '\r' << flush;
             output.push_back(node(line.c_str()));
-            cout << "record: end of loop" << endl;
+            cout << "record: end of loop" << '\r' << flush;
         }
         
-        cout << "record: nearly done" << endl;
+        cout << "record: nearly done" << '\r' << flush;
         return output;
     }
     
@@ -41,7 +41,7 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     FieldFilter::FieldFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
-    FieldFilter::~FieldFilter(){ cout <<"deconstructing field filter. "<< endl; }
+    FieldFilter::~FieldFilter(){ cout <<"deconstructing field filter. "<< '\r' << flush; }
 
     vector<node> FieldFilter::execute(const char * text)
     {
@@ -49,7 +49,6 @@
 
         char * pch;
 
-        printf ("Splitting string \"%s\" into tokens:\n", text);
         pch = strtok((char *)text,",");
 
         while (pch != NULL)
@@ -72,7 +71,7 @@
     //---------------------------------------------------------------------------//
     void CSVOutput::execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store)
     {
-        cout << "CSV Output" << endl;
+        cout << "CSV Output" << '\r' << flush;
 
         //set of nodes to check
         vector<shared_ptr<node>> in;

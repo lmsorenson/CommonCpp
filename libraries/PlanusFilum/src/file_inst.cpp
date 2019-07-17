@@ -1,5 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "../include/file_inst.h"
+#include "abstract/DataStructures/AbstractDataStructure.hpp"
 
 #include <iostream>
 #include <string>
@@ -9,9 +10,9 @@
 
 using namespace std;
 
-int32_t Filum::read_file(const char * filepath)
+int32_t Filum::read_file(AbstractDataStructure& data_store, const char * filepath)
 {
-    cout << "DEBUG: reading file. . . " << endl;
+    cout << "DEBUG: reading file. . . " << '\r' << flush;
 
     //-----------------------|   Parse file path   |-----------------------//
 
@@ -27,16 +28,15 @@ int32_t Filum::read_file(const char * filepath)
     if(strategy->execute_read(filepath, *data))
     {
         //return 1 on execution failure.
-        cout << "ERROR: read execution failed." << endl;    
+        cout << "ERROR: read execution failed." << '\r' << flush;    
         return 1;
     }
 
-    cout << "TEST: " << data->get("R0F1") << endl;
-
     //-----------------------|   Clean up   |-----------------------//
-    cout << "DEBUG: done reading file." << endl;
+    cout << "DEBUG: done reading file." << '\r' << flush;
 
     //-----------------------|   Return   |-----------------------//
+    data_store = *data;
     return 0;
 }
 
@@ -52,7 +52,7 @@ int32_t Filum::write_file()
 
     //STEP 4 -- WRITE the file.
 
-    "DEBUG: done writing file." << endl;
+    "DEBUG: done writing file." << '\r' << flush;
     return 0;
 }
 
