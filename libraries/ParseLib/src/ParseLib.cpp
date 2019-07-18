@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../include/file_inst.h"
+#include "../include/ParseLib.h"
 #include "abstract/DataStructures/AbstractDataStructure.hpp"
 
 #include <iostream>
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-int32_t Filum::read_file(AbstractDataStructure& data_store, const char * filepath)
+int32_t ParseLib::read_file(AbstractDataStructure& data_store, const char * filepath)
 {
     cout << "DEBUG: reading file. . . " << '\r' << flush;
 
@@ -40,7 +40,7 @@ int32_t Filum::read_file(AbstractDataStructure& data_store, const char * filepat
     return 0;
 }
 
-int32_t Filum::write_file()
+int32_t ParseLib::write_file()
 {
     cout << "DEBUG: starting a write. . ."
     //STEP 1 -- FACTORY.

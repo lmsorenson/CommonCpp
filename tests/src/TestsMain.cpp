@@ -4,7 +4,7 @@
 #include <ctime>
 
 #include <gtest/gtest.h>
-#include <file_inst.h>
+#include <ParseLib.h>
 
 using namespace std;
 
@@ -68,7 +68,7 @@ TEST_F(CSVTest, TestR1)
 {
     AbstractDataStructure ds;
     
-    Filum().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
 
     string str = ds.get("R0F0");
 
@@ -90,7 +90,7 @@ TEST_F(CSVTest, TestR3)
 
     AbstractDataStructure ds;
 
-    Filum().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test2.csv");
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test2.csv");
 
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
@@ -103,7 +103,7 @@ TEST_F(CSVTest, TestR4)
 {
     AbstractDataStructure ds;
     
-    int32_t exit_code = Filum().read_file(ds, "Invalid-Path");
+    int32_t exit_code = ParseLib().read_file(ds, "Invalid-Path");
     
     ASSERT_EQ(exit_code, 1);
 }
@@ -122,7 +122,7 @@ TEST_F(CSVTest, TestR7)
 {
     AbstractDataStructure ds;
     
-    int32_t exit_code = Filum().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    int32_t exit_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
     
     string str = ds.get("R100000F0");
     

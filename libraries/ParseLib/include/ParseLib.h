@@ -4,9 +4,7 @@
 #include <memory>
 
 
-class AbstractDataStructure;
-
-class Filum
+class ParseLib
 {
 public:
     int32_t read_file(AbstractDataStructure& data_store, const char * filepath);
