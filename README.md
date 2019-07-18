@@ -3,3 +3,5 @@ This repository is a set of libraries which holds everyday tasks which a develop
 
 ## ParseLib
 A primitive document access library.  A set of abstract read/write procedures which simplify setup of new file format specifications.
+
+<img align="center" src="libraries/ParseLib/docs/images/ParseLibUseCaseDiagram1.png" width="500"/>
