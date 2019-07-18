@@ -96,7 +96,7 @@ TEST_F(CSVTest, TestR3)
 
     cout << "Time elapsed: " << duration * 1000 << "ms" << endl;
 
-    ASSERT_LT(duration, 16);
+    ASSERT_LT(duration * 1000, 16);
 }
 
 TEST_F(CSVTest, TestR4)

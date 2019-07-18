@@ -7,10 +7,10 @@ set (CMAKE_CXX_FLAGS "-g")
 # set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
 include_directories(
-    ${PROJECT_SOURCE_DIR}/../libraries/PlanusFilum/include/
+    ${PROJECT_SOURCE_DIR}/../libraries/ParseLib/include/
 )
 add_subdirectory(
-	${PROJECT_SOURCE_DIR}/../libraries/PlanusFilum/src/
+	${PROJECT_SOURCE_DIR}/../libraries/ParseLib/src/
 	lib/
 )
 
@@ -34,7 +34,7 @@ add_executable(tests ${PROJECT_SOURCE_DIR}/src/TestsMain.cpp)
 target_link_libraries(
 	tests
 	gtest
-	PlanusFilum
+	parse
 )
 
 

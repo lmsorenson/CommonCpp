@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 
-project (PlanusFilum)
+project (parse)
 
 set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_FLAGS "-g")
@@ -20,5 +20,5 @@ file(
     ${PROJECT_SOURCE_DIR}/concrete/csv/*.cpp
     )
 
-add_library(PlanusFilum ${Mods})
+add_library(parse ${Mods})
 
