@@ -8,6 +8,8 @@ set (CMAKE_CXX_FLAGS "-g")
 
 set( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR} )
 
+option(ENABLE_DEBUG "Set to ON to enable ParseLib debug features" ON)
+
 #create a lib
 #--------------------------
 file( 
@@ -21,4 +23,12 @@ file(
     )
 
 add_library(parse ${Mods})
+
+if(ENABLE_DEBUG)
+
+file( 
+    GLOB parse_includes
+    ${PROJECT_SOURCE_DIR}/../include/*.h
+    )
+endif()
 
