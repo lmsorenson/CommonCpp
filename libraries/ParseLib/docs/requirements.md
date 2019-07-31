@@ -7,7 +7,7 @@
 1.3. The library shall read and parse OBJ data files.  
 2. The library shall provide client code access to data instances within the file as enumerated in each file format's requirements.
 3. The read data structure should provide references to an instance's relationships (or related entities) as enumerated in each file format's requirements and data models.
-4. Elements within the read data structure should be uniquely identifiable.
+4. Elements within the read data structure should be uniquely identifiable.  
 4.1 No two parse filters can have the same ID stem.
 5. The library shall write new data model instances to existing files.
 6. The library shall modify existing data model instances of existing files.
