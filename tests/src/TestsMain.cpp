@@ -8,6 +8,7 @@
 // #include <abstract/Reads/ParserPipeline.hpp>
 
 #include "CSVFunctionalTests.hpp"
+#include "CSVPerformanceTests.hpp"
 
 using namespace std;
 

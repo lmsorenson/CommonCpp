@@ -7,14 +7,14 @@
 #include <ParseLib.h>
 
 
-class CSVFunctional : public ::testing::Test
+class CSVFunctionalSpec : public ::testing::Test
 {
 protected:
     
-    CSVFunctional() {
+    CSVFunctionalSpec() {
     }
     
-    virtual ~CSVFunctional() {
+    virtual ~CSVFunctionalSpec() {
         // You can do clean-up work that doesn't throw exceptions here.
     }
     
@@ -34,7 +34,7 @@ protected:
     // Objects declared here can be used by all tests in the test case for Foo.
 };
 
-TEST_F(CSVFunctional, TestR1)
+TEST_F(CSVFunctionalSpec, TestR1)
 {
     AbstractDataStructure ds;
     
@@ -45,31 +45,13 @@ TEST_F(CSVFunctional, TestR1)
     ASSERT_EQ(str, "January");
 }
 
-TEST_F(CSVFunctional, TestR2)
+TEST_F(CSVFunctionalSpec, TestR2)
 {
 
     ASSERT_EQ(true, false);
 }
 
-TEST_F(CSVFunctional, TestR3)
-{
-    std::clock_t start;
-    double duration;
-
-    start = std::clock();
-
-    AbstractDataStructure ds;
-
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test2.csv");
-
-    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-
-    cout << "Time elapsed: " << duration * 1000 << "ms" << endl;
-
-    ASSERT_LT(duration * 1000, 16);
-}
-
-TEST_F(CSVFunctional, TestR4)
+TEST_F(CSVFunctionalSpec, TestR4)
 {
     AbstractDataStructure ds;
     
@@ -78,17 +60,17 @@ TEST_F(CSVFunctional, TestR4)
     ASSERT_EQ(exit_code, 1);
 }
 
-TEST_F(CSVFunctional, TestR5)
+TEST_F(CSVFunctionalSpec, TestR5)
 {
     ASSERT_EQ(true, false);
 }
 
-TEST_F(CSVFunctional, TestR6)
+TEST_F(CSVFunctionalSpec, TestR6)
 {
     ASSERT_EQ(true, false);
 }
 
-TEST_F(CSVFunctional, TestR7)
+TEST_F(CSVFunctionalSpec, TestR7)
 {
     AbstractDataStructure ds;
     
