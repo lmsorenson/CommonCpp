@@ -16,10 +16,12 @@
 ## Performance Requirements
 1. A 10,000 line read should take less than 1/60th of a second.
 2. The file read shall indicate  noticably slow requirements.
+3. Concurrency.
 
 ## Security Requirements
 1. The library shall allow the client code to encrypt large data files.  
 2. The library should be able to build using an encrypted hash function.
+3. Encrypted files will shall keep unathorized viewers from accessing data.
 
 ## unsorted
 3. If an invalid path is used the system shall indicate the error.
@@ -41,3 +43,4 @@
 
 ## Scalability Requirements
 1. simple to add more formats.
+
