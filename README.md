@@ -11,7 +11,7 @@ A primitive document access library.  A set of abstract read/write procedures wh
 ### Architectural Description:
 1. [Requirements](https://github.com/lmsorenson/CommonCpp/blob/master/libraries/ParseLib/docs/requirements.md#parselib-requirements---v1)</br>
 2. [Context View](https://github.com/lmsorenson/CommonCpp/blob/master/libraries/ParseLib/README.md#context)</br>
-3. [Functinal View](https://github.com/lmsorenson/CommonCpp/blob/master/libraries/ParseLib/README.md#functional-view)</br>
+3. [Functional View](https://github.com/lmsorenson/CommonCpp/blob/master/libraries/ParseLib/README.md#functional-view)</br>
 
 
 <img align="center" src="libraries/ParseLib/docs/images/ParseLibUseCaseDiagram1.png" width="500"/>
