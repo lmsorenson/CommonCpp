@@ -12,7 +12,7 @@ A primitive document access library.  A set of abstract read/write procedures wh
 1. [Requirements](https://github.com/lmsorenson/CommonCpp/blob/master/libraries/ParseLib/docs/requirements.md#parselib-requirements---v1)</br>
 2. [Context View](https://github.com/lmsorenson/CommonCpp/blob/master/libraries/ParseLib/README.md#context)</br>
 3. [Functional View](https://github.com/lmsorenson/CommonCpp/blob/master/libraries/ParseLib/README.md#functional-view)</br>
-
+4. [Information View](https://github.com/lmsorenson/CommonCpp/tree/master/libraries/ParseLib#information-view)</br>
 
 <img align="center" src="libraries/ParseLib/docs/images/ParseLibUseCaseDiagram1.png" width="500"/>
 
