@@ -19,7 +19,7 @@ string loadText(string filepath)
     ifstream file (filepath.c_str());
     if (file.is_open())
     {
-        while ( getline(file,line), file.good() )
+        while ( getline(file,line) )
         {
             output
             .append(line)

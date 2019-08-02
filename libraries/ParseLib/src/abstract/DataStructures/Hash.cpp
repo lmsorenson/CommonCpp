@@ -44,11 +44,11 @@ int32_t hTable::insert(string key, string value)
             e = e->next();
         }
 
-        e->set_next(hElement(value));
+        e->set_next(hElement(key, value));
     }
     else
     {
-        table[index]=make_shared<hElement>(hElement(value));
+        table[index]=make_shared<hElement>(hElement(key, value));
     }
     
 
@@ -57,18 +57,29 @@ int32_t hTable::insert(string key, string value)
 
 string hTable::get(string key)
 {
-    string ret = "ERROR";
+    string ret = "";
 
-    if (table[compute_index(key)]!=nullptr)
+    shared_ptr<hElement> e = table[compute_index(key)];
+
+    //if a value at the key exists.
+    while((e!=nullptr) && (ret == ""))
     {
-        ret = table[compute_index(key)]->get_value();
+        //check if the key of the element is the same as
+        //the key passed in.
+       if (e->get_key() == key)
+       {
+           //returns the correct value
+           return e->get_value();
+       }
+
+       e = e->next();
     }
-    
-    return ret;
+    //should return an error if the correct value is not found.
+    return "ERROR";
 }
 
 
-hElement::hElement(string aValue) : value(aValue){}
+hElement::hElement(string aKey, string aValue) : key(aKey), value(aValue){}
 hElement::~hElement(){}
 
 std::shared_ptr<hElement> hElement::next()
@@ -84,6 +95,11 @@ bool hElement::has_next()
 void hElement::set_next(hElement e)
 {
     next_element = make_shared<hElement>(e);
+}
+
+string hElement::get_key()
+{
+    return key;
 }
 
 string hElement::get_value()

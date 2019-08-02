@@ -7,6 +7,8 @@
 using namespace std;
 
 
+string groom_string(string arg_string);
+
 
 ParserPipeline::ParserPipeline(){}
 ParserPipeline::~ParserPipeline()
@@ -75,8 +77,13 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
                 //Breakup the filter output.
                 for(int l = 0; l < vn.size(); ++l)
                 {
-                    node newNode = node(vn[l].GetValue().c_str());
+                    //create a new node to be added to the tree
+                    node newNode = node( groom_string(vn[l].GetValue().c_str()) );
+
+                        //Append the id of the parent node
                         newNode.AppendID(in_buffer[j][k]->GetID());
+                        
+                        //Append the id of this node
                         newNode.AppendID(filters[i]->GetID(l));
 
                     //Add this to the child set.
@@ -103,4 +110,22 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
     
     //message the output
     output->execute(text, data_store);
+}
+
+string groom_string(string arg_string)
+{
+    string out;
+
+    //use a for loop to interate through each character
+    for ( std::string::iterator it=arg_string.begin(); it!=arg_string.end(); ++it)
+    {
+        //check if the string is one of the denied characters
+        if (*it!='\r')
+        {
+            //append only the current character
+            out.push_back(*it);
+        }
+    }
+
+    return out;
 }

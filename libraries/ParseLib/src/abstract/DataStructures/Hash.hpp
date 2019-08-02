@@ -28,17 +28,19 @@ public:
 class hElement
 {
 private:
+    std::string key;
     std::string value;  //
     std::shared_ptr<hElement> next_element;    //
 
 public:
     hElement() = default;           //
-    hElement(std::string aValue);   //
+    hElement(std::string key, std::string aValue);   //
     ~hElement();                    //
 
     std::shared_ptr<hElement> next();
     bool has_next();
     void set_next(hElement e);
+    std::string get_key();
     std::string get_value();
 };
 
