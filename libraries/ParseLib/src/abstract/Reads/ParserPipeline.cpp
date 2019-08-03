@@ -7,15 +7,8 @@
 using namespace std;
 
 
-string groom_string(string arg_string);
-
-
 ParserPipeline::ParserPipeline(){}
-ParserPipeline::~ParserPipeline()
-{
-    cout << "deconstructing parser pipeline. . ." << '\r' << flush;
-
-}
+ParserPipeline::~ParserPipeline(){}
 
 int32_t ParserPipeline::add_filter(shared_ptr<ParserFilter> filter)
 {
@@ -31,18 +24,12 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
 
 void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store)
 {
-    // cout << "executing pipeline. . . " << endl;
-    // cout << "number of filters: " << filters.size() << endl;
-
     vector<vector<shared_ptr<node>>> in_buffer;
     vector<vector<shared_ptr<node>>> out_buffer;
     
-    // cout << "copy input text. . . " << endl;
     vector<shared_ptr<node>> svn;
     svn.push_back(text);
     out_buffer.push_back(svn);
-    // cout << "finish copy input text. . . " << endl;
-    
 
     //for loops
     //"i" --> filters
@@ -56,20 +43,14 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
         in_buffer = out_buffer;
         out_buffer.clear();
 
-        // cout << endl << "FILTER: " << filters[i]->name() << endl;
-        // cout << "FILTER: number of node sets: " << in_buffer.size() << endl;
-        
         // Apply filters to all node sets.
         for(int j=0; j < in_buffer.size(); ++j)
         {
-            // cout << "NODE SET: number of strings in set: " << in_buffer[j].size() << endl;
-
             // Apply filters to all nodes in the node set.
             for (int k=0; k < in_buffer[j].size(); ++k)
             {
                 //assign the results of the filter to the children vector.
                 string str = in_buffer[j][k]->GetValue();
-                // cout << "NODE: extract string - " << str << endl;
 
                 vector<shared_ptr<node>> filter_result_set;
                 vector<node> vn = filters[i]->execute(str.c_str());
@@ -78,7 +59,7 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
                 for(int l = 0; l < vn.size(); ++l)
                 {
                     //create a new node to be added to the tree
-                    node newNode = node( groom_string(vn[l].GetValue().c_str()) );
+                    node newNode = node(vn[l].GetValue().c_str());
 
                         //Append the id of the parent node
                         newNode.AppendID(in_buffer[j][k]->GetID());
@@ -93,43 +74,15 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
                     filter_result_set.push_back(in_buffer[j][k]->GetChild(l));
                 }
 
-                // cout << "NODE: filter result size - " << filter_result_set.size() << endl;
-
                 out_buffer.push_back(filter_result_set);
-                // cout << "NODE: NUMBER OF SETS: "<< out_buffer.size() << endl;
-
                 filter_result_set.clear();
             }//k
         }//j        
     }//i
 
-    // cout << "clearing vectors" << endl;
     in_buffer.clear();
     out_buffer.clear();
-    // cout << "done clearing vectors" << endl;
     
     //message the output
     output->execute(text, data_store);
-}
-
-string groom_string(string arg_string)
-{
-    string out;
-
-    //use a for loop to interate through each character
-    for ( std::string::iterator it=arg_string.begin(); it!=arg_string.end(); ++it)
-    {
-        //keep track of the number of quotes.
-        int quote_count = 0;
-
-        //If this character is a a quotation mark 
-        if (*it=='"')
-            quote_count++;
-
-        //check if the current character is one of the denied characters
-        else if (*it!='\r')
-            out.push_back(*it);
-    }
-
-    return out;
 }

@@ -3,14 +3,24 @@
 #include "../../abstract/Reads/ParserFilter.hpp"
 #include "../../abstract/Reads/ParserOutput.hpp"
 
+class HeaderFilter : public ParserFilter
+{
+public:
+    HeaderFilter(std::string new_filter_id);
+    ~HeaderFilter();
+
+    std::vector<node> execute(std::string text) override;
+    virtual std::string name() override;
+};
+
 class RecordFilter : public ParserFilter
 {
 public:
     RecordFilter(std::string new_filter_id);
     ~RecordFilter();
 
-    std::vector<node> execute(const char * text) override;
-    virtual const char * name() override;
+    std::vector<node> execute(std::string text) override;
+    virtual std::string name() override;
 };
 
 
@@ -20,8 +30,8 @@ public:
     FieldFilter(std::string new_filter_id);
     ~FieldFilter();
 
-    virtual std::vector<node> execute(const char * text) override;
-    virtual const char * name() override;
+    virtual std::vector<node> execute(std::string text) override;
+    virtual std::string name() override;
 };
 
 

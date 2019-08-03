@@ -13,4 +13,12 @@ class ReadStrategy
 
 public:
     int32_t execute_read(const char * path, AbstractDataStructure &ds);
+
+    enum : int32_t
+    {
+        SUCCESSFUL = 0,
+        FILE_NOT_FOUND,
+        FILE_FORMAT_INVALID,
+        UNKNOWN_ERROR
+    };
 };

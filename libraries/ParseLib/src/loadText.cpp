@@ -11,9 +11,7 @@ using namespace std;
 string loadText(string filepath)
 {
     //return file
-    string output;
-    
-    string line;
+    string output, line;
     
     //open file
     ifstream file (filepath.c_str());

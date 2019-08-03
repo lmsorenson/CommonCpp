@@ -11,27 +11,61 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     RecordFilter::RecordFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
-    RecordFilter::~RecordFilter(){ cout <<"deconstructing record filter. " << '\r' << flush; }
+    RecordFilter::~RecordFilter(){}
 
-    vector<node> RecordFilter::execute(const char * text)
+    vector<node> RecordFilter::execute(string text)
     {
-        cout << "record: start" << '\r' << flush;
         vector<node> output;
 
         istringstream file(text);
-        string line;
-
-        while (std::getline(file, line)) {
-            cout << "record: new line" << '\r' << flush;
-            output.push_back(node(line.c_str()));
-            cout << "record: end of loop" << '\r' << flush;
-        }
+        string line, rBuffer;
         
-        cout << "record: nearly done" << '\r' << flush;
+        int32_t number_of_quotes = 0;
+
+        while (std::getline(file, line)) 
+        {
+            number_of_quotes %= 2;
+            string record_value;
+
+            //iterate through every character in the line
+            for ( std::string::iterator it=line.begin(); it!=line.end(); ++it)
+            {
+                bool bIsQuote;
+
+                if ((bIsQuote= (*it=='"')))
+                    number_of_quotes++;
+
+                if( (*it!='\r') && (*it!='\n') )
+                {
+                    rBuffer.push_back(*it);
+                }
+
+                //if there is a set of quotes open by the end of the line
+                //add any new lines or carriage returns to the record.
+                else if ((number_of_quotes%2)!=0)
+                {
+                    rBuffer.push_back(*it);
+                }
+
+                //if there is not a set of quotes open at the line break, 
+                //append the buffer to the record value.
+                else 
+                {
+                    record_value.append(rBuffer);
+                    rBuffer.clear();
+                }
+            }//last character in line
+
+            //add the new node to the filter output.
+            if(!record_value.empty())
+                output.push_back(node(record_value.c_str()));
+        }//last line
+
+        
         return output;
     }
     
-    const char * RecordFilter::name()
+    string RecordFilter::name()
     {
         return "record";
     }
@@ -41,26 +75,66 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     FieldFilter::FieldFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
-    FieldFilter::~FieldFilter(){ cout <<"deconstructing field filter. "<< '\r' << flush; }
+    FieldFilter::~FieldFilter(){}
 
-    vector<node> FieldFilter::execute(const char * text)
+    vector<node> FieldFilter::execute(string text)
     {
         vector<node> output;
+        string buffer;
+        int32_t number_of_quotes=0;
 
         char * pch;
 
-        pch = strtok((char *)text,",");
+        pch = strtok((char*)text.c_str(),",");
 
         while (pch != NULL)
         {
-            output.push_back(node(pch));
-            pch = strtok(NULL, ", ");
-        }
+            char last_char;//this character describes only characters found in the token
+
+            string param = pch;
+            for(std::string::iterator it=param.begin(); it!=param.end(); ++it)
+            {
+                bool bIsQuote = (*it=='"');
+
+                if (bIsQuote)
+                    number_of_quotes++;
+
+                if (!bIsQuote)
+                {
+                    buffer.push_back(*it);
+                }
+                else if((number_of_quotes%2!=0) && (last_char=='"'))
+                {
+                    buffer.push_back(*it);
+                }
+
+                last_char = *it;
+            }
+
+            //if there is not an open quotation, push the node to the buffer
+            if ((number_of_quotes%2==0))
+            {
+                output.push_back(node(buffer));
+                buffer.clear();
+            }
+            //if there is a quotation open put the comma back, and do NOT clear the buffer
+            else
+            {
+                buffer.push_back(',');
+            }
+
+
+            last_char = '0';//this character describes only characters found in the token
+            pch = strtok(NULL, ",");
+        
+        }//end tokenization
+
+        delete[] pch;
 
         return output;
     }
     
-    const char * FieldFilter::name()
+    string FieldFilter::name()
     {
         return "field";
     }
@@ -71,14 +145,12 @@
     //---------------------------------------------------------------------------//
     void CSVOutput::execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store)
     {
-        cout << "CSV Output" << '\r' << flush;
-
         //set of nodes to check
         vector<shared_ptr<node>> in;
         vector<shared_ptr<node>> out;
         out.push_back(text);
 
-        //run the following loop while there are nodes still nodes to parse.
+        //run the following loop while there are still nodes to parse.
         while(out.size() > 0)
         {
             in.clear();     //clear i

@@ -10,12 +10,11 @@ class hElement;
 class hTable
 {
 private:
-    int32_t compute_index(std::string value);    //hash function.
-
+    virtual int32_t compute_index(std::string value);    //hash function.
+    int32_t hTableSize; //size of the table.
+    std::vector<std::shared_ptr<hElement>> table;
+    
 public:
-    int32_t hTableSize;                         //size of the table.
-    std::vector<std::shared_ptr<hElement>> table;                //storage for the table.
-
     hTable() = default;
     hTable(int32_t table_size_arg);
     ~hTable();

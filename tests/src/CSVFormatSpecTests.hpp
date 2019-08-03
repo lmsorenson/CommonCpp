@@ -51,15 +51,34 @@ TEST_F(CSVFormatTests, TestR1)
 
 
 //The last record in the file may or may not have an ending line break.
-TEST_F(CSVFormatTests, TestR2)
+TEST_F(CSVFormatTests, TestR2_1)//has a line break
+{
+    AbstractDataStructure ds;
+    
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1-1.csv");
+
+    string field1 = ds.get("R0F0");
+    string field2 = ds.get("R0F1");
+    string field3 = ds.get("R0F2");
+
+    ASSERT_EQ(field1, "aaa");
+    ASSERT_EQ(field2, "bbb");
+    ASSERT_EQ(field3, "ccc");
+}
+
+TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 {
     AbstractDataStructure ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
 
-    string str = ds.get("R0F0");
+    string field1 = ds.get("R0F0");
+    string field2 = ds.get("R0F1");
+    string field3 = ds.get("R0F2");
 
-    ASSERT_EQ(str, "January");
+    ASSERT_EQ(field1, "aaa");
+    ASSERT_EQ(field2, "bbb");
+    ASSERT_EQ(field3, "ccc");
 }
 
 
@@ -89,15 +108,46 @@ TEST_F(CSVFormatTests, TestR3)
 //number of fields throughout the file. Spaces are considered part
 //of a field and should not be ignored. The last field in the record
 //must not be followed by a comma. 
-TEST_F(CSVFormatTests, TestR4)
+TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 {
     AbstractDataStructure ds;
     
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3.csv");
+    int32_t status;
 
-    string str = ds.get("R0F0");
+    //read empty file
+    status = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-1.csv");
 
-    ASSERT_EQ(str, "January");
+    //return READ_FILE_EMPTY
+    ASSERT_EQ(status, ParseLib::READ_FORMAT_INVALID);
+} 
+TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
+{
+    AbstractDataStructure ds;
+    
+    // ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3.csv");
+
+    // string field1 = ds.get("R0F0");
+    // string field2 = ds.get("R0F1");
+    // string field3 = ds.get("R0F2");
+
+    // ASSERT_EQ(field1, "aaa");
+    // ASSERT_EQ(field2, "bbb");
+    // ASSERT_EQ(field3, "ccc");
+    ASSERT_EQ(1, -1);
+}
+TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
+{
+    AbstractDataStructure ds;
+    
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-2.csv");
+
+    string field1 = ds.get("R0F0");
+    string field2 = ds.get("R0F1");
+    string field3 = ds.get("R0F2");
+
+    ASSERT_EQ(field1, "ERROR");
+    ASSERT_EQ(field2, "ERROR");
+    ASSERT_EQ(field3, "ERROR");
 } 
 
 
@@ -120,20 +170,52 @@ TEST_F(CSVFormatTests, TestR5)
     ASSERT_EQ(field2, "bbb");
     ASSERT_EQ(field3, "ccc");
 }  
+TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
+{
+    AbstractDataStructure ds;
+    
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4-1.csv");
+
+    string field1 = ds.get("R0F0");
+    string field2 = ds.get("R0F1");
+    string field3 = ds.get("R0F2");
+
+    ASSERT_EQ(field1, "aaa");
+    ASSERT_EQ(field2, "bbb");
+    ASSERT_EQ(field3, "ccc");
+}  
 
 
 
 //Fields containing line breaks (CRLF), double quotes, and commas
 //should be enclosed in double-quotes.
-TEST_F(CSVFormatTests, TestR6)
+TEST_F(CSVFormatTests, TestR6_1)
 {
     AbstractDataStructure ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5.csv");
 
-    string str = ds.get("R0F0");
+    string field1 = ds.get("R0F0");
+    string field2 = ds.get("R0F1");
+    string field3 = ds.get("R0F2");
 
-    ASSERT_EQ(str, "January");
+    ASSERT_EQ(field1, "aaa");
+    ASSERT_EQ(field2, "b\r\rbb");
+    ASSERT_EQ(field3, "ccc");
+}  
+TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
+{
+    AbstractDataStructure ds;
+    
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5-1.csv");
+
+    string field1 = ds.get("R0F0");
+    string field2 = ds.get("R0F1");
+    string field3 = ds.get("R0F2");
+
+    ASSERT_EQ(field1, "aaa");
+    ASSERT_EQ(field2, "b,bb");
+    ASSERT_EQ(field3, "ccc");
 }  
 
 
@@ -147,7 +229,11 @@ TEST_F(CSVFormatTests, TestR7)
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv6.csv");
 
-    string str = ds.get("R0F0");
+    string field1 = ds.get("R0F0");
+    string field2 = ds.get("R0F1");
+    string field3 = ds.get("R0F2");
 
-    ASSERT_EQ(str, "January");
+    ASSERT_EQ(field1, "aaa");
+    ASSERT_EQ(field2, "b\"bb");
+    ASSERT_EQ(field3, "ccc");
 }  

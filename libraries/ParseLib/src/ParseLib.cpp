@@ -25,19 +25,22 @@ int32_t ParseLib::read_file(AbstractDataStructure& data_store, const char * file
     auto strategy = factory.make_read();     //initialize appropriate read strategy
 
     //-----------------------|   Execute read   |-----------------------//
-    if(strategy->execute_read(filepath, *data))
+    int32_t return_code;
+    if((return_code=strategy->execute_read(filepath, *data)))
     {
-        //return 1 on execution failure.
-        cout << "ERROR: read execution failed." << '\r' << flush;    
-        return 1;
+        switch (return_code)
+        {
+            case ReadStrategy::FILE_NOT_FOUND: return READ_FILE_NOT_FOUND; break;
+            default: return UNKNOWN_ERROR; break;
+        }
     }
 
     //-----------------------|   Clean up   |-----------------------//
-    cout << "DEBUG: done reading file." << '\r' << flush;
+    cout << "PARSE LIB: read complete." << '\r' << flush;
 
     //-----------------------|   Return   |-----------------------//
     data_store = *data;
-    return 0;
+    return READ_SUCCESSFUL;
 }
 
 int32_t ParseLib::write_file()

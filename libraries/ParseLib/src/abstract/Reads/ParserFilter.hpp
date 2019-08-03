@@ -15,8 +15,8 @@ public:
     ParserFilter(std::string new_filter_id);
     ~ParserFilter();
 
-    virtual std::vector<node> execute(const char * text) = 0;
-    virtual const char * name();
+    virtual std::vector<node> execute(std::string text) = 0;
+    virtual std::string name();
 
     std::string GetID(int index);
 };

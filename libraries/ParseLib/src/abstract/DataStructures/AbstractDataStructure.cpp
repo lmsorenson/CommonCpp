@@ -5,15 +5,8 @@
 using namespace std;
 
 AbstractDataStructure::AbstractDataStructure(int32_t hash_table_size)
-: hash_table(hash_table_size)
-{
-    cout << "constructing data structure. . ." << '\r' << flush;
-}
-
-AbstractDataStructure::~AbstractDataStructure()
-{
-    cout << "destructing data structure. . ." << '\r' << flush;
-}
+: hash_table(hash_table_size){}
+AbstractDataStructure::~AbstractDataStructure(){}
 
 std::string AbstractDataStructure::get(std::string key)
 {

@@ -16,7 +16,7 @@ ParserFilter::~ParserFilter()
     cout << "deconstructing filter" << '\r' << flush;
 }
 
-const char * ParserFilter::name()
+string ParserFilter::name()
 {
     return "abstract";
 }

@@ -11,21 +11,19 @@ using namespace std;
 
 int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure &ds)
 {
-    cout << "Running read strategy." << '\r' << flush; 
-
     //load text
-    shared_ptr<node> n = make_shared<node>(node(loadText(filepath)));
-    // n->Print();
+    string raw_text;
+    if ((raw_text=loadText(filepath))==LOAD_ERROR_STR)
+        return FILE_NOT_FOUND;
+
+    shared_ptr<node> n = make_shared<node>(node(raw_text));
+    
     //decrypt
 
     //Configure pipeline
     ParserPipeline pipeline;
     this->configure_pipeline(pipeline);
     pipeline.execute(n, ds);
-
-    // n->Print();
-
-    cout << "pipeline done."  << '\r' << flush;
 
     //parse text
     // vector<vector<string>> arr = parse(file_contents.c_str());
