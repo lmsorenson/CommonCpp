@@ -5,8 +5,8 @@
 
 #include <gtest/gtest.h>
 #include <ParseLib.h>
-// #include <abstract/Reads/ParserPipeline.hpp>
 
+#include "CSVFormatSpecTests.hpp"
 #include "CSVFunctionalTests.hpp"
 #include "CSVPerformanceTests.hpp"
 

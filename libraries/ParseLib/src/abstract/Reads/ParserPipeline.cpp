@@ -119,12 +119,16 @@ string groom_string(string arg_string)
     //use a for loop to interate through each character
     for ( std::string::iterator it=arg_string.begin(); it!=arg_string.end(); ++it)
     {
-        //check if the string is one of the denied characters
-        if (*it!='\r')
-        {
-            //append only the current character
+        //keep track of the number of quotes.
+        int quote_count = 0;
+
+        //If this character is a a quotation mark 
+        if (*it=='"')
+            quote_count++;
+
+        //check if the current character is one of the denied characters
+        else if (*it!='\r')
             out.push_back(*it);
-        }
     }
 
     return out;

@@ -15,8 +15,8 @@ Below is the specification of the csv file format taken from the [RFC 4180 stand
 >       break (CRLF).  For example:</br></br>
 >       aaa,bbb,ccc CRLF </br>
 >       zzz,yyy,xxx CRLF </br></br>
->   2.  The last record in the file may or may not have an ending line</br></br>
->       break.  For example:</br>
+>   2.  The last record in the file may or may not have an ending line</br>
+>       break.  For example:</br></br>
 >       aaa,bbb,ccc CRLF</br>
 >       zzz,yyy,xxx</br></br>
 >   3.  There maybe an optional header line appearing as the first line

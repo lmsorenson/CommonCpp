@@ -5,7 +5,7 @@
 1.1. The library shall read and parse RAW text files.  
 1.2. The library shall read and parse CSV data files.  
 1.3. The library shall read and parse OBJ data files.  
-2. The library shall provide client code with a means to access each element within the file of data directly as enumerated in each file format's requirements.
+2. The library shall provide client code with a means to access each element within the file directly as enumerated in each file format's requirements.
 3. The read data structure should provide references to an instance's relationships (or related entities) as enumerated in each file format's requirements and data models.
 4. Elements within the read data structure should be uniquely identified.  
 4.1 No two parse filters can have the same ID stem.
