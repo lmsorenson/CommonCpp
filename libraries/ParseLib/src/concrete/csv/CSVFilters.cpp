@@ -79,9 +79,11 @@
 
     int32_t FieldFilter::execute(string text, vector<node>& output)
     {
+        if (text.back()==',')
+            return FILTER_FORMAT_ERROR;
+
         string buffer;
         int32_t number_of_quotes=0;
-
         char * pch;
 
         pch = strtok((char*)text.c_str(),",");
@@ -99,13 +101,10 @@
                     number_of_quotes++;
 
                 if (!bIsQuote)
-                {
                     buffer.push_back(*it);
-                }
+
                 else if((number_of_quotes%2!=0) && (last_char=='"'))
-                {
                     buffer.push_back(*it);
-                }
 
                 last_char = *it;
             }
@@ -118,18 +117,16 @@
             }
             //if there is a quotation open put the comma back, and do NOT clear the buffer
             else
-            {
                 buffer.push_back(',');
-            }
 
 
             last_char = '0';//this character describes only characters found in the token
-            pch = strtok(NULL, ",");
-        
+            pch = strtok(NULL, ",");            
         }//end tokenization
 
         delete[] pch;
 
+        //all records must have the same size.
         if (!IsFieldCountValid(output.size()))
             return FILTER_FORMAT_ERROR;
 

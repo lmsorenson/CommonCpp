@@ -8,21 +8,13 @@
 using namespace std;
 
 
-ReadCSV::ReadCSV()
-{
-    cout << SetColor(CYAN, "constructing csv read strategy. . . ") << '\r' << flush;
-}
-
-ReadCSV::~ReadCSV()
-{
-    cout << SetColor(RED, "destructing csv read strategy. . . ") << '\r' << flush;
-}
+ReadCSV::ReadCSV(){}
+ReadCSV::~ReadCSV(){}
 
 
 
 void ReadCSV::configure_pipeline(ParserPipeline &pipeline)
 {
-    cout << "configure csv pipeline: " << '\r' << flush;
     pipeline.add_filter(shared_ptr<RecordFilter> (new RecordFilter("R")));
     pipeline.add_filter(shared_ptr<FieldFilter> (new FieldFilter("F")));
     pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
@@ -30,17 +22,12 @@ void ReadCSV::configure_pipeline(ParserPipeline &pipeline)
 
 vector<vector<string>> ReadCSV::parse(const char * file_contents)
 {
-    cout << "csv parse" << '\r' << flush;
-
     vector<vector<string>> out;
-
     return out;
 }
 
 
 string ReadCSV::select()
 {
-    cout << "csv select" << '\r' << flush;
-
     return "string";
 }

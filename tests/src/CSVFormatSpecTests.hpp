@@ -112,13 +112,13 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 {
     AbstractDataStructure ds;
     
-    int32_t status;
+    int32_t return_code;
 
     //read empty file
-    status = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-1.csv");
+    return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-1.csv");
 
     //return READ_FILE_EMPTY
-    ASSERT_EQ(status, ParseLib::READ_FORMAT_INVALID);
+    ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
 } 
 TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
 {
@@ -139,15 +139,11 @@ TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {
     AbstractDataStructure ds;
     
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-2.csv");
+    int32_t return_code;
 
-    string field1 = ds.get("R0F0");
-    string field2 = ds.get("R0F1");
-    string field3 = ds.get("R0F2");
+    return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-2.csv");
 
-    ASSERT_EQ(field1, "ERROR");
-    ASSERT_EQ(field2, "ERROR");
-    ASSERT_EQ(field3, "ERROR");
+    ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
 } 
 
 
