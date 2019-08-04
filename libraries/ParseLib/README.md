@@ -12,6 +12,7 @@
     This is the code that uses the library.  The client code is dependent on interfaces offered by ParseLib.  One interface for reading files and one for writing files.
 
 ## Functional View
+<img align="center" src="docs/images/MainClassDiagram.png"/>
 
 ## Information View
 
