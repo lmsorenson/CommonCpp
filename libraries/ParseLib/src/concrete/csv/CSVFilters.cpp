@@ -13,10 +13,8 @@
     RecordFilter::RecordFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
     RecordFilter::~RecordFilter(){}
 
-    vector<node> RecordFilter::execute(string text)
+    int32_t RecordFilter::execute(string text, vector<node>& output)
     {
-        vector<node> output;
-
         istringstream file(text);
         string line, rBuffer;
         
@@ -60,9 +58,11 @@
             if(!record_value.empty())
                 output.push_back(node(record_value.c_str()));
         }//last line
-
         
-        return output;
+        if(output.size()==0)
+            return FILTER_FORMAT_ERROR;
+        
+        return FILTER_SUCCESS;
     }
     
     string RecordFilter::name()
@@ -74,12 +74,11 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    FieldFilter::FieldFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
+    FieldFilter::FieldFilter(std::string new_filter_id) : ParserFilter(new_filter_id), field_count(-1){}
     FieldFilter::~FieldFilter(){}
 
-    vector<node> FieldFilter::execute(string text)
+    int32_t FieldFilter::execute(string text, vector<node>& output)
     {
-        vector<node> output;
         string buffer;
         int32_t number_of_quotes=0;
 
@@ -131,12 +130,30 @@
 
         delete[] pch;
 
-        return output;
+        if (!IsFieldCountValid(output.size()))
+            return FILTER_FORMAT_ERROR;
+
+        return FILTER_SUCCESS;
     }
     
     string FieldFilter::name()
     {
         return "field";
+    }
+
+    bool FieldFilter::IsFieldCountValid(int32_t field_count_param)
+    {
+        if( (field_count!=0)
+            && (field_count==field_count_param
+            || field_count==-1) )
+        {
+            return true;
+        }
+        else
+        {
+            field_count=field_count_param;
+            return false;
+        }
     }
 
 

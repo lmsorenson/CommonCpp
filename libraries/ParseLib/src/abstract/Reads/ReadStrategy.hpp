@@ -16,7 +16,7 @@ public:
 
     enum : int32_t
     {
-        SUCCESSFUL = 0,
+        SUCCESS = 0,
         FILE_NOT_FOUND,
         FILE_FORMAT_INVALID,
         UNKNOWN_ERROR

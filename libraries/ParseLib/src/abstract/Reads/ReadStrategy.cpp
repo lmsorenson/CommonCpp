@@ -23,7 +23,16 @@ int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure 
     //Configure pipeline
     ParserPipeline pipeline;
     this->configure_pipeline(pipeline);
-    pipeline.execute(n, ds);
+
+    int32_t err;
+    if( (err=pipeline.execute(n, ds)) )
+    {
+        switch (err)
+        {
+            case ParserPipeline::PIPELINE_FORMAT_ERROR: return FILE_FORMAT_INVALID; break;
+            default: return UNKNOWN_ERROR;
+        }
+    }
 
     //parse text
     // vector<vector<string>> arr = parse(file_contents.c_str());
@@ -34,5 +43,5 @@ int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure 
     //assign fields
     // ds.assign();
 
-    return 0;
+    return SUCCESS;
 }

@@ -31,12 +31,12 @@ int32_t ParseLib::read_file(AbstractDataStructure& data_store, const char * file
         switch (return_code)
         {
             case ReadStrategy::FILE_NOT_FOUND: return READ_FILE_NOT_FOUND; break;
+            case ReadStrategy::FILE_FORMAT_INVALID: return READ_FORMAT_INVALID; break;
             default: return UNKNOWN_ERROR; break;
         }
     }
 
     //-----------------------|   Clean up   |-----------------------//
-    cout << "PARSE LIB: read complete." << '\r' << flush;
 
     //-----------------------|   Return   |-----------------------//
     data_store = *data;

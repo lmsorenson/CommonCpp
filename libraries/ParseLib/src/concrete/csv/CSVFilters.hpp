@@ -9,7 +9,7 @@ public:
     HeaderFilter(std::string new_filter_id);
     ~HeaderFilter();
 
-    std::vector<node> execute(std::string text) override;
+    int32_t execute(std::string text, std::vector<node>& output) override;
     virtual std::string name() override;
 };
 
@@ -19,19 +19,22 @@ public:
     RecordFilter(std::string new_filter_id);
     ~RecordFilter();
 
-    std::vector<node> execute(std::string text) override;
+    int32_t execute(std::string text, std::vector<node>& output) override;
     virtual std::string name() override;
 };
 
 
 class FieldFilter : public ParserFilter
 {
+    int32_t field_count;
+
 public:
     FieldFilter(std::string new_filter_id);
     ~FieldFilter();
 
-    virtual std::vector<node> execute(std::string text) override;
+    virtual int32_t execute(std::string text, std::vector<node>& output) override;
     virtual std::string name() override;
+    bool IsFieldCountValid(int32_t field_count_param);
 };
 
 

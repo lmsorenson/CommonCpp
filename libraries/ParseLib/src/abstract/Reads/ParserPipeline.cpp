@@ -22,7 +22,7 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
     return 0;
 }
 
-void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store)
+int32_t ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store)
 {
     vector<vector<shared_ptr<node>>> in_buffer;
     vector<vector<shared_ptr<node>>> out_buffer;
@@ -53,7 +53,17 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
                 string str = in_buffer[j][k]->GetValue();
 
                 vector<shared_ptr<node>> filter_result_set;
-                vector<node> vn = filters[i]->execute(str.c_str());
+                
+                vector<node> vn;
+                int32_t err;
+                if( (err=filters[i]->execute(str.c_str(), vn))!=ParserFilter::FILTER_SUCCESS )
+                {
+                    switch (err)
+                    {
+                        case ParserFilter::FILTER_FORMAT_ERROR: return PIPELINE_FORMAT_ERROR; break;
+                        default: return PIPELINE_UNKNOWN_ERROR; break;
+                    }
+                }
 
                 //Breakup the filter output.
                 for(int l = 0; l < vn.size(); ++l)
@@ -85,4 +95,6 @@ void ParserPipeline::execute(std::shared_ptr<node>& text, AbstractDataStructure&
     
     //message the output
     output->execute(text, data_store);
+
+    return PIPELINE_SUCCESS;
 }

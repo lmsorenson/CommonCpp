@@ -11,10 +11,7 @@ ParserFilter::ParserFilter(string new_filter_id)
 {
     id = new_filter_id;
 }
-ParserFilter::~ParserFilter()
-{
-    cout << "deconstructing filter" << '\r' << flush;
-}
+ParserFilter::~ParserFilter(){}
 
 string ParserFilter::name()
 {

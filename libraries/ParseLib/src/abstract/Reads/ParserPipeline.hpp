@@ -19,5 +19,12 @@ public:
 
     int32_t add_filter(std::shared_ptr<ParserFilter> filter);
     int32_t add_output(std::shared_ptr<ParserOutput> output);
-    void execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store);
+    int32_t execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store);
+
+    enum : int32_t
+    {
+        PIPELINE_SUCCESS=0,
+        PIPELINE_FORMAT_ERROR,
+        PIPELINE_UNKNOWN_ERROR
+    };
 };
