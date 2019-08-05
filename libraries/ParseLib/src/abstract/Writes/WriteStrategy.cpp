@@ -8,9 +8,9 @@
 
 using namespace std;
 
-AbstractDataStructure WriteStrategy::run(const char * path)
+InstanceSet WriteStrategy::run(const char * path)
 {
 
 
-    return AbstractDataStructure(100);
+    return InstanceSet(100);
 }

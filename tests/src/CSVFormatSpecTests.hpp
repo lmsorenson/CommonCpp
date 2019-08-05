@@ -39,7 +39,7 @@ protected:
 //Each record is located on a separate line, delimited by a line break (CRLF). 
 TEST_F(CSVFormatTests, TestR1)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
 
@@ -53,7 +53,7 @@ TEST_F(CSVFormatTests, TestR1)
 //The last record in the file may or may not have an ending line break.
 TEST_F(CSVFormatTests, TestR2_1)//has a line break
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1-1.csv");
 
@@ -68,7 +68,7 @@ TEST_F(CSVFormatTests, TestR2_1)//has a line break
 
 TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
 
@@ -92,7 +92,7 @@ TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 //this MIME type).
 TEST_F(CSVFormatTests, TestR3)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv");
 
@@ -110,7 +110,7 @@ TEST_F(CSVFormatTests, TestR3)
 //must not be followed by a comma. 
 TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     int32_t return_code;
 
@@ -122,7 +122,7 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 } 
 TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     // ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3.csv");
 
@@ -136,8 +136,9 @@ TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fi
     ASSERT_EQ(1, -1);
 }
 TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
-{
-    AbstractDataStructure ds;
+{   
+
+    InstanceSet ds;
     
     int32_t return_code;
 
@@ -154,7 +155,7 @@ TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 //double quotes may not appear inside the fields.
 TEST_F(CSVFormatTests, TestR5)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4.csv");
 
@@ -168,7 +169,7 @@ TEST_F(CSVFormatTests, TestR5)
 }  
 TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4-1.csv");
 
@@ -187,7 +188,7 @@ TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
 //should be enclosed in double-quotes.
 TEST_F(CSVFormatTests, TestR6_1)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5.csv");
 
@@ -201,7 +202,7 @@ TEST_F(CSVFormatTests, TestR6_1)
 }  
 TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5-1.csv");
 
@@ -221,7 +222,7 @@ TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
 //another double quote. For example:
 TEST_F(CSVFormatTests, TestR7)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv6.csv");
 

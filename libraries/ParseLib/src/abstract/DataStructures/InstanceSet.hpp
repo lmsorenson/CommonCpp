@@ -7,14 +7,14 @@ using namespace std;
 
 
 
-class AbstractDataStructure
+class InstanceSet
 {
     hTable hash_table;
 
 public:
-    AbstractDataStructure() = default;
-    AbstractDataStructure(int32_t hash_table_size);
-    ~AbstractDataStructure();
+    InstanceSet() = default;
+    InstanceSet(int32_t hash_table_size);
+    ~InstanceSet();
 
     std::string get(std::string key);
     int32_t set(std::string key, std::string value);

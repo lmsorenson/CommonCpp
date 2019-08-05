@@ -36,7 +36,7 @@ protected:
 
 TEST_F(CSVFunctionalSpec, TestR1)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
 
@@ -47,7 +47,7 @@ TEST_F(CSVFunctionalSpec, TestR1)
 
 TEST_F(CSVFunctionalSpec, TestR2)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
 
@@ -107,7 +107,7 @@ TEST_F(CSVFunctionalSpec, TestR2)
 
 TEST_F(CSVFunctionalSpec, TestR4)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     int32_t exit_code = ParseLib().read_file(ds, "Invalid-Path");
     
@@ -126,7 +126,7 @@ TEST_F(CSVFunctionalSpec, TestR6)
 
 TEST_F(CSVFunctionalSpec, TestR7)
 {
-    AbstractDataStructure ds;
+    InstanceSet ds;
     
     int32_t exit_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
     

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int32_t ReadStrategy::execute_read(const char * filepath, AbstractDataStructure &ds)
+int32_t ReadStrategy::execute_read(const char * filepath, InstanceSet &ds)
 {
     //load text
     string raw_text;

@@ -157,7 +157,7 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    void CSVOutput::execute(std::shared_ptr<node>& text, AbstractDataStructure& data_store)
+    void CSVOutput::execute(std::shared_ptr<node>& text, InstanceSet& data_store)
     {
         //set of nodes to check
         vector<shared_ptr<node>> in;

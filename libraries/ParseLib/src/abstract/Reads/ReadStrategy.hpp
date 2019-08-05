@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "../DataStructures/AbstractDataStructure.hpp"
+#include "../DataStructures/InstanceSet.hpp"
 #include "ParserPipeline.hpp"
 
 class ReadStrategy
@@ -12,7 +12,7 @@ class ReadStrategy
     virtual std::string select() = 0;
 
 public:
-    int32_t execute_read(const char * path, AbstractDataStructure &ds);
+    int32_t execute_read(const char * path, InstanceSet &ds);
 
     enum : int32_t
     {
