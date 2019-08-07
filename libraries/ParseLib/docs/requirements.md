@@ -8,9 +8,9 @@
 2. The library shall validate the format of the file as enumerated in the format specifications.</br>
 2.1. By default when a transaction fails because of a format violation and the system attempts to query the resulting instance set, the system shall respond with a string that will indicate the invalid format.</br>
 3. The library shall provide client code a means to access each element within the file directly as enumerated in each file format's requirements.(With valid permission)</br>
-4. The library shall query the instance set by the entities within the data structure associated with the file.
-4.1. The library shall query the instance set for a single instance of an entity and its relations.
-4.2. The library shall query the instance set for a list of instances of a particular entity and its relations.
+4. The library shall query the instance set by the entities within the data structure associated with the file.</br>
+4.1. The library shall query the instance set for a single instance of an entity and its relations.</br>
+4.2. The library shall query the instance set for a list of instances of a particular entity and its relations.</br>
 5. The read data structure should provide references to an instance's relationships (or related entities) as enumerated in each file format's requirements and data models.</br>
 6. Elements within the read data structure should be uniquely identified.</br>
 6.1 No two parse filters can have the same ID stem.</br>
