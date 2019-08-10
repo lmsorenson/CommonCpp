@@ -5,12 +5,14 @@
 1.1. The library shall be capable of reading and parsing RAW text files.</br>
 1.2. The library shall be capable of reading and parsing CSV data files.</br>
 1.3. The library shall be capable of reading and parsing OBJ data files.</br>
-2. The library shall validate the format of the file as enumerated in the format specifications.</br>
+2. The library shall validate the file at the given path as enumerated in the format specifications.</br>
 2.1. By default when a transaction fails because of a format violation and the system attempts to query the resulting instance set, the system shall respond with a string that will indicate the invalid format.</br>
+2.2. By default when a transaction fails because of an invalid file path and the system attempts to query the resulting instance set, the system shall respond with a string that will indicate the invalid file.</br>
 3. The library shall provide client code a means to access each element within the file directly as enumerated in each file format's requirements.(With valid permission)</br>
-4. The library shall query the instance set by the entities within the data structure associated with the file.</br>
-4.1. The library shall query the instance set for a single instance of an entity and its relations.</br>
-4.2. The library shall query the instance set for a list of instances of a particular entity and its relations.</br>
+3.1. If the library attempts to query a data element that does not exist the data set will return an error.</br>
+4. The library shall query and filter the resulting data set by the entities within the data structure associated with the file.</br>
+4.1. The library shall query the resulting data set for a single instance of an entity and its relations.</br><!--i.e. Get the field at some record-->
+4.2. The library shall query the resulting data set for a list of related instances of a particular entity and its relations.  As enumerated in each file format's specification.</br><!--i.e. get all fields in a record/get all records of one field.-->
 5. The read data structure should provide references to an instance's relationships (or related entities) as enumerated in each file format's requirements and data models.</br>
 6. Elements within the read data structure should be uniquely identified.</br>
 6.1 No two parse filters can have the same ID stem.</br>
@@ -30,7 +32,6 @@
 3. Encrypted files will shall keep unathorized viewers from accessing data.</br>
 
 ## unsorted
-3. If an invalid path is used the system shall indicate the error.</br>
 4. If the supplied File path begins with a slash, read the path as an absolute path.</br>
 5. If the supplied file path begins with a letter or a period treat the path as a relative path.</br>
 6. When accessing the data structure if a key does not exist then return an error.</br>

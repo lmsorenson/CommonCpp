@@ -4,9 +4,9 @@
 #include "node.hpp"
 
 
-
-
-
+/* Each element/entity output by the filter is identified using the format:
+    label + index
+     */
 class ParserFilter
 {
     std::string id;

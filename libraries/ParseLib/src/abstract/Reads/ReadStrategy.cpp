@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int32_t ReadStrategy::execute_read(const char * filepath, InstanceSet &ds)
+int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds)
 {
     //load text
     string raw_text;
@@ -29,7 +29,10 @@ int32_t ReadStrategy::execute_read(const char * filepath, InstanceSet &ds)
     {
         switch (err)
         {
-            case ParserPipeline::PIPELINE_FORMAT_ERROR: return FILE_FORMAT_INVALID; break;
+            case ParserPipeline::PIPELINE_FORMAT_ERROR: 
+            return FILE_FORMAT_INVALID; 
+            break;
+
             default: return UNKNOWN_ERROR;
         }
     }

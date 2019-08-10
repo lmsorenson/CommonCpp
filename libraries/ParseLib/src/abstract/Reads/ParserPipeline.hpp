@@ -5,7 +5,7 @@
 #include "ParserFilter.hpp"
 #include "ParserOutput.hpp"
 #include "node.hpp"
-#include "../DataStructures/InstanceSet.hpp"
+#include "../DataStructures/plDataSet.hpp"
 
 
 class ParserPipeline
@@ -19,7 +19,7 @@ public:
 
     int32_t add_filter(std::shared_ptr<ParserFilter> filter);
     int32_t add_output(std::shared_ptr<ParserOutput> output);
-    int32_t execute(std::shared_ptr<node>& text, InstanceSet& data_store);
+    int32_t execute(std::shared_ptr<node>& text, plDataSet& data_store);
 
     enum : int32_t
     {

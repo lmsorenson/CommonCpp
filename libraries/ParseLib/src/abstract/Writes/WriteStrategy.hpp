@@ -1,11 +1,11 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
-#include "../DataStructures/InstanceSet.hpp"
+#include "../DataStructures/plDataSet.hpp"
 
 
 class WriteStrategy
 {
     // virtual void parse() = 0;
 public:
-    InstanceSet run(const char * path);
+    plDataSet run(const char * path);
 };

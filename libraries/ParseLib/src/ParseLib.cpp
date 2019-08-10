@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "../include/ParseLib.h"
-#include "abstract/DataStructures/InstanceSet.hpp"
+#include "abstract/DataStructures/plDataSet.hpp"
 
 #include <iostream>
 #include <string>
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-int32_t ParseLib::read_file(InstanceSet& data_store, const char * filepath)
+int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath)
 {
     cout << "DEBUG: reading file. . . " << '\r' << flush;
 

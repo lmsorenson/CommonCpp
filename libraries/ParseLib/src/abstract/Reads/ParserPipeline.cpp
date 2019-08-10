@@ -22,7 +22,7 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
     return 0;
 }
 
-int32_t ParserPipeline::execute(std::shared_ptr<node>& text, InstanceSet& data_store)
+int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_store)
 {
     vector<vector<shared_ptr<node>>> in_buffer;
     vector<vector<shared_ptr<node>>> out_buffer;

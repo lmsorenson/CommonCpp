@@ -34,26 +34,27 @@ protected:
     // Objects declared here can be used by all tests in the test case for Foo.
 };
 
+//
 TEST_F(CSVFunctionalSpec, TestR1)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
 
-    string str = ds.get("R0F0");
+    plInstance str = ds.get("R0F0");
 
-    ASSERT_EQ(str, "January");
+    ASSERT_EQ(str.get(), "January");
 }
 
-TEST_F(CSVFunctionalSpec, TestR2)
+TEST_F(CSVFunctionalSpec, TestR3)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
 
 
     //Test every value in the file.
-    string 
+    plInstance 
     R0F0 = ds.get("R0F0"),
     R0F1 = ds.get("R0F1"),
     R1F0 = ds.get("R1F0"),
@@ -79,35 +80,35 @@ TEST_F(CSVFunctionalSpec, TestR2)
     R11F0 = ds.get("R11F0"),
     R11F1 = ds.get("R11F1");
 
-    ASSERT_EQ(R0F0, "January");
-    ASSERT_EQ(R0F1, "1");
-    ASSERT_EQ(R1F0, "February");
-    ASSERT_EQ(R1F1, "2");
-    ASSERT_EQ(R2F0, "March");
-    ASSERT_EQ(R2F1, "3");
-    ASSERT_EQ(R3F0, "April");
-    ASSERT_EQ(R3F1, "4");
-    ASSERT_EQ(R4F0, "May");
-    ASSERT_EQ(R4F1, "5");
-    ASSERT_EQ(R5F0, "June");
-    ASSERT_EQ(R5F1, "6");
-    ASSERT_EQ(R6F0, "July");
-    ASSERT_EQ(R6F1, "7");
-    ASSERT_EQ(R7F0, "August");
-    ASSERT_EQ(R7F1, "8");
-    ASSERT_EQ(R8F0, "September");
-    ASSERT_EQ(R8F1, "9");
-    ASSERT_EQ(R9F0, "October");
-    ASSERT_EQ(R9F1, "10");
-    ASSERT_EQ(R10F0, "November");
-    ASSERT_EQ(R10F1, "11");
-    ASSERT_EQ(R11F0, "December");
-    ASSERT_EQ(R11F1, "12");
+    ASSERT_EQ(R0F0.get(), "January");
+    ASSERT_EQ(R0F1.get(), "1");
+    ASSERT_EQ(R1F0.get(), "February");
+    ASSERT_EQ(R1F1.get(), "2");
+    ASSERT_EQ(R2F0.get(), "March");
+    ASSERT_EQ(R2F1.get(), "3");
+    ASSERT_EQ(R3F0.get(), "April");
+    ASSERT_EQ(R3F1.get(), "4");
+    ASSERT_EQ(R4F0.get(), "May");
+    ASSERT_EQ(R4F1.get(), "5");
+    ASSERT_EQ(R5F0.get(), "June");
+    ASSERT_EQ(R5F1.get(), "6");
+    ASSERT_EQ(R6F0.get(), "July");
+    ASSERT_EQ(R6F1.get(), "7");
+    ASSERT_EQ(R7F0.get(), "August");
+    ASSERT_EQ(R7F1.get(), "8");
+    ASSERT_EQ(R8F0.get(), "September");
+    ASSERT_EQ(R8F1.get(), "9");
+    ASSERT_EQ(R9F0.get(), "October");
+    ASSERT_EQ(R9F1.get(), "10");
+    ASSERT_EQ(R10F0.get(), "November");
+    ASSERT_EQ(R10F1.get(), "11");
+    ASSERT_EQ(R11F0.get(), "December");
+    ASSERT_EQ(R11F1.get(), "12");
 }
 
 TEST_F(CSVFunctionalSpec, TestR4)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     int32_t exit_code = ParseLib().read_file(ds, "Invalid-Path");
     
@@ -126,12 +127,12 @@ TEST_F(CSVFunctionalSpec, TestR6)
 
 TEST_F(CSVFunctionalSpec, TestR7)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     int32_t exit_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
     
-    string str = ds.get("R100000F0");
+    plInstance str = ds.get("R100000F0");
     
 
-    ASSERT_EQ(str, "ERROR");
+    ASSERT_EQ(str.get(), "ERROR");
 }

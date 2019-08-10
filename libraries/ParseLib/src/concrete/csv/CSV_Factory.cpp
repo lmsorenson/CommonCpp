@@ -17,7 +17,7 @@ std::shared_ptr<WriteStrategy> CSV_Factory::make_write()
     return make_shared<WriteStrategy>(WriteStrategy());
 }
 
-std::shared_ptr<InstanceSet> CSV_Factory::make_data()
+std::shared_ptr<plDataSet> CSV_Factory::make_data()
 {
     return make_shared<CSVData>(CSVData(100));
 }

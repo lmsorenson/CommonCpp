@@ -8,7 +8,7 @@ using namespace std;
 
 
 CSVData::CSVData(int32_t hash_table_size)
-: InstanceSet(hash_table_size)
+: plDataSet(hash_table_size)
 {
 }
 

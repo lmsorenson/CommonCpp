@@ -39,13 +39,13 @@ protected:
 //Each record is located on a separate line, delimited by a line break (CRLF). 
 TEST_F(CSVFormatTests, TestR1)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
 
-    string str = ds.get("R0F0");
+    plInstance str = ds.get("R0F0");
 
-    ASSERT_EQ(str, "aaa");
+    ASSERT_EQ(str.get(), "aaa");
 }
 
 
@@ -53,32 +53,34 @@ TEST_F(CSVFormatTests, TestR1)
 //The last record in the file may or may not have an ending line break.
 TEST_F(CSVFormatTests, TestR2_1)//has a line break
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1-1.csv");
 
-    string field1 = ds.get("R0F0");
-    string field2 = ds.get("R0F1");
-    string field3 = ds.get("R0F2");
+    plInstance
+        field1 = ds.get("R0F0"),
+        field2 = ds.get("R0F1"),
+        field3 = ds.get("R0F2");
 
-    ASSERT_EQ(field1, "aaa");
-    ASSERT_EQ(field2, "bbb");
-    ASSERT_EQ(field3, "ccc");
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "bbb");
+    ASSERT_EQ(field3.get(), "ccc");
 }
 
 TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
 
-    string field1 = ds.get("R0F0");
-    string field2 = ds.get("R0F1");
-    string field3 = ds.get("R0F2");
+    plInstance
+        field1 = ds.get("R0F0"),
+        field2 = ds.get("R0F1"),
+        field3 = ds.get("R0F2");
 
-    ASSERT_EQ(field1, "aaa");
-    ASSERT_EQ(field2, "bbb");
-    ASSERT_EQ(field3, "ccc");
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "bbb");
+    ASSERT_EQ(field3.get(), "ccc");
 }
 
 
@@ -92,13 +94,13 @@ TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 //this MIME type).
 TEST_F(CSVFormatTests, TestR3)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv");
 
-    string str = ds.get("R0F0");
+    plInstance str = ds.get("R0F0");
 
-    ASSERT_EQ(str, "January");
+    ASSERT_EQ(str.get(), "January");
 } 
 
 
@@ -110,7 +112,7 @@ TEST_F(CSVFormatTests, TestR3)
 //must not be followed by a comma. 
 TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     int32_t return_code;
 
@@ -122,7 +124,7 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 } 
 TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     // ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3.csv");
 
@@ -138,7 +140,7 @@ TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fi
 TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {   
 
-    InstanceSet ds;
+    plDataSet ds;
     
     int32_t return_code;
 
@@ -155,31 +157,33 @@ TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 //double quotes may not appear inside the fields.
 TEST_F(CSVFormatTests, TestR5)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4.csv");
 
-    string field1 = ds.get("R0F0");
-    string field2 = ds.get("R0F1");
-    string field3 = ds.get("R0F2");
+    plInstance
+        field1 = ds.get("R0F0"),
+        field2 = ds.get("R0F1"),
+        field3 = ds.get("R0F2");
 
-    ASSERT_EQ(field1, "aaa");
-    ASSERT_EQ(field2, "bbb");
-    ASSERT_EQ(field3, "ccc");
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "bbb");
+    ASSERT_EQ(field3.get(), "ccc");
 }  
 TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4-1.csv");
 
-    string field1 = ds.get("R0F0");
-    string field2 = ds.get("R0F1");
-    string field3 = ds.get("R0F2");
+    plInstance
+        field1 = ds.get("R0F0"),
+        field2 = ds.get("R0F1"),
+        field3 = ds.get("R0F2");
 
-    ASSERT_EQ(field1, "aaa");
-    ASSERT_EQ(field2, "bbb");
-    ASSERT_EQ(field3, "ccc");
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "bbb");
+    ASSERT_EQ(field3.get(), "ccc");
 }  
 
 
@@ -188,31 +192,33 @@ TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
 //should be enclosed in double-quotes.
 TEST_F(CSVFormatTests, TestR6_1)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5.csv");
 
-    string field1 = ds.get("R0F0");
-    string field2 = ds.get("R0F1");
-    string field3 = ds.get("R0F2");
+    plInstance
+        field1 = ds.get("R0F0"),
+        field2 = ds.get("R0F1"),
+        field3 = ds.get("R0F2");
 
-    ASSERT_EQ(field1, "aaa");
-    ASSERT_EQ(field2, "b\r\rbb");
-    ASSERT_EQ(field3, "ccc");
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "b\r\rbb");
+    ASSERT_EQ(field3.get(), "ccc");
 }  
 TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5-1.csv");
 
-    string field1 = ds.get("R0F0");
-    string field2 = ds.get("R0F1");
-    string field3 = ds.get("R0F2");
+   plInstance
+        field1 = ds.get("R0F0"),
+        field2 = ds.get("R0F1"),
+        field3 = ds.get("R0F2");
 
-    ASSERT_EQ(field1, "aaa");
-    ASSERT_EQ(field2, "b,bb");
-    ASSERT_EQ(field3, "ccc");
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "b,bb");
+    ASSERT_EQ(field3.get(), "ccc");
 }  
 
 
@@ -222,15 +228,16 @@ TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
 //another double quote. For example:
 TEST_F(CSVFormatTests, TestR7)
 {
-    InstanceSet ds;
+    plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv6.csv");
 
-    string field1 = ds.get("R0F0");
-    string field2 = ds.get("R0F1");
-    string field3 = ds.get("R0F2");
+   plInstance
+        field1 = ds.get("R0F0"),
+        field2 = ds.get("R0F1"),
+        field3 = ds.get("R0F2");
 
-    ASSERT_EQ(field1, "aaa");
-    ASSERT_EQ(field2, "b\"bb");
-    ASSERT_EQ(field3, "ccc");
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "b\"bb");
+    ASSERT_EQ(field3.get(), "ccc");
 }  
