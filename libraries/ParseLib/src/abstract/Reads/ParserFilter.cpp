@@ -9,7 +9,7 @@ using namespace std;
 
 ParserFilter::ParserFilter(string new_filter_id)
 {
-    id = new_filter_id;
+    label = new_filter_id;
 }
 ParserFilter::~ParserFilter(){}
 
@@ -21,6 +21,11 @@ string ParserFilter::name()
 std::string ParserFilter::GetID(int index)
 {
     string out;
-    out.append(id).append(to_string(index));
+    out.append(label).append(to_string(index));
     return out;
+}
+
+std::string ParserFilter::GetLabel()
+{
+    return label;
 }

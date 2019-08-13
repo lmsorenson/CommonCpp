@@ -27,8 +27,7 @@ public:
 class hElement
 {
 private:
-    std::string key;
-    std::string value;  //
+    std::string key, value;  //
     std::shared_ptr<hElement> next_element;    //
 
 public:

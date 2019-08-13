@@ -9,7 +9,7 @@
      */
 class ParserFilter
 {
-    std::string id;
+    std::string label;
 
 public:
     ParserFilter(std::string new_filter_id);
@@ -19,6 +19,7 @@ public:
     virtual std::string name();
 
     std::string GetID(int index);
+    std::string GetLabel();
 
     enum : int32_t
     {

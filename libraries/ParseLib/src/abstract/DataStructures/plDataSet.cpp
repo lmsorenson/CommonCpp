@@ -4,6 +4,9 @@
 
 using namespace std;
 
+
+
+
 plDataSet::plDataSet()
 : state(DATA_SET_EMPTY){}
 plDataSet::plDataSet(State s)
@@ -17,8 +20,7 @@ plInstance plDataSet::get(std::string key)
 {
    return (state==DATA_SET_GOOD)
    ? plInstance(hash_table.get(key))
-   : plInstance(plInstance::NULL_INST); 
-   
+   : plInstance(plInstance::NULL_INST);
 }
 
 int32_t plDataSet::set(std::string key, std::string value)
@@ -31,4 +33,10 @@ int32_t plDataSet::set(std::string key, std::string value)
     default:
     case UNKNOWN: return UNKNOWN; break;
     }
+}
+
+int32_t plDataSet::add_trace_label(std::string new_label)
+{
+    trace_label.push_back(new_label);
+    return 0;
 }

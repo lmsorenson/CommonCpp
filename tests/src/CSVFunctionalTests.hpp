@@ -46,6 +46,16 @@ TEST_F(CSVFunctionalSpec, TestR1)
     ASSERT_EQ(str.get(), "January");
 }
 
+TEST_F(CSVFunctionalSpec, TestR2_2)
+{
+    plDataSet ds;
+    
+    int32_t exit_code = ParseLib().read_file(ds, "Invalid-Path");
+    
+    ASSERT_EQ(exit_code, 1);
+    ASSERT_EQ(ds.get("R0F0").get(), "file_not_found");
+}
+
 TEST_F(CSVFunctionalSpec, TestR3)
 {
     plDataSet ds;
@@ -106,26 +116,7 @@ TEST_F(CSVFunctionalSpec, TestR3)
     ASSERT_EQ(R11F1.get(), "12");
 }
 
-TEST_F(CSVFunctionalSpec, TestR4)
-{
-    plDataSet ds;
-    
-    int32_t exit_code = ParseLib().read_file(ds, "Invalid-Path");
-    
-    ASSERT_EQ(exit_code, 1);
-}
-
-TEST_F(CSVFunctionalSpec, TestR5)
-{
-    ASSERT_EQ(true, false);
-}
-
-TEST_F(CSVFunctionalSpec, TestR6)
-{
-    ASSERT_EQ(true, false);
-}
-
-TEST_F(CSVFunctionalSpec, TestR7)
+TEST_F(CSVFunctionalSpec, TestR3_1)
 {
     plDataSet ds;
     
@@ -134,5 +125,68 @@ TEST_F(CSVFunctionalSpec, TestR7)
     plInstance str = ds.get("R100000F0");
     
 
-    ASSERT_EQ(str.get(), "ERROR");
+    ASSERT_EQ(str.get(), "data_not_found");
 }
+
+//Query for a single element.
+// * WHERE field = value
+TEST_F(CSVFunctionalSpec, TestR4_1)
+{
+    plDataSet ds;
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    plInstance inst = ds.get("R0F0");
+    // inst = inst.related("R");//line retrieves a related record.
+
+    ASSERT_EQ(inst.get(), "slkd");
+}
+
+//Query for a list of elements.
+// * all fields in a record
+// * all values for a specific field
+TEST_F(CSVFunctionalSpec, TestR4_2)
+{
+    ASSERT_EQ(true, false);
+}
+
+// Query for an Instance's related entities.
+// * get a field and iterate through other fields in a record.
+// * get a filed and iterate through other records in a field.
+// * get a field name from the header.
+TEST_F(CSVFunctionalSpec, TestR5)
+{
+    ASSERT_EQ(true, false);
+}
+
+// insert two values into one key.
+TEST_F(CSVFunctionalSpec, TestR6)
+{
+    ASSERT_EQ(true, false);
+}
+
+
+//write a new instances
+// * Add a new record at the end of the file.
+// * Add a new record at the beginning of the file.
+// * Add a new record at a specific position in the middle of the file.
+// * Add a new field at the end of each record
+// * Add a new field at the beginning of each record.
+// * Add a new field in the middle of each record.
+TEST_F(CSVFunctionalSpec, TestR7)
+{
+    ASSERT_EQ(true, false);
+}
+
+//Modify instances.
+// * overwrite a field in an existing record.
+// * overwrite all fields in an existing record.
+TEST_F(CSVFunctionalSpec, TestR8)
+{
+    ASSERT_EQ(true, false);
+}
+
+//Create a write transaction on an empty file path.
+TEST_F(CSVFunctionalSpec, TestR9)
+{
+    ASSERT_EQ(true, false);
+}
+

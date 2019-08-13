@@ -23,7 +23,7 @@
 
 ## Performance Requirements
 1. A 10,000 line read should take less than 1/60th of a second.</br>
-2. The file read shall indicate  noticably slow requirements.</br>
+2. The file read shall indicate  noticably slow reads.</br>
 3. Concurrency.</br>
 
 ## Security Requirements
