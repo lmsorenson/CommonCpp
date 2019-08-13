@@ -26,6 +26,6 @@ public:
     plDataSet(int32_t hash_table_size);
     ~plDataSet();
 
-    plInstance get(std::string key);
-    int32_t set(std::string key, std::string value);
+    plInstance get(std::string aKey);
+    int32_t set(std::string aKey, hValue aValue);
 };

@@ -16,7 +16,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds)
     if ((raw_text=loadText(filepath))==LOAD_ERROR_STR)
         return FILE_NOT_FOUND;
 
-    shared_ptr<node> n = make_shared<node>(node(raw_text));
+    shared_ptr<node> n = make_shared<node>(node(raw_text, nullptr));
     
     //decrypt
 

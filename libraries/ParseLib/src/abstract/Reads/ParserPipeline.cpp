@@ -70,7 +70,7 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
                 for(int l = 0; l < vn.size(); ++l)
                 {
                     //create a new node to be added to the tree
-                    node newNode = node(vn[l].GetValue().c_str());
+                    node newNode = node(vn[l].GetValue().c_str(), in_buffer[j][k]);
 
                         //Append the id of the parent node
                         newNode.AppendID(in_buffer[j][k]->GetID());

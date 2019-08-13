@@ -16,19 +16,19 @@ plDataSet::plDataSet(int32_t hash_table_size)
 , state(DATA_SET_GOOD){}
 plDataSet::~plDataSet(){}
 
-plInstance plDataSet::get(std::string key)
+plInstance plDataSet::get(std::string aKey)
 {
    return (state==DATA_SET_GOOD)
-   ? plInstance(hash_table.get(key))
+   ? plInstance(hash_table.get(aKey))
    : plInstance(plInstance::NULL_INST);
 }
 
-int32_t plDataSet::set(std::string key, std::string value)
+int32_t plDataSet::set(std::string aKey, hValue aValue)
 {
     switch (state)
     {
     case DATA_SET_EMPTY: state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
-    case DATA_SET_GOOD: return hash_table.insert(key, value); break;
+    case DATA_SET_GOOD: return hash_table.insert(aKey, hValue(aValue)); break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
     default:
     case UNKNOWN: return UNKNOWN; break;

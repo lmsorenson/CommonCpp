@@ -16,7 +16,7 @@ hTable::~hTable()
 }
 
 
-int32_t hTable::compute_index(std::string value)
+int32_t hTable::compute_index(string value)
 {
     int index = 1;
 
@@ -31,7 +31,7 @@ int32_t hTable::compute_index(std::string value)
 }
 
 
-int32_t hTable::insert(string key, string value)
+int32_t hTable::insert(string key, hValue value)
 {
     int32_t index = compute_index(key);
     shared_ptr<hElement> e (table[index]);
@@ -79,10 +79,13 @@ string hTable::get(string key)
 }
 
 
-hElement::hElement(string aKey, string aValue) : key(aKey), value(aValue){}
+hElement::hElement(string aKey, hValue aValue) 
+: key(aKey)
+, value( hValue(aValue) )
+{}
 hElement::~hElement(){}
 
-std::shared_ptr<hElement> hElement::next()
+shared_ptr<hElement> hElement::next()
 {
     return next_element;
 }
@@ -103,6 +106,20 @@ string hElement::get_key()
 }
 
 string hElement::get_value()
+{
+    return value.get_value();
+}
+
+
+
+hValue::hValue(string aValue, string aParentString)
+: value(aValue)
+, parent_key(aParentString)
+{}
+hValue::~hValue()
+{}
+
+string hValue::get_value()
 {
     return value;
 }
