@@ -34,9 +34,3 @@ int32_t plDataSet::set(std::string key, std::string value)
     case UNKNOWN: return UNKNOWN; break;
     }
 }
-
-int32_t plDataSet::add_trace_label(std::string new_label)
-{
-    trace_label.push_back(new_label);
-    return 0;
-}

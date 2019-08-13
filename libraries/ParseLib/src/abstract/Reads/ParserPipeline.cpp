@@ -40,9 +40,6 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
     //Execute filters
     for(int i=0; i < filters.size(); ++i)
     {
-        //Add the label for the filter outputs to the data structure.
-        data_store.add_trace_label(filters[i]->GetLabel());
-
         // out text buffer from previous filter becomes new in text buffer
         in_buffer = out_buffer;
         out_buffer.clear();
