@@ -37,14 +37,5 @@ int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds)
         }
     }
 
-    //parse text
-    // vector<vector<string>> arr = parse(file_contents.c_str());
-
-    //select fields
-    // string sel = select();
-    
-    //assign fields
-    // ds.assign();
-
     return SUCCESS;
 }

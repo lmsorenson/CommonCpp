@@ -67,10 +67,6 @@ bool node::has_parent(){return ((bool)parent);}
 
 void node::Print()
 {
-    cout << "Print: " << value << '\r' << flush;
-    cout << "ID: " << id << '\r' << flush;
-
-    cout << SetColor(BLUE, "CHILDREN SIZE: ") << children.size() << '\r' << flush;
     for (int i=0; i < children.size(); ++i)
     {
         children[i]->Print();
