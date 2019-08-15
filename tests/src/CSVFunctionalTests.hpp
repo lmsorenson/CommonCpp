@@ -145,7 +145,14 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
 // * all values for a specific field
 TEST_F(CSVFunctionalSpec, TestR4_2)
 {
-    ASSERT_EQ(true, false);
+    plDataSet ds;
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    
+    //IN -- R0
+    plInstance inst = ds.get("R0");//get all records in record 0
+
+    //OUT -- January,1
+    ASSERT_EQ(true , false);
 }
 
 // Query for an Instance's related entities.

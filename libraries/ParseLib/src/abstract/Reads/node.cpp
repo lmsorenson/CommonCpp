@@ -47,7 +47,6 @@ string node::GetPath()
         while(current_node->has_parent())
         {
             path.insert(0, current_node->GetID());
-            cout << "N " <<  current_node->GetID() << endl; 
             current_node = current_node->parent;
         }
     }

@@ -12,7 +12,8 @@ class plInstance
 {
     std::shared_ptr<plDataSet> owning_data_set;
     std::vector<plInstance> relationship;
-    std::string entity_label, entity_index, value;
+    std::string entity_label, entity_index;
+    std::vector<std::string> value;
 
 public:
     enum State : int32_t
@@ -22,6 +23,7 @@ public:
         UNKNOWN
     } state;
 
+    plInstance() = default;
     plInstance(std::string aValue);
     plInstance(State s);
     ~plInstance();

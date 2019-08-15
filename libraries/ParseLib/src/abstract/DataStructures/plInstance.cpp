@@ -8,9 +8,9 @@
 
 
 plInstance::plInstance(std::string aValue)
-: value(aValue)
-, state(VALID_INST)
+: state(VALID_INST)
 {
+    value.push_back(aValue);
 }
 
 plInstance::plInstance(State s)
@@ -25,7 +25,7 @@ plInstance::~plInstance()
 std::string plInstance::get()
 {
     return (state == VALID_INST)
-    ? value
+    ? value[0]
     : "NULL";
 }
 
