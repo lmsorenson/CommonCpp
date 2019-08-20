@@ -24,7 +24,6 @@ public:
     } state;
 
     plInstance() = default;
-    // plInstance(std::string aValue);
     plInstance(State s);
     ~plInstance();
 

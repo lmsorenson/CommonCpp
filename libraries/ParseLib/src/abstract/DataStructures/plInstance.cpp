@@ -7,12 +7,6 @@
 
 
 
-// plInstance::plInstance(std::string aValue)
-// : state(VALID_INST)
-// {
-//     value.push_back(aValue);
-// }
-
 plInstance::plInstance(State s)
 : state(s)
 {
