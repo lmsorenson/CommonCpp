@@ -15,6 +15,7 @@ public:
     void SetValue(const char * text);
     std::string GetID();
     node AppendID(std::string new_id);
+    bool EmptyID();
     std::string GetPath();
     
     //Get Children

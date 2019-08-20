@@ -41,7 +41,7 @@ TEST_F(CSVFunctionalSpec, TestR1)
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
 
-    plInstance str = ds.get("R0F0");
+    plInstance str = ds.get("R0-F0");
 
     ASSERT_EQ(str.get(), "January");
 }
@@ -53,7 +53,7 @@ TEST_F(CSVFunctionalSpec, TestR2_2)
     int32_t exit_code = ParseLib().read_file(ds, "Invalid-Path");
     
     ASSERT_EQ(exit_code, 1);
-    ASSERT_EQ(ds.get("R0F0").get(), "file_not_found");
+    ASSERT_EQ(ds.get("R0-F0").get(), "file_not_found");
 }
 
 TEST_F(CSVFunctionalSpec, TestR3)
@@ -65,30 +65,30 @@ TEST_F(CSVFunctionalSpec, TestR3)
 
     //Test every value in the file.
     plInstance 
-    R0F0 = ds.get("R0F0"),
-    R0F1 = ds.get("R0F1"),
-    R1F0 = ds.get("R1F0"),
-    R1F1 = ds.get("R1F1"), 
-    R2F0 = ds.get("R2F0"),
-    R2F1 = ds.get("R2F1"),
-    R3F0 = ds.get("R3F0"),
-    R3F1 = ds.get("R3F1"),
-    R4F0 = ds.get("R4F0"),
-    R4F1 = ds.get("R4F1"),
-    R5F0 = ds.get("R5F0"),
-    R5F1 = ds.get("R5F1"),
-    R6F0 = ds.get("R6F0"),
-    R6F1 = ds.get("R6F1"),
-    R7F0 = ds.get("R7F0"),
-    R7F1 = ds.get("R7F1"),
-    R8F0 = ds.get("R8F0"),
-    R8F1 = ds.get("R8F1"),
-    R9F0 = ds.get("R9F0"),
-    R9F1 = ds.get("R9F1"),
-    R10F0 = ds.get("R10F0"),
-    R10F1 = ds.get("R10F1"),
-    R11F0 = ds.get("R11F0"),
-    R11F1 = ds.get("R11F1");
+    R0F0 = ds.get("R0-F0"),
+    R0F1 = ds.get("R0-F1"),
+    R1F0 = ds.get("R1-F0"),
+    R1F1 = ds.get("R1-F1"), 
+    R2F0 = ds.get("R2-F0"),
+    R2F1 = ds.get("R2-F1"),
+    R3F0 = ds.get("R3-F0"),
+    R3F1 = ds.get("R3-F1"),
+    R4F0 = ds.get("R4-F0"),
+    R4F1 = ds.get("R4-F1"),
+    R5F0 = ds.get("R5-F0"),
+    R5F1 = ds.get("R5-F1"),
+    R6F0 = ds.get("R6-F0"),
+    R6F1 = ds.get("R6-F1"),
+    R7F0 = ds.get("R7-F0"),
+    R7F1 = ds.get("R7-F1"),
+    R8F0 = ds.get("R8-F0"),
+    R8F1 = ds.get("R8-F1"),
+    R9F0 = ds.get("R9-F0"),
+    R9F1 = ds.get("R9-F1"),
+    R10F0 = ds.get("R10-F0"),
+    R10F1 = ds.get("R10-F1"),
+    R11F0 = ds.get("R11-F0"),
+    R11F1 = ds.get("R11-F1");
 
     ASSERT_EQ(R0F0.get(), "January");
     ASSERT_EQ(R0F1.get(), "1");
@@ -134,7 +134,7 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
 {
     plDataSet ds;
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
-    plInstance inst = ds.get("R0F0");
+    plInstance inst = ds.get("R0-F0");
     // inst = inst.related("R");//line retrieves a related record.
 
     ASSERT_EQ(inst.get(), "slkd");

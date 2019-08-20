@@ -30,6 +30,7 @@ string node::GetValue(){return value;}
 void node::SetValue(const char * text){value = text;}
 string node::GetID(){return id;}
 node node::AppendID(string new_id){id.append(new_id); return *this;}
+bool node::EmptyID(){return (id.empty());};
 
 string node::GetPath()
 {
