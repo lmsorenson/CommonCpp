@@ -18,7 +18,7 @@ plDataSet::~plDataSet(){}
 
 plInstance plDataSet::get(std::string aKey)
 {
-
+    plInstance return_var;
     string key_buffer = aKey;
     string generated_key;
 
@@ -58,11 +58,17 @@ plInstance plDataSet::get(std::string aKey)
         {
             generated_key.append(to_string(recognized_key[i]->GetIndex()));
         }
+        else
+        {
+            generated_key.append("%i");
+        }
     }
 
+    return_var = plInstance(plInstance::VALID_INST);
+    return_var.add(hash_table.get(generated_key));
 
    return (state==DATA_SET_GOOD)
-   ? plInstance(hash_table.get(generated_key))
+   ? return_var
    : plInstance(plInstance::NULL_INST);
 }
 

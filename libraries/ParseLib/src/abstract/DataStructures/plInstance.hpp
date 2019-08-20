@@ -24,10 +24,12 @@ public:
     } state;
 
     plInstance() = default;
-    plInstance(std::string aValue);
+    // plInstance(std::string aValue);
     plInstance(State s);
     ~plInstance();
 
     std::string get();
     plInstance related(std::string label);
+
+    void add(std::string str_value);
 };

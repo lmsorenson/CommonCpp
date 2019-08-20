@@ -7,11 +7,11 @@
 
 
 
-plInstance::plInstance(std::string aValue)
-: state(VALID_INST)
-{
-    value.push_back(aValue);
-}
+// plInstance::plInstance(std::string aValue)
+// : state(VALID_INST)
+// {
+//     value.push_back(aValue);
+// }
 
 plInstance::plInstance(State s)
 : state(s)
@@ -34,7 +34,6 @@ std::string plInstance::get()
         {
             return "ERROR";
         }
-        
     }
     else
     {
@@ -49,4 +48,10 @@ plInstance plInstance::related(std::string label)
 
 
     return return_var;
+}
+
+
+void plInstance::add(std::string str_value)
+{
+    value.push_back(str_value);
 }
