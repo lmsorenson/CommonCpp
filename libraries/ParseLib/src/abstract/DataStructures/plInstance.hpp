@@ -28,6 +28,7 @@ public:
     ~plInstance();
 
     std::string get();
+    std::string get(int8_t index);
     plInstance related(std::string label);
 
     void add(std::string str_value);

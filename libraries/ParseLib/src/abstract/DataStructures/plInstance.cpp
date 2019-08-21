@@ -16,7 +16,7 @@ plInstance::~plInstance()
 {
 }
 
-std::string plInstance::get()
+string plInstance::get()
 {
     if (state == VALID_INST && value.size()!= 0)
     {
@@ -29,9 +29,24 @@ std::string plInstance::get()
             return "ERROR";
         }
     }
+    //if the value of the instance is of size 0
     else
     {
         return "NULL";
+    }
+}
+string plInstance::get(int8_t index)
+{
+    if(state == VALID_INST && value.size()!= 0)
+    {
+        if(value.size()>=index)
+            return value[index];
+        else
+            return "ERROR";
+    }
+    else
+    {
+       return "NULL";
     }
 }
 

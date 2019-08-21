@@ -152,7 +152,32 @@ TEST_F(CSVFunctionalSpec, TestR4_2)
     plInstance inst = ds.get("R0");//get all records in record 0
 
     //OUT -- January,1
-    ASSERT_EQ(true , false);
+    ASSERT_EQ(inst.get(0) , "January");
+    ASSERT_EQ(inst.get(1) , "1");
+}
+
+TEST_F(CSVFunctionalSpec, TestR4_3)
+{
+    plDataSet ds;
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    
+    //IN -- F1
+    plInstance inst = ds.get("F1");//get all records in field 0
+
+    //OUT -- January,1
+    // ASSERT_EQ(inst.get(0), "1");
+    // ASSERT_EQ(inst.get(1), "2");
+    // ASSERT_EQ(inst.get(2), "3");
+    // ASSERT_EQ(inst.get(3), "4");
+    // ASSERT_EQ(inst.get(4), "5");
+    // ASSERT_EQ(inst.get(5), "6");
+    // ASSERT_EQ(inst.get(6), "7");
+    // ASSERT_EQ(inst.get(7), "8");
+    // ASSERT_EQ(inst.get(8), "9");
+    // ASSERT_EQ(inst.get(9), "10");
+    // ASSERT_EQ(inst.get(10), "11");
+    // ASSERT_EQ(inst.get(11), "12");
+    ASSERT_EQ(true,false);
 }
 
 // Query for an Instance's related entities.

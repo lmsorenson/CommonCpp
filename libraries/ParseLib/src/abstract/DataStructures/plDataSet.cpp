@@ -20,7 +20,11 @@ plInstance plDataSet::get(std::string aKey)
 {
     plInstance return_var;
     string key_buffer = aKey;
-    string generated_key;
+    string 
+        generated_format,
+        generated_key;
+
+    bool data_missing = false;
 
     //TOKENIZE THE KEY
     char * pch;
@@ -46,30 +50,51 @@ plInstance plDataSet::get(std::string aKey)
 
     delete[] pch;
 
+    string result;
+
+    
     //generate a key.
     for(int i=0; i<recognized_key.size(); ++i)
     {
-        if (!generated_key.empty())
-            generated_key.append("-");
+        //add the delimiter
+        if (!generated_format.empty())
+            generated_format.append("-");
 
         //push key to the format.
-        generated_key.append(recognized_key[i]->GetLabel());
+        generated_format.append(recognized_key[i]->GetLabel());
+
         if(recognized_key[i]->GetIndex()!=-1)
         {
-            generated_key.append(to_string(recognized_key[i]->GetIndex()));
+            generated_format.append(to_string(recognized_key[i]->GetIndex()));
         }
         else
         {
-            generated_key.append("%i");
+            data_missing = true;
+            generated_format.append("");
         }
     }
+    
 
     return_var = plInstance(plInstance::VALID_INST);
-    return_var.add(hash_table.get(generated_key));
+    if (data_missing)
+    {
+        vector<string> matching_keys = hash_table.GetMatchingKeys(generated_format);
+        for(int i=0; i<matching_keys.size(); ++i)
+        {
+            return_var.add(hash_table.get(matching_keys[i]));
+        }
+    }
+    else
+    {
+        //return the value at the generated key
+        return_var.add(hash_table.get(generated_format));
+    }
 
-   return (state==DATA_SET_GOOD)
-   ? return_var
-   : plInstance(plInstance::NULL_INST);
+
+
+    return (state==DATA_SET_GOOD)
+    ? return_var
+    : plInstance(plInstance::NULL_INST);
 }
 
 int32_t plDataSet::set(std::string aKey, hValue aValue)

@@ -26,6 +26,8 @@ private:
     virtual int32_t compute_index(std::string aValue);    //hash function.
     int32_t hTableSize; //size of the table.
     std::vector<std::shared_ptr<hElement>> table;
+
+    std::vector<std::string> key_list;
     
 public:
     hTable() = default;
@@ -34,6 +36,7 @@ public:
 
     int32_t insert(std::string key, hValue aValue);  //insert into the table
     std::string get(std::string key);   //get value
+    std::vector<std::string> GetMatchingKeys(std::string str);
 };
 
 

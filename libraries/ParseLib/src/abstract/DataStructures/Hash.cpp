@@ -36,6 +36,7 @@ int32_t hTable::insert(string key, hValue value)
     int32_t index = compute_index(key);
     shared_ptr<hElement> e (table[index]);
 
+    //if the bucket is NOT null
     if (e!=nullptr)
     {
         //Find the last element
@@ -45,10 +46,13 @@ int32_t hTable::insert(string key, hValue value)
         }
 
         e->set_next(hElement(key, value));
+        key_list.push_back(key);
     }
+    //if the bucket is null
     else
     {
         table[index]=make_shared<hElement>(hElement(key, value));
+        key_list.push_back(key);
     }
     
 
@@ -75,9 +79,23 @@ string hTable::get(string key)
        e = e->next();
     }
     //should return an error if the correct value is not found.
-    return "ERROR";
+    return "NULL";
 }
 
+vector<string> hTable::GetMatchingKeys(string str)
+{
+    vector<string> return_list;
+
+    //iterate through all valid keys.
+    for(int i=0; i<key_list.size(); ++i)
+    {
+        //check if the key matches the passed in key.
+        if((key_list[i].find(str))!=string::npos)
+            return_list.push_back(key_list[i]);
+    }
+
+    return return_list;
+}
 
 hElement::hElement(string aKey, hValue aValue) 
 : key(aKey)
