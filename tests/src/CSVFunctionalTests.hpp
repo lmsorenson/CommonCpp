@@ -125,7 +125,7 @@ TEST_F(CSVFunctionalSpec, TestR3_1)
     plInstance str = ds.get("R100000F0");
     
 
-    ASSERT_EQ(str.get(), "data_not_found");
+    ASSERT_EQ(str.get(), "NULL");
 }
 
 //Query for a single element.
@@ -137,7 +137,7 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
     plInstance inst = ds.get("R0-F0");
     // inst = inst.related("R");//line retrieves a related record.
 
-    ASSERT_EQ(inst.get(), "slkd");
+    ASSERT_EQ(inst.get(), "jjkj");
 }
 
 //Query for a list of elements.
@@ -165,19 +165,18 @@ TEST_F(CSVFunctionalSpec, TestR4_3)
     plInstance inst = ds.get("F1");//get all records in field 0
 
     //OUT -- January,1
-    // ASSERT_EQ(inst.get(0), "1");
-    // ASSERT_EQ(inst.get(1), "2");
-    // ASSERT_EQ(inst.get(2), "3");
-    // ASSERT_EQ(inst.get(3), "4");
-    // ASSERT_EQ(inst.get(4), "5");
-    // ASSERT_EQ(inst.get(5), "6");
-    // ASSERT_EQ(inst.get(6), "7");
-    // ASSERT_EQ(inst.get(7), "8");
-    // ASSERT_EQ(inst.get(8), "9");
-    // ASSERT_EQ(inst.get(9), "10");
-    // ASSERT_EQ(inst.get(10), "11");
-    // ASSERT_EQ(inst.get(11), "12");
-    ASSERT_EQ(true,false);
+    ASSERT_EQ(inst.get(0), "1");
+    ASSERT_EQ(inst.get(1), "2");
+    ASSERT_EQ(inst.get(2), "3");
+    ASSERT_EQ(inst.get(3), "4");
+    ASSERT_EQ(inst.get(4), "5");
+    ASSERT_EQ(inst.get(5), "6");
+    ASSERT_EQ(inst.get(6), "7");
+    ASSERT_EQ(inst.get(7), "8");
+    ASSERT_EQ(inst.get(8), "9");
+    ASSERT_EQ(inst.get(9), "10");
+    ASSERT_EQ(inst.get(10), "11");
+    ASSERT_EQ(inst.get(11), "12");
 }
 
 // Query for an Instance's related entities.

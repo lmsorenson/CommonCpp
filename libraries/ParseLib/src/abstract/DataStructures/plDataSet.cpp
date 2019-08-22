@@ -60,17 +60,18 @@ plInstance plDataSet::get(std::string aKey)
         if (!generated_format.empty())
             generated_format.append("-");
 
-        //push key to the format.
-        generated_format.append(recognized_key[i]->GetLabel());
+        
 
         if(recognized_key[i]->GetIndex()!=-1)
         {
+            //push key to the format.
+            generated_format.append(recognized_key[i]->GetLabel());
             generated_format.append(to_string(recognized_key[i]->GetIndex()));
         }
         else
         {
             data_missing = true;
-            generated_format.append("");
+           
         }
     }
     
