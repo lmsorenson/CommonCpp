@@ -7,6 +7,8 @@
 
 using namespace std;
 
+
+
 class plDataSet
 {
     enum State : int32_t
@@ -45,4 +47,6 @@ public:
     plInstance get(std::string aKey);
     int32_t set(std::string aKey, hValue aValue);
     int32_t add_label(std::string new_label);
+
+    void TokenizeKeys(std::string a_key, std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr);
 };

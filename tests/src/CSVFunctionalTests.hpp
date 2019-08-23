@@ -185,6 +185,14 @@ TEST_F(CSVFunctionalSpec, TestR4_3)
 // * get a field name from the header.
 TEST_F(CSVFunctionalSpec, TestR5)
 {
+        plDataSet ds;
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    plInstance inst = ds.get("R0-F0");
+    // inst.related("R");//line retrieves a related record.
+
+    ASSERT_EQ(inst.get(), "jjkj");
+
+
     ASSERT_EQ(true, false);
 }
 

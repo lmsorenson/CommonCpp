@@ -12,8 +12,8 @@ class plInstance
 {
     std::shared_ptr<plDataSet> owning_data_set;
     std::vector<plInstance> relationship;
-    std::string entity_label, entity_index;
-    std::vector<std::string> value;
+    std::string key;//the key that identifies this instance
+    std::vector<std::string> value;//the values stored.
 
 public:
     enum State : int32_t
@@ -29,7 +29,8 @@ public:
 
     std::string get();
     std::string get(int8_t index);
-    plInstance related(std::string label);
+    plInstance related(std::string a_label);
 
-    void add(std::string str_value);
+    void add(std::string str_value);//add a value
+    void SetKey(std::string a_key);//assign the key
 };

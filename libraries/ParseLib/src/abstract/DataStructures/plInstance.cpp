@@ -1,11 +1,13 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "plInstance.hpp"
 #include "plDataSet.hpp"
+#include <iostream>
 
 
 
 
 
+using namespace std;
 
 plInstance::plInstance(State s)
 : state(s)
@@ -50,12 +52,21 @@ string plInstance::get(int8_t index)
     }
 }
 
-plInstance plInstance::related(std::string label)
+plInstance plInstance::related(std::string a_label)
 {
-    plInstance return_var = owning_data_set->get(label.append("0"));
+    //id 
+    owning_data_set->TokenizeKeys(
+        this->key, 
+        [=](int32_t key_i,int32_t index, string label)
+        {
+            if(label==a_label)
+            {
+                cout << "hey" << endl;
+            }
+        }
+        );
 
-
-
+    plInstance return_var = owning_data_set->get(a_label.append("0"));
     return return_var;
 }
 
@@ -63,4 +74,9 @@ plInstance plInstance::related(std::string label)
 void plInstance::add(std::string str_value)
 {
     value.push_back(str_value);
+}
+
+void plInstance::SetKey(std::string a_key)
+{
+    key = a_key;
 }
