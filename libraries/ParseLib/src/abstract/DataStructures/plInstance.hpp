@@ -10,7 +10,7 @@ class plDataSet;
 
 class plInstance
 {
-    std::shared_ptr<plDataSet> owning_data_set;
+    plDataSet * owning_data_set;
     std::vector<plInstance> relationship;
     std::string key;//the key that identifies this instance
     std::vector<std::string> value;//the values stored.
@@ -24,11 +24,11 @@ public:
     } state;
 
     plInstance() = default;
-    plInstance(State s);
+    plInstance(plDataSet * owner, State s);
     ~plInstance();
 
     std::string get();
-    std::string get(int8_t index);
+    std::string at(int8_t index);
     plInstance related(std::string a_label);
 
     void add(std::string str_value);//add a value

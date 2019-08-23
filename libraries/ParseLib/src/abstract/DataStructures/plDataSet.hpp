@@ -32,6 +32,7 @@ class plDataSet
         std::string GetLabel();
         int32_t SetIndex(int32_t a_index);
         int32_t GetIndex();
+        int32_t ClearIndex();
     };
 
     //a hash table to store the data in.

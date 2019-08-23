@@ -135,14 +135,13 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
     plDataSet ds;
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
     plInstance inst = ds.get("R0-F0");
-    // inst = inst.related("R");//line retrieves a related record.
 
     ASSERT_EQ(inst.get(), "jjkj");
 }
 
 //Query for a list of elements.
-// * all fields in a record
-// * all values for a specific field
+// 4_2 * all fields in a record
+// 4_3 * all values for a specific field
 TEST_F(CSVFunctionalSpec, TestR4_2)
 {
     plDataSet ds;
@@ -152,10 +151,9 @@ TEST_F(CSVFunctionalSpec, TestR4_2)
     plInstance inst = ds.get("R0");//get all records in record 0
 
     //OUT -- January,1
-    ASSERT_EQ(inst.get(0) , "January");
-    ASSERT_EQ(inst.get(1) , "1");
+    ASSERT_EQ(inst.at(0) , "January");
+    ASSERT_EQ(inst.at(1) , "1");
 }
-
 TEST_F(CSVFunctionalSpec, TestR4_3)
 {
     plDataSet ds;
@@ -165,35 +163,57 @@ TEST_F(CSVFunctionalSpec, TestR4_3)
     plInstance inst = ds.get("F1");//get all records in field 0
 
     //OUT -- January,1
-    ASSERT_EQ(inst.get(0), "1");
-    ASSERT_EQ(inst.get(1), "2");
-    ASSERT_EQ(inst.get(2), "3");
-    ASSERT_EQ(inst.get(3), "4");
-    ASSERT_EQ(inst.get(4), "5");
-    ASSERT_EQ(inst.get(5), "6");
-    ASSERT_EQ(inst.get(6), "7");
-    ASSERT_EQ(inst.get(7), "8");
-    ASSERT_EQ(inst.get(8), "9");
-    ASSERT_EQ(inst.get(9), "10");
-    ASSERT_EQ(inst.get(10), "11");
-    ASSERT_EQ(inst.get(11), "12");
+    ASSERT_EQ(inst.at(0), "1");
+    ASSERT_EQ(inst.at(1), "2");
+    ASSERT_EQ(inst.at(2), "3");
+    ASSERT_EQ(inst.at(3), "4");
+    ASSERT_EQ(inst.at(4), "5");
+    ASSERT_EQ(inst.at(5), "6");
+    ASSERT_EQ(inst.at(6), "7");
+    ASSERT_EQ(inst.at(7), "8");
+    ASSERT_EQ(inst.at(8), "9");
+    ASSERT_EQ(inst.at(9), "10");
+    ASSERT_EQ(inst.at(10), "11");
+    ASSERT_EQ(inst.at(11), "12");
 }
 
 // Query for an Instance's related entities.
+// * Get an associated record
+// * Get an associated field
 // * get a field and iterate through other fields in a record.
 // * get a filed and iterate through other records in a field.
 // * get a field name from the header.
-TEST_F(CSVFunctionalSpec, TestR5)
+TEST_F(CSVFunctionalSpec, TestR5_1)
 {
-        plDataSet ds;
+    plDataSet ds;
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
-    plInstance inst = ds.get("R0-F0");
-    // inst.related("R");//line retrieves a related record.
+    plInstance inst = ds.get("R1-F1");
+    plInstance inst2 = inst.related("R");
+    std::string str = inst2.at(1);
 
-    ASSERT_EQ(inst.get(), "jjkj");
 
+    ASSERT_EQ(str, "2");
+}
 
-    ASSERT_EQ(true, false);
+TEST_F(CSVFunctionalSpec, TestR5_2)
+{
+    plDataSet ds;
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    plInstance inst = ds.get("R1-F1");
+    plInstance inst2 = inst.related("F");
+
+    ASSERT_EQ(inst2.at(0), "1");
+    ASSERT_EQ(inst2.at(1), "2");
+    ASSERT_EQ(inst2.at(2), "3");
+    ASSERT_EQ(inst2.at(3), "4");
+    ASSERT_EQ(inst2.at(4), "5");
+    ASSERT_EQ(inst2.at(5), "6");
+    ASSERT_EQ(inst2.at(6), "7");
+    ASSERT_EQ(inst2.at(7), "8");
+    ASSERT_EQ(inst2.at(8), "9");
+    ASSERT_EQ(inst2.at(9), "10");
+    ASSERT_EQ(inst2.at(10), "11");
+    ASSERT_EQ(inst2.at(11), "12");
 }
 
 // insert two values into one key.

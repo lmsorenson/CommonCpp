@@ -9,8 +9,9 @@
 
 using namespace std;
 
-plInstance::plInstance(State s)
-: state(s)
+plInstance::plInstance(plDataSet * owner, State s)
+: owning_data_set(owner)
+, state(s)
 {
 }
 
@@ -37,12 +38,14 @@ string plInstance::get()
         return "NULL";
     }
 }
-string plInstance::get(int8_t index)
+string plInstance::at(int8_t index)
 {
     if(state == VALID_INST && value.size()!= 0)
     {
         if(value.size()>=index)
+        {
             return value[index];
+        }
         else
             return "ERROR";
     }
@@ -55,18 +58,20 @@ string plInstance::get(int8_t index)
 plInstance plInstance::related(std::string a_label)
 {
     //id 
+    int32_t index_buffer = -1;
+
     owning_data_set->TokenizeKeys(
         this->key, 
-        [=](int32_t key_i,int32_t index, string label)
+        [&](int32_t key_i,int32_t index, string label) mutable
         {
             if(label==a_label)
             {
-                cout << "hey" << endl;
+                index_buffer = index;
             }
         }
         );
-
-    plInstance return_var = owning_data_set->get(a_label.append("0"));
+    a_label.append(to_string(index_buffer));
+    plInstance return_var = owning_data_set->get(a_label);
     return return_var;
 }
 

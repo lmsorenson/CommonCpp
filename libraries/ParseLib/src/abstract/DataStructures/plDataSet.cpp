@@ -78,7 +78,7 @@ plInstance plDataSet::get(std::string aKey)
         }
     }
 
-    return_var = plInstance(plInstance::VALID_INST);
+    return_var = plInstance(this, plInstance::VALID_INST);
     return_var.SetKey(aKey);//assign the key which was passed into this function.
 
     if (data_missing)
@@ -95,9 +95,14 @@ plInstance plDataSet::get(std::string aKey)
         return_var.add(hash_table.get(generated_key));
     }
 
+    for(int i=0; i< this->recognized_key.size(); ++i)
+    {
+        this->recognized_key[i]->ClearIndex();
+    }
+
     return (state==DATA_SET_GOOD)
     ? return_var
-    : plInstance(plInstance::NULL_INST);
+    : plInstance(this, plInstance::NULL_INST);
 }
 
 int32_t plDataSet::set(std::string aKey, hValue aValue)
@@ -141,6 +146,11 @@ string plDataSet::EntityKey::GetLabel(){return label;}
  {
      index = a_index;
      return 0;
+ }
+
+ int32_t plDataSet::EntityKey::ClearIndex()
+ {
+     index = -1;
  }
 
 int32_t plDataSet::EntityKey::GetIndex(){return index;}
