@@ -242,12 +242,10 @@ TEST_F(CSVFunctionalSpec, TestR5_4)
 {
     plDataSet ds;
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
-    plInstance inst = ds.get("R1-F1");
-    plInstance inst2 = inst.related("R");
-    std::string str = inst2.at(1);
+    plInstance inst = ds.get("R3-F0");
+    plInstance inst2 = inst.pull_next("F");
 
-
-    ASSERT_EQ(true, false);
+    ASSERT_EQ(inst2.get(), "May");
 }
 
 TEST_F(CSVFunctionalSpec, TestR5_5)
