@@ -8,7 +8,7 @@
 
 #include "CSVFormatSpecTests.hpp"
 #include "CSVFunctionalTests.hpp"
-#include "CSVPerformanceTests.hpp"
+// #include "CSVPerformanceTests.hpp"
 
 using namespace std;
 

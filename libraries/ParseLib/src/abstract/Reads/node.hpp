@@ -6,7 +6,7 @@
 class node
 {
 public:
-    node(std::string text);
+    node(std::string text, std::shared_ptr<node> aParent);
     node(const node &node);
     ~node();
 
@@ -15,11 +15,14 @@ public:
     void SetValue(const char * text);
     std::string GetID();
     node AppendID(std::string new_id);
+    bool EmptyID();
+    std::string GetPath();
     
     //Get Children
     std::shared_ptr<node> GetChild(int32_t index);
     int32_t GetNumberOfChildren();
     bool HasChildren();
+    bool has_parent();
 
     //Add Children
     void AddChild(node n);
@@ -30,6 +33,6 @@ public:
 private:
     std::string id;
     std::string value;
+    std::shared_ptr<node> parent;
     std::vector<std::shared_ptr<node>> children;
-     
 };

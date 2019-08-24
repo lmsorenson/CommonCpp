@@ -7,6 +7,12 @@
 using namespace std;
 
 
+void RunFilters();
+void NodeSets();
+void Nodes();
+void ProcessResults(vector<node> node_vec);
+
+
 ParserPipeline::ParserPipeline(){}
 ParserPipeline::~ParserPipeline(){}
 
@@ -40,12 +46,11 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
     //Execute filters
     for(int i=0; i < filters.size(); ++i)
     {
-        //Add the label for the filter outputs to the data structure.
-        data_store.add_trace_label(filters[i]->GetLabel());
-
         // out text buffer from previous filter becomes new in text buffer
         in_buffer = out_buffer;
         out_buffer.clear();
+
+        data_store.add_label(filters[i]->GetLabel());
 
         // Apply filters to all node sets.
         for(int j=0; j < in_buffer.size(); ++j)
@@ -73,15 +78,19 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
                 for(int l = 0; l < vn.size(); ++l)
                 {
                     //create a new node to be added to the tree
-                    node newNode = node(vn[l].GetValue().c_str());
+                    node newNode = node(vn[l].GetValue().c_str(), in_buffer[j][k]);
 
                         //Append the id of the parent node
                         newNode.AppendID(in_buffer[j][k]->GetID());
                         
+                        //add the delimiter
+                        if(!newNode.EmptyID())
+                            newNode.AppendID("-");
+
                         //Append the id of this node
                         newNode.AppendID(filters[i]->GetID(l));
 
-                    //Add this to the child set.
+                    //Add this to the current node's child set.
                     in_buffer[j][k]->AddChild(newNode);
 
                     //Will be added to the output buffer.
@@ -101,4 +110,12 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
     output->execute(text, data_store);
 
     return PIPELINE_SUCCESS;
+}
+
+void ProcessResults(vector<node> node_vec)
+{
+    for(int l = 0; l < node_vec.size(); ++l)
+    {
+
+    }
 }

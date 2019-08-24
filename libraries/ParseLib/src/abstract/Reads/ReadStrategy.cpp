@@ -14,9 +14,13 @@ int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds)
     //load text
     string raw_text;
     if ((raw_text=loadText(filepath))==LOAD_ERROR_STR)
+    {
+        ds = plDataSet(plDataSet::DATA_SET_BAD);
         return FILE_NOT_FOUND;
+    }
+        
 
-    shared_ptr<node> n = make_shared<node>(node(raw_text));
+    shared_ptr<node> n = make_shared<node>(node(raw_text, nullptr));
     
     //decrypt
 
@@ -36,15 +40,6 @@ int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds)
             default: return UNKNOWN_ERROR;
         }
     }
-
-    //parse text
-    // vector<vector<string>> arr = parse(file_contents.c_str());
-
-    //select fields
-    // string sel = select();
-    
-    //assign fields
-    // ds.assign();
 
     return SUCCESS;
 }

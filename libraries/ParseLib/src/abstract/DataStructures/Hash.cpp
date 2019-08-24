@@ -16,7 +16,7 @@ hTable::~hTable()
 }
 
 
-int32_t hTable::compute_index(std::string value)
+int32_t hTable::compute_index(string value)
 {
     int index = 1;
 
@@ -31,11 +31,12 @@ int32_t hTable::compute_index(std::string value)
 }
 
 
-int32_t hTable::insert(string key, string value)
+int32_t hTable::insert(string key, hValue value)
 {
     int32_t index = compute_index(key);
     shared_ptr<hElement> e (table[index]);
 
+    //if the bucket is NOT null
     if (e!=nullptr)
     {
         //Find the last element
@@ -45,10 +46,13 @@ int32_t hTable::insert(string key, string value)
         }
 
         e->set_next(hElement(key, value));
+        key_list.push_back(key);
     }
+    //if the bucket is null
     else
     {
         table[index]=make_shared<hElement>(hElement(key, value));
+        key_list.push_back(key);
     }
     
 
@@ -75,14 +79,31 @@ string hTable::get(string key)
        e = e->next();
     }
     //should return an error if the correct value is not found.
-    return "ERROR";
+    return "NULL";
 }
 
+vector<string> hTable::GetMatchingKeys(string str)
+{
+    vector<string> return_list;
 
-hElement::hElement(string aKey, string aValue) : key(aKey), value(aValue){}
+    //iterate through all valid keys.
+    for(int i=0; i<key_list.size(); ++i)
+    {
+        //check if the key matches the passed in key.
+        if((key_list[i].find(str))!=string::npos)
+            return_list.push_back(key_list[i]);
+    }
+
+    return return_list;
+}
+
+hElement::hElement(string aKey, hValue aValue) 
+: key(aKey)
+, value( hValue(aValue) )
+{}
 hElement::~hElement(){}
 
-std::shared_ptr<hElement> hElement::next()
+shared_ptr<hElement> hElement::next()
 {
     return next_element;
 }
@@ -103,6 +124,20 @@ string hElement::get_key()
 }
 
 string hElement::get_value()
+{
+    return value.get_value();
+}
+
+
+
+hValue::hValue(string aValue, string aParentString)
+: value(aValue)
+, parent_key(aParentString)
+{}
+hValue::~hValue()
+{}
+
+string hValue::get_value()
 {
     return value;
 }
