@@ -45,10 +45,11 @@ plDataSet::~plDataSet(){}
 plInstance plDataSet::get(std::string aKey)
 {
     plInstance return_var;
-    string key_buffer = aKey;
-
-    string generated_key;
-
+    string 
+        key_buffer = aKey,
+        generated_key,
+        result;
+        
     bool data_missing = false;
 
     this->TokenizeKeys(
@@ -56,9 +57,6 @@ plInstance plDataSet::get(std::string aKey)
         [=](int32_t key_i,int32_t index, string label){this->recognized_key[key_i]->SetIndex(index);}
         );
     
-
-    string result;
-
     //generate a key.
     for(int i=0; i<this->recognized_key.size(); ++i)
     {
