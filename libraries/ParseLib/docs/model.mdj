@@ -30315,8 +30315,6 @@
 				}
 			],
 			"visibility": "public"
-<<<<<<< Updated upstream
-=======
 		},
 		{
 			"_type": "UMLCollaboration",
@@ -33062,7 +33060,6 @@
 			"isAbstract": false,
 			"isFinalSpecialization": false,
 			"isLeaf": false
->>>>>>> Stashed changes
 		}
 	]
 }
