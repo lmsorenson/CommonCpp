@@ -11,14 +11,6 @@ using namespace std;
 
 class plDataSet
 {
-    enum State : int32_t
-    {
-        DATA_SET_GOOD,
-        DATA_SET_BAD,
-        DATA_SET_EMPTY,
-        UNKNOWN
-    } state;
-
     class EntityKey
     {
         std::string label;
@@ -40,6 +32,14 @@ class plDataSet
     std::vector<std::shared_ptr<plDataSet::EntityKey>> recognized_key;
 
 public:
+    enum State : int32_t
+    {
+        DATA_SET_GOOD,
+        DATA_SET_BAD,
+        DATA_SET_EMPTY,
+        UNKNOWN
+    } state;
+
     plDataSet();
     plDataSet(State s);
     plDataSet(int32_t hash_table_size);

@@ -52,8 +52,8 @@ TEST_F(CSVFunctionalSpec, TestR2_2)
     
     int32_t exit_code = ParseLib().read_file(ds, "Invalid-Path");
     
-    ASSERT_EQ(exit_code, 1);
-    ASSERT_EQ(ds.get("R0-F0").get(), "file_not_found");
+    ASSERT_EQ(exit_code, ParseLib::READ_FILE_NOT_FOUND);
+    ASSERT_EQ(ds.get("R0-F0").get(), "NO_FILE");
 }
 
 TEST_F(CSVFunctionalSpec, TestR3)
@@ -116,7 +116,7 @@ TEST_F(CSVFunctionalSpec, TestR3)
     ASSERT_EQ(R11F1.get(), "12");
 }
 
-TEST_F(CSVFunctionalSpec, TestR3_1)
+TEST_F(CSVFunctionalSpec, TestR3_1_1)
 {
     plDataSet ds;
     
@@ -126,6 +126,18 @@ TEST_F(CSVFunctionalSpec, TestR3_1)
     
 
     ASSERT_EQ(str.get(), "NULL");
+}
+
+TEST_F(CSVFunctionalSpec, TestR3_1_2)
+{
+    plDataSet ds;
+    
+    int32_t exit_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    
+    plInstance str = ds.get("R0-F0");
+    
+
+    ASSERT_EQ(str.at(1), "NULL");
 }
 
 //Query for a single element.

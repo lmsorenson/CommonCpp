@@ -14,7 +14,11 @@ int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds)
     //load text
     string raw_text;
     if ((raw_text=loadText(filepath))==LOAD_ERROR_STR)
+    {
+        ds = plDataSet(plDataSet::DATA_SET_BAD);
         return FILE_NOT_FOUND;
+    }
+        
 
     shared_ptr<node> n = make_shared<node>(node(raw_text, nullptr));
     

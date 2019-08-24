@@ -20,6 +20,7 @@ public:
     {
         VALID_INST,
         NULL_INST,
+        NO_FILE,
         UNKNOWN
     } state;
 

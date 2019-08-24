@@ -44,6 +44,9 @@ plDataSet::~plDataSet(){}
 
 plInstance plDataSet::get(std::string aKey)
 {
+    if (state == DATA_SET_BAD)
+        return plInstance(this, plInstance::NO_FILE);
+
     plInstance return_var;
     string 
         key_buffer = aKey,
@@ -82,7 +85,7 @@ plInstance plDataSet::get(std::string aKey)
     if (data_missing)
     {
         vector<string> matching_keys = hash_table.GetMatchingKeys(generated_key);
-        
+
         for(int i=0; i<matching_keys.size(); ++i)
         {
             return_var.add(hash_table.get(matching_keys[i]));

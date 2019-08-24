@@ -32,22 +32,22 @@ string plInstance::get()
             return "ERROR";
         }
     }
+    else if (state == NO_FILE)
+        return "NO_FILE";
     //if the value of the instance is of size 0
     else
-    {
         return "NULL";
-    }
 }
 string plInstance::at(int8_t index)
 {
     if(state == VALID_INST && value.size()!= 0)
     {
-        if(value.size()>=index)
+        if(value.size()>=(index+1))
         {
             return value[index];
         }
         else
-            return "ERROR";
+            return "NULL";
     }
     else
     {
