@@ -31697,9 +31697,9 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 299,
+											"left": 290,
 											"top": 144,
-											"width": 115,
+											"width": 132,
 											"height": 13,
 											"autoResize": false,
 											"alpha": 1.626293824348307,
@@ -31709,7 +31709,7 @@
 											},
 											"edgePosition": 1,
 											"underline": false,
-											"text": "3 : Get partial key",
+											"text": "3 : Get partial identifier",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -32377,15 +32377,9 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-<<<<<<< HEAD
 											"left": 481,
 											"top": 352,
 											"width": 99,
-=======
-											"left": 485,
-											"top": 352,
-											"width": 91,
->>>>>>> 71702ce3b04dc1851ece972e0c83f99c1e4a156e
 											"height": 13,
 											"autoResize": false,
 											"alpha": 1.5707963267948966,
@@ -32395,11 +32389,7 @@
 											},
 											"edgePosition": 1,
 											"underline": false,
-<<<<<<< HEAD
 											"text": "7 : Pass value(s)",
-=======
-											"text": "7 : Pass values",
->>>>>>> 71702ce3b04dc1851ece972e0c83f99c1e4a156e
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -32727,15 +32717,9 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-<<<<<<< HEAD
 											"left": 291,
 											"top": 462,
 											"width": 102,
-=======
-											"left": 299,
-											"top": 462,
-											"width": 87,
->>>>>>> 71702ce3b04dc1851ece972e0c83f99c1e4a156e
 											"height": 13,
 											"autoResize": false,
 											"alpha": 1.5707963267948966,
@@ -32745,11 +32729,7 @@
 											},
 											"edgePosition": 1,
 											"underline": false,
-<<<<<<< HEAD
 											"text": "9 : return value(s)",
-=======
-											"text": "9 : return value",
->>>>>>> 71702ce3b04dc1851ece972e0c83f99c1e4a156e
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -32928,7 +32908,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFswVQBrZybQhY="
 							},
-							"name": "Get partial key",
+							"name": "Get partial identifier",
 							"source": {
 								"$ref": "AAAAAAFswVQZQp0EOno="
 							},
@@ -32996,11 +32976,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFswVQBrZybQhY="
 							},
-<<<<<<< HEAD
 							"name": "Pass value",
-=======
-							"name": "Pass values",
->>>>>>> 71702ce3b04dc1851ece972e0c83f99c1e4a156e
 							"source": {
 								"$ref": "AAAAAAFswWKB5J1lBFo="
 							},
@@ -33009,10 +32985,7 @@
 							},
 							"visibility": "public",
 							"messageSort": "synchCall",
-<<<<<<< HEAD
 							"arguments": "s",
-=======
->>>>>>> 71702ce3b04dc1851ece972e0c83f99c1e4a156e
 							"isConcurrentIteration": false
 						},
 						{
@@ -33047,10 +33020,7 @@
 							},
 							"visibility": "public",
 							"messageSort": "reply",
-<<<<<<< HEAD
 							"arguments": "s",
-=======
->>>>>>> 71702ce3b04dc1851ece972e0c83f99c1e4a156e
 							"isConcurrentIteration": false
 						}
 					],
