@@ -12,7 +12,6 @@ using namespace std;
 
 int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath)
 {
-    cout << "DEBUG: reading file. . . " << '\r' << flush;
 
     //-----------------------|   Parse file path   |-----------------------//
 
@@ -30,8 +29,16 @@ int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath)
     {
         switch (return_code)
         {
-            case ReadStrategy::FILE_NOT_FOUND: return READ_FILE_NOT_FOUND; break;
-            case ReadStrategy::FILE_FORMAT_INVALID: return READ_FORMAT_INVALID; break;
+            case ReadStrategy::FILE_NOT_FOUND: 
+                //assign the data store reference when returning out of the function.
+                data_store = *data;
+                return READ_FILE_NOT_FOUND; 
+                break;
+            case ReadStrategy::FILE_FORMAT_INVALID: 
+                //assign the data store reference when returning out of the function.
+                data_store = *data;
+                return READ_FORMAT_INVALID; 
+                break;
             default: return UNKNOWN_ERROR; break;
         }
     }

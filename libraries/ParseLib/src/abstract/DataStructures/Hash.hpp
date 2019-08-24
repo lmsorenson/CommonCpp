@@ -6,33 +6,50 @@
 class hTable;
 class hElement;
 
+class hValue
+{
+    std::string parent_key;
+    std::string value;
+
+public:
+    hValue()=default;
+    hValue(std::string aValue, std::string aParentKey);
+    ~hValue();
+
+    std::string get_value();
+};
+
  
 class hTable
 {
 private:
-    virtual int32_t compute_index(std::string value);    //hash function.
+    virtual int32_t compute_index(std::string aValue);    //hash function.
     int32_t hTableSize; //size of the table.
     std::vector<std::shared_ptr<hElement>> table;
+
+    std::vector<std::string> key_list;
     
 public:
     hTable() = default;
     hTable(int32_t table_size_arg);
     ~hTable();
 
-    int32_t insert(std::string key, std::string value);  //insert into the table
+    int32_t insert(std::string key, hValue aValue);  //insert into the table
     std::string get(std::string key);   //get value
+    std::vector<std::string> GetMatchingKeys(std::string str);
 };
 
 
 class hElement
 {
 private:
-    std::string key, value;  //
+    std::string key;
+    hValue value;  //
     std::shared_ptr<hElement> next_element;    //
 
 public:
     hElement() = default;           //
-    hElement(std::string key, std::string aValue);   //
+    hElement(std::string key, hValue aValue);   //
     ~hElement();                    //
 
     std::shared_ptr<hElement> next();
@@ -41,4 +58,6 @@ public:
     std::string get_key();
     std::string get_value();
 };
+
+
 

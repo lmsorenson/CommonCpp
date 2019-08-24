@@ -43,7 +43,7 @@ TEST_F(CSVFormatTests, TestR1)
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
 
-    plInstance str = ds.get("R0F0");
+    plInstance str = ds.get("R0-F0");
 
     ASSERT_EQ(str.get(), "aaa");
 }
@@ -58,9 +58,9 @@ TEST_F(CSVFormatTests, TestR2_1)//has a line break
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1-1.csv");
 
     plInstance
-        field1 = ds.get("R0F0"),
-        field2 = ds.get("R0F1"),
-        field3 = ds.get("R0F2");
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -74,9 +74,9 @@ TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
 
     plInstance
-        field1 = ds.get("R0F0"),
-        field2 = ds.get("R0F1"),
-        field3 = ds.get("R0F2");
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -98,7 +98,7 @@ TEST_F(CSVFormatTests, TestR3)
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv");
 
-    plInstance str = ds.get("R0F0");
+    plInstance str = ds.get("R0-F0");
 
     ASSERT_EQ(str.get(), "January");
 } 
@@ -162,9 +162,9 @@ TEST_F(CSVFormatTests, TestR5)
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4.csv");
 
     plInstance
-        field1 = ds.get("R0F0"),
-        field2 = ds.get("R0F1"),
-        field3 = ds.get("R0F2");
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -177,9 +177,9 @@ TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4-1.csv");
 
     plInstance
-        field1 = ds.get("R0F0"),
-        field2 = ds.get("R0F1"),
-        field3 = ds.get("R0F2");
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -197,9 +197,9 @@ TEST_F(CSVFormatTests, TestR6_1)
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5.csv");
 
     plInstance
-        field1 = ds.get("R0F0"),
-        field2 = ds.get("R0F1"),
-        field3 = ds.get("R0F2");
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b\r\rbb");
@@ -212,9 +212,9 @@ TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5-1.csv");
 
    plInstance
-        field1 = ds.get("R0F0"),
-        field2 = ds.get("R0F1"),
-        field3 = ds.get("R0F2");
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b,bb");
@@ -233,9 +233,9 @@ TEST_F(CSVFormatTests, TestR7)
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv6.csv");
 
    plInstance
-        field1 = ds.get("R0F0"),
-        field2 = ds.get("R0F1"),
-        field3 = ds.get("R0F2");
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b\"bb");

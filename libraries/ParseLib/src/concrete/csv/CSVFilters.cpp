@@ -56,7 +56,7 @@
 
             //add the new node to the filter output.
             if(!record_value.empty())
-                output.push_back(node(record_value.c_str()));
+                output.push_back(node(record_value.c_str(), nullptr));
         }//last line
         
         if(output.size()==0)
@@ -112,7 +112,7 @@
             //if there is not an open quotation, push the node to the buffer
             if ((number_of_quotes%2==0))
             {
-                output.push_back(node(buffer));
+                output.push_back(node(buffer, nullptr));
                 buffer.clear();
             }
             //if there is a quotation open put the comma back, and do NOT clear the buffer
@@ -188,7 +188,7 @@
                 else
                 {
                     //add the node value to the hash table.
-                    data_store.set(in[i]->GetID(), in[i]->GetValue());
+                    data_store.set( in[i]->GetID(), hValue(in[i]->GetValue(), in[i]->GetPath()) );
                 }
             }//i
         }
