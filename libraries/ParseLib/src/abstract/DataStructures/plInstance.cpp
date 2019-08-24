@@ -55,25 +55,85 @@ string plInstance::at(int8_t index)
     }
 }
 
-plInstance plInstance::related(std::string a_label)
-{
-    //id 
-    int32_t index_buffer = -1;
+plInstance plInstance::related(string a_label)
+{ 
+    //get the value of the id attribute of the entity identified
+    //by 'a_label'
+    string attr_buffer = get_descriptor(a_label);
 
-    owning_data_set->TokenizeKeys(
-        this->key, 
-        [&](int32_t key_i,int32_t index, string label) mutable
-        {
-            if(label==a_label)
-            {
-                index_buffer = index;
-            }
-        }
-        );
-    a_label.append(to_string(index_buffer));
-    plInstance return_var = owning_data_set->get(a_label);
-    return return_var;
+    //get the value from the associated plDataSet
+    return owning_data_set->get(attr_buffer);
 }
+
+//Get next instance in 'a_label'
+plInstance plInstance::pull_next(string a_label)
+{
+    // get next instance with respect to entity identified by a_label
+    plInstance owner;
+
+    //1. get owning entity instance
+    //2. check if the instance is valid before continuing
+    if(!(owner = this->related(a_label)).is_valid())
+        return plInstance(owning_data_set, NULL_INST);
+
+    //------------------------------------------
+    //      step through value iterator
+    //------------------------------------------
+    //start at the first value in the set
+    auto itr = owner.value.cbegin();
+    int32_t pos=0;
+
+    //find the current instance if it exists.
+    while(((*itr)!=this->get()) && (itr!=owner.value.cend()))
+    {
+        itr++;
+        pos++;
+    }
+
+    //check that this and the next item both exist before continuing
+    if((itr!=owner.value.cend()) && (++itr!=owner.value.cend()))
+    {
+        vector<string> 
+        missing_desc = owning_data_set->get_missing_descriptors(a_label);
+        
+        pos++;
+
+        if(missing_desc.size()==1)
+        {
+            string generated_identifier;
+            generated_identifier.append(key);
+            generated_identifier.append("-");
+            generated_identifier.append(missing_desc[0]);
+            generated_identifier.append(to_string(pos));
+
+            return owning_data_set->get(generated_identifier);
+        }
+        //todo-->so far this should never happen
+        else if(missing_desc.size()>1)
+        {
+            return plInstance(owning_data_set, NULL_INST);
+        }
+        else
+        {
+            return plInstance(owning_data_set, NULL_INST);
+        }
+    }
+
+    //if the next item doesn't exist then end here.
+    else
+        return plInstance(owning_data_set, NULL_INST);
+}
+
+plInstance plInstance::pull_previous(string a_label)
+{
+
+    return plInstance();
+}
+
+bool plInstance::is_valid()
+{
+    return (state == VALID_INST);
+}    
 
 
 void plInstance::add(std::string str_value)
@@ -84,4 +144,26 @@ void plInstance::add(std::string str_value)
 void plInstance::SetKey(std::string a_key)
 {
     key = a_key;
+}
+
+
+string plInstance::get_descriptor(string a_label)
+{
+    string attr_buffer = a_label;
+    int32_t index_buffer = -1;
+
+    owning_data_set->TokenizeKeys(
+        this->key, 
+        [&](int32_t key_i,int32_t index, string label) mutable
+        {
+            if(label==attr_buffer)
+            {
+                index_buffer = index;
+            }
+        }
+        );
+
+    attr_buffer.append(to_string(index_buffer));
+
+    return attr_buffer;
 }

@@ -10,11 +10,6 @@ class plDataSet;
 
 class plInstance
 {
-    plDataSet * owning_data_set;
-    std::vector<plInstance> relationship;
-    std::string key;//the key that identifies this instance
-    std::vector<std::string> value;//the values stored.
-
 public:
     enum State : int32_t
     {
@@ -22,15 +17,27 @@ public:
         NULL_INST,
         NO_FILE,
         UNKNOWN
-    } state;
+    };
 
+private:
+    plDataSet * owning_data_set;
+    std::string key;//the key that identifies this instance
+    std::vector<std::string> value;//the values stored.
+    State state;
+    //gets the descriptor for an entity containing this entity instance.
+    std::string get_descriptor(std::string a_label);
+
+public:
     plInstance() = default;
     plInstance(plDataSet * owner, State s);
     ~plInstance();
 
-    std::string get();
-    std::string at(int8_t index);
-    plInstance related(std::string a_label);
+    std::string get();                          //only returns a value if a vector has a particular value
+    std::string at(int8_t index);               //get a specific value within a list of 
+    plInstance pull_next(std::string a_label);       //next value in a set of instances.
+    plInstance pull_previous(std::string a_label);   //previous value in a set of instances.
+    plInstance related(std::string a_label);    //returns a related entity.
+    bool is_valid();                               //tells us if the instance is valid.
 
     void add(std::string str_value);//add a value
     void SetKey(std::string a_key);//assign the key

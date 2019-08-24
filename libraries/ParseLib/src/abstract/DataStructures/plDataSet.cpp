@@ -7,7 +7,10 @@ using namespace std;
 
 
 
-void plDataSet::TokenizeKeys(std::string a_key, std::function<void(int32_t key_i, int32_t index, string label)> lambda_expr)
+void plDataSet::TokenizeKeys(
+    string a_key, 
+    function<void(int32_t key_i, int32_t index, string label)> lambda_expr,
+    function<void(std::string label_not_found)> lambda_expr2)
 {
     char * pch;
     pch = strtok((char*)a_key.c_str(),"-");
@@ -18,19 +21,64 @@ void plDataSet::TokenizeKeys(std::string a_key, std::function<void(int32_t key_i
         char str[1];
         int32_t d;
         sscanf(pch, "%1s%i", str, &d);
+        vector<bool> v_b_found;
 
-        //Compare to each recognized key
+        //initialize a boolean for each expected descriptor,
+        //that indicates if that descriptor was found
+        for (int i=0; i<this->recognized_key.size();++i)
+        {
+            //before searching this is false.
+            v_b_found.push_back(false);
+        }
+
+        //Compare to each expected descriptor
         for(int i=0; i<this->recognized_key.size(); ++i)
         {
             //Check if the token's key matches a recognized key's label.
             if (strcmp(this->recognized_key[i]->GetLabel().c_str(), str)==0)
+            {
+                //call the passed expression
                 lambda_expr(i, d, this->recognized_key[i]->GetLabel());
+                
+                //indicate that this key was found
+                v_b_found[i]=true;
+            }
         }
+        
+        if(lambda_expr2)
+        {
+            for (int i=0; i<this->recognized_key.size();++i)
+            {
+                //pass the missing descriptor to the calling context.
+                if (!v_b_found[i])
+                    lambda_expr2(this->recognized_key[i]->GetLabel());   
+            }
+        }  
 
         pch = strtok(NULL, "-");
     }
 
     delete[] pch;
+}
+
+vector<std::string> plDataSet::get_missing_descriptors(std::string a_descriptor_labels)
+{
+    vector<std::string> r_missing_descriptors;
+
+    this->TokenizeKeys(
+        a_descriptor_labels,
+        [=](int32_t key_i,int32_t index, string label)
+        {
+            //if there is a match
+        },
+        [&](std::string label_not_found)
+        {
+            //if there is not a match
+            r_missing_descriptors.push_back(label_not_found);
+        }
+        );
+
+    return r_missing_descriptors;
 }
 
 plDataSet::plDataSet()

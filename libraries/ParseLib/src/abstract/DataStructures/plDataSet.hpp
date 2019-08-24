@@ -18,7 +18,7 @@ class plDataSet
 
     public:
         EntityKey();
-        EntityKey(std::string label);
+        EntityKey(std::string a_label);
         ~EntityKey();
 
         std::string GetLabel();
@@ -41,14 +41,19 @@ public:
     } state;
 
     plDataSet();
-    plDataSet(State s);
-    plDataSet(int32_t hash_table_size);
+    plDataSet(State a_state);
+    plDataSet(int32_t a_hash_table_size);
     ~plDataSet();
 
     plInstance get(std::string a_key);
     plInstance get(std::string a_key, std::string , std::string );
     int32_t set(std::string a_key, hValue a_value);
-    int32_t add_label(std::string new_label);
+    int32_t add_label(std::string a_new_label);
 
-    void TokenizeKeys(std::string a_key, std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr);
+    void TokenizeKeys(
+        std::string a_key, 
+        std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr,
+        std::function<void(std::string label_not_found)> lambda_expr2=nullptr)
+        ;
+    vector<std::string> get_missing_descriptors(std::string a_descriptor_labels);
 };
