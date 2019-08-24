@@ -25,20 +25,20 @@ void plDataSet::TokenizeKeys(
 
         //initialize a boolean for each expected descriptor,
         //that indicates if that descriptor was found
-        for (int i=0; i<this->recognized_key.size();++i)
+        for (int i=0; i<this->expected_descriptors.size();++i)
         {
             //before searching this is false.
             v_b_found.push_back(false);
         }
 
         //Compare to each expected descriptor
-        for(int i=0; i<this->recognized_key.size(); ++i)
+        for(int i=0; i<this->expected_descriptors.size(); ++i)
         {
             //Check if the token's key matches a recognized key's label.
-            if (strcmp(this->recognized_key[i]->GetLabel().c_str(), str)==0)
+            if (strcmp(this->expected_descriptors[i]->GetLabel().c_str(), str)==0)
             {
                 //call the passed expression
-                lambda_expr(i, d, this->recognized_key[i]->GetLabel());
+                lambda_expr(i, d, this->expected_descriptors[i]->GetLabel());
                 
                 //indicate that this key was found
                 v_b_found[i]=true;
@@ -47,11 +47,11 @@ void plDataSet::TokenizeKeys(
         
         if(lambda_expr2)
         {
-            for (int i=0; i<this->recognized_key.size();++i)
+            for (int i=0; i<this->expected_descriptors.size();++i)
             {
                 //pass the missing descriptor to the calling context.
                 if (!v_b_found[i])
-                    lambda_expr2(this->recognized_key[i]->GetLabel());   
+                    lambda_expr2(this->expected_descriptors[i]->GetLabel());   
             }
         }  
 
@@ -101,25 +101,32 @@ plInstance plDataSet::get(std::string a_key)
         generated_key,
         result;
 
+    //buffer the expected_descriptors to avoid modifying the data set.
+    std::vector<plDataSet::EntityKey> expected_descriptor_buffer;
+    for(int32_t i=0; i<expected_descriptors.size(); ++i)
+    {
+        expected_descriptor_buffer.push_back(*(expected_descriptors[i]));
+    }
+
     bool data_missing = false;
 
     this->TokenizeKeys(
         key_buffer, 
-        [=](int32_t key_i,int32_t index, string label){this->recognized_key[key_i]->SetIndex(index);}
+        [&](int32_t key_i,int32_t index, string label){expected_descriptor_buffer[key_i].SetIndex(index);}
         );
     
     //generate a key.
-    for(int i=0; i<this->recognized_key.size(); ++i)
+    for(int i=0; i<expected_descriptor_buffer.size(); ++i)
     {
         //add the delimiter
         if (!generated_key.empty())
             generated_key.append("-");
 
-        if(this->recognized_key[i]->GetIndex()!=-1)
+        if(expected_descriptor_buffer[i].GetIndex()!=-1)
         {
             //push key to the format.
-            generated_key.append(this->recognized_key[i]->GetLabel());
-            generated_key.append(to_string(this->recognized_key[i]->GetIndex()));
+            generated_key.append(expected_descriptor_buffer[i].GetLabel());
+            generated_key.append(to_string(expected_descriptor_buffer[i].GetIndex()));
         }
         else
         {
@@ -145,11 +152,6 @@ plInstance plDataSet::get(std::string a_key)
         return_var.add(hash_table.get(generated_key));
     }
 
-    for(int i=0; i< this->recognized_key.size(); ++i)
-    {
-        this->recognized_key[i]->ClearIndex();
-    }
-
     return (state==DATA_SET_GOOD)
     ? return_var
     : plInstance(this, plInstance::NULL_INST);
@@ -170,7 +172,7 @@ int32_t plDataSet::set(std::string a_key, hValue a_value)
 
 int32_t plDataSet::add_label(std::string new_label)
 {
-    recognized_key.push_back(make_shared<EntityKey>(EntityKey(new_label)));
+    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(new_label)));
 
     return 0;
 }

@@ -29,7 +29,7 @@ class plDataSet
 
     //a hash table to store the data in.
     hTable hash_table;
-    std::vector<std::shared_ptr<plDataSet::EntityKey>> recognized_key;
+    std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
 
 public:
     enum State : int32_t
