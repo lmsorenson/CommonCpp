@@ -45,8 +45,9 @@ public:
     plDataSet(int32_t hash_table_size);
     ~plDataSet();
 
-    plInstance get(std::string aKey);
-    int32_t set(std::string aKey, hValue aValue);
+    plInstance get(std::string a_key);
+    plInstance get(std::string a_key, std::string , std::string );
+    int32_t set(std::string a_key, hValue a_value);
     int32_t add_label(std::string new_label);
 
     void TokenizeKeys(std::string a_key, std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr);

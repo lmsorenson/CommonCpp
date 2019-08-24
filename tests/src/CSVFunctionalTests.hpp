@@ -146,9 +146,9 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
 {
     plDataSet ds;
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
-    plInstance inst = ds.get("R0-F0");
+    // plInstance inst = ds.get( "F", "F0", "May");
 
-    ASSERT_EQ(inst.get(), "jjkj");
+    // ASSERT_EQ(inst.get(), "5");
 }
 
 //Query for a list of elements.
@@ -190,11 +190,11 @@ TEST_F(CSVFunctionalSpec, TestR4_3)
 }
 
 // Query for an Instance's related entities.
-// * Get an associated record
-// * Get an associated field
-// * get a field and iterate through other fields in a record.
-// * get a filed and iterate through other records in a field.
-// * get a field name from the header.
+// * 5_1: Get an associated record
+// * 5_2: Get an associated field
+// * 5_3: Get a cell and iterate through other fields in a record.
+// * 5_4: Get a cell and iterate through other records in a field.
+// * 5_5: Get a cell name from the header.
 TEST_F(CSVFunctionalSpec, TestR5_1)
 {
     plDataSet ds;
@@ -226,6 +226,42 @@ TEST_F(CSVFunctionalSpec, TestR5_2)
     ASSERT_EQ(inst2.at(9), "10");
     ASSERT_EQ(inst2.at(10), "11");
     ASSERT_EQ(inst2.at(11), "12");
+}
+
+TEST_F(CSVFunctionalSpec, TestR5_3)
+{
+    plDataSet ds;
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    plInstance inst = ds.get("R1-F1");
+    plInstance inst2 = inst.related("R");
+    std::string str = inst2.at(1);
+
+
+    ASSERT_EQ(true, false);
+}
+
+TEST_F(CSVFunctionalSpec, TestR5_4)
+{
+    plDataSet ds;
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    plInstance inst = ds.get("R1-F1");
+    plInstance inst2 = inst.related("R");
+    std::string str = inst2.at(1);
+
+
+    ASSERT_EQ(true, false);
+}
+
+TEST_F(CSVFunctionalSpec, TestR5_5)
+{
+    plDataSet ds;
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    plInstance inst = ds.get("R1-F1");
+    plInstance inst2 = inst.related("R");
+    std::string str = inst2.at(1);
+
+
+    ASSERT_EQ(true, false);
 }
 
 // insert two values into one key.

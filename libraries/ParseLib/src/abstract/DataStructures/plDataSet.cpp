@@ -42,14 +42,14 @@ plDataSet::plDataSet(int32_t hash_table_size)
 , state(DATA_SET_GOOD){}
 plDataSet::~plDataSet(){}
 
-plInstance plDataSet::get(std::string aKey)
+plInstance plDataSet::get(std::string a_key)
 {
     if (state == DATA_SET_BAD)
         return plInstance(this, plInstance::NO_FILE);
 
     plInstance return_var;
     string 
-        key_buffer = aKey,
+        key_buffer = a_key,
         generated_key,
         result;
 
@@ -80,7 +80,7 @@ plInstance plDataSet::get(std::string aKey)
     }
 
     return_var = plInstance(this, plInstance::VALID_INST);
-    return_var.SetKey(aKey);//assign the key which was passed into this function.
+    return_var.SetKey(a_key);//assign the key which was passed into this function.
 
     if (data_missing)
     {
@@ -107,12 +107,12 @@ plInstance plDataSet::get(std::string aKey)
     : plInstance(this, plInstance::NULL_INST);
 }
 
-int32_t plDataSet::set(std::string aKey, hValue aValue)
+int32_t plDataSet::set(std::string a_key, hValue a_value)
 {
     switch (state)
     {
     case DATA_SET_EMPTY: state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
-    case DATA_SET_GOOD: return hash_table.insert(aKey, hValue(aValue)); break;
+    case DATA_SET_GOOD: return hash_table.insert(a_key, hValue(a_value)); break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
     default:
     case UNKNOWN: return UNKNOWN; break;
