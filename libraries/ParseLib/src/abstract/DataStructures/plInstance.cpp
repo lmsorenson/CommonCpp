@@ -149,21 +149,21 @@ void plInstance::SetKey(std::string a_key)
 
 string plInstance::get_descriptor(string a_label)
 {
-    string attr_buffer = a_label;
+    string desc_buffer = a_label;
     int32_t index_buffer = -1;
 
     owning_data_set->id_lexer(
         this->key, 
-        [&](int32_t key_i,int32_t index, string label) mutable
+        [&](int32_t key_i,int32_t index, string found_label) mutable
         {
-            if(label==attr_buffer)
+            if(found_label==desc_buffer)
             {
                 index_buffer = index;
             }
         }
         );
 
-    attr_buffer.append(to_string(index_buffer));
+    desc_buffer.append(to_string(index_buffer));
 
-    return attr_buffer;
+    return desc_buffer;
 }

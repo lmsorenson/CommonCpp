@@ -7,58 +7,86 @@ using namespace std;
 
 
 
-void plDataSet::id_lexer(
-    string a_partial_identifier, 
-    function<void(int32_t key_i, int32_t index, string label)> lambda_expr,
-    function<void(std::string label_not_found)> lambda_expr2)
+string plDataSet::id_lexer(
+    string a_identifier, 
+    function<void(int32_t key_i, int32_t index, string found_label)> callback_desc_found,
+    function<void(string label_not_found)> callback_desc_not_found,
+    function<void(string label_unrecognized)> callback_unrecognized_desc
+    )
 {
-    char * pch = strtok((char*)a_partial_identifier.c_str(),"-");
+    string r_new_id;
+    char * token = strtok((char*)a_identifier.c_str(),"-");
 
-    //check every EntityKey in the passed in key
-    while (pch != NULL)
+    vector<bool> v_b_found;
+
+    //initialize a boolean for each expected descriptor,
+    //that indicates if that descriptor was found
+    for (int i=0; i<this->expected_descriptors.size();++i)
     {
-        char str[1];
-        int32_t d;
-        sscanf(pch, "%1s%i", str, &d);
-        vector<bool> v_b_found;
+        //before searching this is false.
+        v_b_found.push_back(false);
+    }
 
-        //initialize a boolean for each expected descriptor,
-        //that indicates if that descriptor was found
-        for (int i=0; i<this->expected_descriptors.size();++i)
-        {
-            //before searching this is false.
-            v_b_found.push_back(false);
-        }
+    //Check every descriptor in the original key.
+    while (token != NULL)
+    {
+        char scanned_label[1];
+        int32_t scanned_index;
+        
+        //a boolean that indicates whether the current token
+        //was an expected token.
+        bool b_token_recognized = false;
 
-        //Compare to each expected descriptor
+        //scan the token
+        sscanf(token, "%1s%i", scanned_label, &scanned_index);
+
+        
+        //iterate over expected descriptors
         for(int i=0; i<this->expected_descriptors.size(); ++i)
         {
-            //Check if the token's key matches an expected descriptor's label.
-            if (strcmp(this->expected_descriptors[i]->GetLabel().c_str(), str)==0)
+            //Check if the token's key matches the current descriptor's label.
+            if (strcmp(this->expected_descriptors[i]->GetLabel().c_str(), scanned_label)==0)
             {
-                //call the passed expression
-                lambda_expr(i, d, this->expected_descriptors[i]->GetLabel());
-                
-                //indicate that this key was found
+                //if the token was a match, it was expected
+                b_token_recognized = true;
+
+                //indicate that this expected descriptor was found.
                 v_b_found[i]=true;
+
+                if(!r_new_id.empty())
+                    r_new_id.append("-");
+
+                //only add recognized descriptors to the output.
+                r_new_id.append(token);
+
+                //run the callback
+                callback_desc_found(i, scanned_index, this->expected_descriptors[i]->GetLabel());
             }
         }
+
+        if(!b_token_recognized && callback_unrecognized_desc)
+        {
+            callback_unrecognized_desc(scanned_label);
+        }
         
-        if(lambda_expr2)
+        token = strtok(NULL, "-");
+    }
+
+     //by default no callback for descriptors not found,
+        //execute the callback only if it exists.
+        if(callback_desc_not_found)
         {
             for (int i=0; i<this->expected_descriptors.size();++i)
             {
                 //pass the missing descriptor to the calling context
                 //if the descriptor was not matched.
                 if (!v_b_found[i])
-                    lambda_expr2(this->expected_descriptors[i]->GetLabel());   
+                    callback_desc_not_found(this->expected_descriptors[i]->GetLabel());   
             }
         }  
 
-        pch = strtok(NULL, "-");
-    }
-
-    delete[] pch;
+    delete[] token;
+    return r_new_id;
 }
 
 vector<std::string> plDataSet::get_missing_descriptors(std::string a_descriptor_labels)
@@ -67,7 +95,7 @@ vector<std::string> plDataSet::get_missing_descriptors(std::string a_descriptor_
 
     this->id_lexer(
         a_descriptor_labels,
-        [=](int32_t key_i,int32_t index, string label)
+        [=](int32_t key_i,int32_t index, string found_label)
         {
             //if there is a match
         },
@@ -115,9 +143,9 @@ plInstance plDataSet::get(std::string a_key)
     /*-----------------------------------*
     *              Lexer                 *
     * ----------------------------------*/
-    this->id_lexer(
+    key_buffer = this->id_lexer(
         key_buffer, 
-        [&](int32_t key_i,int32_t index, string label)
+        [&](int32_t key_i,int32_t index, string found_label)
         {
             expected_descriptor_buffer[key_i].SetIndex(index);
         }
@@ -140,6 +168,7 @@ plInstance plDataSet::get(std::string a_key)
         }
         else
         {
+            //if any token returns missing record it.
             data_missing = true;
         }
     }
