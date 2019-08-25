@@ -43,7 +43,7 @@ public:
     ~plDataSet();
 
     plInstance get(std::string a_key);
-    plInstance get(std::string a_key, std::string , std::string );
+    plInstance where(std::string descriptor, std::string value);
     int32_t set(std::string a_key, hValue a_value);
     int32_t add_label(std::string a_new_label);
 

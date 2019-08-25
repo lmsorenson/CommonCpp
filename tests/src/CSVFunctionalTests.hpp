@@ -146,9 +146,9 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
 {
     plDataSet ds;
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
-    // plInstance inst = ds.get( "F", "F0", "May");
 
-    // ASSERT_EQ(inst.get(), "5");
+    plInstance inst = ds.where("F0", "May");
+    ASSERT_EQ(inst.at(1), "5");
 }
 
 //Query for a list of elements.

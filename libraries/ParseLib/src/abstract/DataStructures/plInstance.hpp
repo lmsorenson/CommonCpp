@@ -32,12 +32,13 @@ public:
     plInstance(plDataSet * owner, State s);
     ~plInstance();
 
-    std::string get();                          //only returns a value if a vector has a particular value
-    std::string at(int8_t index);               //get a specific value within a list of 
-    plInstance pull_next(std::string a_label);       //next value in a set of instances.
-    plInstance pull_previous(std::string a_label);   //previous value in a set of instances.
-    plInstance related(std::string a_label);    //returns a related entity.
-    bool is_valid();                               //tells us if the instance is valid.
+    std::string get();                                  //only returns a value if a vector has a particular value
+    std::string at(int8_t index);                       //get a specific value within a list of 
+    plInstance pull_next(std::string a_label);          //next value in a set of instances.
+    plInstance pull_previous(std::string a_label);      //previous value in a set of instances.
+    plInstance related(std::string a_label);            //returns a related entity.
+    bool is_valid();                                    //tells us if the instance is valid.
+    int32_t find(std::string value, int32_t offset=0);
 
     void add(std::string str_value);//add a value
     void SetKey(std::string a_key);//assign the key

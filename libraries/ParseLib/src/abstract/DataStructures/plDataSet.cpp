@@ -194,6 +194,38 @@ plInstance plDataSet::get(std::string a_key)
     : plInstance(this, plInstance::NULL_INST);
 }
 
+plInstance plDataSet::where(std::string descriptor, std::string value)
+{
+    plInstance ret;
+
+    //1. get owning entity instance
+    //2. check if the instance is valid before continuing
+    if(!(ret = this->get(descriptor)).is_valid())
+        return plInstance(this, plInstance::NULL_INST);
+
+    int32_t pos = ret.find(value);
+
+    vector<string> missing_desc = this->get_missing_descriptors(descriptor);        
+
+    if(missing_desc.size()==1)
+    {
+        string generated_identifier;
+        generated_identifier.append(missing_desc[0]);
+        generated_identifier.append(to_string(pos));
+
+        return this->get(generated_identifier);
+    }
+    //todo-->so far this should never happen
+    else if(missing_desc.size()>1)
+    {
+        return plInstance(this, plInstance::NULL_INST);
+    }
+    else
+    {
+        return plInstance(this, plInstance::NULL_INST);
+    }
+}
+
 int32_t plDataSet::set(std::string a_key, hValue a_value)
 {
     switch (state)

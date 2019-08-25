@@ -136,6 +136,26 @@ bool plInstance::is_valid()
 }    
 
 
+int32_t plInstance::find(std::string a_value, int32_t offset)
+{
+    //------------------------------------------
+    //      step through value iterator
+    //------------------------------------------
+    //start at the first value in the set
+    auto itr = this->value.cbegin();
+    int32_t pos=offset;
+
+    //find the current instance if it exists.
+    while(((*itr)!=a_value) && (itr!=this->value.cend()))
+    {
+        itr++;
+        pos++;
+    }
+
+    return pos;
+}
+
+
 void plInstance::add(std::string str_value)
 {
     value.push_back(str_value);
