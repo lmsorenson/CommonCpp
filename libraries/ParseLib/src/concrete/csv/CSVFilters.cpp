@@ -10,8 +10,9 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    HeaderFilter::HeaderFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
-    HeaderFilter::~HeaderFilter(){}
+    HeaderFilter::HeaderFilter(std::string new_filter_id) 
+    : ParserFilter(new_filter_id)
+    {}
 
     int32_t HeaderFilter::execute(string text, vector<node>& output)
     {
@@ -25,8 +26,9 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    RecordFilter::RecordFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
-    RecordFilter::~RecordFilter(){}
+    RecordFilter::RecordFilter(std::string new_filter_id) 
+    : ParserFilter(new_filter_id)
+    {}
 
     int32_t RecordFilter::execute(string text, vector<node>& output)
     {
@@ -89,8 +91,10 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    FieldFilter::FieldFilter(std::string new_filter_id) : ParserFilter(new_filter_id), field_count(-1){}
-    FieldFilter::~FieldFilter(){}
+    FieldFilter::FieldFilter(std::string new_filter_id) 
+    : ParserFilter(new_filter_id), 
+    field_count(-1)
+    {}
 
     int32_t FieldFilter::execute(string text, vector<node>& output)
     {

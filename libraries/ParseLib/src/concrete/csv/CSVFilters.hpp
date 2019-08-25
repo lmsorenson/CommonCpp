@@ -7,7 +7,7 @@ class HeaderFilter : public ParserFilter
 {
 public:
     HeaderFilter(std::string new_filter_id);
-    ~HeaderFilter();
+    ~HeaderFilter()=default;
 
     int32_t execute(std::string text, std::vector<node>& output) override;
     virtual std::string name() override;
@@ -17,7 +17,7 @@ class RecordFilter : public ParserFilter
 {
 public:
     RecordFilter(std::string new_filter_id);
-    ~RecordFilter();
+    ~RecordFilter()=default;
 
     int32_t execute(std::string text, std::vector<node>& output) override;
     virtual std::string name() override;
@@ -30,7 +30,7 @@ class FieldFilter : public ParserFilter
 
 public:
     FieldFilter(std::string new_filter_id);
-    ~FieldFilter();
+    ~FieldFilter()=default;
 
     virtual int32_t execute(std::string text, std::vector<node>& output) override;
     virtual std::string name() override;
