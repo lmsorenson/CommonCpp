@@ -10,6 +10,21 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
+    HeaderFilter::HeaderFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
+    HeaderFilter::~HeaderFilter(){}
+
+    int32_t HeaderFilter::execute(string text, vector<node>& output)
+    {
+
+    }
+
+    string HeaderFilter::name()
+    {
+        return "header line";
+    }
+    //---------------------------------------------------------------------------//
+    //---------------------------------------------------------------------------//
+    //---------------------------------------------------------------------------//
     RecordFilter::RecordFilter(std::string new_filter_id) : ParserFilter(new_filter_id){}
     RecordFilter::~RecordFilter(){}
 
