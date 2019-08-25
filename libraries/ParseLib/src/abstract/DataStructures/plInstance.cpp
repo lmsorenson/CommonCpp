@@ -152,7 +152,7 @@ string plInstance::get_descriptor(string a_label)
     string attr_buffer = a_label;
     int32_t index_buffer = -1;
 
-    owning_data_set->TokenizeKeys(
+    owning_data_set->id_lexer(
         this->key, 
         [&](int32_t key_i,int32_t index, string label) mutable
         {

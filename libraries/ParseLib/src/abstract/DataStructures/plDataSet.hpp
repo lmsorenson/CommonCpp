@@ -5,8 +5,6 @@
 #include "plInstance.hpp"
 
 
-using namespace std;
-
 
 
 class plDataSet
@@ -24,7 +22,6 @@ class plDataSet
         std::string GetLabel();
         int32_t SetIndex(int32_t a_index);
         int32_t GetIndex();
-        int32_t ClearIndex();
     };
 
     //a hash table to store the data in.
@@ -50,10 +47,9 @@ public:
     int32_t set(std::string a_key, hValue a_value);
     int32_t add_label(std::string a_new_label);
 
-    void TokenizeKeys(
-        std::string a_key, 
+    void id_lexer(
+        std::string a_partial_identifier, 
         std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr,
-        std::function<void(std::string label_not_found)> lambda_expr2=nullptr)
-        ;
-    vector<std::string> get_missing_descriptors(std::string a_descriptor_labels);
+        std::function<void(std::string label_not_found)> lambda_expr2=nullptr);
+    std::vector<std::string> get_missing_descriptors(std::string a_descriptor_labels);
 };

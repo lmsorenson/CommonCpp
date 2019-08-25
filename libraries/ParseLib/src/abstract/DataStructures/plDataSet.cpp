@@ -7,13 +7,12 @@ using namespace std;
 
 
 
-void plDataSet::TokenizeKeys(
-    string a_key, 
+void plDataSet::id_lexer(
+    string a_partial_identifier, 
     function<void(int32_t key_i, int32_t index, string label)> lambda_expr,
     function<void(std::string label_not_found)> lambda_expr2)
 {
-    char * pch;
-    pch = strtok((char*)a_key.c_str(),"-");
+    char * pch = strtok((char*)a_partial_identifier.c_str(),"-");
 
     //check every EntityKey in the passed in key
     while (pch != NULL)
@@ -34,7 +33,7 @@ void plDataSet::TokenizeKeys(
         //Compare to each expected descriptor
         for(int i=0; i<this->expected_descriptors.size(); ++i)
         {
-            //Check if the token's key matches a recognized key's label.
+            //Check if the token's key matches an expected descriptor's label.
             if (strcmp(this->expected_descriptors[i]->GetLabel().c_str(), str)==0)
             {
                 //call the passed expression
@@ -49,7 +48,8 @@ void plDataSet::TokenizeKeys(
         {
             for (int i=0; i<this->expected_descriptors.size();++i)
             {
-                //pass the missing descriptor to the calling context.
+                //pass the missing descriptor to the calling context
+                //if the descriptor was not matched.
                 if (!v_b_found[i])
                     lambda_expr2(this->expected_descriptors[i]->GetLabel());   
             }
@@ -65,7 +65,7 @@ vector<std::string> plDataSet::get_missing_descriptors(std::string a_descriptor_
 {
     vector<std::string> r_missing_descriptors;
 
-    this->TokenizeKeys(
+    this->id_lexer(
         a_descriptor_labels,
         [=](int32_t key_i,int32_t index, string label)
         {
@@ -100,6 +100,7 @@ plInstance plDataSet::get(std::string a_key)
         key_buffer = a_key,
         generated_key,
         result;
+    bool data_missing = false;
 
     //buffer the expected_descriptors to avoid modifying the data set.
     std::vector<plDataSet::EntityKey> expected_descriptor_buffer;
@@ -108,14 +109,23 @@ plInstance plDataSet::get(std::string a_key)
         expected_descriptor_buffer.push_back(*(expected_descriptors[i]));
     }
 
-    bool data_missing = false;
+    return_var = plInstance(this, plInstance::VALID_INST);
+    return_var.SetKey(a_key);//assign the key which was passed into this function.
 
-    this->TokenizeKeys(
+    /*-----------------------------------*
+    *              Lexer                 *
+    * ----------------------------------*/
+    this->id_lexer(
         key_buffer, 
-        [&](int32_t key_i,int32_t index, string label){expected_descriptor_buffer[key_i].SetIndex(index);}
+        [&](int32_t key_i,int32_t index, string label)
+        {
+            expected_descriptor_buffer[key_i].SetIndex(index);
+        }
         );
     
-    //generate a key.
+    /*-----------------------------------*
+    *             Compiler               *
+    * ----------------------------------*/
     for(int i=0; i<expected_descriptor_buffer.size(); ++i)
     {
         //add the delimiter
@@ -134,9 +144,7 @@ plInstance plDataSet::get(std::string a_key)
         }
     }
 
-    return_var = plInstance(this, plInstance::VALID_INST);
-    return_var.SetKey(a_key);//assign the key which was passed into this function.
-
+    //Ask the storage for all valid keys with matching descriptors.
     if (data_missing)
     {
         vector<string> matching_keys = hash_table.GetMatchingKeys(generated_key);
@@ -198,11 +206,6 @@ string plDataSet::EntityKey::GetLabel(){return label;}
  {
      index = a_index;
      return 0;
- }
-
- int32_t plDataSet::EntityKey::ClearIndex()
- {
-     index = -1;
  }
 
 int32_t plDataSet::EntityKey::GetIndex(){return index;}
