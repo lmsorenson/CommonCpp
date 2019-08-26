@@ -15,7 +15,7 @@ ReadCSV::~ReadCSV(){}
 void ReadCSV::configure_pipeline(ParserPipeline &pipeline)
 {
     if(this->b_use_header_line)
-        pipeline.add_filter(shared_ptr<HeaderFilter> (new HeaderFilter("B")));
+        pipeline.add_filter(shared_ptr<HeaderFilter> (new HeaderFilter("S")));
 
     pipeline.add_filter(shared_ptr<RecordFilter> (new RecordFilter("R")));
     pipeline.add_filter(shared_ptr<FieldFilter> (new FieldFilter("F")));

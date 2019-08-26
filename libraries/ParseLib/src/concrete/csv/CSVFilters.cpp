@@ -16,8 +16,31 @@
 
     int32_t HeaderFilter::execute(string text, vector<node>& output)
     {
-        output.push_back(node(text, nullptr));
-        cout << "HELLO! I'm here in the program!" << endl;
+        istringstream file(text);
+        string line, r_buffer;
+        bool b_first_line = true;
+
+        while (std::getline(file, line)) 
+        {
+            if(b_first_line)
+            {
+                //push line 1 as a new node.
+                output.push_back(node(line, nullptr));
+
+                //once the first line has been separated.
+                //indicate this is no longer the first line.
+                b_first_line = false;
+            }
+            else
+            {
+                r_buffer.append(line);
+                r_buffer.append("\r\n");//add the carriage return back
+            }
+        }
+
+        output.push_back(node(r_buffer, nullptr));
+
+
         return FILTER_SUCCESS;
     }
 

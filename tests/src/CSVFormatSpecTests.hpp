@@ -97,9 +97,25 @@ TEST_F(CSVFormatTests, TestR3)
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv", options);
 
-    plInstance str = ds.get("R0-F0");
+    plInstance H1 = ds.get("S0-R0-F0");
+    plInstance H2 = ds.get("S0-R0-F1");
+    plInstance H3 = ds.get("S0-R0-F2");
+    plInstance A1 = ds.get("S1-R0-F0");
+    plInstance A2 = ds.get("S1-R0-F1");
+    plInstance A3 = ds.get("S1-R0-F2");
+    plInstance B1 = ds.get("S1-R1-F0");
+    plInstance B2 = ds.get("S1-R1-F1");
+    plInstance B3 = ds.get("S1-R1-F2");
 
-    ASSERT_EQ(str.get(), "January");
+    ASSERT_EQ(H1.get(), "field_name");
+    ASSERT_EQ(H2.get(), "field_name");
+    ASSERT_EQ(H3.get(), "field_name");
+    ASSERT_EQ(A1.get(), "aaa");
+    ASSERT_EQ(A2.get(), "bbb");
+    ASSERT_EQ(A3.get(), "ccc");
+    ASSERT_EQ(B1.get(), "zzz");
+    ASSERT_EQ(B2.get(), "yyy");
+    ASSERT_EQ(B3.get(), "xxx");
 } 
 
 
