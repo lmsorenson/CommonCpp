@@ -40,9 +40,7 @@ protected:
 TEST_F(CSVFormatTests, TestR1)
 {
     plDataSet ds;
-    
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
-
     plInstance str = ds.get("R0-F0");
 
     ASSERT_EQ(str.get(), "aaa");
@@ -95,8 +93,9 @@ TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 TEST_F(CSVFormatTests, TestR3)
 {
     plDataSet ds;
-    
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv");
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv", options);
 
     plInstance str = ds.get("R0-F0");
 

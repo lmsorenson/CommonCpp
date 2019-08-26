@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds)
+int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds, std::vector<option> read_options)
 {
     //load text
     string raw_text;
@@ -18,11 +18,14 @@ int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds)
         ds = plDataSet(plDataSet::DATA_SET_BAD);
         return FILE_NOT_FOUND;
     }
-        
+    
+    //set the read options before anything else
+    this->set_read_options(read_options);
 
     shared_ptr<node> n = make_shared<node>(node(raw_text, nullptr));
     
     //decrypt
+    
 
     //Configure pipeline
     ParserPipeline pipeline;

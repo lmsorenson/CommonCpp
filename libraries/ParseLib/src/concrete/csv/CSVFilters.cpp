@@ -16,12 +16,14 @@
 
     int32_t HeaderFilter::execute(string text, vector<node>& output)
     {
-
+        output.push_back(node(text, nullptr));
+        cout << "HELLO! I'm here in the program!" << endl;
+        return FILTER_SUCCESS;
     }
 
     string HeaderFilter::name()
     {
-        return "header line";
+        return "header";
     }
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
@@ -92,8 +94,8 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     FieldFilter::FieldFilter(std::string new_filter_id) 
-    : ParserFilter(new_filter_id), 
-    field_count(-1)
+    : ParserFilter(new_filter_id)
+    , field_count(-1)
     {}
 
     int32_t FieldFilter::execute(string text, vector<node>& output)

@@ -5,17 +5,16 @@
 #include <iostream>
 #include <string>
 
+#include "abstract/Reads/ReadStrategy.hpp"
 #include "concrete/csv/CSVData.hpp"
 #include "concrete/csv/CSV_Factory.hpp"
 
 using namespace std;
 
-int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath)
+int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options)
 {
 
     //-----------------------|   Parse file path   |-----------------------//
-
-
 
 
     //-----------------------|   Generate strategies & Data   |-----------------------//
@@ -25,7 +24,7 @@ int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath)
 
     //-----------------------|   Execute read   |-----------------------//
     int32_t return_code;
-    if((return_code=strategy->execute_read(filepath, *data)))
+    if((return_code=strategy->execute_read(filepath, *data, read_options)))
     {
         switch (return_code)
         {
