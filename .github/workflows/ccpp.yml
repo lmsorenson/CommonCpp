@@ -15,7 +15,10 @@ jobs:
       run: mkdir ./tests/cmake
     - name: configure
       run: |
-        cd ./tests/cmake 
+        cd ./tests/
+        pwd
+        cd ./cmake 
+        pwd
         cmake ..
         make
       #
