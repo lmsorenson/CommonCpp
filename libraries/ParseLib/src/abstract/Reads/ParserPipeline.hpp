@@ -33,7 +33,7 @@ class ParserPipeline
         plNodeBuffer &out_buffer, 
         plNodeSet &in_buffer, 
         std::shared_ptr<ParserFilter> filter);
-        
+
     int32_t ProcessIndividual(
         plNodeSet &out_buffer, 
         std::vector<node> &in_buffer, 
@@ -54,4 +54,5 @@ public:
         PIPELINE_FORMAT_ERROR,
         PIPELINE_UNKNOWN_ERROR
     };
+    
 };
