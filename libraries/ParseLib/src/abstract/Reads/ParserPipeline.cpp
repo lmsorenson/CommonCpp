@@ -10,7 +10,7 @@ using namespace std;
 void RunFilters();
 void NodeSets();
 void Nodes();
-void ProcessResults(vector<node> node_vec);
+
 
 
 ParserPipeline::ParserPipeline(){}
@@ -31,6 +31,8 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
 //execute will populate the plDataSet
 int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_store)
 {
+    int32_t result;
+
     vector<vector<shared_ptr<node>>> in_buffer;
     vector<vector<shared_ptr<node>>> out_buffer;
     
@@ -38,21 +40,33 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
     svn.push_back(text);
     out_buffer.push_back(svn);
 
-    //for loops
-    //"i" --> filters
-    //"j" --> Set of sets
-    //"k" --> Set of nodes
 
-    //Execute filters
-    for(int i=0; i < filters.size(); ++i)
+    if ((result = this->ApplyFilters(data_store, out_buffer, in_buffer)) != PIPELINE_SUCCESS)
     {
-        // out text buffer from previous filter becomes new in text buffer
-        in_buffer = out_buffer;
-        out_buffer.clear();
+        return result;
+    }
 
-        data_store.add_label(filters[i]->GetLabel());
+    in_buffer.clear();
+    out_buffer.clear();
+    
+    //message the output
+    output->execute(text, data_store);
 
-        // Apply filters to all node sets.
+    return PIPELINE_SUCCESS;
+}
+
+void ParserPipeline::ProcessResults(vector<node> node_vec)
+{
+    for(int l = 0; l < node_vec.size(); ++l)
+    {
+
+    }
+}
+
+int32_t ParserPipeline::ProcessNodeSets(plNodeBuffer &out_buffer, plNodeBuffer in_buffer, shared_ptr<ParserFilter> filter)
+{
+
+    // Apply filters to all node sets.
         for(int j=0; j < in_buffer.size(); ++j)
         {
             // Apply filters to all nodes in the node set.
@@ -65,7 +79,7 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
                 
                 vector<node> vn;
                 int32_t err;
-                if( (err=filters[i]->execute(str.c_str(), vn))!=ParserFilter::FILTER_SUCCESS )
+                if( (err=filter->execute(str.c_str(), vn))!=ParserFilter::FILTER_SUCCESS )
                 {
                     switch (err)
                     {
@@ -88,7 +102,7 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
                             newNode.AppendID("-");
 
                         //Append the id of this node
-                        newNode.AppendID(filters[i]->GetID(l));
+                        newNode.AppendID(filter->GetID(l));
 
                     //Add this to the current node's child set.
                     in_buffer[j][k]->AddChild(newNode);
@@ -101,21 +115,31 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
                 filter_result_set.clear();
             }//k
         }//j        
-    }//i
-
-    in_buffer.clear();
-    out_buffer.clear();
-    
-    //message the output
-    output->execute(text, data_store);
 
     return PIPELINE_SUCCESS;
 }
 
-void ProcessResults(vector<node> node_vec)
+int32_t ParserPipeline::ApplyFilters(plDataSet &data_set, plNodeBuffer &out_buffer, plNodeBuffer in_buffer)
 {
-    for(int l = 0; l < node_vec.size(); ++l)
-    {
+    int32_t result;
+     //for loops
+    //"i" --> filters
+    //"j" --> Set of sets
+    //"k" --> Set of nodes
 
-    }
+    for(int i=0; i < filters.size(); ++i)
+    {
+        // out text buffer from previous filter becomes new in text buffer
+        in_buffer = out_buffer;
+        out_buffer.clear();
+
+        //add information about the filtered data to the resulting data set.
+        data_set.add_label(filters[i]->GetLabel());
+
+        if ((result=this->ProcessNodeSets(out_buffer, in_buffer, filters[i]))!=PIPELINE_SUCCESS)
+        {
+            return result;
+        }        
+    }//i
+    return PIPELINE_SUCCESS;
 }
