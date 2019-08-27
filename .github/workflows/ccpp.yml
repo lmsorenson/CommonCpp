@@ -10,9 +10,13 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: configure
-      run:  ./configure
-            cd ./tests/cmake
-            pwd
+      run: cd ./tests/cmake
+    - name: print working directory
+      run: pwd
+    - name: run cmake
+      run: cmake ..
+    - name: run make
+      run: make
     #- name: make
     #  run: make
     #- name: make check
