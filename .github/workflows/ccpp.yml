@@ -14,7 +14,7 @@ jobs:
     - name: make cmake directory
       run: mkdir ./tests/cmake
     - name: configure
-      run: |
+      run:|
       cd ./tests/cmake 
       cmake ..
       make
