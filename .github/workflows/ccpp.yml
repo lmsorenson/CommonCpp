@@ -9,6 +9,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    - name: pwd
+      run: pwd
     - name: configure
       run: cd ./tests/cmake
     - name: print working directory
