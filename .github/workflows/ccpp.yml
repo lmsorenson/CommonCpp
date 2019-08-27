@@ -15,6 +15,7 @@ jobs:
       run: mkdir ./tests/cmake
     - name: configure
       run: cd ./tests/cmake 
+            cmake ..
     - name: print working directory
       run: pwd
     - name: run cmake
