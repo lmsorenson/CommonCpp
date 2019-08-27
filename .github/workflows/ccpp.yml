@@ -9,14 +9,14 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    - uses: google/googletest@1d721a7
+    - uses: lmsorenson/CodexLib@058c2f5
     - name: pwd
       run: pwd
     - name: make cmake directory
       run: mkdir ./tests/cmake
     - name: configure
       run: |
-        git submodule init
-        git submodule update
         ls
         cd ./tests/
         pwd
