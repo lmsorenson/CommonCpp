@@ -18,6 +18,7 @@ jobs:
       cd ./tests/cmake 
       cmake ..
       make
+      #
     #- name: make
     #  run: make
     #- name: make check
