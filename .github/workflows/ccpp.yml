@@ -14,10 +14,10 @@ jobs:
     - name: make cmake directory
       run: mkdir ./tests/cmake
     - name: configure
-      run:|
-      cd ./tests/cmake 
-      cmake ..
-      make
+      run: |
+        cd ./tests/cmake 
+        cmake ..
+        make
       #
     #- name: make
     #  run: make
