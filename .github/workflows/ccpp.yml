@@ -1,22 +1,21 @@
 name: C/C++ CI
 
-on: 
-  push:
-    branches:
-      -master
+on: [push, pull_request]
 
 jobs:
   build:
-
+    name: build_job
     runs-on: macOS-10.14
     
     steps:
-    - uses: actions/checkout@v1
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    -name: Print something
+       run: echo hello world
+    #- uses: actions/checkout@v1
+    #- name: configure
+    #  run: ./configure
+    #- name: make
+    #  run: make
+    #- name: make check
+    #  run: make check
+    #- name: make distcheck
+    #  run: make distcheck
