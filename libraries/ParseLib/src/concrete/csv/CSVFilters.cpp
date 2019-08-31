@@ -184,15 +184,17 @@
 
     bool FieldFilter::IsFieldCountValid(int32_t field_count_param)
     {
-        if( (field_count!=0)
-            && (field_count==field_count_param
-            || field_count==-1) )
+        //if the field_count is null '-1' set the field count to the first entry.
+        if (field_count==-1)
+            field_count=field_count_param;
+        
+        //field count 0 and inconsistent field sizes are format violations.
+        if( (field_count!=0) && (field_count==field_count_param) )
         {
             return true;
         }
         else
         {
-            field_count=field_count_param;
             return false;
         }
     }

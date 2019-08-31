@@ -13,16 +13,24 @@ class plDataSet
     {
         std::string label;
         int32_t index;
-        bool required;
+        bool 
+            required,
+            has_index;
+
+        bool b_found;
 
     public:
         EntityKey();
-        EntityKey(std::string a_label, bool a_required = true);
+        EntityKey(std::string a_label, bool a_required = true, bool a_has_index = true);
         ~EntityKey();
 
         std::string GetLabel();
         int32_t SetIndex(int32_t a_index);
+        int32_t SetFound();
+        bool IsFound();
         int32_t GetIndex();
+        bool IsRequired();
+        bool HasIndex();
     };
 
     //a hash table to store the data in.

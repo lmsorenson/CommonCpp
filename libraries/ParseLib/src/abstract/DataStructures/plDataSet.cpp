@@ -80,7 +80,7 @@ string plDataSet::id_lexer(
             {
                 //pass the missing descriptor to the calling context
                 //if the descriptor was not matched.
-                if (!v_b_found[i])
+                if (!v_b_found[i] && this->expected_descriptors[i]->IsRequired())
                     callback_desc_not_found(this->expected_descriptors[i]->GetLabel());   
             }
         }  
@@ -147,7 +147,10 @@ plInstance plDataSet::get(std::string a_key)
         key_buffer, 
         [&](int32_t key_i,int32_t index, string found_label)
         {
-            expected_descriptor_buffer[key_i].SetIndex(index);
+            if (expected_descriptor_buffer[key_i].HasIndex())
+                expected_descriptor_buffer[key_i].SetIndex(index);
+            else
+                expected_descriptor_buffer[key_i].SetFound();
         }
         );
     
@@ -164,7 +167,14 @@ plInstance plDataSet::get(std::string a_key)
         {
             //push key to the format.
             generated_key.append(expected_descriptor_buffer[i].GetLabel());
-            generated_key.append(to_string(expected_descriptor_buffer[i].GetIndex()));
+            
+            if(expected_descriptor_buffer[i].HasIndex())
+                generated_key.append(to_string(expected_descriptor_buffer[i].GetIndex()));
+        }
+        else if (!expected_descriptor_buffer[i].IsRequired())
+        {
+            if (expected_descriptor_buffer[i].IsFound())
+                generated_key.append(expected_descriptor_buffer[i].GetLabel());
         }
         else
         {
@@ -248,7 +258,7 @@ int32_t plDataSet::add_label(std::string a_new_label)
 
 int32_t plDataSet::add_optional_flag(std::string a_new_label)
 {
-    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_label, false)));
+    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_label, false, false)));
 
     return 0;
 }
@@ -256,17 +266,29 @@ int32_t plDataSet::add_optional_flag(std::string a_new_label)
 plDataSet::EntityKey::EntityKey()
 :label("")
 ,index(-1)
+,b_found(false)
 {
 }
-plDataSet::EntityKey::EntityKey(string a_label, bool a_required)
+plDataSet::EntityKey::EntityKey(string a_label, bool a_required, bool a_has_index)
 :label(a_label)
 ,index(-1)
 ,required(a_required)
+,has_index(a_has_index)
+,b_found(false)
 {
 }
 plDataSet::EntityKey::~EntityKey()
 {
 
+}
+
+bool plDataSet::EntityKey::IsRequired()
+{
+    return this->required;
+}
+bool plDataSet::EntityKey::HasIndex()
+{
+    return this->has_index;
 }
 
 string plDataSet::EntityKey::GetLabel(){return label;}
@@ -275,6 +297,17 @@ string plDataSet::EntityKey::GetLabel(){return label;}
  {
      index = a_index;
      return 0;
+ }
+
+ int32_t plDataSet::EntityKey::SetFound()
+ {
+     b_found = true;
+     return 0;
+ }
+
+  bool plDataSet::EntityKey::IsFound()
+ {
+     return b_found;
  }
 
 int32_t plDataSet::EntityKey::GetIndex(){return index;}

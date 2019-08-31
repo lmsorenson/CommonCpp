@@ -148,8 +148,6 @@ int32_t ParserPipeline::ApplyFilters(plDataSet &data_set, plNodeBuffer &out_buff
         in_buffer = out_buffer;
         out_buffer.clear();
 
-        cout << filters[i]->GetLabel() << endl;
-
         if(filters[i]->GetLabel().substr(0,1)=="~")
             data_set.add_optional_flag(filters[i]->GetLabel().substr(1));
         else

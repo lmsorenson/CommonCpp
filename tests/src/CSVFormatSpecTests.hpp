@@ -141,16 +141,11 @@ TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fi
 {
     plDataSet ds;
     
-    // ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3.csv");
+    int32_t return_code;
 
-    // string field1 = ds.get("R0F0");
-    // string field2 = ds.get("R0F1");
-    // string field3 = ds.get("R0F2");
+    return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-3.csv");
 
-    // ASSERT_EQ(field1, "aaa");
-    // ASSERT_EQ(field2, "bbb");
-    // ASSERT_EQ(field3, "ccc");
-    ASSERT_EQ(1, -1);
+    ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
 }
 TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {   
