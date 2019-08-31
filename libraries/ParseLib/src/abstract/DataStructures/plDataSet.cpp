@@ -11,8 +11,7 @@ string plDataSet::id_lexer(
     string a_identifier, 
     function<void(int32_t key_i, int32_t index, string found_label)> callback_desc_found,
     function<void(string label_not_found)> callback_desc_not_found,
-    function<void(string label_unrecognized)> callback_unrecognized_desc
-    )
+    function<void(string label_unrecognized)> callback_unrecognized_desc)
 {
     string r_new_id;
     char * token = strtok((char*)a_identifier.c_str(),"-");
@@ -60,7 +59,10 @@ string plDataSet::id_lexer(
                 r_new_id.append(token);
 
                 //run the callback
-                callback_desc_found(i, scanned_index, this->expected_descriptors[i]->GetLabel());
+                if (this->expected_descriptors[i]->HasIndex())
+                    callback_desc_found(i, scanned_index, this->expected_descriptors[i]->GetLabel());
+                else
+                    callback_desc_found(i, NO_INDEX, this->expected_descriptors[i]->GetLabel());
             }
         }
 
@@ -72,7 +74,7 @@ string plDataSet::id_lexer(
         token = strtok(NULL, "-");
     }
 
-     //by default no callback for descriptors not found,
+        //by default no callback for descriptors not found,
         //execute the callback only if it exists.
         if(callback_desc_not_found)
         {

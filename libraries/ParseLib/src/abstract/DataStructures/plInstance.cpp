@@ -27,6 +27,10 @@ string plInstance::get()
         {
             return value[0];
         }
+        else if(value.size()>0)
+        {
+            return "SPECIFY_AN_INDEX";
+        }
         else
         {
             return "ERROR";
@@ -57,7 +61,7 @@ string plInstance::at(int8_t index)
 
 plInstance plInstance::related(string a_label)
 { 
-    //get the value of the id attribute of the entity identified
+    //get the descriptor-index value off the entity identified
     //by 'a_label'
     string attr_buffer = get_descriptor(a_label);
 

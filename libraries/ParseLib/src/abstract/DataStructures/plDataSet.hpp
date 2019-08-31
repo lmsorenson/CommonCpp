@@ -5,6 +5,7 @@
 #include "plInstance.hpp"
 
 
+#define NO_INDEX -1
 
 
 class plDataSet
