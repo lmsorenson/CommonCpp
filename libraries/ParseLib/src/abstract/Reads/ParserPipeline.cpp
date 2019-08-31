@@ -61,8 +61,20 @@ int32_t ParserPipeline::ProcessIndividual(plNodeSet &out_buffer, vector<node> &i
             if(!newNode.EmptyID())
                 newNode.AppendID("-");
 
+            //functionality for the special (~) flag
+            if (filter->GetLabel().substr(0,1)=="~")
+            {
+                if (l==0)
+                {
+                    newNode.AppendID(filter->GetLabel().substr(1));
+                }
+            }
             //Append the id of this node
-            newNode.AppendID(filter->GetID(l));
+            else 
+            {
+                newNode.AppendID(filter->GetID(l));
+            }
+                
 
         //Add this to the current node's child set.
         current_node->AddChild(newNode);
@@ -136,8 +148,13 @@ int32_t ParserPipeline::ApplyFilters(plDataSet &data_set, plNodeBuffer &out_buff
         in_buffer = out_buffer;
         out_buffer.clear();
 
-        //add information about the filtered data to the resulting data set.
-        data_set.add_label(filters[i]->GetLabel());
+        cout << filters[i]->GetLabel() << endl;
+
+        if(filters[i]->GetLabel().substr(0,1)=="~")
+            data_set.add_optional_flag(filters[i]->GetLabel().substr(1));
+        else
+            data_set.add_label(filters[i]->GetLabel());
+        
 
         if ((result=this->ProcessNodeSets(out_buffer, in_buffer, filters[i]))!=PIPELINE_SUCCESS)
         {

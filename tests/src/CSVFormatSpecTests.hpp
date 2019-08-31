@@ -97,9 +97,9 @@ TEST_F(CSVFormatTests, TestR3)
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv", options);
 
-    plInstance H1 = ds.get("~B-R0-F0");
-    plInstance H2 = ds.get("~B-R0-F1");
-    plInstance H3 = ds.get("~B-R0-F2");
+    plInstance H1 = ds.get("H-R0-F0");
+    plInstance H2 = ds.get("H-R0-F1");
+    plInstance H3 = ds.get("H-R0-F2");
     plInstance A1 = ds.get("R0-F0");
     plInstance A2 = ds.get("R0-F1");
     plInstance A3 = ds.get("R0-F2");

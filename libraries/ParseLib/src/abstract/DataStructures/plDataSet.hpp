@@ -13,10 +13,11 @@ class plDataSet
     {
         std::string label;
         int32_t index;
+        bool required;
 
     public:
         EntityKey();
-        EntityKey(std::string a_label);
+        EntityKey(std::string a_label, bool a_required = true);
         ~EntityKey();
 
         std::string GetLabel();
@@ -46,6 +47,7 @@ public:
     plInstance where(std::string descriptor, std::string value);
     int32_t set(std::string a_key, hValue a_value);
     int32_t add_label(std::string a_new_label);
+    int32_t add_optional_flag(std::string a_new_label);
 
     std::string id_lexer(
         std::string a_identifier, 

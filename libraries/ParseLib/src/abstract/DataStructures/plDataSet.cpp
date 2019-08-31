@@ -239,9 +239,16 @@ int32_t plDataSet::set(std::string a_key, hValue a_value)
 }
 
 
-int32_t plDataSet::add_label(std::string new_label)
+int32_t plDataSet::add_label(std::string a_new_label)
 {
-    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(new_label)));
+    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_label)));
+
+    return 0;
+}
+
+int32_t plDataSet::add_optional_flag(std::string a_new_label)
+{
+    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_label, false)));
 
     return 0;
 }
@@ -251,9 +258,10 @@ plDataSet::EntityKey::EntityKey()
 ,index(-1)
 {
 }
-plDataSet::EntityKey::EntityKey(string a_label)
+plDataSet::EntityKey::EntityKey(string a_label, bool a_required)
 :label(a_label)
 ,index(-1)
+,required(a_required)
 {
 }
 plDataSet::EntityKey::~EntityKey()
