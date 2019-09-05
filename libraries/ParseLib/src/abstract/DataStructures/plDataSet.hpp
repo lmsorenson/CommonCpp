@@ -3,6 +3,7 @@
 #include <vector>
 #include "Hash.hpp"
 #include "plInstance.hpp"
+#include "MetaLDS.hpp"
 
 
 #define NO_INDEX -1
@@ -36,6 +37,7 @@ class plDataSet
 
     //a hash table to store the data in.
     hTable hash_table;
+    Model logical_data_structure;
     std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
 
 public:
@@ -47,16 +49,21 @@ public:
         UNKNOWN
     } state;
 
+    //constructors//---------------------------------------------
     plDataSet();
     plDataSet(State a_state);
     plDataSet(int32_t a_hash_table_size);
     ~plDataSet();
 
+    //accessors//------------------------------------------------
     plInstance get(std::string a_key);
     plInstance where(std::string descriptor, std::string value);
+
+    //Mutators//-------------------------------------------------
     int32_t set(std::string a_key, hValue a_value);
     int32_t add_label(std::string a_new_label);
     int32_t add_optional_flag(std::string a_new_label);
+    int32_t generate_data_model();
 
     std::string id_lexer(
         std::string a_identifier, 

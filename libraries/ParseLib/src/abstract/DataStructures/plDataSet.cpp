@@ -126,10 +126,12 @@ plInstance plDataSet::get(std::string a_key)
         return plInstance(this, plInstance::NO_FILE);
 
     plInstance return_var;
+   
     string 
         key_buffer = a_key,
         generated_key,
         result;
+
     bool data_missing = false;
 
     //buffer the expected_descriptors to avoid modifying the data set.
@@ -313,3 +315,7 @@ string plDataSet::EntityKey::GetLabel(){return label;}
  }
 
 int32_t plDataSet::EntityKey::GetIndex(){return index;}
+
+int32_t plDataSet::generate_data_model()
+{
+};

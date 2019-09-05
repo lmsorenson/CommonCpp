@@ -17,53 +17,85 @@ class Attribute;
 class Link;
 class Degree;
 
+template <class T> using ManyLink = std::vector<std::shared_ptr<T>>;
+template <class T> using OneLink = std::shared_ptr<T>;
+
 
 class Model
 {
-    std::vector<std::shared_ptr<Thing>> thing_array;
+    ManyLink<Thing> thing_array;
+
+public:
+    Model()=default;
+    ~Model()=default;
 };
 
 class Thing
 {
     std::string name;
+
+public:
+    Thing(std::string a_name);
+    ~Thing()=default;
 };
 
 class Identifier 
 {
-    std::shared_ptr<Entity> owning_entity;
-    std::vector<std::shared_ptr<Descriptor>> descriptor_array; 
+    OneLink<Entity> owning_entity;
+    ManyLink<Descriptor> descriptor_array; 
+
+public:
 };
 
 
 class Entity : public Thing
 {
-    std::vector<std::shared_ptr<Descriptor>> descriptor_array; 
-    std::vector<std::shared_ptr<Identifier>> identifier_array; 
+    ManyLink<Descriptor> descriptor_array; 
+    ManyLink<Identifier> identifier_array; 
+
+public:
+    Entity(std::string name, std::shared_ptr<Identifier> a_identifier);
+    Entity(std::string name, std::vector<std::shared_ptr<Identifier>> a_identifier_set);
+    ~Entity()=default;
+
+    void add_descriptor(std::shared_ptr<Descriptor> a_descriptor);
 };
 
 class Descriptor : public Thing
 {
-    std::shared_ptr<Entity> owning_entity;
-    std::vector<std::shared_ptr<Identifier>> identifier_array; 
-    std::shared_ptr<Degree> degree;
+    OneLink<Entity> owning_entity;
+    ManyLink<Identifier> identifier_array; 
+    OneLink<Degree> degree;
+
+public:
+    Descriptor(std::string a_name);
+    ~Descriptor()=default;
 };
 
 class Relationship : public Thing
 {
     bool to_be_flag;
+    ManyLink<Link> link_array;
 
-    std::vector<std::shared_ptr<Link>> link_array;
+public:
+    Relationship(std::string a_name, std::shared_ptr<Entity> a_linked_entity, std::shared_ptr<Entity> a_linked_entity_2);
+    ~Relationship()=default;
 };
 
 class Link : public Descriptor
 {
-    std::shared_ptr<Relationship> owning_relationship;
-    std::shared_ptr<Degree> degree;
+    OneLink<Relationship> owning_relationship;
+    OneLink<Degree> degree;
 
     std::string label;
+    OneLink<Entity> link_subject;
+
+public:
+    Link(std::string a_name, std::shared_ptr<Entity> a_entity);
+    ~Link()=default;
 };
 
-class Attribute : public Identifier
+class Attribute : public Descriptor
 {
     enum Scale
     {
@@ -71,8 +103,9 @@ class Attribute : public Identifier
         Nominal,
         Ordinal,
         Boolean,
-        NULL
-    } scale;
+        Unknown
+    } 
+    scale;
 };
 
 class Degree
