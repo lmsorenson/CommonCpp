@@ -28,6 +28,8 @@ class Model
 public:
     Model()=default;
     ~Model()=default;
+
+    void add_thing(std::shared_ptr<Thing> a_thing);
 };
 
 class Thing
@@ -45,6 +47,9 @@ class Identifier
     ManyLink<Descriptor> descriptor_array; 
 
 public:
+    Identifier(std::shared_ptr<Entity> a_owner);
+    ~Identifier()=default;
+    void add_descriptor(std::shared_ptr<Descriptor> a_descriptor);
 };
 
 
@@ -54,11 +59,10 @@ class Entity : public Thing
     ManyLink<Identifier> identifier_array; 
 
 public:
-    Entity(std::string name, std::shared_ptr<Identifier> a_identifier);
-    Entity(std::string name, std::vector<std::shared_ptr<Identifier>> a_identifier_set);
+    Entity(std::string name);
     ~Entity()=default;
 
-    void add_descriptor(std::shared_ptr<Descriptor> a_descriptor);
+    void add_descriptor(std::shared_ptr<Descriptor> a_descriptor, bool b_is_identifying_descriptor = false, int32_t identifier_index = 0);
 };
 
 class Descriptor : public Thing
@@ -106,6 +110,10 @@ class Attribute : public Descriptor
         Unknown
     } 
     scale;
+
+public:
+    Attribute(std::string a_name);
+    ~Attribute()=default;
 };
 
 class Degree

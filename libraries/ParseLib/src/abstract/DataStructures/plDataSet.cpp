@@ -318,4 +318,35 @@ int32_t plDataSet::EntityKey::GetIndex(){return index;}
 
 int32_t plDataSet::generate_data_model()
 {
+    shared_ptr<Entity>
+        eRecord = make_shared<Entity>("record"),
+        eCell = make_shared<Entity>("cell"),
+        eField = make_shared<Entity>("field"),
+        eField_name = make_shared<Entity>("field_name");
+
+    shared_ptr<Attribute>
+        eRecord_line_id,
+        eCell_value,
+        eField_field_id,
+        eField_name_value;
+
+    eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("line_id")), true);
+    eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value")));
+    eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id")), true);
+    eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("value")));
+
+    shared_ptr<Relationship>
+        cell_to_record = make_shared<Relationship>("cell_to_record", eRecord, eCell),
+        cell_to_field = make_shared<Relationship>("cell_to_field", eField, eCell),
+        field_to_field_name = make_shared<Relationship>("field_to_field_name", eField, eField_name);
+
+    logical_data_structure.add_thing(eRecord);
+    logical_data_structure.add_thing(eCell); 
+    logical_data_structure.add_thing(eField);
+    logical_data_structure.add_thing(eField_name);
+
+    logical_data_structure.add_thing(cell_to_record);
+    logical_data_structure.add_thing(cell_to_field); 
+    logical_data_structure.add_thing(field_to_field_name);
+
 };
