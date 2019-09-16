@@ -319,10 +319,10 @@ int32_t plDataSet::EntityKey::GetIndex(){return index;}
 int32_t plDataSet::generate_data_model()
 {
     shared_ptr<Entity>
-        eRecord = make_shared<Entity>("record"),
-        eCell = make_shared<Entity>("cell"),
-        eField = make_shared<Entity>("field"),
-        eField_name = make_shared<Entity>("field_name");
+        eRecord = make_shared<Entity>("R", "record"),
+        eCell = make_shared<Entity>("C", "cell"),
+        eField = make_shared<Entity>("F", "field"),
+        eField_name = make_shared<Entity>("H", "field_name");
 
     shared_ptr<Attribute>
         eRecord_line_id,
@@ -333,12 +333,19 @@ int32_t plDataSet::generate_data_model()
     eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("line_id")), true);
     eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value")));
     eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id")), true);
-    eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("value")));
+    eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("name")));
 
     shared_ptr<Relationship>
         cell_to_record = make_shared<Relationship>("cell_to_record", eRecord, eCell),
         cell_to_field = make_shared<Relationship>("cell_to_field", eField, eCell),
-        field_to_field_name = make_shared<Relationship>("field_to_field_name", eField, eField_name);
+        
+        //be-be relationship 
+        cell_to_field_name = make_shared<Relationship>(
+            "cell_to_field_name", //relationship name
+            eCell, //entity 1
+            eField_name, //entity 2
+            true, //true indicates that this relationship is a be relationship.
+            Relationship::IDENTIFY_BY::LINK_2);//the link to entity 2 will be an identifying descriptor for entity_1
 
     logical_data_structure.add_thing(eRecord);
     logical_data_structure.add_thing(eCell); 
@@ -347,6 +354,12 @@ int32_t plDataSet::generate_data_model()
 
     logical_data_structure.add_thing(cell_to_record);
     logical_data_structure.add_thing(cell_to_field); 
-    logical_data_structure.add_thing(field_to_field_name);
+    logical_data_structure.add_thing(cell_to_field_name);
 
 };
+
+
+Model plDataSet::get_data_model()
+{
+    return logical_data_structure;
+}

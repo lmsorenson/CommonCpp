@@ -31,6 +31,9 @@ int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds, std::ve
     ParserPipeline pipeline;
     this->configure_pipeline(pipeline);
 
+    //configure the data model
+    ds.generate_data_model();
+
     int32_t err;
     if( (err=pipeline.execute(n, ds)) )
     {

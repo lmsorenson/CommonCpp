@@ -63,7 +63,16 @@ plInstance plInstance::related(string a_label)
 { 
     //get the descriptor-index value off the entity identified
     //by 'a_label'
-    string attr_buffer = get_descriptor(a_label);
+    string attr_buffer;
+    attr_buffer.append(get_descriptor(a_label));
+
+    cout << "plInstance::related:  attr_buffer =" << attr_buffer << endl;
+    vector<string> identifier = owning_data_set->get_data_model().get_entity_identifier(a_label);
+
+    for(auto &descriptor : identifier)
+    {
+        cout << "plInstance::related:  identifying descriptor =" << descriptor << endl;
+    }
 
     //get the value from the associated plDataSet
     return owning_data_set->get(attr_buffer);

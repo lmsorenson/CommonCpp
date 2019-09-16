@@ -64,6 +64,7 @@ public:
     int32_t add_label(std::string a_new_label);
     int32_t add_optional_flag(std::string a_new_label);
     int32_t generate_data_model();
+    Model get_data_model();
 
     std::string id_lexer(
         std::string a_identifier, 
