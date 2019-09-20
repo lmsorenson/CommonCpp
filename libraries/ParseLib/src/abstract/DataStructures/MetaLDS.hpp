@@ -38,7 +38,7 @@ public:
 class Thing
 {
     std::string name;
-    std::string id_label;
+    std::string thing_id;
 
 public:
     Thing(std::string a_name);
@@ -46,7 +46,7 @@ public:
     ~Thing()=default;
 
     virtual void print();
-    virtual std::string get_label();
+    std::string get_id();
 };
 
 class Identifier 
@@ -84,6 +84,8 @@ class Descriptor : public Thing
 public:
     Descriptor(std::string a_name);
     ~Descriptor()=default;
+
+    virtual std::string get_label()=0;
 };
 
 class Relationship : public Thing
@@ -130,9 +132,13 @@ class Attribute : public Descriptor
     } 
     scale;
 
+    std::string attribute_label;
+
 public:
-    Attribute(std::string a_name);
+    Attribute(std::string a_name, std::string a_label);
     ~Attribute()=default;
+
+    virtual std::string get_label() override;
 };
 
 class Degree

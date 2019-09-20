@@ -330,14 +330,14 @@ int32_t plDataSet::generate_data_model()
         eField_field_id,
         eField_name_value;
 
-    eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("line_id")), true);
-    eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value")));
-    eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id")), true);
-    eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("name")));
+    eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("record_id", "R")), true);
+    eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value", "V")));
+    eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id", "F")), true);
+    eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("name", "N")));
 
     shared_ptr<Relationship>
-        cell_to_record = make_shared<Relationship>("cell_to_record", eRecord, eCell),
-        cell_to_field = make_shared<Relationship>("cell_to_field", eField, eCell),
+        cell_to_record = make_shared<Relationship>("cell_to_record", eCell, eRecord,  false, Relationship::IDENTIFY_BY::LINK_1),
+        cell_to_field = make_shared<Relationship>("cell_to_field", eCell, eField, false, Relationship::IDENTIFY_BY::LINK_1),
         
         //be-be relationship 
         cell_to_field_name = make_shared<Relationship>(
@@ -345,7 +345,7 @@ int32_t plDataSet::generate_data_model()
             eCell, //entity 1
             eField_name, //entity 2
             true, //true indicates that this relationship is a be relationship.
-            Relationship::IDENTIFY_BY::LINK_2);//the link to entity 2 will be an identifying descriptor for entity_1
+            Relationship::IDENTIFY_BY::LINK_2);//the link to entity 1 will be an identifying descriptor for entity_2
 
     logical_data_structure.add_thing(eRecord);
     logical_data_structure.add_thing(eCell); 

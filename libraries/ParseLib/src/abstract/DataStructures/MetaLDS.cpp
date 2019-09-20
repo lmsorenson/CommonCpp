@@ -25,7 +25,7 @@ shared_ptr<Entity> Model::get_entity(string a_entity_id_label)
         //thing is an entity and the label matches the argument label.
         if((found_entity=dynamic_pointer_cast<Entity>(thing)))
         {
-            if (a_entity_id_label.compare(found_entity->get_label())==0)
+            if (a_entity_id_label.compare(found_entity->get_id())==0)
             {
                 //if the found entity doesn't exist.
                 if(!result)
@@ -53,7 +53,7 @@ vector<string> Model::get_entity_identifier(string a_entity_label)
 
     //ask the entity for it's identifying descriptors.
     if (e!=nullptr)
-        str_vec = e->get_identifying_descriptors();
+        str_vec=e->get_identifying_descriptors();
 
     return str_vec;
 }
@@ -65,7 +65,7 @@ Thing::Thing(string a_name)
 
 Thing::Thing(std::string a_name, std::string a_label)
 : name(a_name)
-, id_label(a_label)
+, thing_id(a_label)
 {
 }
 
@@ -74,9 +74,9 @@ void Thing::print()
     cout << this->name << endl;
 }
 
-string Thing::get_label()
+string Thing::get_id()
 {
-    return id_label;
+    return thing_id;
 }
 
 Identifier::Identifier(std::shared_ptr<Entity> a_owner)
@@ -92,9 +92,9 @@ void Identifier::add_descriptor(shared_ptr<Descriptor> a_descriptor)
 vector<string> Identifier::get_descriptor_labels()
 {
     vector<string> result;
-    for(auto descriptor : this->descriptor_array)
+    for(int i=0; i<this->descriptor_array.size(); i++)
     {
-        result.push_back(descriptor->get_label());
+        result.push_back(this->descriptor_array[i]->get_label());
     }
     return result;
 }
@@ -105,6 +105,7 @@ Entity::Entity(string a_entity_id, string a_name)
 {
 }
 
+//default param for identifier index is 0
 void Entity::add_descriptor(shared_ptr<Descriptor> a_descriptor, bool b_is_identifying_descriptor, int32_t identifier_index)
 {
     descriptor_array.push_back(a_descriptor);
@@ -156,10 +157,32 @@ Link::Link(string a_name, shared_ptr<Entity> a_entity, string a_link_label)
 string Link::get_label()
 {
     if (link_subject)
-        return link_subject->get_label();
+    {
+        vector<string> descriptor_labels;
+
+        descriptor_labels = link_subject->get_identifying_descriptors();
+
+        std::string result;
+        for(auto label : descriptor_labels)
+        {
+            result.append(label);
+        }
+
+        return result;
+    }
+    else
+    {
+        return "ERROR";
+    }
 }
 
-Attribute::Attribute(string a_name)
+Attribute::Attribute(string a_name, std::string a_label)
 : Descriptor(a_name)
+, attribute_label(a_label)
 {
+}
+
+string Attribute::get_label()
+{
+    return attribute_label;
 }
