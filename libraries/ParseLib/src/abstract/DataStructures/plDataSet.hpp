@@ -66,6 +66,8 @@ public:
     int32_t generate_data_model();
     Model get_data_model();
 
+    int32_t IsLabelRequired(std::string a_label);
+
     std::string id_lexer(
         std::string a_identifier, 
         std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr,

@@ -163,12 +163,14 @@ plInstance plDataSet::get(std::string a_key)
     * ----------------------------------*/
     for(int i=0; i<expected_descriptor_buffer.size(); ++i)
     {
-        //add the delimiter
-        if (!generated_key.empty())
-            generated_key.append("-");
+        
 
         if(expected_descriptor_buffer[i].GetIndex()!=-1)
         {
+            //add the delimiter
+            if (!generated_key.empty())
+                generated_key.append("-");
+
             //push key to the format.
             generated_key.append(expected_descriptor_buffer[i].GetLabel());
             
@@ -177,6 +179,10 @@ plInstance plDataSet::get(std::string a_key)
         }
         else if (!expected_descriptor_buffer[i].IsRequired())
         {
+            //add the delimiter
+            if (!generated_key.empty())
+                generated_key.append("-");
+
             if (expected_descriptor_buffer[i].IsFound())
                 generated_key.append(expected_descriptor_buffer[i].GetLabel());
         }
@@ -316,6 +322,8 @@ string plDataSet::EntityKey::GetLabel(){return label;}
 
 int32_t plDataSet::EntityKey::GetIndex(){return index;}
 
+
+
 int32_t plDataSet::generate_data_model()
 {
     shared_ptr<Entity>
@@ -362,4 +370,24 @@ int32_t plDataSet::generate_data_model()
 Model plDataSet::get_data_model()
 {
     return logical_data_structure;
+}
+
+int32_t plDataSet::IsLabelRequired(string a_label)
+{
+    int32_t r=-1;
+
+    bool b_descriptor_found = false;
+
+    for(auto descriptor : this->expected_descriptors)
+    {
+        if(descriptor->GetLabel() == a_label)//if this is never called return an error.
+        {       
+            if (b_descriptor_found)//if this is ever called return an error.
+                r=-1;
+
+            r=descriptor->IsRequired();
+        }
+    }
+
+    return r;
 }

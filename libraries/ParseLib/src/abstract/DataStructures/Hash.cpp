@@ -46,13 +46,13 @@ int32_t hTable::insert(string key, hValue value)
         }
 
         e->set_next(hElement(key, value));
-        key_list.push_back(key);
+        hash_key_list.push_back(key);
     }
     //if the bucket is null
     else
     {
         table[index]=make_shared<hElement>(hElement(key, value));
-        key_list.push_back(key);
+        hash_key_list.push_back(key);
     }
     
 
@@ -82,18 +82,37 @@ string hTable::get(string key)
     return "NULL";
 }
 
-vector<string> hTable::GetMatchingKeys(string str)
+vector<string> hTable::GetMatchingKeys(string descriptor_list_str)
 {
     vector<string> return_list;
 
-    //iterate through all valid keys.
-    for(int i=0; i<key_list.size(); ++i)
+    char * token=strtok((char*)descriptor_list_str.c_str(), "-");
+    vector<string> 
+        local_hash_keys = hash_key_list,
+        local_hash_key_buffer;
+
+    while(token!=NULL)
     {
-        //check if the key matches the passed in key.
-        if((key_list[i].find(str))!=string::npos)
-            return_list.push_back(key_list[i]);
+        //iterate through all valid keys.
+        for(int i=0; i<local_hash_keys.size(); ++i)
+        {
+            //check if the key matches the passed in key.
+            if((local_hash_keys[i].find(token))!=string::npos)
+            {
+                local_hash_key_buffer.push_back(local_hash_keys[i]);
+            }
+        }
+
+        local_hash_keys.clear();
+        local_hash_keys=local_hash_key_buffer;
+        local_hash_key_buffer.clear();
+
+        token=strtok(NULL, "-");
     }
 
+    return_list = local_hash_keys;
+
+    delete[] token;
     return return_list;
 }
 

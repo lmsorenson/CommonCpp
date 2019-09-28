@@ -33,8 +33,8 @@ shared_ptr<Entity> Model::get_entity(string a_entity_id_label)
 
                 //if it does exist there has been an error.
                 //no two entities should have the same id_label.
-                // else
-                //     return nullptr;
+                else
+                    return nullptr;
             }
 
         }
@@ -63,7 +63,7 @@ Thing::Thing(string a_name)
 {
 }
 
-Thing::Thing(std::string a_name, std::string a_label)
+Thing::Thing(string a_name, string a_label)
 : name(a_name)
 , thing_id(a_label)
 {
@@ -79,7 +79,7 @@ string Thing::get_id()
     return thing_id;
 }
 
-Identifier::Identifier(std::shared_ptr<Entity> a_owner)
+Identifier::Identifier(shared_ptr<Entity> a_owner)
 : owning_entity(a_owner)
 {
 }
@@ -94,7 +94,18 @@ vector<string> Identifier::get_descriptor_labels()
     vector<string> result;
     for(int i=0; i<this->descriptor_array.size(); i++)
     {
-        result.push_back(this->descriptor_array[i]->get_label());
+        shared_ptr<Attribute> a;
+        shared_ptr<Link> l;
+        if((a=dynamic_pointer_cast<Attribute>(this->descriptor_array[i])))
+            result.push_back(a->get_label());
+
+        else if((l=dynamic_pointer_cast<Link>(this->descriptor_array[i])))
+        {
+            for( string label : l->get_labels())
+            {
+                result.push_back(label);
+            }
+        }
     }
     return result;
 }
@@ -154,29 +165,17 @@ Link::Link(string a_name, shared_ptr<Entity> a_entity, string a_link_label)
 {
 }
 
-string Link::get_label()
+vector<string> Link::get_labels()
 {
+    vector<string> r_descriptor_labels;
+     //if the link subject is valid get descriptors identifying the linked entity.
     if (link_subject)
-    {
-        vector<string> descriptor_labels;
+        r_descriptor_labels = link_subject->get_identifying_descriptors();
 
-        descriptor_labels = link_subject->get_identifying_descriptors();
-
-        std::string result;
-        for(auto label : descriptor_labels)
-        {
-            result.append(label);
-        }
-
-        return result;
-    }
-    else
-    {
-        return "ERROR";
-    }
+    return r_descriptor_labels;
 }
 
-Attribute::Attribute(string a_name, std::string a_label)
+Attribute::Attribute(string a_name, string a_label)
 : Descriptor(a_name)
 , attribute_label(a_label)
 {

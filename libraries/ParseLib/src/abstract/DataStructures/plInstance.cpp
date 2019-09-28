@@ -64,14 +64,35 @@ plInstance plInstance::related(string a_label)
     //get the descriptor-index value off the entity identified
     //by 'a_label'
     string attr_buffer;
-    attr_buffer.append(get_descriptor(a_label));
+    
+    
+    if(get_descriptor(a_label)!="NO_VALUE")
+        attr_buffer.append(get_descriptor(a_label));
 
-    cout << "plInstance::related:  attr_buffer =" << attr_buffer << endl;
+    else if(!owning_data_set->IsLabelRequired(a_label))
+        attr_buffer.append(a_label);
+
+    //get any other descriptors that might be necessary
     vector<string> identifier = owning_data_set->get_data_model().get_entity_identifier(a_label);
 
     for(int i=0; i<identifier.size();++i)
     {
-        cout << "plInstance::related:  identifying descriptor =" << identifier[i] << endl;
+        if(get_descriptor(identifier[i])!="NO_VALUE")
+        {
+            if(!attr_buffer.empty())
+                attr_buffer.append("-");
+
+            attr_buffer.append(get_descriptor(identifier[i]));
+        }
+            
+
+        else if(!owning_data_set->IsLabelRequired(identifier[i]))
+        {
+            if(!attr_buffer.empty())
+                attr_buffer.append("-");
+
+            attr_buffer.append(identifier[i]);
+        }
     }
 
     //get the value from the associated plDataSet
@@ -159,7 +180,7 @@ int32_t plInstance::find(std::string a_value, int32_t offset)
     int32_t pos=offset;
 
     //find the current instance if it exists.
-    while(((*itr)!=a_value) && (itr!=this->value.cend()))
+    while(( (itr!=this->value.cend()) && (*itr)!=a_value))
     {
         itr++;
         pos++;
@@ -196,7 +217,10 @@ string plInstance::get_descriptor(string a_label)
         }
         );
 
-    desc_buffer.append(to_string(index_buffer));
+    if (index_buffer!=-1)
+        desc_buffer.append(to_string(index_buffer));
+    else
+        return "NO_VALUE";
 
     return desc_buffer;
 }

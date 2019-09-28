@@ -251,7 +251,9 @@ TEST_F(CSVFunctionalSpec, TestR5_4)
 TEST_F(CSVFunctionalSpec, TestR5_5)
 {
     plDataSet ds;
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv");
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv", options);
     plInstance inst = ds.get("F1");
     plInstance inst2 = inst.related("H");
 

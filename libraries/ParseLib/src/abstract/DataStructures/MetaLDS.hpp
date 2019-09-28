@@ -84,8 +84,6 @@ class Descriptor : public Thing
 public:
     Descriptor(std::string a_name);
     ~Descriptor()=default;
-
-    virtual std::string get_label()=0;
 };
 
 class Relationship : public Thing
@@ -117,7 +115,7 @@ public:
     Link(std::string a_name, std::shared_ptr<Entity> a_entity, std::string a_link_label="");
     ~Link()=default;
 
-    virtual std::string get_label() override;
+    std::vector<std::string> get_labels();
 };
 
 class Attribute : public Descriptor
@@ -138,7 +136,7 @@ public:
     Attribute(std::string a_name, std::string a_label);
     ~Attribute()=default;
 
-    virtual std::string get_label() override;
+    std::string get_label();
 };
 
 class Degree
