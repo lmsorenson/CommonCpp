@@ -257,7 +257,7 @@ TEST_F(CSVFunctionalSpec, TestR5_5)
     plInstance inst = ds.get("F1");
     plInstance inst2 = inst.related("H");
 
-    ASSERT_EQ(inst2.get(), "field_name");
+    ASSERT_EQ(inst2.get(), "field_nameB");
 }
 
 // insert two values into one key.

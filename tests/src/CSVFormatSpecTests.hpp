@@ -45,6 +45,17 @@ TEST_F(CSVFormatTests, TestR1)
 
     ASSERT_EQ(str.get(), "aaa");
 }
+//HEADER 
+TEST_F(CSVFormatTests, TestR1_WithHeader)
+{
+    plDataSet ds;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1H.csv", options);
+    plInstance str = ds.get("R0-F0");
+
+    ASSERT_EQ(str.get(), "aaa");
+}
 
 
 
@@ -64,12 +75,46 @@ TEST_F(CSVFormatTests, TestR2_1)//has a line break
     ASSERT_EQ(field2.get(), "bbb");
     ASSERT_EQ(field3.get(), "ccc");
 }
+//The last record in the file may or may not have an ending line break.
+TEST_F(CSVFormatTests, TestR2_1_WithHeader)//has a line break
+{
+    plDataSet ds;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1-1H.csv", options);
+
+    plInstance
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
+
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "bbb");
+    ASSERT_EQ(field3.get(), "ccc");
+}
 
 TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 {
     plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1.csv");
+
+    plInstance
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
+
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "bbb");
+    ASSERT_EQ(field3.get(), "ccc");
+}
+
+TEST_F(CSVFormatTests, TestR2_2_WithHeader)//does not have a line break
+{
+    plDataSet ds;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv1H.csv", options);
 
     plInstance
         field1 = ds.get("R0-F0"),
@@ -107,9 +152,9 @@ TEST_F(CSVFormatTests, TestR3)
     plInstance B2 = ds.get("R1-F1");
     plInstance B3 = ds.get("R1-F2");
 
-    ASSERT_EQ(H1.get(), "field_name");
-    ASSERT_EQ(H2.get(), "field_name");
-    ASSERT_EQ(H3.get(), "field_name");
+    ASSERT_EQ(H1.get(), "field_nameA");
+    ASSERT_EQ(H2.get(), "field_nameB");
+    ASSERT_EQ(H3.get(), "field_nameC");
     ASSERT_EQ(A1.get(), "aaa");
     ASSERT_EQ(A2.get(), "bbb");
     ASSERT_EQ(A3.get(), "ccc");
@@ -137,6 +182,20 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
     //return READ_FILE_EMPTY
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
 } 
+TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
+{
+    plDataSet ds;
+    
+    int32_t return_code;
+
+    //read empty file
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-1.csv", options);
+
+    //return READ_FILE_EMPTY
+    ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+} 
 TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
 {
     plDataSet ds;
@@ -144,6 +203,17 @@ TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fi
     int32_t return_code;
 
     return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-3.csv");
+
+    ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+}
+TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same number of fields.
+{
+    plDataSet ds;
+    
+    int32_t return_code;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-3H.csv", options);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
 }
@@ -155,6 +225,18 @@ TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
     int32_t return_code;
 
     return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-2.csv");
+
+    ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+} 
+TEST_F(CSVFormatTests, TestR4_3_WithHeader)//must not be followed by a comma
+{   
+
+    plDataSet ds;
+    
+    int32_t return_code;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-2H.csv", options);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
 } 
@@ -180,10 +262,26 @@ TEST_F(CSVFormatTests, TestR5)
     ASSERT_EQ(field2.get(), "bbb");
     ASSERT_EQ(field3.get(), "ccc");
 }  
-TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
+TEST_F(CSVFormatTests, TestR5_WithHeader)
 {
     plDataSet ds;
     
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4H.csv", options);
+
+    plInstance
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
+
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "bbb");
+    ASSERT_EQ(field3.get(), "ccc");
+} 
+TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
+{
+    plDataSet ds;
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4-1.csv");
 
     plInstance
@@ -195,6 +293,22 @@ TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
     ASSERT_EQ(field2.get(), "bbb");
     ASSERT_EQ(field3.get(), "ccc");
 }  
+TEST_F(CSVFormatTests, TestR5_1_WithHeader)//Dobule quotes may not appear inside the fields
+{
+    plDataSet ds;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv4-1H.csv", options);
+
+    plInstance
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
+
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "bbb");
+    ASSERT_EQ(field3.get(), "ccc");
+} 
 
 
 
@@ -203,7 +317,7 @@ TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
 TEST_F(CSVFormatTests, TestR6_1)
 {
     plDataSet ds;
-    
+
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5.csv");
 
     plInstance
@@ -215,6 +329,22 @@ TEST_F(CSVFormatTests, TestR6_1)
     ASSERT_EQ(field2.get(), "b\r\rbb");
     ASSERT_EQ(field3.get(), "ccc");
 }  
+TEST_F(CSVFormatTests, TestR6_1_WithHeader)
+{
+    plDataSet ds;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5H.csv", options);
+
+    plInstance
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
+
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "b\r\r\rbb");
+    ASSERT_EQ(field3.get(), "ccc");
+} 
 TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
 {
     plDataSet ds;
@@ -230,6 +360,22 @@ TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
     ASSERT_EQ(field2.get(), "b,bb");
     ASSERT_EQ(field3.get(), "ccc");
 }  
+TEST_F(CSVFormatTests, TestR6_2_WithHeader)//commas can be enclosed in double quotes
+{
+    plDataSet ds;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv5-1H.csv", options);
+
+   plInstance
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
+
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "b,bb");
+    ASSERT_EQ(field3.get(), "ccc");
+} 
 
 
 
@@ -241,6 +387,22 @@ TEST_F(CSVFormatTests, TestR7)
     plDataSet ds;
     
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv6.csv");
+
+   plInstance
+        field1 = ds.get("R0-F0"),
+        field2 = ds.get("R0-F1"),
+        field3 = ds.get("R0-F2");
+
+    ASSERT_EQ(field1.get(), "aaa");
+    ASSERT_EQ(field2.get(), "b\"bb");
+    ASSERT_EQ(field3.get(), "ccc");
+}  
+TEST_F(CSVFormatTests, TestR7_WithHeader)
+{
+    plDataSet ds;
+    std::vector<option> options;
+    options.push_back({"header_line", true});
+    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv6H.csv", options);
 
    plInstance
         field1 = ds.get("R0-F0"),
