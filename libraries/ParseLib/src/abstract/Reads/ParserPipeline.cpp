@@ -20,14 +20,14 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
 }
 
 //execute will populate the plDataSet
-int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_store)
+int32_t ParserPipeline::execute(std::shared_ptr<plNode>& text, plDataSet& data_store)
 {
     int32_t result;
 
-    vector<vector<shared_ptr<node>>> in_buffer;
-    vector<vector<shared_ptr<node>>> out_buffer;
+    vector<vector<shared_ptr<plNode>>> in_buffer;
+    vector<vector<shared_ptr<plNode>>> out_buffer;
     
-    vector<shared_ptr<node>> svn;
+    vector<shared_ptr<plNode>> svn;
     svn.push_back(text);
     out_buffer.push_back(svn);
 
@@ -46,15 +46,15 @@ int32_t ParserPipeline::execute(std::shared_ptr<node>& text, plDataSet& data_sto
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::ProcessIndividual(plNodeSet &out_buffer, vector<node> &in_buffer, plNodePtr &current_node, std::shared_ptr<ParserFilter> filter)
+int32_t ParserPipeline::ProcessIndividual(plNodeSet &out_buffer, vector<plNode> &in_buffer, plNodePtr &current_node, std::shared_ptr<ParserFilter> filter)
 {
     //Breakup the filter output.
     for(int l = 0; l < in_buffer.size(); ++l)
     {
-        //create a new node to be added to the tree
-        node newNode = node(in_buffer[l].GetValue().c_str(), current_node);
+        //create a new plNode to be added to the tree
+        plNode newNode = plNode(in_buffer[l].GetValue().c_str(), current_node);
 
-            //Append the id of the parent node
+            //Append the id of the parent plNode
             newNode.AppendID(current_node->GetID());
             
             //add the delimiter
@@ -69,14 +69,14 @@ int32_t ParserPipeline::ProcessIndividual(plNodeSet &out_buffer, vector<node> &i
                     newNode.AppendID(filter->GetLabel().substr(1));
                 }
             }
-            //Append the id of this node
+            //Append the id of this plNode
             else 
             {
                 newNode.AppendID(filter->GetID(l));
             }
                 
 
-        //Add this to the current node's child set.
+        //Add this to the current plNode's child set.
         current_node->AddChild(newNode);
 
         //Will be added to the output buffer.
@@ -91,15 +91,15 @@ int32_t ParserPipeline::ProcessNodes(plNodeBuffer &out_buffer, plNodeSet &in_buf
 {
     int32_t result;
 
-    // Apply filters to all nodes in the node set.
+    // Apply filters to all nodes in the plNode set.
     for (int k=0; k < in_buffer.size(); ++k)
     {
         //assign the results of the filter to the children vector.
         string str = in_buffer[k]->GetValue();
 
-        vector<shared_ptr<node>> filter_result_set;
+        vector<shared_ptr<plNode>> filter_result_set;
         
-        vector<node> vn;
+        vector<plNode> vn;
         int32_t err;
         if( (err=filter->execute(str.c_str(), vn))!=ParserFilter::FILTER_SUCCESS )
         {
@@ -126,7 +126,7 @@ int32_t ParserPipeline::ProcessNodeSets(plNodeBuffer &out_buffer, plNodeBuffer &
 {
     int32_t result;
 
-    // Apply filters to all node sets.
+    // Apply filters to all plNode sets.
     for(int j=0; j < in_buffer.size(); ++j)
     {
         if ((result=ProcessNodes(out_buffer, in_buffer[j], filter))!= PIPELINE_SUCCESS)

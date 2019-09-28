@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <vector>
-#include "Hash.hpp"
+#include "plHash.hpp"
 #include "plInstance.hpp"
 #include "MetaLDS.hpp"
 

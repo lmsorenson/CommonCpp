@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <vector>
-#include "node.hpp"
+#include "../DataStructures/plNode.hpp"
 
 
 /* Each element/entity output by the filter is identified using the format:
@@ -15,7 +15,7 @@ public:
     ParserFilter(std::string new_filter_id);
     ~ParserFilter();
 
-    virtual int32_t execute(std::string text, std::vector<node> & output) = 0;
+    virtual int32_t execute(std::string text, std::vector<plNode> & output) = 0;
     virtual std::string name();
 
     std::string GetID(int index);

@@ -14,7 +14,7 @@
     : ParserFilter(new_filter_id)
     {}
 
-    int32_t HeaderFilter::execute(string text, vector<node>& output)
+    int32_t HeaderFilter::execute(string text, vector<plNode>& output)
     {
         istringstream file(text);
         string line, r_buffer;
@@ -24,8 +24,8 @@
         {
             if(b_first_line)
             {
-                //push line 1 as a new node.
-                output.push_back(node(line, nullptr));
+                //push line 1 as a new plNode.
+                output.push_back(plNode(line, nullptr));
 
                 //once the first line has been separated.
                 //indicate this is no longer the first line.
@@ -38,7 +38,7 @@
             }
         }
 
-        output.push_back(node(r_buffer, nullptr));
+        output.push_back(plNode(r_buffer, nullptr));
 
 
         return FILTER_SUCCESS;
@@ -55,7 +55,7 @@
     : ParserFilter(new_filter_id)
     {}
 
-    int32_t RecordFilter::execute(string text, vector<node>& output)
+    int32_t RecordFilter::execute(string text, vector<plNode>& output)
     {
         istringstream file(text);
         string line, rBuffer;
@@ -96,9 +96,9 @@
                 }
             }//last character in line
 
-            //add the new node to the filter output.
+            //add the new plNode to the filter output.
             if(!record_value.empty())
-                output.push_back(node(record_value.c_str(), nullptr));
+                output.push_back(plNode(record_value.c_str(), nullptr));
         }//last line
         
         if(output.size()==0)
@@ -121,7 +121,7 @@
     , field_count(-1)
     {}
 
-    int32_t FieldFilter::execute(string text, vector<node>& output)
+    int32_t FieldFilter::execute(string text, vector<plNode>& output)
     {
         if (text.back()==',')
             return FILTER_FORMAT_ERROR;
@@ -153,10 +153,10 @@
                 last_char = *it;
             }
 
-            //if there is not an open quotation, push the node to the buffer
+            //if there is not an open quotation, push the plNode to the buffer
             if ((number_of_quotes%2==0))
             {
-                output.push_back(node(buffer, nullptr));
+                output.push_back(plNode(buffer, nullptr));
                 buffer.clear();
             }
             //if there is a quotation open put the comma back, and do NOT clear the buffer
@@ -203,11 +203,11 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    void CSVOutput::execute(std::shared_ptr<node>& text, plDataSet& data_store)
+    void CSVOutput::execute(std::shared_ptr<plNode>& text, plDataSet& data_store)
     {
         //set of nodes to check
-        vector<shared_ptr<node>> in;
-        vector<shared_ptr<node>> out;
+        vector<shared_ptr<plNode>> in;
+        vector<shared_ptr<plNode>> out;
         out.push_back(text);
 
         //run the following loop while there are still nodes to parse.
@@ -217,10 +217,10 @@
             in = out;       //set i equal to the previous o
             out.clear();    //clear o for new nodes.
 
-            //loop through a node set
+            //loop through a plNode set
             for (int i=0; i<in.size(); ++i)
             { 
-                //if the node has children:
+                //if the plNode has children:
                 if (in[i]->HasChildren())
                 {
                     //loop through all children
@@ -233,7 +233,7 @@
                 //if not:
                 else
                 {
-                    //add the node value to the hash table.
+                    //add the plNode value to the hash table.
                     data_store.set( in[i]->GetID(), plHashValue(in[i]->GetValue(), in[i]->GetPath()) );
                 }
             }//i

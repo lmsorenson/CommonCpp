@@ -22,7 +22,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds, std::ve
     //set the read options before anything else
     this->set_read_options(read_options);
 
-    shared_ptr<node> n = make_shared<node>(node(raw_text, nullptr));
+    shared_ptr<plNode> n = make_shared<plNode>(plNode(raw_text, nullptr));
     
     //decrypt
     
