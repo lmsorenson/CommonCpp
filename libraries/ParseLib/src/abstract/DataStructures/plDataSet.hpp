@@ -36,7 +36,7 @@ class plDataSet
     };
 
     //a hash table to store the data in.
-    hTable hash_table;
+    plHashTable hash_table;
     Model logical_data_structure;
     std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
 
@@ -60,7 +60,7 @@ public:
     plInstance where(std::string descriptor, std::string value);
 
     //Mutators//-------------------------------------------------
-    int32_t set(std::string a_key, hValue a_value);
+    int32_t set(std::string a_key, plHashValue a_value);
     int32_t add_label(std::string a_new_label);
     int32_t add_optional_flag(std::string a_new_label);
     int32_t generate_data_model();

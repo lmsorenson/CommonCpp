@@ -246,12 +246,12 @@ plInstance plDataSet::where(std::string descriptor, std::string value)
     }
 }
 
-int32_t plDataSet::set(std::string a_key, hValue a_value)
+int32_t plDataSet::set(std::string a_key, plHashValue a_value)
 {
     switch (state)
     {
     case DATA_SET_EMPTY: state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
-    case DATA_SET_GOOD: return hash_table.insert(a_key, hValue(a_value)); break;
+    case DATA_SET_GOOD: return hash_table.insert(a_key, plHashValue(a_value)); break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
     default:
     case UNKNOWN: return UNKNOWN; break;
@@ -364,6 +364,7 @@ int32_t plDataSet::generate_data_model()
     logical_data_structure.add_thing(cell_to_field); 
     logical_data_structure.add_thing(cell_to_field_name);
 
+    return 0;
 };
 
 

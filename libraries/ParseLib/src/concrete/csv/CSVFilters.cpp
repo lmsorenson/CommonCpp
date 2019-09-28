@@ -234,7 +234,7 @@
                 else
                 {
                     //add the node value to the hash table.
-                    data_store.set( in[i]->GetID(), hValue(in[i]->GetValue(), in[i]->GetPath()) );
+                    data_store.set( in[i]->GetID(), plHashValue(in[i]->GetValue(), in[i]->GetPath()) );
                 }
             }//i
         }

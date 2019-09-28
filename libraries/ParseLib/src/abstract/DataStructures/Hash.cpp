@@ -4,19 +4,19 @@
 
 using namespace std;
 
-hTable::hTable(int32_t table_size_arg)
+plHashTable::plHashTable(int32_t table_size_arg)
 {
     hTableSize = table_size_arg;
     table.resize(hTableSize);
 }
 
-hTable::~hTable()
+plHashTable::~plHashTable()
 {
 
 }
 
 
-int32_t hTable::compute_index(string value)
+int32_t plHashTable::compute_index(string value) const
 {
     int index = 1;
 
@@ -31,10 +31,10 @@ int32_t hTable::compute_index(string value)
 }
 
 
-int32_t hTable::insert(string key, hValue value)
+int32_t plHashTable::insert(string key, plHashValue value)
 {
     int32_t index = compute_index(key);
-    shared_ptr<hElement> e (table[index]);
+    shared_ptr<plHashElement> e (table[index]);
 
     //if the bucket is NOT null
     if (e!=nullptr)
@@ -45,13 +45,13 @@ int32_t hTable::insert(string key, hValue value)
             e = e->next();
         }
 
-        e->set_next(hElement(key, value));
-        hash_key_list.push_back(key);
+        e->set_next(plHashElement(key, value));
+        this->hash_key_list.push_back(key);
     }
     //if the bucket is null
     else
     {
-        table[index]=make_shared<hElement>(hElement(key, value));
+        table[index]=make_shared<plHashElement>(plHashElement(key, value));
         hash_key_list.push_back(key);
     }
     
@@ -59,11 +59,11 @@ int32_t hTable::insert(string key, hValue value)
     return 0;
 }
 
-string hTable::get(string key)
+string plHashTable::get(string key) const
 {
     string ret = "";
 
-    shared_ptr<hElement> e = table[compute_index(key)];
+    shared_ptr<plHashElement> e = table[compute_index(key)];
 
     //if a value at the key exists.
     while((e!=nullptr) && (ret == ""))
@@ -82,7 +82,7 @@ string hTable::get(string key)
     return "NULL";
 }
 
-vector<string> hTable::GetMatchingKeys(string descriptor_list_str)
+vector<string> plHashTable::GetMatchingKeys(string descriptor_list_str) const
 {
     vector<string> return_list;
 
@@ -116,47 +116,47 @@ vector<string> hTable::GetMatchingKeys(string descriptor_list_str)
     return return_list;
 }
 
-hElement::hElement(string aKey, hValue aValue) 
+plHashElement::plHashElement(string aKey, plHashValue aValue) 
 : key(aKey)
-, value( hValue(aValue) )
+, value( plHashValue(aValue) )
 {}
-hElement::~hElement(){}
+plHashElement::~plHashElement(){}
 
-shared_ptr<hElement> hElement::next()
+shared_ptr<plHashElement> plHashElement::next() const
 {
     return next_element;
 }
 
-bool hElement::has_next()
+bool plHashElement::has_next() const
 {
     return (this->next() != nullptr);
 }
 
-void hElement::set_next(hElement e)
+void plHashElement::set_next(plHashElement e)
 {
-    next_element = make_shared<hElement>(e);
+    next_element = make_shared<plHashElement>(e);
 }
 
-string hElement::get_key()
+string plHashElement::get_key() const
 {
     return key;
 }
 
-string hElement::get_value()
+string plHashElement::get_value() const
 {
     return value.get_value();
 }
 
 
 
-hValue::hValue(string aValue, string aParentString)
+plHashValue::plHashValue(string aValue, string aParentString)
 : value(aValue)
 , parent_key(aParentString)
 {}
-hValue::~hValue()
+plHashValue::~plHashValue()
 {}
 
-string hValue::get_value()
+string plHashValue::get_value() const
 {
     return value;
 }
