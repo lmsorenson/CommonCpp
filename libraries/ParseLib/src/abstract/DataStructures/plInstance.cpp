@@ -19,7 +19,7 @@ plInstance::~plInstance()
 {
 }
 
-string plInstance::get()
+string plInstance::get() const
 {
     if (state == VALID_INST && value.size()!= 0)
     {
@@ -42,7 +42,7 @@ string plInstance::get()
     else
         return "NULL";
 }
-string plInstance::at(int8_t index)
+string plInstance::at(int8_t index) const
 {
     if(state == VALID_INST && value.size()!= 0)
     {
@@ -59,7 +59,7 @@ string plInstance::at(int8_t index)
     }
 }
 
-plInstance plInstance::related(string a_label)
+plInstance plInstance::related(string a_label) const
 { 
     //get the descriptor-index value off the entity identified
     //by 'a_label'
@@ -100,7 +100,7 @@ plInstance plInstance::related(string a_label)
 }
 
 //Get next instance in 'a_label'
-plInstance plInstance::pull_next(string a_label)
+plInstance plInstance::pull_next(string a_label) const
 {
     // get next instance with respect to entity identified by a_label
     plInstance owner;
@@ -158,19 +158,19 @@ plInstance plInstance::pull_next(string a_label)
         return plInstance(owning_data_set, NULL_INST);
 }
 
-plInstance plInstance::pull_previous(string a_label)
+plInstance plInstance::pull_previous(string a_label) const
 {
 
     return plInstance();
 }
 
-bool plInstance::is_valid()
+bool plInstance::is_valid() const
 {
     return (state == VALID_INST);
 }    
 
 
-int32_t plInstance::find(std::string a_value, int32_t offset)
+int32_t plInstance::find(std::string a_value, int32_t offset) const
 {
     //------------------------------------------
     //      step through value iterator
@@ -201,7 +201,7 @@ void plInstance::SetKey(std::string a_key)
 }
 
 
-string plInstance::get_descriptor(string a_label)
+string plInstance::get_descriptor(string a_label) const
 {
     string desc_buffer = a_label;
     int32_t index_buffer = -1;
