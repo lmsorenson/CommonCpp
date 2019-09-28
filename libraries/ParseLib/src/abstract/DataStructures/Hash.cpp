@@ -39,13 +39,7 @@ int32_t plHashTable::insert(string key, plHashValue value)
     //if the bucket is NOT null
     if (e!=nullptr)
     {
-        //Find the last element
-        while(e->has_next())
-        {
-            e = e->next();
-        }
-
-        e->set_next(plHashElement(key, value));
+        e->set_last(plHashElement(key, value));
         this->hash_key_list.push_back(key);
     }
     //if the bucket is null
@@ -61,25 +55,7 @@ int32_t plHashTable::insert(string key, plHashValue value)
 
 string plHashTable::get(string key) const
 {
-    string ret = "";
-
-    shared_ptr<plHashElement> e = table[compute_index(key)];
-
-    //if a value at the key exists.
-    while((e!=nullptr) && (ret == ""))
-    {
-        //check if the key of the element is the same as
-        //the key passed in.
-       if (e->get_key() == key)
-       {
-           //returns the correct value
-           return e->get_value();
-       }
-
-       e = e->next();
-    }
-    //should return an error if the correct value is not found.
-    return "NULL";
+    return table[compute_index(key)]->find(key);
 }
 
 vector<string> plHashTable::GetMatchingKeys(string descriptor_list_str) const
@@ -122,7 +98,7 @@ plHashElement::plHashElement(string aKey, plHashValue aValue)
 {}
 plHashElement::~plHashElement(){}
 
-shared_ptr<plHashElement> plHashElement::next() const
+shared_ptr<const plHashElement> plHashElement::next() const
 {
     return next_element;
 }
@@ -132,9 +108,39 @@ bool plHashElement::has_next() const
     return (this->next() != nullptr);
 }
 
-void plHashElement::set_next(plHashElement e)
+void plHashElement::set_last(plHashElement e)
 {
+    const plHashElement * x = this;
+
+    //Find the last element
+    while(x->has_next())
+    {
+        x = x->next().get();
+    }
+
     next_element = make_shared<plHashElement>(e);
+}
+
+string plHashElement::find(string a_key) const
+{
+    string ret = "";
+    const plHashElement * e = this;
+
+    //if a value at the key exists.
+    while((e!=nullptr) && (ret == ""))
+    {
+        //check if the key of the element is the same as
+        //the key passed in.
+       if (e->get_key() == a_key)
+       {
+           //returns the correct value
+           return e->get_value();
+       }
+
+       e = e->next().get();
+    }
+
+    return "NULL";
 }
 
 string plHashElement::get_key() const
