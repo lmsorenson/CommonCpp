@@ -4,7 +4,7 @@
 
 
 class plHashTable;
-class plHashElement;
+class plHashElementIterator;
 
 class plHashValue
 {
@@ -26,7 +26,7 @@ private:
     virtual int32_t compute_index(std::string aValue) const;    //hash function.
     
     int32_t hTableSize; //size of the table.
-    std::vector<std::shared_ptr<plHashElement>> table;  //the table of data.
+    std::vector<std::shared_ptr<plHashElementIterator>> table;  //the table of data.
     std::vector<std::string> hash_key_list;             //a list of keys entered into this table.
     
 public:
@@ -44,21 +44,21 @@ public:
 };
 
 
-class plHashElement
+class plHashElementIterator
 {
 private:
     const std::string key;                                //the key for the key-value pair.
     const plHashValue value;                              //the value of the element.
-    std::shared_ptr<plHashElement> next_element;          //a pointer to the next element in the bucket(or with the same key)
+    std::shared_ptr<plHashElementIterator> next_element;          //a pointer to the next element in the bucket(or with the same key)
 
 public:
-    plHashElement() = default;                            //
-    plHashElement(std::string key, plHashValue aValue);   //
-    ~plHashElement();                                     //
+    plHashElementIterator() = default;                            //
+    plHashElementIterator(std::string key, plHashValue aValue);   //
+    ~plHashElementIterator();                                     //
 
-    std::shared_ptr<const plHashElement> next() const;
+    std::shared_ptr<const plHashElementIterator> next() const;
     bool has_next() const;
-    void set_last(plHashElement e);
+    void set_last(plHashElementIterator e);
     std::string find(std::string a_key) const;
     std::string get_key() const;
     std::string get_value() const;

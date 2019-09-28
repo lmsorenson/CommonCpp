@@ -34,18 +34,18 @@ int32_t plHashTable::compute_index(string value) const
 int32_t plHashTable::insert(string key, plHashValue value)
 {
     int32_t index = compute_index(key);
-    shared_ptr<plHashElement> e (table[index]);
+    shared_ptr<plHashElementIterator> e (table[index]);
 
     //if the bucket is NOT null
     if (e!=nullptr)
     {
-        e->set_last(plHashElement(key, value));
+        e->set_last(plHashElementIterator(key, value));
         this->hash_key_list.push_back(key);
     }
     //if the bucket is null
     else
     {
-        table[index]=make_shared<plHashElement>(plHashElement(key, value));
+        table[index]=make_shared<plHashElementIterator>(plHashElementIterator(key, value));
         hash_key_list.push_back(key);
     }
     
@@ -92,25 +92,25 @@ vector<string> plHashTable::GetMatchingKeys(string descriptor_list_str) const
     return return_list;
 }
 
-plHashElement::plHashElement(string aKey, plHashValue aValue) 
+plHashElementIterator::plHashElementIterator(string aKey, plHashValue aValue) 
 : key(aKey)
 , value( plHashValue(aValue) )
 {}
-plHashElement::~plHashElement(){}
+plHashElementIterator::~plHashElementIterator(){}
 
-shared_ptr<const plHashElement> plHashElement::next() const
+shared_ptr<const plHashElementIterator> plHashElementIterator::next() const
 {
     return next_element;
 }
 
-bool plHashElement::has_next() const
+bool plHashElementIterator::has_next() const
 {
     return (this->next() != nullptr);
 }
 
-void plHashElement::set_last(plHashElement e)
+void plHashElementIterator::set_last(plHashElementIterator e)
 {
-    const plHashElement * x = this;
+    const plHashElementIterator * x = this;
 
     //Find the last element
     while(x->has_next())
@@ -118,13 +118,13 @@ void plHashElement::set_last(plHashElement e)
         x = x->next().get();
     }
 
-    next_element = make_shared<plHashElement>(e);
+    next_element = make_shared<plHashElementIterator>(e);
 }
 
-string plHashElement::find(string a_key) const
+string plHashElementIterator::find(string a_key) const
 {
     string ret = "";
-    const plHashElement * e = this;
+    const plHashElementIterator * e = this;
 
     //if a value at the key exists.
     while((e!=nullptr) && (ret == ""))
@@ -143,12 +143,12 @@ string plHashElement::find(string a_key) const
     return "NULL";
 }
 
-string plHashElement::get_key() const
+string plHashElementIterator::get_key() const
 {
     return key;
 }
 
-string plHashElement::get_value() const
+string plHashElementIterator::get_value() const
 {
     return value.get_value();
 }
