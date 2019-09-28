@@ -181,6 +181,7 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 
     //return READ_FILE_EMPTY
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
 } 
 TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 {
@@ -195,6 +196,7 @@ TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 
     //return READ_FILE_EMPTY
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
 } 
 TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
 {
@@ -205,6 +207,7 @@ TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fi
     return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-3.csv");
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
 }
 TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same number of fields.
 {
@@ -216,6 +219,7 @@ TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same n
     return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-3H.csv", options);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
 }
 TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {   
@@ -227,10 +231,10 @@ TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
     return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-2.csv");
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
 } 
 TEST_F(CSVFormatTests, TestR4_3_WithHeader)//must not be followed by a comma
 {   
-
     plDataSet ds;
     
     int32_t return_code;
@@ -239,6 +243,7 @@ TEST_F(CSVFormatTests, TestR4_3_WithHeader)//must not be followed by a comma
     return_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv3-2H.csv", options);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
+    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
 } 
 
 
