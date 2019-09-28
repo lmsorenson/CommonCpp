@@ -11,7 +11,7 @@ string plDataSet::id_lexer(
     string a_identifier, 
     function<void(int32_t key_i, int32_t index, string found_label)> callback_desc_found,
     function<void(string label_not_found)> callback_desc_not_found,
-    function<void(string label_unrecognized)> callback_unrecognized_desc)
+    function<void(string label_unrecognized)> callback_unrecognized_desc) const
 {
     string r_new_id;
     char * token = strtok((char*)a_identifier.c_str(),"-");
@@ -91,7 +91,7 @@ string plDataSet::id_lexer(
     return r_new_id;
 }
 
-vector<std::string> plDataSet::get_missing_descriptors(std::string a_descriptor_labels)
+vector<std::string> plDataSet::get_missing_descriptors(std::string a_descriptor_labels) const
 {
     vector<std::string> r_missing_descriptors;
 
@@ -120,7 +120,7 @@ plDataSet::plDataSet(int32_t hash_table_size)
 , state(DATA_SET_GOOD){}
 plDataSet::~plDataSet(){}
 
-plInstance plDataSet::get(std::string a_key)
+plInstance plDataSet::get(std::string a_key) const
 {
     if (state == DATA_SET_BAD)
         return plInstance(this, plInstance::NO_FILE);
@@ -214,7 +214,7 @@ plInstance plDataSet::get(std::string a_key)
     : plInstance(this, plInstance::NULL_INST);
 }
 
-plInstance plDataSet::where(std::string descriptor, std::string value)
+plInstance plDataSet::where(std::string descriptor, std::string value) const
 {
     plInstance ret;
 
@@ -292,16 +292,16 @@ plDataSet::EntityKey::~EntityKey()
 
 }
 
-bool plDataSet::EntityKey::IsRequired()
+bool plDataSet::EntityKey::IsRequired() const
 {
     return this->required;
 }
-bool plDataSet::EntityKey::HasIndex()
+bool plDataSet::EntityKey::HasIndex() const
 {
     return this->has_index;
 }
 
-string plDataSet::EntityKey::GetLabel(){return label;}
+string plDataSet::EntityKey::GetLabel() const {return label;}
 
  int32_t plDataSet::EntityKey::SetIndex(int32_t a_index)
  {
@@ -315,12 +315,12 @@ string plDataSet::EntityKey::GetLabel(){return label;}
      return 0;
  }
 
-  bool plDataSet::EntityKey::IsFound()
+  bool plDataSet::EntityKey::IsFound() const
  {
      return b_found;
  }
 
-int32_t plDataSet::EntityKey::GetIndex(){return index;}
+int32_t plDataSet::EntityKey::GetIndex() const {return index;}
 
 
 
@@ -368,12 +368,12 @@ int32_t plDataSet::generate_data_model()
 };
 
 
-Model plDataSet::get_data_model()
+Model plDataSet::get_data_model() const
 {
     return logical_data_structure;
 }
 
-int32_t plDataSet::IsLabelRequired(string a_label)
+int32_t plDataSet::IsLabelRequired(string a_label) const
 {
     int32_t r=-1;
 

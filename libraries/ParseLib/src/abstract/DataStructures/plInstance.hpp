@@ -20,7 +20,7 @@ public:
     };
 
 private:
-    plDataSet * owning_data_set;
+    const plDataSet * owning_data_set;
     std::string key;//the key that identifies this instance
     std::vector<std::string> value;//the values stored.
     State state;
@@ -29,7 +29,7 @@ private:
 
 public:
     plInstance() = default;
-    plInstance(plDataSet * owner, State s);
+    plInstance(const plDataSet * owner, State s);
     ~plInstance();
 
     std::string get();                                  //only returns a value if a vector has a particular value

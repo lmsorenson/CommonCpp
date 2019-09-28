@@ -9,7 +9,7 @@
 
 using namespace std;
 
-plInstance::plInstance(plDataSet * owner, State s)
+plInstance::plInstance(const plDataSet * owner, State s)
 : owning_data_set(owner)
 , state(s)
 {
