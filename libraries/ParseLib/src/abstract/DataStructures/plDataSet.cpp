@@ -392,3 +392,16 @@ int32_t plDataSet::IsLabelRequired(string a_label) const
 
     return r;
 }
+
+int32_t plDataSet::increment_counter(std::string a_entity_label)
+{
+    logical_data_structure.increment_entity_counter(a_entity_label);
+}
+
+
+
+
+void plDataSet::add_instance(std::string entity_name, std::vector<std::string> entity_values)
+{
+
+}

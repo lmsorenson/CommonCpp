@@ -276,6 +276,11 @@ TEST_F(CSVFunctionalSpec, TestR6)
 // * Add a new field in the middle of each record.
 TEST_F(CSVFunctionalSpec, TestR7)
 {
+    plDataSet ds;
+    ds.add_instance("R", {"A1", "A2", "A3", "A4"});
+
+    ParseLib().write_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/Write/csvR7.csv");
+
     ASSERT_EQ(true, false);
 }
 

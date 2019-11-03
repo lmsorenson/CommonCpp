@@ -58,14 +58,23 @@ vector<string> Model::get_entity_identifier(string a_entity_label)
     return str_vec;
 }
 
+void Model::increment_entity_counter(string a_entity_label)
+{
+    shared_ptr<Entity> e = get_entity(a_entity_label);
+    
+    e->increment_counter();
+}
+
 Thing::Thing(string a_name)
 : name(a_name)
+, counter(0)
 {
 }
 
 Thing::Thing(string a_name, string a_label)
 : name(a_name)
 , thing_id(a_label)
+, counter(0)
 {
 }
 
@@ -77,6 +86,11 @@ void Thing::print()
 string Thing::get_id()
 {
     return thing_id;
+}
+
+void Thing::increment_counter()
+{
+    counter++;
 }
 
 Identifier::Identifier(shared_ptr<Entity> a_owner)

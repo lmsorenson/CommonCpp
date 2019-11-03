@@ -11,6 +11,10 @@
 
 class plDataSet
 {
+    //descriptors used in the identifier for an atomic entity.
+    //atomic refers to the smallest entity in a data set.
+    //atomic entities are also the elements stored in the hash table.
+    //this entity describes individual descriptors needed to identify a hash element.
     class EntityKey
     {
         std::string label;
@@ -37,7 +41,11 @@ class plDataSet
 
     //a hash table to store the data in.
     plHashTable hash_table;
+
+    //the logical data structure is meta data about the data stored in this hash table.
     Model logical_data_structure;
+
+    //expected descriptors refers to the descriptors needed or present in some hash keys.
     std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
 
 public:
@@ -58,14 +66,18 @@ public:
     //accessors//------------------------------------------------
     plInstance get(std::string a_key) const;
     plInstance where(std::string descriptor, std::string value) const;
+    Model get_data_model() const;
+    int32_t IsLabelRequired(std::string a_label) const;
 
     //Mutators//-------------------------------------------------
     int32_t set(std::string a_key, plHashValue a_value);
     int32_t add_label(std::string a_new_label);
     int32_t add_optional_flag(std::string a_new_label);
     int32_t generate_data_model();
-    Model get_data_model() const;
-    int32_t IsLabelRequired(std::string a_label) const;
+    int32_t increment_counter(std::string a_entity_label);
+
+    void add_instance(std::string entity_name, std::vector<std::string> entity_values);
+    
 
     std::string id_lexer(
         std::string a_identifier, 

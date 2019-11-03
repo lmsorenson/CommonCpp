@@ -25,16 +25,19 @@ class ParserPipeline
         plNodeBuffer &in_buffer);
 
     int32_t ProcessNodeSets(
+        plDataSet &data_set,
         plNodeBuffer &out_buffer, 
         plNodeBuffer &in_buffer, 
         std::shared_ptr<ParserFilter> filter);
 
     int32_t ProcessNodes(
+        plDataSet &data_set,
         plNodeBuffer &out_buffer, 
         plNodeSet &in_buffer, 
         std::shared_ptr<ParserFilter> filter);
 
     int32_t ProcessIndividual(
+        plDataSet &data_set,
         plNodeSet &out_buffer, 
         std::vector<plNode> &in_buffer, 
         plNodePtr &current_node, 

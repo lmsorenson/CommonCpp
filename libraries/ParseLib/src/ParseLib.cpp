@@ -49,7 +49,7 @@ int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath, std::v
     return READ_SUCCESSFUL;
 }
 
-int32_t ParseLib::write_file()
+int32_t ParseLib::write_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options)
 {
     cout << "DEBUG: starting a write. . ."
     //STEP 1 -- FACTORY.

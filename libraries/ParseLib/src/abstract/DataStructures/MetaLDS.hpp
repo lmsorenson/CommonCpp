@@ -31,14 +31,22 @@ public:
     Model()=default;
     ~Model()=default;
 
+    //add a thing to the data model.
     void add_thing(std::shared_ptr<Thing> a_thing);
+
+    //get identifying descriptors for the entity specified
     std::vector<std::string> get_entity_identifier(std::string a_entity_label);
+
+    //increment the counter for the entity specified
+    void increment_entity_counter(std::string a_entity_label);
 };
 
 class Thing
 {
     std::string name;
     std::string thing_id;
+
+    int32_t counter; 
 
 public:
     Thing(std::string a_name);
@@ -47,6 +55,8 @@ public:
 
     virtual void print();
     std::string get_id();
+
+    void increment_counter();
 };
 
 class Identifier 

@@ -19,7 +19,7 @@ class ParseLib
 {
 public:
     int32_t read_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options=DEFAULT_OPTION_VECTOR);
-    int32_t write_file();
+    int32_t write_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options=DEFAULT_OPTION_VECTOR);
 
     //READ CODES
     enum : int32_t
