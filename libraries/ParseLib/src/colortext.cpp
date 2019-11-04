@@ -1,7 +1,7 @@
 #include "colortext.hpp"
 #include <string>
 
-const char * SetColor(const char * color, const char * text)
+std::string SetColor(std::string color, std::string text)
 {
     std::string str;
     str.append("\33[1;");

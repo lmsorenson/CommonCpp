@@ -17,4 +17,6 @@
 #define CYAN ("36")
 #define WHITE ("37")
 
-const char * SetColor(const char * color, const char * text);
+#include <string>
+
+std::string SetColor(std::string color, std::string text);
