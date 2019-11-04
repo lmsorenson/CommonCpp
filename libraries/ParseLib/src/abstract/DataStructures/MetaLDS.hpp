@@ -39,6 +39,7 @@ public:
 
     //increment the counter for the entity specified
     void increment_entity_counter(std::string a_entity_label);
+    int32_t get_entity_count(std::string a_entity_label);
 };
 
 class Thing
@@ -57,6 +58,7 @@ public:
     std::string get_id();
 
     void increment_counter();
+    int32_t get_count();
 };
 
 class Identifier 

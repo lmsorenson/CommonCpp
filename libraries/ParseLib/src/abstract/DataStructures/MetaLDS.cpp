@@ -65,6 +65,13 @@ void Model::increment_entity_counter(string a_entity_label)
     e->increment_counter();
 }
 
+int32_t Model::get_entity_count(string a_entity_label)
+{
+    shared_ptr<Entity> e = get_entity(a_entity_label);
+    
+    return e->get_count();
+}
+
 Thing::Thing(string a_name)
 : name(a_name)
 , counter(0)
@@ -92,6 +99,12 @@ void Thing::increment_counter()
 {
     counter++;
 }
+
+int32_t Thing::get_count()
+{
+    return counter;
+}
+
 
 Identifier::Identifier(shared_ptr<Entity> a_owner)
 : owning_entity(a_owner)
