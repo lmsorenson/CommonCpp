@@ -48,6 +48,10 @@ class plDataSet
     //expected descriptors refers to the descriptors needed or present in some hash keys.
     std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
 
+protected:
+    //the logical data structure is meta data about the data stored in this hash table.
+    Model logical_data_structure;
+
 public:
     enum State : int32_t
     {
