@@ -112,12 +112,23 @@ vector<std::string> plDataSet::get_missing_descriptors(std::string a_descriptor_
 }
 
 plDataSet::plDataSet()
-: state(DATA_SET_EMPTY){}
+: state(DATA_SET_EMPTY)
+{
+    generate_data_model();
+}
 plDataSet::plDataSet(State s)
-: state(s){}
+: state(s)
+{
+    generate_data_model();
+}
 plDataSet::plDataSet(int32_t hash_table_size)
 : hash_table(hash_table_size)
-, state(DATA_SET_GOOD){}
+, state(DATA_SET_GOOD)
+{
+    generate_data_model();
+}
+
+//deconstructors
 plDataSet::~plDataSet(){}
 
 plInstance plDataSet::get(std::string a_key) const
