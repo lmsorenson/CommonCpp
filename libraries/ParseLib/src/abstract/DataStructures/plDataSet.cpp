@@ -412,7 +412,15 @@ int32_t plDataSet::increment_counter(std::string a_entity_label)
 
 
 
+
 void plDataSet::add_instance(std::string entity_name, std::vector<std::string> entity_values)
 {
+    int32_t count = logical_data_structure.get_entity_count(entity_name);
 
+    //todo -- should I ask the data model?  what parts are necessary to add this item to the dataset?
+}
+
+int32_t plDataSet::pad_entity_count(std::string entity_name, int32_t a_num_blanks)
+{
+    
 }

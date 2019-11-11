@@ -276,12 +276,22 @@ TEST_F(CSVFunctionalSpec, TestR6)
 // * Add a new field in the middle of each record.
 TEST_F(CSVFunctionalSpec, TestR7)
 {
-    plDataSet ds;
+    CSVData ds(100);
     ds.add_instance("R", {"A1", "A2", "A3", "A4"});
+    ds.add_instance("R", {"B1", "B2", "B3", "B4"});
+
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "A2");
+    ASSERT_EQ(ds.get("R0-F2").get(), "A3");
+    ASSERT_EQ(ds.get("R0-F3").get(), "A4");
+    ASSERT_EQ(ds.get("R1-F0").get(), "B1");
+    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
+    ASSERT_EQ(ds.get("R1-F2").get(), "B3");
+    ASSERT_EQ(ds.get("R1-F3").get(), "B4");
 
     ParseLib().write_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/Write/csvR7.csv");
 
-    ASSERT_EQ(true, false);
+    // ASSERT_EQ(true, false);
 }
 
 //Modify instances.

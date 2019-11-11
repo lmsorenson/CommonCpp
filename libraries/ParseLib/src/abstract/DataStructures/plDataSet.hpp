@@ -42,8 +42,6 @@ class plDataSet
     //a hash table to store the data in.
     plHashTable hash_table;
 
-    //the logical data structure is meta data about the data stored in this hash table.
-    Model logical_data_structure;
 
     //expected descriptors refers to the descriptors needed or present in some hash keys.
     std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
@@ -79,8 +77,10 @@ public:
     int32_t add_optional_flag(std::string a_new_label);
     int32_t generate_data_model();
     int32_t increment_counter(std::string a_entity_label);
+    
 
-    void add_instance(std::string entity_name, std::vector<std::string> entity_values);
+    virtual void add_instance(std::string entity_name, std::vector<std::string> entity_values);
+    virtual int32_t pad_entity_count(std::string entity_name, int32_t a_num_blanks=1);
     
 
     std::string id_lexer(
