@@ -291,7 +291,7 @@ TEST_F(CSVFunctionalSpec, TestR7)
 
     ParseLib().write_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/Write/csvR7.csv");
 
-    // ASSERT_EQ(true, false);
+    ASSERT_EQ(true, false);
 }
 
 //Modify instances.
