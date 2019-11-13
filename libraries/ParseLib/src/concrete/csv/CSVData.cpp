@@ -6,16 +6,63 @@
 
 using namespace std;
 
+void CSVData::csv_model()
+{
+    shared_ptr<Entity>
+        eRecord = make_shared<Entity>("R", "record"),
+        eCell = make_shared<Entity>("C", "cell"),
+        eField = make_shared<Entity>("F", "field"),
+        eField_name = make_shared<Entity>("H", "field_name");
+
+    shared_ptr<Attribute>
+        eRecord_line_id,
+        eCell_value,
+        eField_field_id,
+        eField_name_value;
+
+    eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("record_id", "R")), true);
+    eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value", "V")));
+    eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id", "F")), true);
+    eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("name", "N")));
+
+    shared_ptr<Relationship>
+        cell_to_record = make_shared<Relationship>("cell_to_record", eCell, eRecord,  false, Relationship::IDENTIFY_BY::LINK_1),
+        cell_to_field = make_shared<Relationship>("cell_to_field", eCell, eField, false, Relationship::IDENTIFY_BY::LINK_1),
+        
+        //be-be relationship 
+        cell_to_field_name = make_shared<Relationship>(
+            "cell_to_field_name", //relationship name
+            eCell, //entity 1
+            eField_name, //entity 2
+            true, //true indicates that this relationship is a be relationship.
+            Relationship::IDENTIFY_BY::LINK_2);//the link to entity 1 will be an identifying descriptor for entity_2
+
+    logical_data_structure.add_thing(eRecord);
+    logical_data_structure.add_thing(eCell); 
+    logical_data_structure.add_thing(eField);
+    logical_data_structure.add_thing(eField_name);
+
+    logical_data_structure.add_thing(cell_to_record);
+    logical_data_structure.add_thing(cell_to_field); 
+    logical_data_structure.add_thing(cell_to_field_name);
+}
 
 CSVData::CSVData()
 : plDataSet()
 {
-
+    this->add_optional_flag("H");
+    this->add_label("R");
+    this->add_label("F");
+    this->csv_model();//generate the meta data
 }
 
 CSVData::CSVData(int32_t hash_table_size)
 : plDataSet(hash_table_size)
 {
+    this->add_optional_flag("H");
+    this->add_label("R");
+    this->add_label("F");
+    this->csv_model();//generate the meta data
 }
 
 CSVData::~CSVData()
@@ -33,11 +80,10 @@ void CSVData::add_instance(std::string entity_name, std::vector<std::string> ent
     {
         //get the number of fields in the dataset.
         int32_t 
-        field_count = this->logical_data_structure.get_entity_count("F"),
-        record_count = this->logical_data_structure.get_entity_count("R");
+            field_count = this->logical_data_structure.get_entity_count("F"),
+            record_count = this->logical_data_structure.get_entity_count("R");
 
-        this->increment_counter("R");
-        this->state = DATA_SET_GOOD;
+        this->increment_counter("R");//todo--> maybe implement the counter within the plDataSet::set function
 
         //cell values 
         if(entity_values.size()<=field_count)
@@ -55,7 +101,6 @@ void CSVData::add_instance(std::string entity_name, std::vector<std::string> ent
                 if(i<entity_values.size())
                 {
                     this->set(key_buffer, plHashValue(entity_values[i], str));
-                    cout << key_buffer << endl;
                     this->increment_counter("F");
                 }
                 else
@@ -67,7 +112,7 @@ void CSVData::add_instance(std::string entity_name, std::vector<std::string> ent
         }
         else
         {
-            pad_entity_count("F", (entity_values.size() - field_count) );
+            // pad_entity_count("F", (entity_values.size() - field_count) );
 
             std::string str = "R";
             str.append(std::to_string(record_count));
@@ -83,7 +128,6 @@ void CSVData::add_instance(std::string entity_name, std::vector<std::string> ent
                 if(i<entity_values.size())
                 {
                     this->set(key_buffer, plHashValue(entity_values[i], str));
-                    cout << key_buffer << endl;
                     this->increment_counter("F");
                 }
                 else

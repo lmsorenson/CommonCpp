@@ -149,12 +149,6 @@ int32_t ParserPipeline::ApplyFilters(plDataSet &data_set, plNodeBuffer &out_buff
         in_buffer = out_buffer;
         out_buffer.clear();
 
-        if(filters[i]->GetLabel().substr(0,1)=="~")
-            data_set.add_optional_flag(filters[i]->GetLabel().substr(1));
-        else
-            data_set.add_label(filters[i]->GetLabel());
-        
-
         if ((result=this->ProcessNodeSets(data_set, out_buffer, in_buffer, filters[i]))!=PIPELINE_SUCCESS)
         {
             return result;

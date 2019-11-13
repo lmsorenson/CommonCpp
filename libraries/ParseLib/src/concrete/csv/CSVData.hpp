@@ -14,6 +14,8 @@ class CSVData : public plDataSet
 {
     csv_file file;
 
+    void csv_model();
+
 public:
     CSVData();
     CSVData(int32_t hash_table_size);

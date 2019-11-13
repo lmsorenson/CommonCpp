@@ -74,10 +74,8 @@ public:
     //Mutators//-------------------------------------------------
     int32_t set(std::string a_key, plHashValue a_value);
     int32_t add_label(std::string a_new_label);
-    int32_t add_optional_flag(std::string a_new_label);
-    int32_t generate_data_model();
+    int32_t add_optional_flag(std::string a_new_label);  
     int32_t increment_counter(std::string a_entity_label);
-    
 
     virtual void add_instance(std::string entity_name, std::vector<std::string> entity_values);
     virtual int32_t pad_entity_count(std::string entity_name, int32_t a_num_blanks=1);
