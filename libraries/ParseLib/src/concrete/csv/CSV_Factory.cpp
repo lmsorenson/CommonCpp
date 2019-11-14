@@ -1,6 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "CSV_Factory.hpp"
 #include "ReadCSV.hpp"
+#include "CSV_Write.hpp"
 #include "CSVData.hpp"
 #include <iostream>
 
@@ -14,7 +15,7 @@ std::shared_ptr<ReadStrategy> CSV_Factory::make_read()
 
 std::shared_ptr<WriteStrategy> CSV_Factory::make_write()
 {
-    return make_shared<WriteStrategy>(WriteStrategy());
+    return make_shared<CSV_Write>(CSV_Write());
 }
 
 std::shared_ptr<plDataSet> CSV_Factory::make_data()

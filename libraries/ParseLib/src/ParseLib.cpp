@@ -51,8 +51,11 @@ int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath, std::v
 
 int32_t ParseLib::write_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options)
 {
-    cout << "DEBUG: starting a write. . ."
     //STEP 1 -- FACTORY.
+    //-----------------------|   Generate strategies & Data   |-----------------------//
+    CSV_Factory factory;                    //TODO-->make factory producer
+    auto data = factory.make_data();         //use the factory to initialize the data variable.
+    auto strategy = factory.make_write();     //initialize appropriate read strategy
     
     //STEP 2 -- READ the file.
     // this->read_file();
@@ -60,8 +63,8 @@ int32_t ParseLib::write_file(plDataSet& data_store, const char * filepath, std::
     //STEP 3 -- MODIFY the data.
 
     //STEP 4 -- WRITE the file.
+    strategy->execute_write(filepath);
 
-    "DEBUG: done writing file." << '\r' << flush;
     return 0;
 }
 
