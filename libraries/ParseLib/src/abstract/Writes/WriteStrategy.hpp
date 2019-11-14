@@ -6,11 +6,11 @@
 
 class WriteStrategy
 {
-    // virtual void configure_pipeline(CompilerPipeline &pipeline) = 0;
+    virtual void configure_pipeline() = 0;
     virtual int32_t set_read_options(std::vector<option> read_options)=0;
 
 public:
-    plDataSet execute_write(std::string path);
+    void execute_write(plDataSet dataset, std::string path);
 
     enum : int32_t
     {

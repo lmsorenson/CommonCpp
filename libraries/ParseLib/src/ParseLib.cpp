@@ -63,7 +63,7 @@ int32_t ParseLib::write_file(plDataSet& data_store, const char * filepath, std::
     //STEP 3 -- MODIFY the data.
 
     //STEP 4 -- WRITE the file.
-    strategy->execute_write(filepath);
+    strategy->execute_write(data_store, filepath);
 
     return 0;
 }

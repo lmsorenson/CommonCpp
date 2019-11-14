@@ -10,12 +10,12 @@
 
 using namespace std;
 
-plDataSet WriteStrategy::execute_write(std::string path)
+void WriteStrategy::execute_write(plDataSet dataset, std::string path)
 {
 
-    std::string out_str = "hello world";
+    std::string out_str;
+
+
 
     writeText(path, out_str);
-
-    return plDataSet(100);
 }
