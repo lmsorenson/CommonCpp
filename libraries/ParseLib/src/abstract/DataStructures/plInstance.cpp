@@ -99,6 +99,17 @@ plInstance plInstance::related(string a_label) const
     return owning_data_set->get(attr_buffer);
 }
 
+
+const std::vector<std::string>::iterator plInstance::begin()
+{
+    return value.begin();
+}
+
+const std::vector<std::string>::iterator plInstance::end()
+{
+    return value.end();
+}
+
 //Get next instance in 'a_label'
 plInstance plInstance::pull_next(string a_label) const
 {

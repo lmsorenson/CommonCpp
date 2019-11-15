@@ -34,6 +34,8 @@ public:
 
     std::string get() const;                                    //only returns a value if a vector has a particular value
     std::string at(int8_t index) const;                         //get a specific value within a list of 
+    const std::vector<std::string>::iterator begin();
+    const std::vector<std::string>::iterator end();
     plInstance pull_next(std::string a_label) const;            //next value in a set of instances.
     plInstance pull_previous(std::string a_label) const;        //previous value in a set of instances.
     plInstance related(std::string a_label) const;              //returns a related entity.
