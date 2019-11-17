@@ -2,11 +2,12 @@
 #pragma once
 #include "../DataStructures/plDataSet.hpp"
 #include "../../../include/ParseLib.h"
+#include "../Reads/ParserPipeline.hpp"
 
 
 class WriteStrategy
 {
-    virtual void configure_pipeline() = 0;
+    virtual void configure_pipeline(ParserPipeline &pipeline) = 0;
     virtual int32_t set_read_options(std::vector<option> read_options)=0;
 
 public:

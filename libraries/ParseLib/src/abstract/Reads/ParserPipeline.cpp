@@ -46,6 +46,54 @@ int32_t ParserPipeline::execute(std::shared_ptr<plNode>& text, plDataSet& data_s
     return PIPELINE_SUCCESS;
 }
 
+int32_t ParserPipeline::inverse(std::vector<std::vector<std::string>> vector_vector, std::string &text)
+{
+    std::string compiled_buffer;
+    std::vector<std::vector<std::string>> vector_in_buffer;
+    std::vector<std::vector<std::string>> vector_out_buffer = vector_vector;
+
+    for(int i=0; i < filters.size(); ++i)
+    {
+        vector_in_buffer.clear();
+        vector_in_buffer = vector_out_buffer;
+        vector_out_buffer.clear();
+
+        std::vector<std::string> vec_out;
+
+        int32_t result;
+        for(int k=0; k < vector_in_buffer.size(); ++k)
+        {
+            //1 given 1 record separated into a vector.
+            //2 given 1 dataset separated into a vector of records.
+            //empty compiled_string
+            compiled_buffer.clear();
+
+            int32_t err;
+            if( (err=filters[i]->inverse(vector_in_buffer[k], compiled_buffer))!=ParserFilter::FILTER_SUCCESS )
+            {
+                switch (err)
+                {
+                    case ParserFilter::FILTER_FORMAT_ERROR: return PIPELINE_FORMAT_ERROR; break;
+                    default: return PIPELINE_UNKNOWN_ERROR; break;
+                }
+            }
+
+            //1 give me 1 string each value separated by a comma
+            //2 give me 1 string each record separated by a line break.
+            vec_out.push_back(compiled_buffer);
+        }//k
+
+        //after going through all of the vectors push back
+        vector_out_buffer.push_back(vec_out);
+
+    }//i
+        
+
+    
+    text = compiled_buffer;
+    return PIPELINE_SUCCESS;
+}
+
 int32_t ParserPipeline::ProcessIndividual(plDataSet &data_set, plNodeSet &out_buffer, vector<plNode> &in_buffer, plNodePtr &current_node, std::shared_ptr<ParserFilter> filter)
 {
     //Breakup the filter output.

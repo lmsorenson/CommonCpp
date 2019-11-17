@@ -358,6 +358,11 @@ int32_t plDataSet::IsLabelRequired(string a_label) const
     return r;
 }
 
+int32_t plDataSet::size(std::string descriptor)
+{
+    return this->logical_data_structure.get_entity_count(descriptor);
+}
+
 int32_t plDataSet::increment_counter(std::string a_entity_label)
 {
     logical_data_structure.increment_entity_counter(a_entity_label);

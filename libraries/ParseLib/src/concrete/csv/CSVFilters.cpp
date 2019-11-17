@@ -44,6 +44,11 @@
         return FILTER_SUCCESS;
     }
 
+    int32_t HeaderFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
+    {
+        
+    }
+
     string HeaderFilter::name()
     {
         return "header";
@@ -104,6 +109,23 @@
         if(output.size()==0)
             return FILTER_FORMAT_ERROR;
         
+        return FILTER_SUCCESS;
+    }
+
+    int32_t RecordFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
+    {
+        for(int32_t i=0; i<string_set.size(); ++i)
+        {
+            cout << string_set[i] << endl;
+            compiled_string.append(string_set[i]);
+
+            if(i+1 == string_set.size())
+                continue;
+            else
+                compiled_string.append(",");
+
+        }
+
         return FILTER_SUCCESS;
     }
     
@@ -173,6 +195,23 @@
         //all records must have the same size.
         if (!IsFieldCountValid(output.size()))
             return FILTER_FORMAT_ERROR;
+
+        return FILTER_SUCCESS;
+    }
+
+    int32_t FieldFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
+    {
+        for(int32_t i=0; i<string_set.size(); ++i)
+        {
+            cout << string_set[i] << endl;
+            compiled_string.append(string_set[i]);
+
+            if(i+1 == string_set.size())
+                continue;
+            else
+                compiled_string.append("\r\n");
+
+        }
 
         return FILTER_SUCCESS;
     }

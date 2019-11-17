@@ -70,6 +70,7 @@ public:
     plInstance where(std::string descriptor, std::string value) const;
     Model get_data_model() const;
     int32_t IsLabelRequired(std::string a_label) const;
+    int32_t size(std::string descriptor);
 
     //Mutators//-------------------------------------------------
     int32_t set(std::string a_key, plHashValue a_value);

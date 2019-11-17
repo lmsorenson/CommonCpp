@@ -16,6 +16,7 @@ public:
     ~ParserFilter();
 
     virtual int32_t execute(std::string text, std::vector<plNode> & output) = 0;
+    virtual int32_t inverse(std::vector<std::string> vector, std::string &compiled_string) = 0;
     virtual std::string name();
 
     std::string GetID(int index);

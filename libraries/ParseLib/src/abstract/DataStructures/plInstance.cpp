@@ -42,6 +42,12 @@ string plInstance::get() const
     else
         return "NULL";
 }
+
+std::vector<std::string> plInstance::get_vector()
+{
+    return value;
+}
+
 string plInstance::at(int8_t index) const
 {
     if(state == VALID_INST && value.size()!= 0)

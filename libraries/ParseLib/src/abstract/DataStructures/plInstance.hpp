@@ -33,6 +33,7 @@ public:
     ~plInstance();
 
     std::string get() const;                                    //only returns a value if a vector has a particular value
+    std::vector<std::string> get_vector();
     std::string at(int8_t index) const;                         //get a specific value within a list of 
     const std::vector<std::string>::iterator begin();
     const std::vector<std::string>::iterator end();

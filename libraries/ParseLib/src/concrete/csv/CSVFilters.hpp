@@ -9,7 +9,8 @@ public:
     HeaderFilter(std::string new_filter_id);
     ~HeaderFilter()=default;
 
-    int32_t execute(std::string text, std::vector<plNode>& output) override;
+    virtual int32_t execute(std::string text, std::vector<plNode>& output) override;
+    virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;
     virtual std::string name() override;
 };
 
@@ -19,7 +20,8 @@ public:
     RecordFilter(std::string new_filter_id);
     ~RecordFilter()=default;
 
-    int32_t execute(std::string text, std::vector<plNode>& output) override;
+    virtual int32_t execute(std::string text, std::vector<plNode>& output) override;
+    virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;
     virtual std::string name() override;
 };
 
@@ -33,6 +35,7 @@ public:
     ~FieldFilter()=default;
 
     virtual int32_t execute(std::string text, std::vector<plNode>& output) override;
+    virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;
     virtual std::string name() override;
     bool IsFieldCountValid(int32_t field_count_param);
 };
