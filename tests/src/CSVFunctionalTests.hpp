@@ -5,9 +5,12 @@
 
 #include <gtest/gtest.h>
 #include <ParseLib.h>
+#include "TestFramework.hpp"
 
 
-class CSVFunctionalSpec : public ::testing::Test
+
+
+class CSVFunctionalSpec : public ::LucTestFramework
 {
 protected:
     
@@ -38,8 +41,7 @@ protected:
 TEST_F(CSVFunctionalSpec, TestR1)
 {
     plDataSet ds;
-    
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
 
     plInstance str = ds.get("R0-F0");
 
@@ -50,7 +52,7 @@ TEST_F(CSVFunctionalSpec, TestR2_2)
 {
     plDataSet ds;
     
-    int32_t exit_code = ParseLib().read_file(ds, "Invalid-Path");
+    int32_t exit_code = ParseLib().read_file(ds, this->path("Invalid-Path").c_str());
     
     ASSERT_EQ(exit_code, ParseLib::READ_FILE_NOT_FOUND);
     ASSERT_EQ(ds.get("R0-F0").get(), "NO_FILE");
@@ -60,7 +62,7 @@ TEST_F(CSVFunctionalSpec, TestR3)
 {
     plDataSet ds;
     
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
 
 
     //Test every value in the file.
@@ -120,7 +122,7 @@ TEST_F(CSVFunctionalSpec, TestR3_1_1)
 {
     plDataSet ds;
     
-    int32_t exit_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    int32_t exit_code = ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
     plInstance str = ds.get("R100000F0");
     
@@ -132,7 +134,7 @@ TEST_F(CSVFunctionalSpec, TestR3_1_2)
 {
     plDataSet ds;
     
-    int32_t exit_code = ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    int32_t exit_code = ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
     plInstance str = ds.get("R0-F0");
     
@@ -145,7 +147,7 @@ TEST_F(CSVFunctionalSpec, TestR3_1_2)
 TEST_F(CSVFunctionalSpec, TestR4_1)
 {
     plDataSet ds;
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
 
     plInstance inst = ds.where("F0", "May");
     ASSERT_EQ(inst.at(1), "5");
@@ -157,7 +159,7 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
 TEST_F(CSVFunctionalSpec, TestR4_2)
 {
     plDataSet ds;
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
     //IN -- R0
     plInstance inst = ds.get("R0");//get all records in record 0
@@ -169,7 +171,7 @@ TEST_F(CSVFunctionalSpec, TestR4_2)
 TEST_F(CSVFunctionalSpec, TestR4_3)
 {
     plDataSet ds;
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
     //IN -- F1
     plInstance inst = ds.get("F1");//get all records in field 0
@@ -198,7 +200,7 @@ TEST_F(CSVFunctionalSpec, TestR4_3)
 TEST_F(CSVFunctionalSpec, TestR5_1)
 {
     plDataSet ds;
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     plInstance inst = ds.get("R1-F1");
     plInstance inst2 = inst.related("R");
     std::string str = inst2.at(1);
@@ -210,7 +212,7 @@ TEST_F(CSVFunctionalSpec, TestR5_1)
 TEST_F(CSVFunctionalSpec, TestR5_2)
 {
     plDataSet ds;
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     plInstance inst = ds.get("R1-F1");
     plInstance inst2 = inst.related("F");
 
@@ -231,7 +233,7 @@ TEST_F(CSVFunctionalSpec, TestR5_2)
 TEST_F(CSVFunctionalSpec, TestR5_3)
 {
     plDataSet ds;
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     plInstance inst = ds.get("R1-F0");
     plInstance inst2 = inst.pull_next("R");
 
@@ -241,7 +243,7 @@ TEST_F(CSVFunctionalSpec, TestR5_3)
 TEST_F(CSVFunctionalSpec, TestR5_4)
 {
     plDataSet ds;
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test1.csv");
+    ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     plInstance inst = ds.get("R3-F0");
     plInstance inst2 = inst.pull_next("F");
 
@@ -253,7 +255,7 @@ TEST_F(CSVFunctionalSpec, TestR5_5)
     plDataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/FormatSpec/csv2.csv", options);
+    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
     plInstance inst = ds.get("F1");
     plInstance inst2 = inst.related("H");
 
@@ -277,21 +279,31 @@ TEST_F(CSVFunctionalSpec, TestR6)
 TEST_F(CSVFunctionalSpec, TestR7)
 {
     CSVData ds(100);
-    ds.add_instance("R", {"A1", "A2", "A3", "A4"});
-    ds.add_instance("R", {"B1", "B2", "B3", "B4"});
+    ds.add_instance("R", {"A1", "B1", "C1", "D1"});
+    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
 
     ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "A2");
-    ASSERT_EQ(ds.get("R0-F2").get(), "A3");
-    ASSERT_EQ(ds.get("R0-F3").get(), "A4");
-    ASSERT_EQ(ds.get("R1-F0").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
     ASSERT_EQ(ds.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R1-F2").get(), "B3");
-    ASSERT_EQ(ds.get("R1-F3").get(), "B4");
+    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
+    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
 
-    ParseLib().write_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/CSV/Write/csvR7.csv");
+    ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7.csv").c_str());
 
-    ASSERT_EQ(true, false);
+    plDataSet ds2;
+    ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7.csv").c_str());
+
+    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds2.get("R1-F0").get(), "A2");
+    ASSERT_EQ(ds2.get("R1-F1").get(), "B2");
+    ASSERT_EQ(ds2.get("R1-F2").get(), "C2");
+    ASSERT_EQ(ds2.get("R1-F3").get(), "D2");
 }
 
 //Modify instances.
