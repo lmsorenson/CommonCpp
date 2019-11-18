@@ -17,7 +17,7 @@ void CSV_Write::configure_pipeline(ParserPipeline & pipeline)
     pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 
-int32_t CSV_Write::set_read_options(std::vector<option> read_options)
+int32_t CSV_Write::set_write_options(std::vector<option> write_options)
 {
     for (auto option : read_options)
     {
@@ -26,4 +26,19 @@ int32_t CSV_Write::set_read_options(std::vector<option> read_options)
     }
 
     return 0;
+}
+
+std::vector<std::vector<std::string>> CSV_Write::get_dataset_contents(plDataSet dataset)
+{
+    std::vector<std::vector<std::string>> return_var;
+
+    for(int32_t i=0; i<dataset.size("R"); ++i)
+    {
+        std::string index = "R";
+        index.append(std::to_string(i));
+
+        return_var.push_back(dataset.get(index).get_vector());
+    }
+
+    return return_var;
 }

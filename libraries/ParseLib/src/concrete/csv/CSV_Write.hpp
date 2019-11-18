@@ -9,8 +9,14 @@
 
 class CSV_Write : public WriteStrategy
 {
+    //this method sets up the pipeline.
     virtual void configure_pipeline(ParserPipeline &pipeline);
-    virtual int32_t set_read_options(std::vector<option> read_options);
+
+    //this function reads special parameters into the write strategy.
+    virtual int32_t set_write_options(std::vector<option> write_options);
+
+    //this function gets all elements produced by the final filter in the pipeline.
+    virtual virtual std::vector<std::vector<std::string>> get_dataset_contents(plDataSet dataset);
 
     //csv read options
     bool b_use_header_line;

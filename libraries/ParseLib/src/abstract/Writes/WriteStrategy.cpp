@@ -20,15 +20,7 @@ int32_t WriteStrategy::execute_write(plDataSet dataset, std::string path)
     this->configure_pipeline(pipeline);
 
     
-    std::vector<std::vector<std::string>> vector_vector;
-
-    for(int32_t i=0; i<dataset.size("R"); ++i)
-    {
-        std::string index = "R";
-        index.append(std::to_string(i));
-
-        vector_vector.push_back(dataset.get(index).get_vector());
-    }
+    std::vector<std::vector<std::string>> vector_vector = get_dataset_contents(dataset);    
 
     int32_t err;
     if( (err=pipeline.inverse(vector_vector, out_str)) )
