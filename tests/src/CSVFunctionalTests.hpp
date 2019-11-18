@@ -276,8 +276,23 @@ TEST_F(CSVFunctionalSpec, TestR6)
 // * Add a new field at the end of each record
 // * Add a new field at the beginning of each record.
 // * Add a new field in the middle of each record.
-TEST_F(CSVFunctionalSpec, TestR7)
+TEST_F(CSVFunctionalSpec, TestR7_1)
 {
+     ASSERT_EQ(true, false);
+}
+
+//Modify instances.
+// * overwrite a field in an existing record.
+// * overwrite all fields in an existing record.
+TEST_F(CSVFunctionalSpec, TestR8)
+{
+    ASSERT_EQ(true, false);
+}
+
+//Create a write transaction on an empty file path.
+TEST_F(CSVFunctionalSpec, TestR9)
+{
+    //adds a new record to the end of a 
     CSVData ds(100);
     ds.add_instance("R", {"A1", "B1", "C1", "D1"});
     ds.add_instance("R", {"A2", "B2", "C2", "D2"});
@@ -304,19 +319,5 @@ TEST_F(CSVFunctionalSpec, TestR7)
     ASSERT_EQ(ds2.get("R1-F1").get(), "B2");
     ASSERT_EQ(ds2.get("R1-F2").get(), "C2");
     ASSERT_EQ(ds2.get("R1-F3").get(), "D2");
-}
-
-//Modify instances.
-// * overwrite a field in an existing record.
-// * overwrite all fields in an existing record.
-TEST_F(CSVFunctionalSpec, TestR8)
-{
-    ASSERT_EQ(true, false);
-}
-
-//Create a write transaction on an empty file path.
-TEST_F(CSVFunctionalSpec, TestR9)
-{
-    ASSERT_EQ(true, false);
 }
 

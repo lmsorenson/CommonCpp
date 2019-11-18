@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void WriteStrategy::execute_write(plDataSet dataset, std::string path)
+int32_t WriteStrategy::execute_write(plDataSet dataset, std::string path)
 {
 
     std::string out_str;
@@ -33,14 +33,10 @@ void WriteStrategy::execute_write(plDataSet dataset, std::string path)
     int32_t err;
     if( (err=pipeline.inverse(vector_vector, out_str)) )
     {
-        // switch (err)
-        // {
-        //     case ParserPipeline::PIPELINE_FORMAT_ERROR: 
-        //     return FILE_FORMAT_INVALID; 
-        //     break;
-
-        //     default: return UNKNOWN_ERROR;
-        // }
+        switch (err)
+        {
+            default: return UNKNOWN_ERROR;
+        }
     }
 
     writeText(path, out_str);

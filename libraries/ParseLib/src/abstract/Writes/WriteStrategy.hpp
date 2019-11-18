@@ -11,7 +11,7 @@ class WriteStrategy
     virtual int32_t set_read_options(std::vector<option> read_options)=0;
 
 public:
-    void execute_write(plDataSet dataset, std::string path);
+    int32_t execute_write(plDataSet dataset, std::string path);
 
     enum : int32_t
     {

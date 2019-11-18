@@ -116,7 +116,6 @@
     {
         for(int32_t i=0; i<string_set.size(); ++i)
         {
-            cout << string_set[i] << endl;
             compiled_string.append(string_set[i]);
 
             if(i+1 == string_set.size())
@@ -203,7 +202,6 @@
     {
         for(int32_t i=0; i<string_set.size(); ++i)
         {
-            cout << string_set[i] << endl;
             compiled_string.append(string_set[i]);
 
             if(i+1 == string_set.size())
