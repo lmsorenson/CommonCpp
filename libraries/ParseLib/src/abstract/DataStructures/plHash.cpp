@@ -53,9 +53,30 @@ int32_t plHashTable::insert(string key, plHashValue value)
     return 0;
 }
 
+void plHashTable::move(std::string old_key, std::string new_key)
+{
+    //create a new instance of the old hash value at a new loxation.
+    this->insert( new_key, this->get_hash_value(old_key) );
+
+    //delete the value at the old location.
+    this->delete_value(old_key);
+
+    //todo-->finish defining this function.
+}
+
+void plHashTable::delete_value(std::string a_key)
+{
+    //todo-->define this function
+}
+
 string plHashTable::get(string key) const
 {
     return table[compute_index(key)]->find(key);
+}
+
+plHashValue plHashTable::get_hash_value(std::string key) const
+{
+    return table[compute_index(key)]->find_hash_value(key);
 }
 
 vector<string> plHashTable::GetMatchingKeys(string descriptor_list_str) const
@@ -123,11 +144,10 @@ void plHashElementIterator::set_last(plHashElementIterator e)
 
 string plHashElementIterator::find(string a_key) const
 {
-    string ret = "";
     const plHashElementIterator * e = this;
 
     //if a value at the key exists.
-    while((e!=nullptr) && (ret == ""))
+    while(e!=nullptr)
     {
         //check if the key of the element is the same as
         //the key passed in.
@@ -143,6 +163,27 @@ string plHashElementIterator::find(string a_key) const
     return "NULL";
 }
 
+plHashValue plHashElementIterator::find_hash_value(std::string a_key) const
+{
+    const plHashElementIterator * e = this;
+
+    //if a value at the key exists.
+    while(e!=nullptr)
+    {
+        //check if the key of the element is the same as
+        //the key passed in.
+       if (e->get_key() == a_key)
+       {
+           //returns the correct value
+           return e->value;
+       }
+
+       e = e->next().get();
+    }
+
+    return plHashValue("", "");
+}
+
 string plHashElementIterator::get_key() const
 {
     return key;
@@ -151,6 +192,11 @@ string plHashElementIterator::get_key() const
 string plHashElementIterator::get_value() const
 {
     return value.get_value();
+}
+
+void plHashElementIterator::remove_value()
+{
+    //todo-->define remove_value
 }
 
 

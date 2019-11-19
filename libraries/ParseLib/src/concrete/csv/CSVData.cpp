@@ -73,7 +73,7 @@ void CSVData::assign()
 {
 }
 
-void CSVData::add_instance(std::string entity_name, std::vector<std::string> entity_values)
+void CSVData::add_instance(std::string entity_name, std::vector<std::string> entity_values, int32_t position)
 {
     //adding a record
     if(entity_name.compare("R")==0)
@@ -89,7 +89,19 @@ void CSVData::add_instance(std::string entity_name, std::vector<std::string> ent
         if(entity_values.size()<=field_count)
         {
             std::string str = "R";
-            str.append(std::to_string(record_count));
+
+            //called if the position parameter is left empty,
+            //by default add new records to the end of the document.
+            if(position==END_OF_ENTITY_LIST)
+                str.append(std::to_string(record_count));
+
+            //if a position is given insert the record at the position given.
+            else 
+                str.append(std::to_string(position));
+
+            //todo->after creating the new line push everything else down a record.
+
+
             for(int32_t i=0;i<field_count;++i)
             {
                 std::string key_buffer = str;
@@ -150,6 +162,11 @@ void CSVData::add_instance(std::string entity_name, std::vector<std::string> ent
     {
         //todo --> populate this function.
     }
+}
+
+void CSVData::increment_instance_id(std::string entity_id, int32_t position)
+{
+
 }
 
 int32_t CSVData::pad_entity_count(std::string entity_name, int32_t a_num_blanks)

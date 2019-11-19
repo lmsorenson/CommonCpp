@@ -37,9 +37,12 @@ public:
 
     //Mutators
     int32_t insert(std::string key, plHashValue aValue);  //insert into the table
+    void move(std::string old_key, std::string new_key);
+    void delete_value(std::string a_key);
 
     //Accessors
     std::string get(std::string key) const;   //get value
+    plHashValue get_hash_value(std::string key) const;
     std::vector<std::string> GetMatchingKeys(std::string descriptor_list_str) const;
 };
 
@@ -60,8 +63,10 @@ public:
     bool has_next() const;
     void set_last(plHashElementIterator e);
     std::string find(std::string a_key) const;
+    plHashValue find_hash_value(std::string a_key) const;
     std::string get_key() const;
     std::string get_value() const;
+    void remove_value();
 };
 
 
