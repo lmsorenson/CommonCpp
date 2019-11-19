@@ -19,7 +19,7 @@ void CSV_Write::configure_pipeline(ParserPipeline & pipeline)
 
 int32_t CSV_Write::set_write_options(std::vector<option> write_options)
 {
-    for (auto option : read_options)
+    for (auto option : write_options)
     {
         if((option.name == "header_line") && (option.value>0))
             this->b_use_header_line = true;

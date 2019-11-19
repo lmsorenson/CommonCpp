@@ -8,7 +8,7 @@
 class WriteStrategy
 {
     virtual void configure_pipeline(ParserPipeline &pipeline) = 0;
-    virtual int32_t set_read_options(std::vector<option> read_options)=0;
+    virtual int32_t set_write_options(std::vector<option> write_options)=0;
     virtual std::vector<std::vector<std::string>> get_dataset_contents(plDataSet dataset)=0;
 
 public:
