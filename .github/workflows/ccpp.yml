@@ -27,6 +27,8 @@ jobs:
         ls
         cmake ..
         make
+    - name: run tests
+      run: ./CommonCpp/tests/out/tests
       #
     #- name: make
     #  run: make
