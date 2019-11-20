@@ -11,7 +11,7 @@ jobs:
     - name: sub
       run: |
         pwd
-        git clone --recurse-submodules https://${{secrets.WF_NAME}}@github.com/lmsorenson/CommonCpp.git
+        git clone --recurse-submodules https://${{secrets.NAME_U}}:${{secrets.WF_NAME}}@github.com/lmsorenson/CommonCpp.git
         #git submodule checkout --init --recursive
     - name: pwd
       run: pwd
