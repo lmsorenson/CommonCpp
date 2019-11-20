@@ -377,6 +377,11 @@ void plDataSet::add_instance(std::string entity_name, std::vector<std::string> e
     //todo-->handle definition of this function
 }
 
+void plDataSet::remove_instance(std::string entity_id)
+{
+    //todo-->handle definition of this function
+}
+
 void plDataSet::increment_instance_id(std::string entity_id, int32_t position)
 {
     //todo-->handle definition of this function

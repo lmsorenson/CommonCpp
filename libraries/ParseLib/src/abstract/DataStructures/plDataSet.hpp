@@ -39,8 +39,7 @@ class plDataSet
         bool HasIndex() const;
     };
 
-    //a hash table to store the data in.
-    plHashTable hash_table;
+    
 
 
     //expected descriptors refers to the descriptors needed or present in some hash keys.
@@ -49,6 +48,9 @@ class plDataSet
 protected:
     //the logical data structure is meta data about the data stored in this hash table.
     Model logical_data_structure;
+
+    //a hash table to store the data in.
+    plHashTable hash_table;
 
 public:
     enum State : int32_t
@@ -80,6 +82,7 @@ public:
 
     //API for modifying a data set
     virtual void add_instance(std::string entity_name, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
+    virtual void remove_instance(std::string entity_id);
     virtual void increment_instance_id(std::string entity_id, int32_t position=1);
     virtual int32_t pad_entity_count(std::string entity_name, int32_t a_num_blanks=1);
 
