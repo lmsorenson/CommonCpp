@@ -1,8 +1,12 @@
 #include "plHash.hpp"
 #include <iostream>
 
-
-using namespace std;
+using std::string;
+using std::shared_ptr;
+using std::make_shared;
+using std::vector;
+using std::endl;
+using std::cout;
 
 plHashTable::plHashTable()
 : hash_table_size(100)
@@ -18,7 +22,6 @@ plHashTable::plHashTable(int32_t table_size_arg)
 
 plHashTable::~plHashTable()
 {
-
 }
 
 
@@ -59,7 +62,7 @@ int32_t plHashTable::insert(string key, plHashValue value)
     return 0;
 }
 
-void plHashTable::move(std::string old_key, std::string new_key)
+void plHashTable::move(string old_key, string new_key)
 {
     //create a new instance of the old hash value at a new loxation.
     cout << "new: " << new_key << " value: " << this->get(old_key) << endl;
@@ -71,7 +74,7 @@ void plHashTable::move(std::string old_key, std::string new_key)
     //todo-->finish defining this function.
 }
 
-void plHashTable::delete_value(std::string a_key)
+void plHashTable::delete_value(string a_key)
 {
     //todo-->define this function
     table[compute_index(a_key)]->remove_value(a_key);
@@ -82,7 +85,7 @@ string plHashTable::get(string key) const
     return table[compute_index(key)]->find(key);
 }
 
-plHashValue plHashTable::get_hash_value(std::string key) const
+plHashValue plHashTable::get_hash_value(string key) const
 {
     return table[compute_index(key)]->find_hash_value(key);
 }
@@ -144,7 +147,7 @@ bool plHashElementIterator::has_next() const
 
 void plHashElementIterator::set_last(plHashElementIterator e)
 {
-    const plHashElementIterator * x = this;
+    plHashElementIterator * x = this;
 
     //Find the last element
     while(x->has_next())
@@ -152,7 +155,7 @@ void plHashElementIterator::set_last(plHashElementIterator e)
         x = x->next().get();
     }
 
-    next_element = make_shared<plHashElementIterator>(e);
+    x->next_element = make_shared<plHashElementIterator>(e);
 }
 
 string plHashElementIterator::find(string a_key) const
@@ -176,7 +179,7 @@ string plHashElementIterator::find(string a_key) const
     return "NULL";
 }
 
-plHashValue plHashElementIterator::find_hash_value(std::string a_key) const
+plHashValue plHashElementIterator::find_hash_value(string a_key) const
 {
     const plHashElementIterator * e = this;
 
@@ -207,7 +210,7 @@ string plHashElementIterator::get_value() const
     return value.get_value();
 }
 
-void plHashElementIterator::remove_value(std::string a_key)
+void plHashElementIterator::remove_value(string a_key)
 {
     plHashElementIterator * e = this;
 

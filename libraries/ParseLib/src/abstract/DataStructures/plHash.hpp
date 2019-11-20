@@ -48,9 +48,6 @@ private:
     //a pointer to the next element in the linked list.
     std::shared_ptr<plHashElementIterator> next_element;
 
-    //a pointer to the previous element in the linked list.
-    std::shared_ptr<plHashElementIterator> previous_element;
-
     //** Notice ** this method should be kept private.
     //a form of the next() function to be used internally.
     //this method is meant to allow access to clear the 
@@ -90,6 +87,16 @@ public:
     void remove_value(std::string a_key);
 };
  
+
+
+
+
+/* 
+* Hash Table
+* -- 
+* -- more or less a linked list of elements that will be stored at 
+* -- the same index on the hash table.
+*/
 class plHashTable
 {
 private:
@@ -127,6 +134,7 @@ public:
 
 
     /*      Accessors     */
+
     //returns the string value of a key in the hash table.
     std::string get(std::string key) const;
 
