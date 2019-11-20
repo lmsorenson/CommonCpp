@@ -282,11 +282,74 @@ TEST_F(CSVFunctionalSpec, TestR7_1)
 }
 
 //Modify instances.
+// * delete a record instance.
+// * move a record instance to a different position.
 // * overwrite a field in an existing record.
 // * overwrite all fields in an existing record.
-TEST_F(CSVFunctionalSpec, TestR8)
+TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
 {
-    ASSERT_EQ(true, false);
+    CSVData ds(100);
+
+    //create three records
+    ds.add_instance("R", {"A1", "B1", "C1", "D1"});
+    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
+    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
+    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
+    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
+
+    ds.remove_instance("R1");//remove row 3
+
+    //assert row 3 = NULL
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
+
+
+}
+
+TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
+{
+    CSVData ds(100);
+
+    //create three records
+    ds.add_instance("R", {"A1", "B1", "C1", "D1"});
+    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
+    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
+    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
+    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
+
+    ds.increment_instance_id("R1");//remove row 3
+
+    //assert row 3 = NULL
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
+    ASSERT_EQ(ds.get("R2-F0").get(), "A2");
+    ASSERT_EQ(ds.get("R2-F1").get(), "B2");
+    ASSERT_EQ(ds.get("R2-F2").get(), "C2");
+    ASSERT_EQ(ds.get("R2-F3").get(), "D2");
 }
 
 //Create a write transaction on an empty file path.
