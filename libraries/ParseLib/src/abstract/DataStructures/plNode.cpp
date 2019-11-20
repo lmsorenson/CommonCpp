@@ -9,12 +9,10 @@ plNode::plNode(string text, std::shared_ptr<plNode> aParent)
 : value(text)
 , parent(aParent)
 {
-    // cout << SetColor(CYAN, "constructing plNode: ") << text << endl;
 }
 
 plNode::plNode(const plNode &plNode)
 {
-    // cout << SetColor(YELLOW, "copying plNode:" ) << plNode.value << endl;
     id = plNode.id;
     value = plNode.value;
     children = plNode.children;
