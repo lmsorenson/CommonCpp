@@ -164,9 +164,60 @@ void CSVData::add_instance(std::string entity_name, std::vector<std::string> ent
     }
 }
 
+void CSVData::remove_instance(std::string entity_id)
+{
+    //todo-->define
+
+    for (auto key : hash_table.GetMatchingKeys(entity_id))
+    {
+        hash_table.delete_value(key);
+    }
+}
+
 void CSVData::increment_instance_id(std::string entity_id, int32_t position)
 {
+    //todo-->define
 
+    for (auto key : hash_table.GetMatchingKeys(entity_id))
+    {
+        std::string copy = key;
+
+        char * token = strtok((char*)copy.c_str(),"-");
+        std::string new_key;
+
+        
+
+        while(token!=NULL)
+        {
+            if(entity_id.compare(token)==0)
+            {
+                char scanned_label[1];
+                int32_t scanned_index;
+
+                //scan the token
+                sscanf(token, "%1s%i", scanned_label, &scanned_index);
+
+                scanned_index++;
+
+                new_key.append(scanned_label);
+                new_key.append(std::to_string(scanned_index));
+            }
+            else
+            {
+                new_key.append(token);
+            }
+            
+
+            token = strtok(NULL,"-");
+
+            if(token!=NULL)
+                new_key.append("-");
+        }
+
+        delete[] token;
+        
+        hash_table.move(key, new_key);
+    }
 }
 
 int32_t CSVData::pad_entity_count(std::string entity_name, int32_t a_num_blanks)
