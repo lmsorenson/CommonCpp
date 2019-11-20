@@ -8,8 +8,12 @@ jobs:
     runs-on: macOS-10.14
     
     steps:
-    - name: sub
-      run: git submodule checkout --init --recursive
+
+   - name: sub
+      run: |
+      pwd
+      git submodule checkout --init --recursive
+
     - name: pwd
       run: pwd
     - name: make cmake directory
