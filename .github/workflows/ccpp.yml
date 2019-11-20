@@ -17,9 +17,8 @@ jobs:
       run: pwd
     - name: make cmake directory
       run: |
-        mkdir tests
         ls
-        cd ./tests/
+        cd CommonCpp/tests/
         pwd
         mkdir cmake
         ls
