@@ -10,8 +10,8 @@ jobs:
     steps:
    - name: sub
       run: |
-      pwd
-      git submodule checkout --init --recursive
+        pwd
+        git submodule checkout --init --recursive
     - name: pwd
       run: pwd
     - name: make cmake directory
