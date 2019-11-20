@@ -8,7 +8,7 @@ jobs:
     runs-on: macOS-10.14
     
     steps:
-   - name: sub
+    - name: sub
       run: pwd
         #git submodule checkout --init --recursive
     - name: pwd
