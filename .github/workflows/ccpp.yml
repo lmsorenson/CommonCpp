@@ -8,7 +8,6 @@ jobs:
     runs-on: macOS-10.14
     
     steps:
-    - uses: actions/checkout@v1
     - uses: google/googletest@1d721a7
     - uses: lmsorenson/CodexLib@058c2f5
     - name: sub
