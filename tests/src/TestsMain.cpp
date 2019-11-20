@@ -7,7 +7,7 @@
 #include <ParseLib.h>
 
 #include "CSVFormatSpecTests.hpp"
-//#include "CSVFunctionalTests.hpp"
+#include "CSVFunctionalTests.hpp"
 // #include "CSVPerformanceTests.hpp"
 
 using namespace std;
