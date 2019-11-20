@@ -16,7 +16,7 @@ jobs:
     - name: make cmake directory
       run: |
         mkdir tests
-        ls
+        ls ..
         cd ./tests/
         pwd
         mkdir cmake
