@@ -8,8 +8,6 @@ jobs:
     runs-on: macOS-10.14
     
     steps:
-    - uses: google/googletest@1d721a7
-    - uses: lmsorenson/CodexLib@058c2f5
     - name: sub
       run: git submodule checkout --init --recursive
     - name: pwd
