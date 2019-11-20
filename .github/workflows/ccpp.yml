@@ -9,7 +9,9 @@ jobs:
     
     steps:
     - name: sub
-      run: pwd
+      run: |
+        pwd
+        git clone --recurse-submodules https://github.com/lmsorenson/CommonCpp.git
         #git submodule checkout --init --recursive
     - name: pwd
       run: pwd
