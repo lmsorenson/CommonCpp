@@ -4,10 +4,16 @@
 
 using namespace std;
 
-plHashTable::plHashTable(int32_t table_size_arg)
+plHashTable::plHashTable()
+: hash_table_size(100)
+, table(100)
 {
-    hTableSize = table_size_arg;
-    table.resize(hTableSize);
+}
+
+plHashTable::plHashTable(int32_t table_size_arg)
+: hash_table_size(table_size_arg)
+, table(hash_table_size)
+{
 }
 
 plHashTable::~plHashTable()
@@ -25,7 +31,7 @@ int32_t plHashTable::compute_index(string value) const
         index += (int)*si;
     }
 
-    index %= hTableSize;
+    index %= hash_table_size;
 
     return index;
 }
@@ -56,6 +62,7 @@ int32_t plHashTable::insert(string key, plHashValue value)
 void plHashTable::move(std::string old_key, std::string new_key)
 {
     //create a new instance of the old hash value at a new loxation.
+    cout << "new: " << new_key << " value: " << this->get(old_key) << endl;
     this->insert( new_key, this->get_hash_value(old_key) );
 
     //delete the value at the old location.
@@ -67,6 +74,7 @@ void plHashTable::move(std::string old_key, std::string new_key)
 void plHashTable::delete_value(std::string a_key)
 {
     //todo-->define this function
+    table[compute_index(a_key)]->remove_value(a_key);
 }
 
 string plHashTable::get(string key) const
@@ -120,6 +128,11 @@ plHashElementIterator::plHashElementIterator(string aKey, plHashValue aValue)
 plHashElementIterator::~plHashElementIterator(){}
 
 shared_ptr<const plHashElementIterator> plHashElementIterator::next() const
+{
+    return next_element;
+}
+
+shared_ptr<plHashElementIterator> plHashElementIterator::next()
 {
     return next_element;
 }
@@ -194,9 +207,26 @@ string plHashElementIterator::get_value() const
     return value.get_value();
 }
 
-void plHashElementIterator::remove_value()
+void plHashElementIterator::remove_value(std::string a_key)
 {
-    //todo-->define remove_value
+    plHashElementIterator * e = this;
+
+    //if a value at the key exists.
+    while(e!=nullptr)
+    {
+        //check if the key of the element is the same as
+        //the key passed in.
+       if (e->get_key() == a_key)
+       {
+           //clears the key and value
+           e->key.clear();
+           e->value.clear_hash_value();
+           return;
+       }
+
+       e = e->next().get();
+    }
+    //todo->close the gap between the two linked list elements before and after this one.
 }
 
 
@@ -211,4 +241,10 @@ plHashValue::~plHashValue()
 string plHashValue::get_value() const
 {
     return value;
+}
+
+void plHashValue::clear_hash_value()
+{
+    value.clear();
+    parent_key.clear();
 }
