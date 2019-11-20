@@ -10,6 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: google/googletest@1d721a7
+    - args: args = "git submodule update --init --recursive"
     - uses: lmsorenson/CodexLib@058c2f5
     - name: pwd
       run: pwd
