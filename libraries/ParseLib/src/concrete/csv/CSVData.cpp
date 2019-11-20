@@ -197,7 +197,12 @@ void CSVData::increment_instance_id(std::string entity_id, int32_t position)
                 //scan the token
                 sscanf(token, "%1s%i", scanned_label, &scanned_index);
 
-                scanned_index++;
+                scanned_index += position;
+                for(int i=0; i<position; ++i)
+                {
+                    this->increment_counter(scanned_label);
+                }
+                
 
                 new_key.append(scanned_label);
                 new_key.append(std::to_string(scanned_index));

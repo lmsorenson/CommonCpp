@@ -140,6 +140,11 @@ shared_ptr<plHashElementIterator> plHashElementIterator::next()
     return next_element;
 }
 
+shared_ptr<plHashElementIterator> plHashElementIterator::previous()
+{
+    //todo-->define this function
+}
+
 bool plHashElementIterator::has_next() const
 {
     return (this->next() != nullptr);

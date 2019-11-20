@@ -30,6 +30,9 @@ public:
     void clear_hash_value();
 };
 
+
+
+
 /* 
 * Hash Element Iterator
 * -- a hash value on a linked list.
@@ -53,11 +56,12 @@ private:
     //this method is meant to allow access to clear the 
     //element during a delete procedure.
     std::shared_ptr<plHashElementIterator> next();
+    std::shared_ptr<plHashElementIterator> previous();
 
 public:
-    plHashElementIterator() = default;                            //
-    plHashElementIterator(std::string key, plHashValue aValue);   //
-    ~plHashElementIterator();                                     //
+    plHashElementIterator() = default;                            
+    plHashElementIterator(std::string key, plHashValue aValue);   
+    ~plHashElementIterator();                                     
 
     //returns a const pointer to the next element in the linked list.
     std::shared_ptr<const plHashElementIterator> next() const;
@@ -89,8 +93,7 @@ public:
  
 
 
-
-
+ 
 /* 
 * Hash Table
 * -- 
