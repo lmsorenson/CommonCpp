@@ -14,12 +14,12 @@ jobs:
     - name: pwd
       run: pwd
     - name: make cmake directory
-      run: mkdir ./tests/cmake
-    - name: configure
       run: |
+        mkdir tests
         ls
         cd ./tests/
         pwd
+        mkdir cmake
         ls
         cd ./cmake 
         pwd
