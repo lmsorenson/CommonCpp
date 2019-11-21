@@ -19,4 +19,4 @@ jobs:
         cmake ..
         make
     - name: Validation Test
-      run: ./CommonCpp/tests/out/tests
+      run: sudo ./CommonCpp/tests/out/tests
