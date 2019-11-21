@@ -67,12 +67,29 @@ public:
     plDataSet(int32_t a_hash_table_size);
     ~plDataSet();
 
+
+
+
     //accessors//------------------------------------------------
-    plInstance get(std::string a_key) const;
+    
+    
+    plInstance get(std::string a_descriptor) const;
+    
+    //finds a specific instance without specifying an identifier.
     plInstance where(std::string descriptor, std::string value) const;
+    
+    //get a copy of the metadata
     Model get_data_model() const;
-    int32_t IsLabelRequired(std::string a_label) const;
-    int32_t size(std::string descriptor);
+
+    //is this descriptor required to uniquely identify a value
+    //in the hash table.
+    int32_t IsDescriptorRequired(std::string a_descriptor) const;
+    
+    //returns the number of instances of the chosen entity
+    int32_t number_of_entity_instances(std::string entity_id);
+
+
+
 
     //Mutators//-------------------------------------------------
     int32_t set(std::string a_key, plHashValue a_value);

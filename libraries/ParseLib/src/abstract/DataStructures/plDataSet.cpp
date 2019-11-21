@@ -128,7 +128,7 @@ plDataSet::plDataSet(int32_t hash_table_size)
 //deconstructors
 plDataSet::~plDataSet(){}
 
-plInstance plDataSet::get(std::string a_key) const
+plInstance plDataSet::get(std::string a_descriptor) const
 {
     if (state == DATA_SET_BAD)
         return plInstance(this, plInstance::NO_FILE);
@@ -136,7 +136,7 @@ plInstance plDataSet::get(std::string a_key) const
     plInstance return_var;
    
     string 
-        key_buffer = a_key,
+        key_buffer = a_descriptor,
         generated_key,
         result;
 
@@ -150,7 +150,7 @@ plInstance plDataSet::get(std::string a_key) const
     }
 
     return_var = plInstance(this, plInstance::VALID_INST);
-    return_var.SetKey(a_key);//assign the key which was passed into this function.
+    return_var.SetKey(a_descriptor);//assign the key which was passed into this function.
 
     /*-----------------------------------*
     *              Lexer                 *
@@ -338,7 +338,7 @@ Model plDataSet::get_data_model() const
     return logical_data_structure;
 }
 
-int32_t plDataSet::IsLabelRequired(string a_label) const
+int32_t plDataSet::IsDescriptorRequired(string a_descriptor) const
 {
     int32_t r=-1;
 
@@ -346,7 +346,7 @@ int32_t plDataSet::IsLabelRequired(string a_label) const
 
     for(auto descriptor : this->expected_descriptors)
     {
-        if(descriptor->GetLabel() == a_label)//if this is never called return an error.
+        if(descriptor->GetLabel() == a_descriptor)//if this is never called return an error.
         {       
             if (b_descriptor_found)//if this is ever called return an error.
                 r=-1;
@@ -358,9 +358,9 @@ int32_t plDataSet::IsLabelRequired(string a_label) const
     return r;
 }
 
-int32_t plDataSet::size(std::string descriptor)
+int32_t plDataSet::number_of_entity_instances(std::string a_entity_id)
 {
-    return this->logical_data_structure.get_entity_count(descriptor);
+    return this->logical_data_structure.get_entity_count(a_entity_id);
 }
 
 int32_t plDataSet::increment_counter(std::string a_entity_label)

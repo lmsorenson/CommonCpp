@@ -75,7 +75,7 @@ plInstance plInstance::related(string a_label) const
     if(get_descriptor(a_label)!="NO_VALUE")
         attr_buffer.append(get_descriptor(a_label));
 
-    else if(!owning_data_set->IsLabelRequired(a_label))
+    else if(!owning_data_set->IsDescriptorRequired(a_label))
         attr_buffer.append(a_label);
 
     //get any other descriptors that might be necessary
@@ -92,7 +92,7 @@ plInstance plInstance::related(string a_label) const
         }
             
 
-        else if(!owning_data_set->IsLabelRequired(identifier[i]))
+        else if(!owning_data_set->IsDescriptorRequired(identifier[i]))
         {
             if(!attr_buffer.empty())
                 attr_buffer.append("-");

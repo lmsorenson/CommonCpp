@@ -32,7 +32,7 @@ std::vector<std::vector<std::string>> CSV_Write::get_dataset_contents(plDataSet 
 {
     std::vector<std::vector<std::string>> return_var;
 
-    for(int32_t i=0; i<dataset.size("R"); ++i)
+    for(int32_t i=0; i<dataset.number_of_entity_instances("R"); ++i)
     {
         std::string index = "R";
         index.append(std::to_string(i));
