@@ -51,8 +51,8 @@ CSVData::CSVData()
 : plDataSet()
 {
     this->add_optional_flag("H");
-    this->add_label("R");
-    this->add_label("F");
+    this->register_descriptor("R");
+    this->register_descriptor("F");
     this->csv_model();//generate the meta data
 }
 
@@ -60,8 +60,8 @@ CSVData::CSVData(int32_t hash_table_size)
 : plDataSet(hash_table_size)
 {
     this->add_optional_flag("H");
-    this->add_label("R");
-    this->add_label("F");
+    this->register_descriptor("R");
+    this->register_descriptor("F");
     this->csv_model();//generate the meta data
 }
 
@@ -73,10 +73,10 @@ void CSVData::assign()
 {
 }
 
-void CSVData::add_instance(std::string entity_name, std::vector<std::string> entity_values, int32_t position)
+void CSVData::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
 {
     //adding a record
-    if(entity_name.compare("R")==0)
+    if(entity_id.compare("R")==0)
     {
         //get the number of fields in the dataset.
         int32_t 
@@ -152,7 +152,7 @@ void CSVData::add_instance(std::string entity_name, std::vector<std::string> ent
     }
 
     //adding a field
-    else if(entity_name.compare("F")==0)
+    else if(entity_id.compare("F")==0)
     {
         //todo --> populate this function.
     }
@@ -225,7 +225,7 @@ void CSVData::increment_instance_id(std::string entity_id, int32_t position)
     }
 }
 
-int32_t CSVData::pad_entity_count(std::string entity_name, int32_t a_num_blanks)
+int32_t CSVData::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 {
     //get the current number of fields.
     int32_t 
@@ -234,7 +234,7 @@ int32_t CSVData::pad_entity_count(std::string entity_name, int32_t a_num_blanks)
 
     std::string r_buffer, f_buffer, c_buffer;
 
-    if(entity_name.compare("F")==0)
+    if(entity_id.compare("F")==0)
     {
         for(int i=0; i<record_count; ++i)
         {
@@ -261,7 +261,7 @@ int32_t CSVData::pad_entity_count(std::string entity_name, int32_t a_num_blanks)
 
         return 0;
     }
-    else if(entity_name.compare("R")==0)
+    else if(entity_id.compare("R")==0)
     {
         for(int i=record_count; i<record_count+a_num_blanks; ++i)
         {

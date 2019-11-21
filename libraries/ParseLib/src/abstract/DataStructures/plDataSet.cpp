@@ -254,14 +254,14 @@ plInstance plDataSet::where(std::string descriptor, std::string value) const
     }
 }
 
-int32_t plDataSet::set(std::string a_key, plHashValue a_value)
+int32_t plDataSet::set(std::string a_descriptor_list, plHashValue a_value)
 {
     switch (state)
     {
     case DATA_SET_EMPTY: 
         state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
-        return hash_table.insert(a_key, plHashValue(a_value)); break;
+        return hash_table.insert(a_descriptor_list, plHashValue(a_value)); break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
     default:
     case UNKNOWN: return UNKNOWN; break;
@@ -269,16 +269,16 @@ int32_t plDataSet::set(std::string a_key, plHashValue a_value)
 }
 
 
-int32_t plDataSet::add_label(std::string a_new_label)
+int32_t plDataSet::register_descriptor(std::string a_new_descriptor)
 {
-    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_label)));
+    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor)));
 
     return 0;
 }
 
-int32_t plDataSet::add_optional_flag(std::string a_new_label)
+int32_t plDataSet::add_optional_flag(std::string a_new_descriptor)
 {
-    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_label, false, false)));
+    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor, false, false)));
 
     return 0;
 }
@@ -363,16 +363,16 @@ int32_t plDataSet::number_of_entity_instances(std::string a_entity_id)
     return this->logical_data_structure.get_entity_count(a_entity_id);
 }
 
-int32_t plDataSet::increment_counter(std::string a_entity_label)
+int32_t plDataSet::increment_counter(std::string a_entity_id)
 {
-    logical_data_structure.increment_entity_counter(a_entity_label);
+    logical_data_structure.increment_entity_counter(a_entity_id);
 }
 
 
 
 
 
-void plDataSet::add_instance(std::string entity_name, std::vector<std::string> entity_values, int32_t position)
+void plDataSet::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
 {
     //todo-->handle definition of this function
 }
@@ -387,7 +387,7 @@ void plDataSet::increment_instance_id(std::string entity_id, int32_t position)
     //todo-->handle definition of this function
 }
 
-int32_t plDataSet::pad_entity_count(std::string entity_name, int32_t a_num_blanks)
+int32_t plDataSet::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 {
     //todo-->handle definition of this function
 }

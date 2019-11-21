@@ -42,7 +42,7 @@ class plDataSet
     
 
 
-    //expected descriptors refers to the descriptors needed or present in some hash keys.
+    //epected descriptors are descriptors needed to identify a hash value.
     std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
 
 protected:
@@ -92,16 +92,20 @@ public:
 
 
     //Mutators//-------------------------------------------------
-    int32_t set(std::string a_key, plHashValue a_value);
-    int32_t add_label(std::string a_new_label);
-    int32_t add_optional_flag(std::string a_new_label);  
-    int32_t increment_counter(std::string a_entity_label);
+
+    //add an atomic value to the store identified by a list of descriptors
+    int32_t set(std::string a_descriptor_list, plHashValue a_value);
+
+    //add an atomic value
+    int32_t register_descriptor(std::string a_new_descriptor);
+    int32_t add_optional_flag(std::string a_new_descriptor);  
+    int32_t increment_counter(std::string a_entity_id);
 
     //API for modifying a data set
-    virtual void add_instance(std::string entity_name, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
+    virtual void add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
     virtual void remove_instance(std::string entity_id);
     virtual void increment_instance_id(std::string entity_id, int32_t position=1);
-    virtual int32_t pad_entity_count(std::string entity_name, int32_t a_num_blanks=1);
+    virtual int32_t pad_entity_count(std::string entity_id, int32_t a_num_blanks=1);
 
     
 
