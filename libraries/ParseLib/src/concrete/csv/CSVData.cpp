@@ -4,7 +4,9 @@
 #include "../../colortext.hpp"
 
 
-using namespace std;
+
+using std::shared_ptr;
+using std::make_shared;
 
 void CSVData::csv_model()
 {
@@ -97,7 +99,10 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
 
             //if a position is given insert the record at the position given.
             else 
+            {
                 str.append(std::to_string(position));
+            }
+                
 
             //todo->after creating the new line push everything else down a record.
 
@@ -197,7 +202,7 @@ void CSVData::increment_instance_id(std::string entity_id, int32_t position)
                 //scan the token
                 sscanf(token, "%1s%i", scanned_label, &scanned_index);
 
-                scanned_index += position;
+                scanned_index++;
                 for(int i=0; i<position; ++i)
                 {
                     this->increment_counter(scanned_label);
