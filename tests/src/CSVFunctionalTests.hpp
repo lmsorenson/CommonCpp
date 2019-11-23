@@ -498,6 +498,14 @@ TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already 
     ASSERT_EQ(ds.get("R2-F1").get(), "B2");
     ASSERT_EQ(ds.get("R2-F2").get(), "C2");
     ASSERT_EQ(ds.get("R2-F3").get(), "D2");
+    ASSERT_EQ(ds.get("R3-F0").get(), "A3");
+    ASSERT_EQ(ds.get("R3-F1").get(), "B3");
+    ASSERT_EQ(ds.get("R3-F2").get(), "C3");
+    ASSERT_EQ(ds.get("R3-F3").get(), "D3");
+    ASSERT_EQ(ds.get("R3-F0").get(), "A4");
+    ASSERT_EQ(ds.get("R3-F1").get(), "B4");
+    ASSERT_EQ(ds.get("R3-F2").get(), "C4");
+    ASSERT_EQ(ds.get("R3-F3").get(), "D4");
 }
 
 //Create a write transaction on an empty file path.
