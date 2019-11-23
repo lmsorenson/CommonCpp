@@ -261,7 +261,9 @@ int32_t plDataSet::set(std::string a_descriptor_list, plHashValue a_value)
     case DATA_SET_EMPTY: 
         state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
-        return hash_table.insert(a_descriptor_list, plHashValue(a_value)); break;
+        hash_table.insert(a_descriptor_list, plHashValue(a_value));
+        return 0; 
+        break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
     default:
     case UNKNOWN: return UNKNOWN; break;

@@ -48,20 +48,19 @@ bool plHashTable::key_value_exists(std::string a_key)
     return !(value=="NULL");
 }
 
-int32_t plHashTable::insert(string key, plHashValue value)
+plHashValue plHashTable::insert(string key, plHashValue value)
 {
     int32_t index = compute_index(key);
     shared_ptr<plHashElementIterator> e (table[index]);
 
-    //do not overwrite 
-    
+    plHashValue replaced_key_value;
 
     //if the bucket is NOT null
     if (e!=nullptr)
     {
         if(this->key_value_exists(key))
         {
-            e->assign_value_to_existing_key(key, value);
+            replaced_key_value = e->assign_value_to_existing_key(key, value);
         }
         else
         {
@@ -77,18 +76,22 @@ int32_t plHashTable::insert(string key, plHashValue value)
     }
     
 
-    return 0;//success
+    return replaced_key_value;
 }
 
-void plHashTable::move(string old_key, string new_key)
+plHashValue plHashTable::move(string old_key, string new_key)
 {
+    plHashValue replaced_value;
+
     //create a new instance of the old hash value at a new loxation.
-    this->insert( new_key, this->get_hash_value(old_key) );
+    replaced_value = this->insert( new_key, this->get_hash_value(old_key) );
 
     //delete the value at the old location.
     this->delete_value(old_key);
 
     //todo-->finish defining this function.
+
+    return replaced_value;
 }
 
 void plHashTable::delete_value(string a_key)
@@ -162,7 +165,7 @@ shared_ptr<plHashElementIterator> plHashElementIterator::previous()
     //todo-->define this function
 }
 
-void plHashElementIterator::assign_value_to_existing_key(std::string a_key, plHashValue a_value)
+plHashValue plHashElementIterator::assign_value_to_existing_key(std::string a_key, plHashValue a_value)
 {
     plHashElementIterator * e = this;
 
@@ -173,12 +176,20 @@ void plHashElementIterator::assign_value_to_existing_key(std::string a_key, plHa
         //the key passed in.
        if (e->get_key() == a_key)
        {
-           //assign the new value to the key.
+            //record the value that is being replaced.
+            plHashValue replaced_value = e->value;
+
+            //assign the new value to the key.
             e->value = a_value;
+
+            //return the replaced_value
+            return replaced_value;
        }
 
        e = e->next().get();
     }
+
+    return plHashValue();
 }
 
 bool plHashElementIterator::has_next() const
@@ -274,13 +285,21 @@ void plHashElementIterator::remove_value(string a_key)
 }
 
 
-
+plHashValue::plHashValue()
+: value("")
+, parent_key("")
+{}
 plHashValue::plHashValue(string aValue, string aParentString)
 : value(aValue)
 , parent_key(aParentString)
 {}
 plHashValue::~plHashValue()
 {}
+
+bool plHashValue::is_valid()
+{
+    return !(value.empty() && parent_key.empty());
+}
 
 string plHashValue::get_value() const
 {

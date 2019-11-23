@@ -18,9 +18,11 @@ class plHashValue
     std::string value;
 
 public:
-    plHashValue()=default;
+    plHashValue();
     plHashValue(std::string aValue, std::string aParentKey);
     ~plHashValue();
+
+    bool is_valid();
 
     //get_value()
     std::string get_value() const;
@@ -83,7 +85,7 @@ public:
     //the whole hash value along with it's metadata.
     plHashValue find_hash_value(std::string a_key) const;
 
-    void assign_value_to_existing_key(std::string a_key, plHashValue a_value);
+    plHashValue assign_value_to_existing_key(std::string a_key, plHashValue a_value);
 
     //returns the value of the key.
     std::string get_key() const;
@@ -133,10 +135,10 @@ public:
     /*      Mutators        */
 
     //inserts a key and value into the hash table.
-    int32_t insert(std::string key, plHashValue aValue);
+    plHashValue insert(std::string key, plHashValue aValue);
 
     //moves a hash value from one key to another.
-    void move(std::string old_key, std::string new_key);
+    plHashValue move(std::string old_key, std::string new_key);
 
     //deletes a hash key and hash value from the hash table.
     void delete_value(std::string a_key);
