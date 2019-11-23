@@ -3,3 +3,6 @@
 .DS_Store
 \.vscode/
 \out/
+tests/test_data/CSV/Write/csvR8_1.csv
+tests/test_data/CSV/Write/csvR8_2.csv
+tests/test_data/CSV/Write/csvR9.csv
