@@ -83,7 +83,6 @@ int32_t plHashTable::insert(string key, plHashValue value)
 void plHashTable::move(string old_key, string new_key)
 {
     //create a new instance of the old hash value at a new loxation.
-    cout << "new: " << new_key << " value: " << this->get(old_key) << endl;
     this->insert( new_key, this->get_hash_value(old_key) );
 
     //delete the value at the old location.
