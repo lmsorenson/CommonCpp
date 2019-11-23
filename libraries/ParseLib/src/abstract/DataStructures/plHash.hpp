@@ -58,6 +58,8 @@ private:
     std::shared_ptr<plHashElementIterator> next();
     std::shared_ptr<plHashElementIterator> previous();
 
+    
+
 public:
     plHashElementIterator() = default;                            
     plHashElementIterator(std::string key, plHashValue aValue);   
@@ -80,6 +82,8 @@ public:
     //this method finds a specific element in the linked list by its key and returns 
     //the whole hash value along with it's metadata.
     plHashValue find_hash_value(std::string a_key) const;
+
+    void assign_value_to_existing_key(std::string a_key, plHashValue a_value);
 
     //returns the value of the key.
     std::string get_key() const;
@@ -114,6 +118,9 @@ private:
 
     //a list of keys entered into this table.
     std::vector<std::string> hash_key_list;             
+
+
+    bool key_value_exists(std::string a_key);
     
 public:
     //Constructors

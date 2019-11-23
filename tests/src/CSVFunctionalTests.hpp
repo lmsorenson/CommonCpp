@@ -278,7 +278,81 @@ TEST_F(CSVFunctionalSpec, TestR6)
 // * Add a new field in the middle of each record.
 TEST_F(CSVFunctionalSpec, TestR7_1)
 {
-     ASSERT_EQ(true, false);
+    //adds a new record to the end of an exsiting file.
+    CSVData ds;
+
+    //reads in the file.
+    ParseLib().read_file(ds, this->path("../test_data/CSV/csvR7_1_read.csv").c_str());
+
+
+    //asserts that one line exists and line 2 does not.
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
+
+    //adds line 2 to the end of the document.
+    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+
+    //writes the file to a new location.
+    ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7_1.csv").c_str());
+
+    //opens the file just written.
+    plDataSet ds2;
+    ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_1.csv").c_str());
+
+    //asserts that both lines exist.
+    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds2.get("R1-F0").get(), "A2");
+    ASSERT_EQ(ds2.get("R1-F1").get(), "B2");
+    ASSERT_EQ(ds2.get("R1-F2").get(), "C2");
+    ASSERT_EQ(ds2.get("R1-F3").get(), "D2");
+}
+
+TEST_F(CSVFunctionalSpec, TestR7_2)
+{
+    //adds a new record to the end of an exsiting file.
+    CSVData ds;
+
+    //reads in the file.
+    ParseLib().read_file(ds, this->path("../test_data/CSV/csvR7_2_read.csv").c_str());
+
+    //asserts that one line exists and line 2 does not.
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
+
+    //adds line 2 to the end of the document.
+    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+
+    //writes the file to a new location.
+    ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7_2.csv").c_str());
+
+    //opens the file just written.
+    plDataSet ds2;
+    ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_2.csv").c_str());
+
+    //asserts that both lines exist.
+    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds2.get("R1-F0").get(), "A2");
+    ASSERT_EQ(ds2.get("R1-F1").get(), "B2");
+    ASSERT_EQ(ds2.get("R1-F2").get(), "C2");
+    ASSERT_EQ(ds2.get("R1-F3").get(), "D2");
 }
 
 //Modify instances.
@@ -382,6 +456,50 @@ TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
     ASSERT_EQ(ds2.get("R2-F3").get(), "D2");
 }
 
+TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already has a record
+{
+    CSVData ds;
+
+    //create four records
+    ds.add_instance("R", {"A1", "B1", "C1", "D1"});
+    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+    ds.add_instance("R", {"A3", "B3", "C3", "D3"});
+    ds.add_instance("R", {"A4", "B4", "C4", "D4"});
+
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
+    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
+    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
+    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
+    ASSERT_EQ(ds.get("R2-F0").get(), "A3");
+    ASSERT_EQ(ds.get("R2-F1").get(), "B3");
+    ASSERT_EQ(ds.get("R2-F2").get(), "C3");
+    ASSERT_EQ(ds.get("R2-F3").get(), "D3");
+    ASSERT_EQ(ds.get("R3-F0").get(), "A4");
+    ASSERT_EQ(ds.get("R3-F1").get(), "B4");
+    ASSERT_EQ(ds.get("R3-F2").get(), "C4");
+    ASSERT_EQ(ds.get("R3-F3").get(), "D4");
+
+    ds.increment_instance_id("R1");//remove row 3
+
+    //assert row 3 = NULL
+    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
+    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
+    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
+    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
+    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
+    ASSERT_EQ(ds.get("R2-F0").get(), "A2");
+    ASSERT_EQ(ds.get("R2-F1").get(), "B2");
+    ASSERT_EQ(ds.get("R2-F2").get(), "C2");
+    ASSERT_EQ(ds.get("R2-F3").get(), "D2");
+}
+
 //Create a write transaction on an empty file path.
 TEST_F(CSVFunctionalSpec, TestR9)
 {
@@ -399,10 +517,10 @@ TEST_F(CSVFunctionalSpec, TestR9)
     ASSERT_EQ(ds.get("R1-F2").get(), "C2");
     ASSERT_EQ(ds.get("R1-F3").get(), "D2");
 
-    ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7.csv").c_str());
+    ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR9.csv").c_str());
 
     plDataSet ds2;
-    ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7.csv").c_str());
+    ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR9.csv").c_str());
 
     ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
     ASSERT_EQ(ds2.get("R0-F1").get(), "B1");

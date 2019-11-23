@@ -39,17 +39,35 @@ int32_t plHashTable::compute_index(string value) const
     return index;
 }
 
+bool plHashTable::key_value_exists(std::string a_key)
+{
+    int32_t index = compute_index(a_key);
+
+    std::string value = table[index]->find(a_key);
+
+    return !(value=="NULL");
+}
 
 int32_t plHashTable::insert(string key, plHashValue value)
 {
     int32_t index = compute_index(key);
     shared_ptr<plHashElementIterator> e (table[index]);
 
+    //do not overwrite 
+    
+
     //if the bucket is NOT null
     if (e!=nullptr)
     {
-        e->set_last(plHashElementIterator(key, value));
-        this->hash_key_list.push_back(key);
+        if(this->key_value_exists(key))
+        {
+            e->assign_value_to_existing_key(key, value);
+        }
+        else
+        {
+            e->set_last(plHashElementIterator(key, value));
+            this->hash_key_list.push_back(key);
+        }
     }
     //if the bucket is null
     else
@@ -59,7 +77,7 @@ int32_t plHashTable::insert(string key, plHashValue value)
     }
     
 
-    return 0;
+    return 0;//success
 }
 
 void plHashTable::move(string old_key, string new_key)
@@ -143,6 +161,25 @@ shared_ptr<plHashElementIterator> plHashElementIterator::next()
 shared_ptr<plHashElementIterator> plHashElementIterator::previous()
 {
     //todo-->define this function
+}
+
+void plHashElementIterator::assign_value_to_existing_key(std::string a_key, plHashValue a_value)
+{
+    plHashElementIterator * e = this;
+
+    //if a value at the key exists.
+    while(e!=nullptr)
+    {
+        //check if the key of the element is the same as
+        //the key passed in.
+       if (e->get_key() == a_key)
+       {
+           //assign the new value to the key.
+            e->value = a_value;
+       }
+
+       e = e->next().get();
+    }
 }
 
 bool plHashElementIterator::has_next() const
