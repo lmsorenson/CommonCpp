@@ -7,6 +7,12 @@
 
 using std::shared_ptr;
 using std::make_shared;
+using std::cout;
+using std::endl;
+
+/* Helpers */
+void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id);
+std::string increment_descriptor_in_key(CSVData * a_this, std::string entity_id, std::string hash_key, int32_t position);
 
 void CSVData::csv_model()
 {
@@ -182,52 +188,32 @@ void CSVData::remove_instance(std::string entity_id)
 void CSVData::increment_instance_id(std::string entity_id, int32_t position)
 {
     //todo-->define
-
+    
+    //iterates through all keys matching the passed in entity_id
     for (auto key : hash_table.GetMatchingKeys(entity_id))
     {
-        std::string copy = key;
-
-        char * token = strtok((char*)copy.c_str(),"-");
+        bool done = false;
         std::string new_key;
+        plHashValue replaced_value;
 
-        
+        new_key = increment_descriptor_in_key(this, entity_id, key, position);
 
-        while(token!=NULL)
+        replaced_value = hash_table.move(key, new_key);
+    
+        std::string new_entity_id = entity_id;
+
+        while(replaced_value.is_valid())
         {
-            if(entity_id.compare(token)==0)
-            {
-                char scanned_label[1];
-                int32_t scanned_index;
+            std::string scanned_meta_descriptor_id;
 
-                //scan the token
-                sscanf(token, "%1s%i", scanned_label, &scanned_index);
+            increment_descriptor_value(new_entity_id, new_entity_id, scanned_meta_descriptor_id);
 
-                scanned_index++;
-                for(int i=0; i<position; ++i)
-                {
-                    this->increment_counter(scanned_label);
-                }
-                
+            new_key = increment_descriptor_in_key(this, new_entity_id, new_key, 1);
 
-                new_key.append(scanned_label);
-                new_key.append(std::to_string(scanned_index));
-            }
-            else
-            {
-                new_key.append(token);
-            }
-            
-
-            token = strtok(NULL,"-");
-
-            if(token!=NULL)
-                new_key.append("-");
+            replaced_value = hash_table.insert(new_key, replaced_value);
         }
-
-        delete[] token;
         
-        hash_table.move(key, new_key);
-    }
+    }//for
 }
 
 int32_t CSVData::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
@@ -295,4 +281,60 @@ int32_t CSVData::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 
     else
         return -1;
+}
+
+
+void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id)
+{
+    char* descriptor_id = (char*)a_descriptor_id.c_str();
+    char scanned_descriptor_id[1];
+    int32_t scanned_descriptor_value;
+
+    //scan the token
+    sscanf(descriptor_id, "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
+
+    //increment the numeric descriptor value
+    scanned_descriptor_value++;
+
+    //assign the value of the descriptor_id to the reference parameter
+    a_out_meta_descriptor_id=scanned_descriptor_id;
+
+    a_out_descriptor_id.clear();
+    a_out_descriptor_id.append(scanned_descriptor_id).append(std::to_string(scanned_descriptor_value));
+}
+
+std::string increment_descriptor_in_key(CSVData * a_this, std::string a_entity_id, std::string a_hash_key, int32_t a_position)
+{
+    std::string 
+            copy = a_hash_key,
+            new_key,
+            descriptor_id;
+
+    char * token = strtok((char*)copy.c_str(),"-");
+
+    //iterates through all tokens(descriptors)
+    while(token!=NULL)
+    {
+        //if the descriptor mat
+        if(a_entity_id.compare(token)==0)
+        {
+            increment_descriptor_value(token, new_key, descriptor_id);
+            for(int i=0; i<a_position; ++i)
+            {
+                a_this->increment_counter(descriptor_id);
+            }
+        }
+        else
+        {
+            new_key.append(token);
+        }
+        
+        token = strtok(NULL,"-");
+
+        if(token!=NULL)
+            new_key.append("-");
+    }
+    delete[] token;
+
+    return new_key;
 }
