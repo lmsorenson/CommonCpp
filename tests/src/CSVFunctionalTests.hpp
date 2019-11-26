@@ -726,6 +726,7 @@ TEST_F(CSVFunctionalSpec, TestR9)
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR9.csv").c_str());
 
     plDataSet ds2;
+    std::cout << "path: " << this->path("../test_data/CSV/Write/csvR9.csv").c_str() << std::endl;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR9.csv").c_str());
 
     ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
