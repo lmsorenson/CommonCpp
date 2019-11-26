@@ -20,7 +20,7 @@ jobs:
         make
     - name: Validation Test
       run: |
+        mkdir ./CommonCpp/tests/test_data/Write
         cd ./CommonCpp/tests/out/
-        ls ./CommonCpp/tests/test_data/Write/
         sudo ./tests
         ls ./CommonCpp/tests/test_data/Write/
