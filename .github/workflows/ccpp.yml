@@ -21,4 +21,5 @@ jobs:
     - name: Validation Test
       run: |
         mkdir ./CommonCpp/tests/test_data/CSV/Write
+        cd ./CommonCpp/tests/out
         sudo ./tests
