@@ -10,10 +10,6 @@ using std::make_shared;
 using std::cout;
 using std::endl;
 
-/* Helpers */
-void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id);
-std::string increment_descriptor_in_key(CSVData * a_this, std::string entity_id, std::string hash_key, int32_t position);
-
 void CSVData::csv_model()
 {
     shared_ptr<Entity>
@@ -91,8 +87,6 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
             field_count = this->logical_data_structure.get_entity_count("F"),
             record_count = this->logical_data_structure.get_entity_count("R");
 
-        this->increment_counter("R");//todo--> maybe implement the counter within the plDataSet::set function
-
         //cell values 
         if(entity_values.size()<=field_count)
         {
@@ -112,7 +106,6 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
 
             //todo->after creating the new line push everything else down a record.
 
-
             for(int32_t i=0;i<field_count;++i)
             {
                 std::string key_buffer = str;
@@ -123,12 +116,12 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
 
                 if(i<entity_values.size())
                 {
-                    this->set(key_buffer, plHashValue(entity_values[i], str));
-                    this->increment_counter("F");
+                    
+                    this->set(key_buffer, plHashValue(entity_values[i], str), "R");
                 }
                 else
                 {
-                    this->set(key_buffer, plHashValue("", str));
+                    this->set(key_buffer, plHashValue("", str),"R");
                 }
                 
             }
@@ -136,9 +129,12 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
         else
         {
             // pad_entity_count("F", (entity_values.size() - field_count) );
-
             std::string str = "R";
+            //called if the position parameter is left empty,
+            //by default add new records to the end of the document.
+            
             str.append(std::to_string(record_count));
+
 
             for(int32_t i=0;i<entity_values.size();++i)
             {
@@ -150,12 +146,11 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
 
                 if(i<entity_values.size())
                 {
-                    this->set(key_buffer, plHashValue(entity_values[i], str));
-                    this->increment_counter("F");
+                    this->set(key_buffer, plHashValue(entity_values[i], str), "R");
                 }
                 else
                 {
-                    this->set(key_buffer, plHashValue("", str));
+                    this->set(key_buffer, plHashValue("", str), "R");
                 }
             }
         }
@@ -165,7 +160,56 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
     //adding a field
     else if(entity_id.compare("F")==0)
     {
-        //todo --> populate this function.
+        //get the number of fields in the dataset.
+        int32_t 
+            field_count = this->logical_data_structure.get_entity_count("F"),
+            record_count = this->logical_data_structure.get_entity_count("R");
+
+        //cell values 
+        if(entity_values.size()<=record_count)
+        {
+            for(int32_t i=0;i<record_count;++i)
+            {
+                std::string str = "R";
+
+                //called if the position parameter is left empty,
+                //by default add new records to the end of the document.
+                
+                str.append(std::to_string(i));
+
+                std::string key_buffer = str;
+                key_buffer.append("-");
+                key_buffer.append("F");
+
+                if(position==END_OF_ENTITY_LIST)
+                    key_buffer.append(std::to_string(field_count));
+
+                //if a position is given insert the record at the position given.
+                else 
+                {
+                    key_buffer.append(std::to_string(position));
+                }
+
+
+                
+                if(i<entity_values.size())
+                {
+                    this->set(key_buffer, plHashValue(entity_values[i], str), "F");
+                    // this->increment_counter("F");
+                }
+                else
+                {
+                    this->set(key_buffer, plHashValue("", str),"F");
+                }
+                
+            }
+        }
+        else
+        {
+            //todo-->define
+        }
+
+
     }
     
     //error
@@ -196,22 +240,13 @@ void CSVData::increment_instance_id(std::string entity_id, int32_t position)
         std::string new_key;
         plHashValue replaced_value;
 
-        new_key = increment_descriptor_in_key(this, entity_id, key, position);
-
+        new_key = increment_descriptor_in_key(entity_id, key, position);
+        
         replaced_value = hash_table.move(key, new_key);
-    
-        std::string new_entity_id = entity_id;
+        
+        update_descriptor_counts(new_key);
 
-        while(replaced_value.is_valid())
-        {
-            std::string scanned_meta_descriptor_id;
-
-            increment_descriptor_value(new_entity_id, new_entity_id, scanned_meta_descriptor_id);
-
-            new_key = increment_descriptor_in_key(this, new_entity_id, new_key, 1);
-
-            replaced_value = hash_table.insert(new_key, replaced_value);
-        }
+        displace_overwritten_keys(replaced_value, entity_id, new_key);
         
     }//for
 }
@@ -281,60 +316,4 @@ int32_t CSVData::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 
     else
         return -1;
-}
-
-
-void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id)
-{
-    char* descriptor_id = (char*)a_descriptor_id.c_str();
-    char scanned_descriptor_id[1];
-    int32_t scanned_descriptor_value;
-
-    //scan the token
-    sscanf(descriptor_id, "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
-
-    //increment the numeric descriptor value
-    scanned_descriptor_value++;
-
-    //assign the value of the descriptor_id to the reference parameter
-    a_out_meta_descriptor_id=scanned_descriptor_id;
-
-    a_out_descriptor_id.clear();
-    a_out_descriptor_id.append(scanned_descriptor_id).append(std::to_string(scanned_descriptor_value));
-}
-
-std::string increment_descriptor_in_key(CSVData * a_this, std::string a_entity_id, std::string a_hash_key, int32_t a_position)
-{
-    std::string 
-            copy = a_hash_key,
-            new_key,
-            descriptor_id;
-
-    char * token = strtok((char*)copy.c_str(),"-");
-
-    //iterates through all tokens(descriptors)
-    while(token!=NULL)
-    {
-        //if the descriptor mat
-        if(a_entity_id.compare(token)==0)
-        {
-            increment_descriptor_value(token, new_key, descriptor_id);
-            for(int i=0; i<a_position; ++i)
-            {
-                a_this->increment_counter(descriptor_id);
-            }
-        }
-        else
-        {
-            new_key.append(token);
-        }
-        
-        token = strtok(NULL,"-");
-
-        if(token!=NULL)
-            new_key.append("-");
-    }
-    delete[] token;
-
-    return new_key;
 }

@@ -65,6 +65,23 @@ void Model::increment_entity_counter(string a_entity_label)
     e->increment_counter();
 }
 
+void Model::found_descriptor(std::string a_descriptor)
+{
+    char scanned_label[1];
+    int32_t scanned_index;
+
+    //scan the token
+    sscanf(a_descriptor.c_str(), "%1s%i", scanned_label, &scanned_index);
+
+    std::shared_ptr<Entity> e = get_entity(scanned_label);
+    scanned_index++;
+
+    if(scanned_index>e->get_count())
+    {
+        e->set_counter(scanned_index);
+    }
+}
+
 int32_t Model::get_entity_count(string a_entity_label)
 {
     shared_ptr<Entity> e = get_entity(a_entity_label);
@@ -83,6 +100,11 @@ Thing::Thing(string a_name, string a_label)
 , thing_id(a_label)
 , counter(0)
 {
+}
+
+void Thing::set_counter(int32_t a_value)
+{
+    counter = a_value;
 }
 
 void Thing::print()

@@ -39,6 +39,8 @@ public:
 
     //increment the counter for the entity specified
     void increment_entity_counter(std::string a_entity_label);
+    void found_descriptor(std::string a_descriptor);
+
     int32_t get_entity_count(std::string a_entity_label);
 };
 
@@ -57,7 +59,11 @@ public:
     virtual void print();
     std::string get_id();
 
+    //pass in a descriptor to update the count
     void increment_counter();
+
+    void set_counter(int32_t a_value);
+    
     int32_t get_count();
 };
 

@@ -7,6 +7,10 @@ using namespace std;
 
 
 
+/* helpers */
+void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id);
+std::string get_matching_descriptor(std::string a_descriptor_list, std::string a_meta_entity_id);
+
 string plDataSet::id_lexer(
     string a_identifier, 
     function<void(int32_t key_i, int32_t index, string found_label)> callback_desc_found,
@@ -262,6 +266,43 @@ int32_t plDataSet::set(std::string a_descriptor_list, plHashValue a_value)
         state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
         hash_table.insert(a_descriptor_list, plHashValue(a_value));
+        this->update_descriptor_counts(a_descriptor_list);
+        return 0; 
+        break;
+    case DATA_SET_BAD: return DATA_SET_BAD; break;
+    default:
+    case UNKNOWN: return UNKNOWN; break;
+    }
+}
+
+int32_t plDataSet::set(std::string a_descriptor_list, plHashValue a_value, std::string a_entity_id)
+{
+    plHashValue replaced_value;
+    std::string new_entity_id, new_key, copy_entity_id = a_entity_id;
+
+    switch (state)
+    {
+    case DATA_SET_EMPTY: 
+        state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
+    case DATA_SET_GOOD: 
+
+
+        replaced_value = hash_table.insert(a_descriptor_list, plHashValue(a_value));
+        this->update_descriptor_counts(a_descriptor_list);
+
+        if(replaced_value.is_valid())
+        {
+            new_entity_id = get_matching_descriptor(a_descriptor_list, copy_entity_id);
+            
+            new_key = increment_descriptor_in_key(new_entity_id, a_descriptor_list, 0);
+
+            replaced_value = hash_table.insert(new_key, plHashValue(replaced_value));
+            
+            this->update_descriptor_counts(new_key);
+            
+            displace_overwritten_keys(replaced_value, new_entity_id, new_key);
+        }
+        
         return 0; 
         break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
@@ -367,7 +408,7 @@ int32_t plDataSet::number_of_entity_instances(std::string a_entity_id)
 
 int32_t plDataSet::increment_counter(std::string a_entity_id)
 {
-    logical_data_structure.increment_entity_counter(a_entity_id);
+    // logical_data_structure.increment_entity_counter(a_entity_id);
 }
 
 
@@ -392,4 +433,118 @@ void plDataSet::increment_instance_id(std::string entity_id, int32_t position)
 int32_t plDataSet::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 {
     //todo-->handle definition of this function
+}
+
+
+
+
+std::string plDataSet::increment_descriptor_in_key(std::string a_entity_id, std::string a_hash_key, int32_t a_position)
+{
+    std::string 
+            copy = a_hash_key,
+            new_key,
+            descriptor_id;
+
+    char * token = strtok((char*)copy.c_str(),"-");
+
+    //iterates through all tokens(descriptors)
+    while(token!=NULL)
+    {
+        //if the descriptor mat
+        if(a_entity_id.compare(token)==0)
+        {   
+            std::string copy_new_key = new_key;
+            increment_descriptor_value(token, copy_new_key, descriptor_id);
+            new_key.append(copy_new_key);
+        
+            for(int i=0; i<a_position; ++i)
+            {
+                // this->increment_counter(descriptor_id);
+            }
+        }
+        else
+        {
+            new_key.append(token);
+        }
+        
+        token = strtok(NULL,"-");
+
+        if(token!=NULL)
+            new_key.append("-");
+    }
+    delete[] token;
+
+    return new_key;
+}
+
+
+//increments the id for each 
+void plDataSet::displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key)
+{
+    plHashValue replaced = replaced_value;
+    while(replaced.is_valid())
+    {
+        std::string scanned_meta_descriptor_id;
+        increment_descriptor_value(new_entity_id, new_entity_id, scanned_meta_descriptor_id);
+        new_key = increment_descriptor_in_key(new_entity_id, new_key, 1);
+        replaced = this->hash_table.insert(new_key, replaced);
+        this->update_descriptor_counts(new_key);
+    }
+}
+
+
+
+
+/* helpers */
+void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id)
+{
+    char* descriptor_id = (char*)a_descriptor_id.c_str();
+    char scanned_descriptor_id[1];
+    int32_t scanned_descriptor_value;
+
+    //scan the token
+    sscanf(descriptor_id, "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
+
+    //increment the numeric descriptor value
+    scanned_descriptor_value++;
+
+    //assign the value of the descriptor_id to the reference parameter
+    a_out_meta_descriptor_id=scanned_descriptor_id;
+
+    a_out_descriptor_id.clear();
+    a_out_descriptor_id.append(scanned_descriptor_id).append(std::to_string(scanned_descriptor_value));
+}
+
+
+
+
+std::string get_matching_descriptor(std::string a_descriptor_list, std::string a_meta_entity_id)
+{
+    std::string copy = a_descriptor_list;
+    char * token = strtok((char*)copy.c_str(),"-");
+
+    while(token!=NULL)
+    {
+        if(std::string(token).substr(0,1).compare(a_meta_entity_id)==0)
+        {
+            return token;
+        }
+
+        token = strtok(NULL,"-");
+    }
+
+    return "NULL";
+}
+
+void plDataSet::update_descriptor_counts(std::string a_descriptor_list)
+{
+    std::string copy = a_descriptor_list;
+    char * token = strtok((char*)copy.c_str(),"-");
+
+    while(token!=NULL)
+    {
+        logical_data_structure.found_descriptor(token);
+
+        token = strtok(NULL,"-");
+    }
 }

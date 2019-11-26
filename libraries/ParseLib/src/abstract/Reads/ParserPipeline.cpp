@@ -121,7 +121,6 @@ int32_t ParserPipeline::ProcessIndividual(plDataSet &data_set, plNodeSet &out_bu
             else 
             {
                 newNode.AppendID(filter->GetID(l));
-                data_set.increment_counter(filter->GetLabel());
             }
                 
 

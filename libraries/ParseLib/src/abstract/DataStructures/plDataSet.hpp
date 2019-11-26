@@ -9,8 +9,14 @@
 #define NO_INDEX -1
 #define END_OF_ENTITY_LIST -1
 
+
+
 class plDataSet
 {
+
+
+
+private:
     //descriptors used in the identifier for an atomic entity.
     //atomic refers to the smallest entity in a data set.
     //atomic entities are also the elements stored in the hash table.
@@ -51,6 +57,11 @@ protected:
 
     //a hash table to store the data in.
     plHashTable hash_table;
+
+    /* Helpers */
+    void displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key);
+    std::string increment_descriptor_in_key(std::string entity_id, std::string hash_key, int32_t position);
+    void update_descriptor_counts(std::string a_descriptor_list);
 
 public:
     enum State : int32_t
@@ -95,6 +106,7 @@ public:
 
     //add an atomic value to the store identified by a list of descriptors
     int32_t set(std::string a_descriptor_list, plHashValue a_value);
+    int32_t set(std::string a_descriptor_list, plHashValue a_value, std::string a_entity_id);
 
     //add an atomic value
     int32_t register_descriptor(std::string a_new_descriptor);
