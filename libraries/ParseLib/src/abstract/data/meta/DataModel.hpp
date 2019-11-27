@@ -5,9 +5,6 @@
 #include <string>
 #include <memory>
 
-template <class T> using ManyLink = std::vector<std::shared_ptr<T>>;
-template <class T> using OneLink = std::shared_ptr<T>;
-
 #include "Interface.hpp"
 #include "Entity.hpp"
 
