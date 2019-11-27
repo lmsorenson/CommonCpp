@@ -1,12 +1,12 @@
 # CommonCpp
-This repository is a set of libraries which holds everyday tasks which a developer such as myself might not want to write over and over again.
+This repository is a set of common utility libraries.  Including:
 
 1. ParseLib
-2. LoggerLib
-3. MessageLib
 
 ## ParseLib
-A primitive document access library.  A set of abstract read/write procedures which simplify setup of new file format specifications.</br></br>
+A primitive document access library.  A set of abstract read/write procedures that separates <i>what</i> from <i>how</i>.  That is <i>what</i> data we want to remember, and <i>how</i> the data is stored or implemented. <br></br>
+
+Parse Lib reads and parses data into a format-neutral dataset which can be modified and written to multiple file formats.
 
 ### Architectural Description:
 1. [Requirements](https://github.com/lmsorenson/CommonCpp/blob/master/libraries/ParseLib/docs/requirements.md#parselib-requirements---v1)</br>
@@ -15,9 +15,3 @@ A primitive document access library.  A set of abstract read/write procedures wh
 4. [Information View](https://github.com/lmsorenson/CommonCpp/tree/master/libraries/ParseLib#information-view)</br>
 
 <img align="center" src="libraries/ParseLib/docs/images/ParseLibUseCaseDiagram1.png" width="500"/>
-
-## LoggerLib
-This lib has not yet been designed.
-
-## MessageLib
-This lib has not yet been designed.
