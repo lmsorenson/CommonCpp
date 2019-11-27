@@ -163,6 +163,7 @@ shared_ptr<plHashElementIterator> plHashElementIterator::next()
 shared_ptr<plHashElementIterator> plHashElementIterator::previous()
 {
     //todo-->define this function
+    return 0;
 }
 
 plHashValue plHashElementIterator::assign_value_to_existing_key(std::string a_key, plHashValue a_value)

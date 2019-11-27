@@ -409,6 +409,7 @@ int32_t plDataSet::number_of_entity_instances(std::string a_entity_id)
 int32_t plDataSet::increment_counter(std::string a_entity_id)
 {
     // logical_data_structure.increment_entity_counter(a_entity_id);
+    return 0;
 }
 
 
@@ -433,6 +434,7 @@ void plDataSet::increment_instance_id(std::string entity_id, int32_t position)
 int32_t plDataSet::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 {
     //todo-->handle definition of this function
+    return 0;
 }
 
 

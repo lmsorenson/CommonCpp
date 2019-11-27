@@ -32,4 +32,6 @@ int32_t WriteStrategy::execute_write(plDataSet dataset, std::string path)
     }
 
     writeText(path, out_str);
+
+    return 0;
 }
