@@ -13,13 +13,7 @@ jobs:
         git clone --recurse-submodules https://${{secrets.NAME_U}}:${{secrets.WF_NAME}}@github.com/lmsorenson/CommonCpp.git
     - name: Compile the project
       run: |
-        ls
-        pwd
-        ls CommonCpp/
-        pwd
-        ls CommonCpp/CommonCpp/
-        pwd
-        cd CommonCpp/CommonCpp/libraries/ParseLib/tests/
+        cd CommonCpp/libraries/ParseLib/tests/
         mkdir cmake
         cd ./cmake 
         cmake ..
