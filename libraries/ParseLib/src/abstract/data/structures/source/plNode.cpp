@@ -1,7 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "../plNode.hpp"
 #include <iostream>
-#include "../../../../colortext.hpp"
 
 using namespace std;
 

@@ -1,7 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "CSVData.hpp"
 #include <iostream>
-#include "../../colortext.hpp"
 
 #include "../../abstract/data/meta/Relationship.hpp"
 #include "../../abstract/data/meta/Entity.hpp"
