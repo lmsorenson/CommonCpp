@@ -3,7 +3,8 @@
 #include <iostream>
 #include "../../colortext.hpp"
 
-
+#include "../../abstract/data/meta/Relationship.hpp"
+#include "../../abstract/data/meta/Entity.hpp"
 
 using std::shared_ptr;
 using std::make_shared;

@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
-#include "../DataStructures/plDataSet.hpp"
+#include "../data/plDataSet.hpp"
 #include "../../../include/ParseLib.h"
 #include "../Reads/ParserPipeline.hpp"
 

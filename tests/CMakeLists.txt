@@ -34,8 +34,10 @@ target_include_directories(
 	tests PUBLIC
 	${PROJECT_SOURCE_DIR}/../libraries/ParseLib/include
 	${PROJECT_SOURCE_DIR}/../libraries/ParseLib/
-    ${PROJECT_SOURCE_DIR}/../libraries/ParseLib/abstract/Factories/
-    ${PROJECT_SOURCE_DIR}/../libraries/ParseLib/abstract/DataStructures/
+	${PROJECT_SOURCE_DIR}/../libraries/ParseLib/abstract/Factories/
+	${PROJECT_SOURCE_DIR}/../libraries/ParseLib/abstract/data/
+	${PROJECT_SOURCE_DIR}/../libraries/ParseLib/abstract/data/meta/
+	${PROJECT_SOURCE_DIR}/../libraries/ParseLib/abstract/data/structures/
     ${PROJECT_SOURCE_DIR}/../libraries/ParseLib/abstract/Reads/
     ${PROJECT_SOURCE_DIR}/../libraries/ParseLib/abstract/Writes/
     ${PROJECT_SOURCE_DIR}/../libraries/ParseLib/concrete/csv/

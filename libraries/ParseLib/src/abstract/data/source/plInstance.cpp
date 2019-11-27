@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "plInstance.hpp"
-#include "plDataSet.hpp"
+#include "../plInstance.hpp"
+#include "../plDataSet.hpp"
 #include <iostream>
 
 
