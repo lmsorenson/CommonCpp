@@ -16,7 +16,9 @@ file(
     GLOB Mods 
     ${PROJECT_SOURCE_DIR}/*.cpp 
     ${PROJECT_SOURCE_DIR}/abstract/Factories/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/DataStructures/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/meta/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/structures/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Reads/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
     ${PROJECT_SOURCE_DIR}/concrete/csv/*.cpp

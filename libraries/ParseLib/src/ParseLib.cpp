@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "../include/ParseLib.h"
-#include "abstract/DataStructures/plDataSet.hpp"
+#include "abstract/data/plDataSet.hpp"
 
 #include <iostream>
 #include <string>

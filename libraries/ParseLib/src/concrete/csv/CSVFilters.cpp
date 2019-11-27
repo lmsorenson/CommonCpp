@@ -46,7 +46,7 @@
 
     int32_t HeaderFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
     {
-        
+        return 0;
     }
 
     string HeaderFilter::name()

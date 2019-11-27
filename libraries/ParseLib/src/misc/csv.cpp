@@ -21,7 +21,7 @@ CSV file::loadCSV(const char * filepath)
 
 CSV SeparateLines(const char * text)
 {
-    printf("\nPOSIX version: %i\n", _POSIX_VERSION);
+    printf("\nPOSIX version: %i\n", ((long)_POSIX_VERSION));
     CSV ret_val;
     char * pch;
     char * end;
@@ -42,7 +42,7 @@ CSV SeparateLines(const char * text)
 
 vector<string> SeparateValues(const char * text)
 {
-    printf("\nPOSIX version: %i\n", _POSIX_VERSION);
+    printf("\nPOSIX version: %i\n", ((int)_POSIX_VERSION));
 
     vector<string> ret_val;
     char * pch;

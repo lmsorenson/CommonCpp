@@ -4,8 +4,8 @@
 #include <string>
 #include "ParserFilter.hpp"
 #include "ParserOutput.hpp"
-#include "../DataStructures/plNode.hpp"
-#include "../DataStructures/plDataSet.hpp"
+#include "../data/structures/plNode.hpp"
+#include "../data/plDataSet.hpp"
 
 
 typedef std::vector<std::vector<std::shared_ptr<plNode>>> plNodeBuffer;

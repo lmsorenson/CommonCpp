@@ -1,9 +1,10 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <vector>
-#include "plHash.hpp"
+#include <iostream>
+#include "structures/plHash.hpp"
 #include "plInstance.hpp"
-#include "MetaLDS.hpp"
+#include "meta/DataModel.hpp"
 
 
 #define NO_INDEX -1
@@ -13,55 +14,6 @@
 
 class plDataSet
 {
-
-
-
-private:
-    //descriptors used in the identifier for an atomic entity.
-    //atomic refers to the smallest entity in a data set.
-    //atomic entities are also the elements stored in the hash table.
-    //this entity describes individual descriptors needed to identify a hash element.
-    class EntityKey
-    {
-        std::string label;
-        int32_t index;
-        bool 
-            required,
-            has_index;
-
-        bool b_found;
-
-    public:
-        EntityKey();
-        EntityKey(std::string a_label, bool a_required = true, bool a_has_index = true);
-        ~EntityKey();
-
-        std::string GetLabel() const;
-        int32_t SetIndex(int32_t a_index);
-        int32_t SetFound();
-        bool IsFound() const;
-        int32_t GetIndex() const;
-        bool IsRequired() const;
-        bool HasIndex() const;
-    };
-
-    
-
-
-    //epected descriptors are descriptors needed to identify a hash value.
-    std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
-
-protected:
-    //the logical data structure is meta data about the data stored in this hash table.
-    Model logical_data_structure;
-
-    //a hash table to store the data in.
-    plHashTable hash_table;
-
-    /* Helpers */
-    void displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key);
-    std::string increment_descriptor_in_key(std::string entity_id, std::string hash_key, int32_t position);
-    void update_descriptor_counts(std::string a_descriptor_list);
 
 public:
     enum State : int32_t
@@ -78,6 +30,13 @@ public:
     plDataSet(int32_t a_hash_table_size);
     ~plDataSet();
 
+    plInstance operator[](std::string i)
+    {
+        plInstance ret = this->get("R0");
+         std::cout << i << std::endl;
+         
+         return ret;
+    }
 
 
 
@@ -127,4 +86,55 @@ public:
         std::function<void(std::string label_not_found)> lambda_expr2=nullptr,
         std::function<void(std::string label_unrecognized)> callback_unrecognized_desc=nullptr) const;
     std::vector<std::string> get_missing_descriptors(std::string a_descriptor_labels) const;
+    
+
+
+    protected:
+    //the logical data structure is meta data about the data stored in this hash table.
+    Model logical_data_structure;
+
+    //a hash table to store the data in.
+    plHashTable hash_table;
+
+    /* Helpers */
+    void displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key);
+    std::string increment_descriptor_in_key(std::string entity_id, std::string hash_key, int32_t position);
+    void update_descriptor_counts(std::string a_descriptor_list);
+    
+
+    
+    private:
+    //descriptors used in the identifier for an atomic entity.
+    //atomic refers to the smallest entity in a data set.
+    //atomic entities are also the elements stored in the hash table.
+    //this entity describes individual descriptors needed to identify a hash element.
+    class EntityKey
+    {
+
+    public:
+        EntityKey();
+        EntityKey(std::string a_label, bool a_required = true, bool a_has_index = true);
+        ~EntityKey();
+
+        std::string GetLabel() const;
+        int32_t SetIndex(int32_t a_index);
+        int32_t SetFound();
+        bool IsFound() const;
+        int32_t GetIndex() const;
+        bool IsRequired() const;
+        bool HasIndex() const;
+
+    private:
+        std::string label;
+        int32_t index;
+        bool 
+            required,
+            has_index;
+
+        bool b_found;
+
+    };
+
+    //epected descriptors are descriptors needed to identify a hash value.
+    std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
 };

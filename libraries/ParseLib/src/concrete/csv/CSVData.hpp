@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 
-#include "../../abstract/DataStructures/plDataSet.hpp"
+#include "../../abstract/data/plDataSet.hpp"
 #include <vector>
 #include <string>
 
@@ -22,7 +22,7 @@ public:
 
     virtual void assign();
     virtual void add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position=-1) override;
-    virtual void remove_instance(std::string entity_id);
+    virtual void remove_instance(std::string entity_id) override;;
     virtual void increment_instance_id(std::string entity_id, int32_t position=1) override;
     virtual int32_t pad_entity_count(std::string entity_id, int32_t a_num_blanks=1) override;
 };
