@@ -1,0 +1,25 @@
+name: ubuntu--ParseLib C/C++ CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build, Run, Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout source code
+      run: |
+        git clone --recurse-submodules https://${{secrets.NAME_U}}:${{secrets.WF_NAME}}@github.com/lmsorenson/CommonCpp.git
+    - name: Compile the project
+      run: |
+        cd CommonCpp/libraries/ParseLib/tests/
+        mkdir cmake
+        cd ./cmake 
+        cmake ..
+        make
+    - name: Validation Test
+      run: |
+        mkdir ./CommonCpp/libraries/ParseLib/tests/test_data/CSV/Write
+        cd ./CommonCpp/libraries/ParseLib/tests/out
+        sudo ./tests
