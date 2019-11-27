@@ -17,7 +17,9 @@ jobs:
         pwd
         ls CommonCpp/
         pwd
-        cd CommonCpp/libraries/ParseLib/tests/
+        ls CommonCpp/CommonCpp/
+        pwd
+        cd CommonCpp/CommonCpp/libraries/ParseLib/tests/
         mkdir cmake
         cd ./cmake 
         cmake ..
