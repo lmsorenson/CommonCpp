@@ -7,6 +7,8 @@
 
 #include "Interface.hpp"
 #include "Entity.hpp"
+#include "Relationship.hpp"
+#include "Descriptor.hpp"
 
 
 class Model

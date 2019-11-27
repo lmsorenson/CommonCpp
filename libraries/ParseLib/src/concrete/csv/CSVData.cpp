@@ -2,8 +2,7 @@
 #include "CSVData.hpp"
 #include <iostream>
 
-#include "../../abstract/data/meta/Relationship.hpp"
-#include "../../abstract/data/meta/Entity.hpp"
+#include "../../abstract/data/meta/DataModel.hpp"
 
 using std::shared_ptr;
 using std::make_shared;
