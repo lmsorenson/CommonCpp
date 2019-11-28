@@ -8,7 +8,7 @@ jobs:
     runs-on: macOS-latest
     
     steps:
-    - name: Checkout source code
+    - name: Checkout Source Code
       run: |
         git clone --recurse-submodules https://${{secrets.NAME_U}}:${{secrets.WF_NAME}}@github.com/lmsorenson/CommonCpp.git
     - name: Compile the project
