@@ -2,9 +2,9 @@
 #pragma once
 #include <vector>
 #include <iostream>
-#include "structures/plHash.hpp"
-#include "plInstance.hpp"
-#include "meta/DataModel.hpp"
+#include "../src/abstract/data/structures/plHash.hpp"
+#include "../src/abstract/data/plInstance.hpp"
+#include "../src/abstract/data/meta/DataModel.hpp"
 
 
 #define NO_INDEX -1

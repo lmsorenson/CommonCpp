@@ -1,9 +1,13 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "CSV_Factory.hpp"
+
+#include <iostream>
+
+#include "../../../include/concrete/CSVData.hpp"
 #include "ReadCSV.hpp"
 #include "CSV_Write.hpp"
-#include "CSVData.hpp"
-#include <iostream>
+
+
 
 
 using namespace std;

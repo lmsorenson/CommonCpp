@@ -1,7 +1,7 @@
 #pragma once
 #include <stdio.h>
-#include "../src/abstract/data/plDataSet.hpp"
-#include "../src/concrete/csv/CSVData.hpp"
+#include "plDataSet.hpp"
+#include "concrete/CSVData.hpp"
 #include <memory>
 
 

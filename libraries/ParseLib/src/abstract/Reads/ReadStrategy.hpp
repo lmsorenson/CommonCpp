@@ -2,9 +2,9 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "../data/plDataSet.hpp"
 #include "ParserPipeline.hpp"
-#include "../../../include/ParseLib.h"
+#include "../../../include/plDataSet.hpp"
+#include "../../../include/ParseLib.hpp"
 
 
 class ReadStrategy

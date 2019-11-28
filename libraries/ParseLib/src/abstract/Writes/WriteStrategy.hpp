@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
-#include "../data/plDataSet.hpp"
-#include "../../../include/ParseLib.h"
+#include "../../../include/plDataSet.hpp"
+#include "../../../include/ParseLib.hpp"
 #include "../Reads/ParserPipeline.hpp"
 
 

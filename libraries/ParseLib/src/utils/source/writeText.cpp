@@ -1,4 +1,4 @@
-#include "../include/writeText.h"
+#include "../writeText.h"
 
 #include <iostream>
 #include <fstream>

@@ -1,12 +1,12 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../include/ParseLib.h"
-#include "abstract/data/plDataSet.hpp"
+#include "../include/ParseLib.hpp"
+#include "../include/plDataSet.hpp"
 
 #include <iostream>
 #include <string>
 
+#include "../include/concrete/CSVData.hpp"
 #include "abstract/Reads/ReadStrategy.hpp"
-#include "concrete/csv/CSVData.hpp"
 #include "concrete/csv/CSV_Factory.hpp"
 
 using namespace std;

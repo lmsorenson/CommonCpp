@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 
-#include "../../abstract/data/plDataSet.hpp"
+#include "../plDataSet.hpp"
 #include <vector>
 #include <string>
 

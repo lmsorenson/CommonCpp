@@ -1,4 +1,4 @@
-#include "../include/loadText.h"
+#include "../loadText.h"
 
 #include <iostream>
 #include <fstream>

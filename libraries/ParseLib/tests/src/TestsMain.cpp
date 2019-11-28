@@ -4,7 +4,7 @@
 #include <ctime>
 
 #include <gtest/gtest.h>
-#include <ParseLib.h>
+#include <ParseLib.hpp>
 
 #include "CSVFormatSpecTests.hpp"
 #include "CSVFunctionalTests.hpp"
