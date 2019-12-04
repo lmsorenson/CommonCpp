@@ -19,6 +19,14 @@ plInstance::plInstance(const plDataSet * owner, State s)
 plInstance::~plInstance()
 {}
 
+plInstance plInstance::operator[](std::string i)
+{
+    std::string new_key_buffer = this->key;
+    new_key_buffer.append("-").append(i);
+
+    return owning_data_set->get(new_key_buffer);
+}
+
 string plInstance::get() const
 {
     if (state == VALID_INST && value.size()!= 0)

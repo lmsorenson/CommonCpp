@@ -6,7 +6,6 @@ using namespace std;
 
 
 
-
 /* helpers */
 void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id);
 std::string get_matching_descriptor(std::string a_descriptor_list, std::string a_meta_entity_id);
@@ -131,6 +130,14 @@ plDataSet::plDataSet(int32_t hash_table_size)
 
 //deconstructors
 plDataSet::~plDataSet(){}
+
+
+plInstance plDataSet::operator[](std::string i)
+{
+    return this->get(i);
+}
+
+
 
 plInstance plDataSet::get(std::string a_descriptor) const
 {

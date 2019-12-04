@@ -10,7 +10,8 @@
 #define NO_INDEX -1
 #define END_OF_ENTITY_LIST -1
 
-
+class SelectionVisitor;
+class EntitySelection;
 
 class plDataSet
 {
@@ -30,13 +31,7 @@ public:
     plDataSet(int32_t a_hash_table_size);
     ~plDataSet();
 
-    plInstance operator[](std::string i)
-    {
-        plInstance ret = this->get("R0");
-         std::cout << i << std::endl;
-         
-         return ret;
-    }
+    plInstance operator[](std::string i);
 
 
 
@@ -79,6 +74,8 @@ public:
     virtual int32_t pad_entity_count(std::string entity_id, int32_t a_num_blanks=1);
 
     
+    void accept(SelectionVisitor a_selection);
+
 
     std::string id_lexer(
         std::string a_identifier, 

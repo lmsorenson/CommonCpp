@@ -27,10 +27,14 @@ private:
     //gets the descriptor for an entity containing this entity instance.
     std::string get_descriptor(std::string a_label) const;
 
+    
+
 public:
     plInstance() = default;
     plInstance(const plDataSet * owner, State s);
     ~plInstance();
+
+    plInstance operator[](std::string i);
 
     std::string get() const;                                    //only returns a value if a vector has a particular value
     std::vector<std::string> get_vector();

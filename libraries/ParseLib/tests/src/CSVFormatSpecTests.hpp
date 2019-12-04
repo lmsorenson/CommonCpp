@@ -42,7 +42,9 @@ TEST_F(CSVFormatTests, TestR1)
 {
     plDataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1.csv").c_str());
-    plInstance str = ds.get("R0-F0");
+    //plInstance str = ds['A']['1'];
+    // plInstance str = ds.get("R0-F0");
+    plInstance str = ds["R0"]["F0"];
 
     ASSERT_EQ(str.get(), "aaa");
 }
@@ -53,7 +55,7 @@ TEST_F(CSVFormatTests, TestR1_WithHeader)
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1H.csv").c_str(), options);
-    plInstance str = ds.get("R0-F0");
+    plInstance str = ds["R0"]["F0"];
 
     ASSERT_EQ(str.get(), "aaa");
 }
