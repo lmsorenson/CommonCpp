@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include "../data/structures/plNode.hpp"
-#include "../../../include/plDataSet.hpp"
+#include <plDataSet.hpp>
 #include <vector>
 
 class ParserOutput
