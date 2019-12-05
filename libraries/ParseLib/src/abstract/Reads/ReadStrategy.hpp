@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include "ParserPipeline.hpp"
-#include "../../../include/plDataSet.hpp"
-#include "../../../include/ParseLib.hpp"
+#include <plDataSet.hpp>
+#include <ParseLib.hpp>
 
 
 class ReadStrategy
