@@ -16,7 +16,7 @@ class CSV_Write : public WriteStrategy
     virtual int32_t set_write_options(std::vector<option> write_options) override;
 
     //this function gets all elements produced by the final filter in the pipeline.
-    virtual std::vector<std::vector<std::string>> get_dataset_contents(plDataSet dataset) override;
+    virtual std::vector<std::vector<std::string>> get_dataset_contents(sdg::plDataSet dataset) override;
 
     //csv read options
     bool b_use_header_line;

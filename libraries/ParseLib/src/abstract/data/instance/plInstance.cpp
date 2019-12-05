@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "plInstance.hpp"
-#include "../../../include/plDataSet.hpp"
+#include "../plInstance.hpp"
+#include "../../../../include/plDataSet.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,7 +11,7 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-plInstance::plInstance(const plDataSet * owner, State s)
+plInstance::plInstance(const sdg::plDataSet * owner, State s)
 : owning_data_set(owner)
 , state(s)
 {}

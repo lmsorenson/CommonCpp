@@ -10,8 +10,13 @@
 #define NO_INDEX -1
 #define END_OF_ENTITY_LIST -1
 
+//soli deo gloria
+namespace sdg {
+
 class SelectionVisitor;
 class EntitySelection;
+
+
 
 class plDataSet
 {
@@ -135,3 +140,8 @@ public:
     //epected descriptors are descriptors needed to identify a hash value.
     std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
 };
+
+
+
+
+}//namespace sdg

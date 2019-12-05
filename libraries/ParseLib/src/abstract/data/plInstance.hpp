@@ -5,8 +5,11 @@
 
 
 
+namespace sdg {
 
 class plDataSet;
+
+}//namespace sdg
 
 class plInstance
 {
@@ -20,7 +23,7 @@ public:
     };
 
 private:
-    const plDataSet * owning_data_set;
+    const sdg::plDataSet * owning_data_set;
     std::string key;//the key that identifies this instance
     std::vector<std::string> value;//the values stored.
     State state;
@@ -31,7 +34,7 @@ private:
 
 public:
     plInstance() = default;
-    plInstance(const plDataSet * owner, State s);
+    plInstance(const sdg::plDataSet * owner, State s);
     ~plInstance();
 
     plInstance operator[](std::string i);

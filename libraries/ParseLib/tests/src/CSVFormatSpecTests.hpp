@@ -7,6 +7,8 @@
 #include <ParseLib.hpp>
 #include "TestFramework.hpp"
 
+using sdg::plDataSet;
+
 
 class CSVFormatTests : public ::LucTestFramework
 {

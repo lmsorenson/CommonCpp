@@ -28,7 +28,7 @@ int32_t CSV_Write::set_write_options(std::vector<option> write_options)
     return 0;
 }
 
-std::vector<std::vector<std::string>> CSV_Write::get_dataset_contents(plDataSet dataset)
+std::vector<std::vector<std::string>> CSV_Write::get_dataset_contents(sdg::plDataSet dataset)
 {
     std::vector<std::vector<std::string>> return_var;
 

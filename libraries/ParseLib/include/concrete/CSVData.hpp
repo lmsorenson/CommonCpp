@@ -9,7 +9,7 @@ typedef std::string field;
 typedef std::vector<field> record;
 typedef std::vector<record> csv_file;
 
-class CSVData : public plDataSet
+class CSVData : public sdg::plDataSet
 {
     csv_file file;
 

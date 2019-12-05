@@ -43,5 +43,5 @@ public:
 
 class CSVOutput : public ParserOutput
 {
-    virtual void execute(std::shared_ptr<plNode>& text, plDataSet& data_store) override;
+    virtual void execute(std::shared_ptr<plNode>& text, sdg::plDataSet& data_store) override;
 };

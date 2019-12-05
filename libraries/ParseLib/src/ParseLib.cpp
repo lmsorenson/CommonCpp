@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options)
+int32_t ParseLib::read_file(sdg::plDataSet& data_store, const char * filepath, std::vector<option> read_options)
 {
 
     //-----------------------|   Parse file path   |-----------------------//
@@ -49,7 +49,7 @@ int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath, std::v
     return READ_SUCCESSFUL;
 }
 
-int32_t ParseLib::write_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options)
+int32_t ParseLib::write_file(sdg::plDataSet& data_store, const char * filepath, std::vector<option> read_options)
 {
     //STEP 1 -- FACTORY.
     //-----------------------|   Generate strategies & Data   |-----------------------//

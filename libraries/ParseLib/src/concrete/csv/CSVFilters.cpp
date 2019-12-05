@@ -240,7 +240,7 @@
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
     //---------------------------------------------------------------------------//
-    void CSVOutput::execute(std::shared_ptr<plNode>& text, plDataSet& data_store)
+    void CSVOutput::execute(std::shared_ptr<plNode>& text, sdg::plDataSet& data_store)
     {
         //set of nodes to check
         vector<shared_ptr<plNode>> in;

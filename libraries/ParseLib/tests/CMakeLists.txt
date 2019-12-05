@@ -39,6 +39,8 @@ target_include_directories(
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/meta/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/structures/
+	${PROJECT_SOURCE_DIR}/../src/abstract/data/instance/
+	${PROJECT_SOURCE_DIR}/../src/abstract/data/dataset/
     ${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
     ${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
 	${PROJECT_SOURCE_DIR}/../src/concrete/csv/
