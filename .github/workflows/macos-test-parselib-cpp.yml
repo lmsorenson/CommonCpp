@@ -11,6 +11,7 @@ jobs:
     - name: Checkout source code
       run: |
         git clone --recurse-submodules https://${{secrets.NAME_U}}:${{secrets.WF_NAME}}@github.com/lmsorenson/CommonCpp.git
+        echo ${GITHUB_REF#refs/heads/}
     - name: Compile the project
       run: |
         cd CommonCpp/libraries/ParseLib/tests/
