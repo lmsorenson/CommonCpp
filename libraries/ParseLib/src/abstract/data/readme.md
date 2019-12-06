@@ -13,6 +13,8 @@ descriptor_value: 0.
 
 1. Granular Data - The smallest units in a file format.
 
+1. partial key -- 
+
 1. Key - Used in the hash table to identify a unit of granular data.
 
 1. Index - the array index used to specify the location of granular data in the hash table.

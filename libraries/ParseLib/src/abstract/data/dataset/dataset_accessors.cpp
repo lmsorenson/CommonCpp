@@ -99,7 +99,7 @@ sdg::Instance sdg::DataSet::get(std::string a_descriptor) const
     }
 
     return_var = sdg::Instance(this, Instance::VALID_INST);
-    return_var.SetKey(a_descriptor);//assign the key which was passed into this function.
+    return_var.set_key(a_descriptor);//assign the key which was passed into this function.
 
     /*-----------------------------------*
     *              Lexer                 *
@@ -157,13 +157,13 @@ sdg::Instance sdg::DataSet::get(std::string a_descriptor) const
 
         for(int i=0; i<matching_keys.size(); ++i)
         {
-            return_var.add(hash_table.get(matching_keys[i]));
+            return_var.add_value(hash_table.get(matching_keys[i]));
         }
     }
     else
     {
         //return the value at the generated key
-        return_var.add(hash_table.get(generated_key));
+        return_var.add_value(hash_table.get(generated_key));
     }
 
     return (state==DATA_SET_GOOD)

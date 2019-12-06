@@ -12,8 +12,11 @@ using std::function;
 /* helpers */
 void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id);
 
+
+//todo -- increase the clarity and readability of the inner workings of the lexer.
+//-- also adjust this algorithm to more closely adhere to concepts of lexical analysis, and assess time complexity.
 string sdg::DataSet::id_lexer(
-    string a_identifier, 
+    string a_identifier, // the identifier to be broken down into descriptors.
     function<void(int32_t key_i, int32_t index, string found_label)> callback_desc_found,
     function<void(string label_not_found)> callback_desc_not_found,
     function<void(string label_unrecognized)> callback_unrecognized_desc) const

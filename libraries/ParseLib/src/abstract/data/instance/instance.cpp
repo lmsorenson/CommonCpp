@@ -13,8 +13,8 @@ using std::to_string;
 using std::vector;
 
 sdg::Instance::Instance(const sdg::DataSet * owner, State s)
-: owning_data_set(owner)
-, state(s)
+: kOwner_(owner)
+, state_(s)
 {}
 
 sdg::Instance::~Instance()
@@ -22,8 +22,8 @@ sdg::Instance::~Instance()
 
 sdg::Instance sdg::Instance::operator[](std::string i)
 {
-    std::string new_key_buffer = this->key;
+    std::string new_key_buffer = this->key_;
     new_key_buffer.append("-").append(i);
 
-    return owning_data_set->get(new_key_buffer);
+    return kOwner_->get(new_key_buffer);
 }

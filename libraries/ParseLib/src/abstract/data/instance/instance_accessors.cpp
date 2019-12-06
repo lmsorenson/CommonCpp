@@ -9,26 +9,28 @@ using ::std::to_string;
 using ::sdg::Instance;
 
 
+//todo -- check if this this returns a modifiable iterator. (consider const key words)
 const std::vector<std::string>::iterator Instance::begin()
 {
-    return value.begin();
+    return value_.begin();
 }
 
+//todo -- check if this this returns a modifiable iterator. (consider const key words)
 const std::vector<std::string>::iterator Instance::end()
 {
-    return value.end();
+    return value_.end();
 }
 
 
 string Instance::get() const
 {
-    if (state == VALID_INST && value.size()!= 0)
+    if (state_ == VALID_INST && value_.size()!= 0)
     {
-        if (value.size()==1)
+        if (value_.size()==1)
         {
-            return value[0];
+            return value_[0];
         }
-        else if(value.size()>0)
+        else if(value_.size()>0)
         {
             return "SPECIFY_AN_INDEX";
         }
@@ -37,8 +39,10 @@ string Instance::get() const
             return "ERROR";
         }
     }
-    else if (state == NO_FILE)
+
+    else if (state_ == NO_FILE)
         return "NO_FILE";
+
     //if the value of the instance is of size 0
     else
         return "NULL";
@@ -49,7 +53,7 @@ string Instance::get() const
 
 std::vector<std::string> Instance::get_vector()
 {
-    return value;
+    return value_;
 }
 
 
@@ -57,11 +61,11 @@ std::vector<std::string> Instance::get_vector()
 
 string Instance::at(int8_t index) const
 {
-    if(state == VALID_INST && value.size()!= 0)
+    if(state_ == VALID_INST && value_.size()!= 0)
     {
-        if(value.size()>=(index+1))
+        if(value_.size()>=(index+1))
         {
-            return value[index];
+            return value_[index];
         }
         else
             return "NULL";
@@ -82,27 +86,27 @@ Instance Instance::related(string a_label) const
     string attr_buffer;
     
     
-    if(get_descriptor(a_label)!="NO_VALUE")
-        attr_buffer.append(get_descriptor(a_label));
+    if( GetDescriptorByDescriptorID(a_label) != "NO_VALUE" )
+        attr_buffer.append( GetDescriptorByDescriptorID(a_label) );
 
-    else if(!owning_data_set->IsDescriptorRequired(a_label))
+    else if(!kOwner_->IsDescriptorRequired(a_label))
         attr_buffer.append(a_label);
 
     //get any other descriptors that might be necessary
-    vector<string> identifier = owning_data_set->get_data_model().get_entity_identifier(a_label);
+    vector<string> identifier = kOwner_->get_data_model().get_entity_identifier(a_label);
 
     for(int i=0; i<identifier.size();++i)
     {
-        if(get_descriptor(identifier[i])!="NO_VALUE")
+        if(GetDescriptorByDescriptorID(identifier[i])!="NO_VALUE")
         {
             if(!attr_buffer.empty())
                 attr_buffer.append("-");
 
-            attr_buffer.append(get_descriptor(identifier[i]));
+            attr_buffer.append(GetDescriptorByDescriptorID(identifier[i]));
         }
             
 
-        else if(!owning_data_set->IsDescriptorRequired(identifier[i]))
+        else if(!kOwner_->IsDescriptorRequired(identifier[i]))
         {
             if(!attr_buffer.empty())
                 attr_buffer.append("-");
@@ -112,7 +116,7 @@ Instance Instance::related(string a_label) const
     }
 
     //get the value from the associated DataSet
-    return owning_data_set->get(attr_buffer);
+    return kOwner_->get(attr_buffer);
 }
 
 
@@ -127,54 +131,54 @@ Instance Instance::pull_next(string a_label) const
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
     if(!(owner = this->related(a_label)).is_valid())
-        return Instance(owning_data_set, NULL_INST);
+        return Instance(kOwner_, NULL_INST);
 
     //------------------------------------------
     //      step through value iterator
     //------------------------------------------
     //start at the first value in the set
-    auto itr = owner.value.cbegin();
+    auto itr = owner.value_.cbegin();
     int32_t pos=0;
 
     //find the current instance if it exists.
-    while(((*itr)!=this->get()) && (itr!=owner.value.cend()))
+    while(((*itr)!=this->get()) && (itr!=owner.value_.cend()))
     {
         itr++;
         pos++;
     }
 
     //check that this and the next item both exist before continuing
-    if((itr!=owner.value.cend()) && (++itr!=owner.value.cend()))
+    if((itr!=owner.value_.cend()) && (++itr!=owner.value_.cend()))
     {
         vector<string> 
-        missing_desc = owning_data_set->get_missing_descriptors(a_label);
+        missing_desc = kOwner_->get_missing_descriptors(a_label);
         
         pos++;
 
         if(missing_desc.size()==1)
         {
             string generated_identifier;
-            generated_identifier.append(key);
+            generated_identifier.append(key_);
             generated_identifier.append("-");
             generated_identifier.append(missing_desc[0]);
             generated_identifier.append(to_string(pos));
 
-            return owning_data_set->get(generated_identifier);
+            return kOwner_->get(generated_identifier);
         }
         //todo-->so far this should never happen
         else if(missing_desc.size()>1)
         {
-            return Instance(owning_data_set, NULL_INST);
+            return Instance(kOwner_, NULL_INST);
         }
         else
         {
-            return Instance(owning_data_set, NULL_INST);
+            return Instance(kOwner_, NULL_INST);
         }
     }
 
     //if the next item doesn't exist then end here.
     else
-        return Instance(owning_data_set, NULL_INST);
+        return Instance(kOwner_, NULL_INST);
 }
 
 
@@ -189,22 +193,22 @@ Instance Instance::pull_previous(string a_label) const
 
 bool Instance::is_valid() const
 {
-    return (state == VALID_INST);
+    return (state_ == VALID_INST);
 }    
 
 
 
-int32_t Instance::find(std::string a_value, int32_t offset) const
+int32_t Instance::find(std::string a_value_to_search_for, int32_t offset) const
 {
     //------------------------------------------
     //      step through value iterator
     //------------------------------------------
     //start at the first value in the set
-    auto itr = this->value.cbegin();
+    auto itr = this->value_.cbegin();
     int32_t pos=offset;
 
     //find the current instance if it exists.
-    while(( (itr!=this->value.cend()) && (*itr)!=a_value))
+    while(( (itr!=this->value_.cend()) && (*itr) != a_value_to_search_for ))
     {
         itr++;
         pos++;
@@ -214,26 +218,39 @@ int32_t Instance::find(std::string a_value, int32_t offset) const
 }
 
 
-string Instance::get_descriptor(string a_label) const
+string Instance::GetDescriptorByDescriptorID(string a_descriptor_id) const
 {
-    string desc_buffer = a_label;
+    //create a buffer to act as a return value and construct it in steps.
+    string desc_buffer = a_descriptor_id;
+
+    //the index buffer is an a place to store matching indices from the lexer.
+    //the index buffer is null or not found when the value is -1.
     int32_t index_buffer = -1;
 
-    owning_data_set->id_lexer(
-        this->key, 
-        [&](int32_t key_i,int32_t index, string found_label) mutable
+    //find the matching descriptor.
+    kOwner_->id_lexer(
+        this->key_, //passes in the partial key used to create this instance.
+                    //in the lexer this is broken down into descriptors and compared with the argument.
+        [&](int32_t key_i, int32_t index, string found_label) mutable
         {
+            // where found_label is the label being processed in a loop.
+            // and the argument is equal to the found label.
             if(found_label==desc_buffer)
             {
+                //pull the index out of the lexer.
                 index_buffer = index;
             }
         }
         );
 
+    //if an index is found, append it to the output string.
     if (index_buffer!=-1)
         desc_buffer.append(to_string(index_buffer));
+
+    //if the index buffer is null return a NO VALUE message.
     else
         return "NO_VALUE";
 
+    //if there is no error, return the descriptor buffer.
     return desc_buffer;
 }
