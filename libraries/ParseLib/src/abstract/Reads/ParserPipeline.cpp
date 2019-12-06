@@ -19,8 +19,8 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
     return 0;
 }
 
-//execute will populate the plDataSet
-int32_t ParserPipeline::execute(std::shared_ptr<plNode>& text, sdg::plDataSet& data_store)
+//execute will populate the DataSet
+int32_t ParserPipeline::execute(std::shared_ptr<plNode>& text, sdg::DataSet& data_store)
 {
     int32_t result;
 
@@ -94,7 +94,7 @@ int32_t ParserPipeline::inverse(std::vector<std::vector<std::string>> vector_vec
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::ProcessIndividual(sdg::plDataSet &data_set, plNodeSet &out_buffer, vector<plNode> &in_buffer, plNodePtr &current_node, std::shared_ptr<ParserFilter> filter)
+int32_t ParserPipeline::ProcessIndividual(sdg::DataSet &data_set, plNodeSet &out_buffer, vector<plNode> &in_buffer, plNodePtr &current_node, std::shared_ptr<ParserFilter> filter)
 {
     //Breakup the filter output.
     for(int l = 0; l < in_buffer.size(); ++l)
@@ -135,7 +135,7 @@ int32_t ParserPipeline::ProcessIndividual(sdg::plDataSet &data_set, plNodeSet &o
 
 }
 
-int32_t ParserPipeline::ProcessNodes(sdg::plDataSet &data_set, plNodeBuffer &out_buffer, plNodeSet &in_buffer, std::shared_ptr<ParserFilter> filter)
+int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, plNodeBuffer &out_buffer, plNodeSet &in_buffer, std::shared_ptr<ParserFilter> filter)
 {
     int32_t result;
 
@@ -170,7 +170,7 @@ int32_t ParserPipeline::ProcessNodes(sdg::plDataSet &data_set, plNodeBuffer &out
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::ProcessNodeSets(sdg::plDataSet &data_set, plNodeBuffer &out_buffer, plNodeBuffer &in_buffer, shared_ptr<ParserFilter> filter)
+int32_t ParserPipeline::ProcessNodeSets(sdg::DataSet &data_set, plNodeBuffer &out_buffer, plNodeBuffer &in_buffer, shared_ptr<ParserFilter> filter)
 {
     int32_t result;
 
@@ -186,7 +186,7 @@ int32_t ParserPipeline::ProcessNodeSets(sdg::plDataSet &data_set, plNodeBuffer &
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::ApplyFilters(sdg::plDataSet &data_set, plNodeBuffer &out_buffer, plNodeBuffer &in_buffer)
+int32_t ParserPipeline::ApplyFilters(sdg::DataSet &data_set, plNodeBuffer &out_buffer, plNodeBuffer &in_buffer)
 {
     int32_t result;
 

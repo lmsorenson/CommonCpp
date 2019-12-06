@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 #include "../src/abstract/data/structures/plHash.hpp"
-#include "../src/abstract/data/plInstance.hpp"
+#include "../src/abstract/data/instance.hpp"
 #include "../src/abstract/data/meta/DataModel.hpp"
 
 
@@ -18,7 +18,7 @@ class EntitySelection;
 
 
 
-class plDataSet
+class DataSet
 {
 
 public:
@@ -31,22 +31,22 @@ public:
     } state;
 
     //constructors//---------------------------------------------
-    plDataSet();
-    plDataSet(State a_state);
-    plDataSet(int32_t a_hash_table_size);
-    ~plDataSet();
+    DataSet();
+    DataSet(State a_state);
+    DataSet(int32_t a_hash_table_size);
+    ~DataSet();
 
-    plInstance operator[](std::string i);
+    Instance operator[](std::string i);
 
 
 
     //accessors//------------------------------------------------
     
     
-    plInstance get(std::string a_descriptor) const;
+    Instance get(std::string a_descriptor) const;
     
     //finds a specific instance without specifying an identifier.
-    plInstance where(std::string descriptor, std::string value) const;
+    Instance where(std::string descriptor, std::string value) const;
     
     //get a copy of the metadata
     Model get_data_model() const;
@@ -138,7 +138,7 @@ public:
     };
 
     //epected descriptors are descriptors needed to identify a hash value.
-    std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
+    std::vector<std::shared_ptr<DataSet::EntityKey>> expected_descriptors;
 };
 
 

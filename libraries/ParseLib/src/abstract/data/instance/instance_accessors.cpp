@@ -1,25 +1,26 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../plInstance.hpp"
-#include <plDataSet.hpp>
+#include "../instance.hpp"
+#include <data_set.hpp>
 
 
 using ::std::vector;
 using ::std::string;
 using ::std::to_string;
+using ::sdg::Instance;
 
 
-const std::vector<std::string>::iterator plInstance::begin()
+const std::vector<std::string>::iterator Instance::begin()
 {
     return value.begin();
 }
 
-const std::vector<std::string>::iterator plInstance::end()
+const std::vector<std::string>::iterator Instance::end()
 {
     return value.end();
 }
 
 
-string plInstance::get() const
+string Instance::get() const
 {
     if (state == VALID_INST && value.size()!= 0)
     {
@@ -46,7 +47,7 @@ string plInstance::get() const
 
 
 
-std::vector<std::string> plInstance::get_vector()
+std::vector<std::string> Instance::get_vector()
 {
     return value;
 }
@@ -54,7 +55,7 @@ std::vector<std::string> plInstance::get_vector()
 
 
 
-string plInstance::at(int8_t index) const
+string Instance::at(int8_t index) const
 {
     if(state == VALID_INST && value.size()!= 0)
     {
@@ -74,7 +75,7 @@ string plInstance::at(int8_t index) const
 
 
 
-plInstance plInstance::related(string a_label) const
+Instance Instance::related(string a_label) const
 { 
     //get the descriptor-index value off the entity identified
     //by 'a_label'
@@ -110,7 +111,7 @@ plInstance plInstance::related(string a_label) const
         }
     }
 
-    //get the value from the associated plDataSet
+    //get the value from the associated DataSet
     return owning_data_set->get(attr_buffer);
 }
 
@@ -118,15 +119,15 @@ plInstance plInstance::related(string a_label) const
 
 
 //Get next instance in 'a_label'
-plInstance plInstance::pull_next(string a_label) const
+Instance Instance::pull_next(string a_label) const
 {
     // get next instance with respect to entity identified by a_label
-    plInstance owner;
+    Instance owner;
 
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
     if(!(owner = this->related(a_label)).is_valid())
-        return plInstance(owning_data_set, NULL_INST);
+        return Instance(owning_data_set, NULL_INST);
 
     //------------------------------------------
     //      step through value iterator
@@ -163,37 +164,37 @@ plInstance plInstance::pull_next(string a_label) const
         //todo-->so far this should never happen
         else if(missing_desc.size()>1)
         {
-            return plInstance(owning_data_set, NULL_INST);
+            return Instance(owning_data_set, NULL_INST);
         }
         else
         {
-            return plInstance(owning_data_set, NULL_INST);
+            return Instance(owning_data_set, NULL_INST);
         }
     }
 
     //if the next item doesn't exist then end here.
     else
-        return plInstance(owning_data_set, NULL_INST);
+        return Instance(owning_data_set, NULL_INST);
 }
 
 
 
 
-plInstance plInstance::pull_previous(string a_label) const
+Instance Instance::pull_previous(string a_label) const
 {
 
-    return plInstance();
+    return Instance();
 }
 
 
-bool plInstance::is_valid() const
+bool Instance::is_valid() const
 {
     return (state == VALID_INST);
 }    
 
 
 
-int32_t plInstance::find(std::string a_value, int32_t offset) const
+int32_t Instance::find(std::string a_value, int32_t offset) const
 {
     //------------------------------------------
     //      step through value iterator
@@ -213,7 +214,7 @@ int32_t plInstance::find(std::string a_value, int32_t offset) const
 }
 
 
-string plInstance::get_descriptor(string a_label) const
+string Instance::get_descriptor(string a_label) const
 {
     string desc_buffer = a_label;
     int32_t index_buffer = -1;

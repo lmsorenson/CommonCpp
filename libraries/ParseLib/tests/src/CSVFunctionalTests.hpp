@@ -40,17 +40,17 @@ protected:
 //
 TEST_F(CSVFunctionalSpec, TestR1)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
 
-    plInstance str = ds.get("R0-F0");
+    Instance str = ds.get("R0-F0");
 
     ASSERT_EQ(str.get(), "January");
 }
 
 TEST_F(CSVFunctionalSpec, TestR2_2)
 {
-    plDataSet ds;
+    DataSet ds;
     
     int32_t exit_code = ParseLib().read_file(ds, this->path("Invalid-Path").c_str());
     
@@ -60,13 +60,13 @@ TEST_F(CSVFunctionalSpec, TestR2_2)
 
 TEST_F(CSVFunctionalSpec, TestR3)
 {
-    plDataSet ds;
+    DataSet ds;
     
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
 
 
     //Test every value in the file.
-    plInstance 
+    Instance 
     R0F0 = ds.get("R0-F0"),
     R0F1 = ds.get("R0-F1"),
     R1F0 = ds.get("R1-F0"),
@@ -120,11 +120,11 @@ TEST_F(CSVFunctionalSpec, TestR3)
 
 TEST_F(CSVFunctionalSpec, TestR3_1_1)
 {
-    plDataSet ds;
+    DataSet ds;
     
     int32_t exit_code = ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
-    plInstance str = ds.get("R100000F0");
+    Instance str = ds.get("R100000F0");
     
 
     ASSERT_EQ(str.get(), "NULL");
@@ -132,11 +132,11 @@ TEST_F(CSVFunctionalSpec, TestR3_1_1)
 
 TEST_F(CSVFunctionalSpec, TestR3_1_2)
 {
-    plDataSet ds;
+    DataSet ds;
     
     int32_t exit_code = ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
-    plInstance str = ds.get("R0-F0");
+    Instance str = ds.get("R0-F0");
     
 
     ASSERT_EQ(str.at(1), "NULL");
@@ -146,10 +146,10 @@ TEST_F(CSVFunctionalSpec, TestR3_1_2)
 // * WHERE field = value
 TEST_F(CSVFunctionalSpec, TestR4_1)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
 
-    plInstance inst = ds.where("F0", "May");
+    Instance inst = ds.where("F0", "May");
     ASSERT_EQ(inst.at(1), "5");
 }
 
@@ -158,11 +158,11 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
 // 4_3 * all values for a specific field
 TEST_F(CSVFunctionalSpec, TestR4_2)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
     //IN -- R0
-    plInstance inst = ds.get("R0");//get all records in record 0
+    Instance inst = ds.get("R0");//get all records in record 0
 
     //OUT -- January,1
     ASSERT_EQ(inst.at(0) , "January");
@@ -170,11 +170,11 @@ TEST_F(CSVFunctionalSpec, TestR4_2)
 }
 TEST_F(CSVFunctionalSpec, TestR4_3)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
     //IN -- F1
-    plInstance inst = ds.get("F1");//get all records in field 0
+    Instance inst = ds.get("F1");//get all records in field 0
 
     //OUT -- January,1
     ASSERT_EQ(inst.at(0), "1");
@@ -199,10 +199,10 @@ TEST_F(CSVFunctionalSpec, TestR4_3)
 // * 5_5: Get a value name from the header.
 TEST_F(CSVFunctionalSpec, TestR5_1)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
-    plInstance inst = ds.get("R1-F1");
-    plInstance inst2 = inst.related("R");
+    Instance inst = ds.get("R1-F1");
+    Instance inst2 = inst.related("R");
     std::string str = inst2.at(1);
 
 
@@ -211,10 +211,10 @@ TEST_F(CSVFunctionalSpec, TestR5_1)
 
 TEST_F(CSVFunctionalSpec, TestR5_2)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
-    plInstance inst = ds.get("R1-F1");
-    plInstance inst2 = inst.related("F");
+    Instance inst = ds.get("R1-F1");
+    Instance inst2 = inst.related("F");
 
     ASSERT_EQ(inst2.at(0), "1");
     ASSERT_EQ(inst2.at(1), "2");
@@ -232,32 +232,32 @@ TEST_F(CSVFunctionalSpec, TestR5_2)
 
 TEST_F(CSVFunctionalSpec, TestR5_3)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
-    plInstance inst = ds.get("R1-F0");
-    plInstance inst2 = inst.pull_next("R");
+    Instance inst = ds.get("R1-F0");
+    Instance inst2 = inst.pull_next("R");
 
     ASSERT_EQ(inst2.get(), "2");
 }
 
 TEST_F(CSVFunctionalSpec, TestR5_4)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
-    plInstance inst = ds.get("R3-F0");
-    plInstance inst2 = inst.pull_next("F");
+    Instance inst = ds.get("R3-F0");
+    Instance inst2 = inst.pull_next("F");
 
     ASSERT_EQ(inst2.get(), "May");
 }
 
 TEST_F(CSVFunctionalSpec, TestR5_5)
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
-    plInstance inst = ds.get("F1");
-    plInstance inst2 = inst.related("H");
+    Instance inst = ds.get("F1");
+    Instance inst2 = inst.related("H");
 
     ASSERT_EQ(inst2.get(), "field_nameB");
 }
@@ -302,7 +302,7 @@ TEST_F(CSVFunctionalSpec, TestR7_1)
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7_1.csv").c_str());
 
     //opens the file just written.
-    plDataSet ds2;
+    DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_1.csv").c_str());
 
     //asserts that both lines exist.
@@ -341,7 +341,7 @@ TEST_F(CSVFunctionalSpec, TestR7_2)
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7_2.csv").c_str());
 
     //opens the file just written.
-    plDataSet ds2;
+    DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_2.csv").c_str());
 
     //asserts that both lines exist.
@@ -389,7 +389,7 @@ TEST_F(CSVFunctionalSpec, TestR7_3)
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7_3.csv").c_str());
 
     //opens the file just written.
-    plDataSet ds2;
+    DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_3.csv").c_str());
 
     //asserts that both lines exist.
@@ -442,7 +442,7 @@ TEST_F(CSVFunctionalSpec, TestR7_4)
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7_4.csv").c_str());
 
     //opens the file just written.
-    plDataSet ds2;
+    DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_4.csv").c_str());
 
     //asserts that both lines exist.
@@ -475,7 +475,7 @@ TEST_F(CSVFunctionalSpec, TestR7_5)
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7_5.csv").c_str());
 
     //opens the file just written.
-    plDataSet ds2;
+    DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_5.csv").c_str());
 
     //asserts that both lines exist.
@@ -523,7 +523,7 @@ TEST_F(CSVFunctionalSpec, TestR7_6)
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR7_6.csv").c_str());
 
     //opens the file just written.
-    plDataSet ds2;
+    DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_6.csv").c_str());
 
     //asserts that both lines exist.
@@ -589,7 +589,7 @@ TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
 
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR8_1.csv").c_str());
 
-    plDataSet ds2;
+    DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR8_1.csv").c_str());
 
     ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
@@ -637,7 +637,7 @@ TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
 
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR8_2.csv").c_str());
 
-    plDataSet ds2;
+    DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR8_2.csv").c_str());
 
     ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
@@ -725,7 +725,7 @@ TEST_F(CSVFunctionalSpec, TestR9)
 
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR9.csv").c_str());
 
-    plDataSet ds2;
+    DataSet ds2;
     std::cout << "path: " << this->path("../test_data/CSV/Write/csvR9.csv").c_str() << std::endl;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR9.csv").c_str());
 

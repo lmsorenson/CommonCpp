@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include <plDataSet.hpp>
+#include <data_set.hpp>
 
 
 using ::std::string;
@@ -7,7 +7,7 @@ using ::std::to_string;
 using ::std::vector;
 
 
-int32_t sdg::plDataSet::IsDescriptorRequired(string a_descriptor) const
+int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor) const
 {
     int32_t r=-1;
 
@@ -27,31 +27,31 @@ int32_t sdg::plDataSet::IsDescriptorRequired(string a_descriptor) const
     return r;
 }
 
-int32_t sdg::plDataSet::number_of_entity_instances(std::string a_entity_id)
+int32_t sdg::DataSet::number_of_entity_instances(std::string a_entity_id)
 {
     return this->logical_data_structure.get_entity_count(a_entity_id);
 }
 
-int32_t sdg::plDataSet::increment_counter(std::string a_entity_id)
+int32_t sdg::DataSet::increment_counter(std::string a_entity_id)
 {
     // logical_data_structure.increment_entity_counter(a_entity_id);
     return 0;
 }
 
-Model sdg::plDataSet::get_data_model() const
+Model sdg::DataSet::get_data_model() const
 {
     return logical_data_structure;
 }
 
 
-plInstance sdg::plDataSet::where(std::string descriptor, std::string value) const
+sdg::Instance sdg::DataSet::where(std::string descriptor, std::string value) const
 {
-    plInstance ret;
+    Instance ret;
 
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
     if(!(ret = this->get(descriptor)).is_valid())
-        return plInstance(this, plInstance::NULL_INST);
+        return sdg::Instance(this, sdg::Instance::NULL_INST);
 
     int32_t pos = ret.find(value);
 
@@ -68,21 +68,21 @@ plInstance sdg::plDataSet::where(std::string descriptor, std::string value) cons
     //todo-->so far this should never happen
     else if(missing_desc.size()>1)
     {
-        return plInstance(this, plInstance::NULL_INST);
+        return sdg::Instance(this, Instance::NULL_INST);
     }
     else
     {
-        return plInstance(this, plInstance::NULL_INST);
+        return sdg::Instance(this, Instance::NULL_INST);
     }
 }
 
 
-plInstance sdg::plDataSet::get(std::string a_descriptor) const
+sdg::Instance sdg::DataSet::get(std::string a_descriptor) const
 {
     if (state == DATA_SET_BAD)
-        return plInstance(this, plInstance::NO_FILE);
+        return sdg::Instance(this, Instance::NO_FILE);
 
-    plInstance return_var;
+    Instance return_var;
    
     string 
         key_buffer = a_descriptor,
@@ -92,13 +92,13 @@ plInstance sdg::plDataSet::get(std::string a_descriptor) const
     bool data_missing = false;
 
     //buffer the expected_descriptors to avoid modifying the data set.
-    std::vector<plDataSet::EntityKey> expected_descriptor_buffer;
+    std::vector<DataSet::EntityKey> expected_descriptor_buffer;
     for(int32_t i=0; i<expected_descriptors.size(); ++i)
     {
         expected_descriptor_buffer.push_back(*(expected_descriptors[i]));
     }
 
-    return_var = plInstance(this, plInstance::VALID_INST);
+    return_var = sdg::Instance(this, Instance::VALID_INST);
     return_var.SetKey(a_descriptor);//assign the key which was passed into this function.
 
     /*-----------------------------------*
@@ -168,5 +168,5 @@ plInstance sdg::plDataSet::get(std::string a_descriptor) const
 
     return (state==DATA_SET_GOOD)
     ? return_var
-    : plInstance(this, plInstance::NULL_INST);
+    : sdg::Instance(this, Instance::NULL_INST);
 }

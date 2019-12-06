@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include <plDataSet.hpp>
+#include <data_set.hpp>
 
 
 
@@ -12,7 +12,7 @@ using std::function;
 /* helpers */
 void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id);
 
-string sdg::plDataSet::id_lexer(
+string sdg::DataSet::id_lexer(
     string a_identifier, 
     function<void(int32_t key_i, int32_t index, string found_label)> callback_desc_found,
     function<void(string label_not_found)> callback_desc_not_found,
@@ -96,7 +96,7 @@ string sdg::plDataSet::id_lexer(
     return r_new_id;
 }
 
-vector<std::string> sdg::plDataSet::get_missing_descriptors(std::string a_descriptor_labels) const
+vector<std::string> sdg::DataSet::get_missing_descriptors(std::string a_descriptor_labels) const
 {
     vector<std::string> r_missing_descriptors;
 
@@ -117,7 +117,7 @@ vector<std::string> sdg::plDataSet::get_missing_descriptors(std::string a_descri
 }
 
 
-std::string sdg::plDataSet::increment_descriptor_in_key(std::string a_entity_id, std::string a_hash_key, int32_t a_position)
+std::string sdg::DataSet::increment_descriptor_in_key(std::string a_entity_id, std::string a_hash_key, int32_t a_position)
 {
     std::string 
             copy = a_hash_key,
@@ -159,7 +159,7 @@ std::string sdg::plDataSet::increment_descriptor_in_key(std::string a_entity_id,
 
 
 //increments the id for each 
-void sdg::plDataSet::displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key)
+void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key)
 {
     plHashValue replaced = replaced_value;
     while(replaced.is_valid())

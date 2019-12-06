@@ -7,11 +7,11 @@
 
 namespace sdg {
 
-class plDataSet;
+class DataSet;
 
-}//namespace sdg
 
-class plInstance
+
+class Instance
 {
 public:
     enum State : int32_t
@@ -23,7 +23,7 @@ public:
     };
 
 private:
-    const sdg::plDataSet * owning_data_set;
+    const sdg::DataSet * owning_data_set;
     std::string key;//the key that identifies this instance
     std::vector<std::string> value;//the values stored.
     State state;
@@ -33,23 +33,26 @@ private:
     
 
 public:
-    plInstance() = default;
-    plInstance(const sdg::plDataSet * owner, State s);
-    ~plInstance();
+    Instance() = default;
+    Instance(const sdg::DataSet * owner, State s);
+    ~Instance();
 
-    plInstance operator[](std::string i);
+    Instance operator[](std::string i);
 
     std::string get() const;                                    //only returns a value if a vector has a particular value
     std::vector<std::string> get_vector();
     std::string at(int8_t index) const;                         //get a specific value within a list of 
     const std::vector<std::string>::iterator begin();
     const std::vector<std::string>::iterator end();
-    plInstance pull_next(std::string a_label) const;            //next value in a set of instances.
-    plInstance pull_previous(std::string a_label) const;        //previous value in a set of instances.
-    plInstance related(std::string a_label) const;              //returns a related entity.
+    Instance pull_next(std::string a_label) const;            //next value in a set of instances.
+    Instance pull_previous(std::string a_label) const;        //previous value in a set of instances.
+    Instance related(std::string a_label) const;              //returns a related entity.
     bool is_valid() const;                                      //tells us if the instance is valid.
     int32_t find(std::string value, int32_t offset=0) const;
 
     void add(std::string str_value);//add a value
     void SetKey(std::string a_key);//assign the key
 };
+
+
+}//namespace sdg

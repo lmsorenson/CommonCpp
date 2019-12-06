@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include <plDataSet.hpp>
+#include <data_set.hpp>
 
 
 
@@ -11,7 +11,7 @@ using std::make_shared;
 
 std::string get_matching_descriptor(std::string a_descriptor_list, std::string a_meta_entity_id);
 
-int32_t sdg::plDataSet::set(std::string a_descriptor_list, plHashValue a_value)
+int32_t sdg::DataSet::set(std::string a_descriptor_list, plHashValue a_value)
 {
     switch (state)
     {
@@ -30,7 +30,7 @@ int32_t sdg::plDataSet::set(std::string a_descriptor_list, plHashValue a_value)
 
 
 
-int32_t sdg::plDataSet::set(std::string a_descriptor_list, plHashValue a_value, std::string a_entity_id)
+int32_t sdg::DataSet::set(std::string a_descriptor_list, plHashValue a_value, std::string a_entity_id)
 {
     plHashValue replaced_value;
     std::string new_entity_id, new_key, copy_entity_id = a_entity_id;
@@ -70,14 +70,14 @@ int32_t sdg::plDataSet::set(std::string a_descriptor_list, plHashValue a_value, 
 
 
 
-int32_t sdg::plDataSet::register_descriptor(std::string a_new_descriptor)
+int32_t sdg::DataSet::register_descriptor(std::string a_new_descriptor)
 {
     expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor)));
 
     return 0;
 }
 
-int32_t sdg::plDataSet::add_optional_flag(std::string a_new_descriptor)
+int32_t sdg::DataSet::add_optional_flag(std::string a_new_descriptor)
 {
     expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor, false, false)));
 
@@ -88,22 +88,22 @@ int32_t sdg::plDataSet::add_optional_flag(std::string a_new_descriptor)
 
 
 
-void sdg::plDataSet::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
+void sdg::DataSet::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
 {
     //todo-->handle definition of this function
 }
 
-void sdg::plDataSet::remove_instance(std::string entity_id)
+void sdg::DataSet::remove_instance(std::string entity_id)
 {
     //todo-->handle definition of this function
 }
 
-void sdg::plDataSet::increment_instance_id(std::string entity_id, int32_t position)
+void sdg::DataSet::increment_instance_id(std::string entity_id, int32_t position)
 {
     //todo-->handle definition of this function
 }
 
-int32_t sdg::plDataSet::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
+int32_t sdg::DataSet::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 {
     //todo-->handle definition of this function
     return 0;
@@ -113,7 +113,7 @@ int32_t sdg::plDataSet::pad_entity_count(std::string entity_id, int32_t a_num_bl
 
 
 
-void sdg::plDataSet::update_descriptor_counts(std::string a_descriptor_list)
+void sdg::DataSet::update_descriptor_counts(std::string a_descriptor_list)
 {
     std::string copy = a_descriptor_list;
     char * token = strtok((char*)copy.c_str(),"-");
