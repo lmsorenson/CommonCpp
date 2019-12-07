@@ -13,9 +13,15 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-sdg::Instance::Instance(const sdg::DataSet * owner, State s)
+sdg::Instance::Instance(const sdg::DataSet * owner, State a_state)
 : kOwner_(owner)
-, state_(s)
+, state_(a_state)
+{}
+
+sdg::Instance::Instance(const sdg::DataSet * owner, State a_state, std::string a_key)
+: kOwner_(owner)
+, state_(a_state)
+, key_(a_key)
 {}
 
 sdg::Instance::~Instance()

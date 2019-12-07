@@ -18,6 +18,29 @@ class SelectionVisitor;
 class EntitySelection;
 
 
+class HashKey
+{
+public:
+    HashKey() = default;
+    HashKey(std::string a_value, bool a_is_partial_key)
+    : value_(a_value)
+    , is_partial_key_(a_is_partial_key)
+    {}
+
+    bool is_partial_key()
+    {
+        return is_partial_key_;
+    }
+    std::string value()
+    {
+        return value_;
+    }
+
+private:
+    std::string value_;
+    bool is_partial_key_;
+};
+
 
 class DataSet
 {
@@ -78,10 +101,6 @@ public:
     virtual void increment_instance_id(std::string entity_id, int32_t position=1);
     virtual int32_t pad_entity_count(std::string entity_id, int32_t a_num_blanks=1);
 
-    
-    void accept(SelectionVisitor a_selection);
-
-
     std::string id_lexer(
         std::string a_identifier, 
         std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr,
@@ -89,23 +108,6 @@ public:
         std::function<void(std::string label_unrecognized)> callback_unrecognized_desc=nullptr) const;
     std::vector<std::string> get_missing_descriptors(std::string a_descriptor_labels) const;
     
-
-
-    protected:
-    //the logical data structure is meta data about the data stored in this hash table.
-    Model logical_data_structure;
-
-    //a hash table to store the data in.
-    plHashTable hash_table;
-
-    /* Helpers */
-    void displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key);
-    std::string increment_descriptor_in_key(std::string entity_id, std::string hash_key, int32_t position);
-    void update_descriptor_counts(std::string a_descriptor_list);
-    
-
-    
-    private:
     //descriptors used in the identifier for an atomic entity.
     //atomic refers to the smallest entity in a data set.
     //atomic entities are also the elements stored in the hash table.
@@ -136,6 +138,20 @@ public:
         bool b_found;
 
     };
+
+protected:
+    //the logical data structure is meta data about the data stored in this hash table.
+    Model logical_data_structure;
+
+    //a hash table to store the data in.
+    plHashTable hash_table;
+
+    /* Helpers */
+    void displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key);
+    std::string increment_descriptor_in_key(std::string entity_id, std::string hash_key, int32_t position);
+    void update_descriptor_counts(std::string a_descriptor_list);
+    sdg::HashKey compile_hash_key(const std::vector<sdg::DataSet::EntityKey> expected_descriptors) const;
+    void helper(std::string key_buffer, std::vector<std::shared_ptr<DataSet::EntityKey>> expected_descriptor_buffer) const;
 
     //epected descriptors are descriptors needed to identify a hash value.
     std::vector<std::shared_ptr<DataSet::EntityKey>> expected_descriptors;

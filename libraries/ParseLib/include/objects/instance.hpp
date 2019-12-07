@@ -21,7 +21,8 @@ public:
     };
 
     Instance() = default;
-    Instance(const sdg::DataSet * owner, State s);
+    Instance(const sdg::DataSet * owner, State a_state);
+    Instance(const sdg::DataSet * owner, State a_state, std::string a_key);
     ~Instance();
 
     Instance operator[](std::string i);

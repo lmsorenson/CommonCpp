@@ -196,3 +196,79 @@ void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_
 
 
 
+
+
+sdg::HashKey sdg::DataSet::compile_hash_key(const std::vector<sdg::DataSet::EntityKey> expected_descriptors) const
+{
+
+    std::string compiled_key;
+    bool data_missing;
+
+    /*-----------------------------------*
+    *             Compiler               *
+    * ----------------------------------*/
+    for(int i=0; i<expected_descriptors.size(); ++i)
+    {
+        
+        //-- if the descriptor value is not a null value. --
+        if(expected_descriptors[i].GetIndex()!=-1)
+        {
+            //add the delimiter
+            if (!compiled_key.empty())
+                compiled_key.append("-");
+
+            //push key to the format.
+            compiled_key.append(expected_descriptors[i].GetLabel());
+            
+            if(expected_descriptors[i].HasIndex())
+                compiled_key.append(std::to_string(expected_descriptors[i].GetIndex()));
+        }
+
+        //-- if the descriptor value is not required. --
+        else if (!expected_descriptors[i].IsRequired())
+        {
+            //add the delimiter
+            if (!compiled_key.empty())
+                compiled_key.append("-");
+
+            if (expected_descriptors[i].IsFound())
+                compiled_key.append(expected_descriptors[i].GetLabel());
+        }
+
+        //-- note missing data. --
+        else
+        {
+            //if any token returns missing record it.
+            data_missing = true;
+        }
+    }
+
+    return sdg::HashKey(compiled_key, data_missing);
+}
+
+std::vector<sdg::DataSet::EntityKey> sdg::DataSet::helper(std::string key_buffer, std::vector<std::shared_ptr<DataSet::EntityKey>> expected_descriptor_buffer) const
+{
+    std::vector<DataSet::EntityKey> buffer;
+
+    for(auto descriptor : expected_descriptor_buffer)
+    {
+        buffer.push_back(*descriptor);
+    }
+
+    /*-----------------------------------*
+    *              Lexer                 *
+    * ----------------------------------*/
+    key_buffer = this->id_lexer(
+        key_buffer, 
+        [&](int32_t key_i,int32_t index, string found_label)
+        {
+            if (buffer[key_i].HasIndex())
+                buffer[key_i].SetIndex(index);
+            else
+                buffer[key_i].SetFound();
+        }
+        );
+
+    return buffer;
+
+}
