@@ -151,7 +151,7 @@ protected:
     std::string increment_descriptor_in_key(std::string entity_id, std::string hash_key, int32_t position);
     void update_descriptor_counts(std::string a_descriptor_list);
     sdg::HashKey compile_hash_key(const std::vector<sdg::DataSet::EntityKey> expected_descriptors) const;
-    void helper(std::string key_buffer, std::vector<std::shared_ptr<DataSet::EntityKey>> expected_descriptor_buffer) const;
+    std::vector<DataSet::EntityKey> helper(std::string key_buffer, std::vector<std::shared_ptr<DataSet::EntityKey>> expected_descriptor_buffer) const;
 
     //epected descriptors are descriptors needed to identify a hash value.
     std::vector<std::shared_ptr<DataSet::EntityKey>> expected_descriptors;
