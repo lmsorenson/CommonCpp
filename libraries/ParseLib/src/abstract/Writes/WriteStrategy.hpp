@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
-#include <data_set.hpp>
+#include <objects/data_set.hpp>
 #include <ParseLib.hpp>
 #include "../Reads/ParserPipeline.hpp"
 

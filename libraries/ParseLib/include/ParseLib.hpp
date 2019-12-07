@@ -1,7 +1,7 @@
 #pragma once
 #include <stdio.h>
-#include "data_set.hpp"
-#include "concrete/CSVData.hpp"
+#include <objects/data_set.hpp>
+#include <formats/csv_data_set.hpp>
 #include <memory>
 
 

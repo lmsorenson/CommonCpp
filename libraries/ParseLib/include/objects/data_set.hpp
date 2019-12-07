@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-#include <instance.hpp>
+#include <objects/instance.hpp>
 #include "../src/abstract/data/structures/plHash.hpp"
 #include "../src/abstract/data/meta/DataModel.hpp"
 

@@ -1,11 +1,11 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <ParseLib.hpp>
-#include <data_set.hpp>
+#include <objects/data_set.hpp>
 
 #include <iostream>
 #include <string>
 
-#include "../include/concrete/CSVData.hpp"
+#include <formats/csv_data_set.hpp>
 #include "abstract/Reads/ReadStrategy.hpp"
 #include "concrete/csv/CSV_Factory.hpp"
 
