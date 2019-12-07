@@ -1,5 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../instance.hpp"
+#include <instance.hpp>
+
 #include <data_set.hpp>
 
 

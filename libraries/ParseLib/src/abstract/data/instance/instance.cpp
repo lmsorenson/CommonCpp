@@ -1,10 +1,11 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../instance.hpp"
-#include <data_set.hpp>
+#include <instance.hpp>
 
 #include <iostream>
 #include <string>
 #include <vector>
+
+#include <data_set.hpp>
 
 
 

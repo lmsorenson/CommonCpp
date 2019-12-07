@@ -2,8 +2,9 @@
 #pragma once
 #include <vector>
 #include <iostream>
+
+#include <instance.hpp>
 #include "../src/abstract/data/structures/plHash.hpp"
-#include "../src/abstract/data/instance.hpp"
 #include "../src/abstract/data/meta/DataModel.hpp"
 
 
