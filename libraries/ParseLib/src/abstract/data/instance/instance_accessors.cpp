@@ -79,7 +79,7 @@ string Instance::at(int8_t index) const
 
 
 
-Instance Instance::related(string a_label) const
+Instance Instance::GetRelatedInstance(string a_label) const
 { 
     //get the descriptor-index value off the entity identified
     //by 'a_label'
@@ -123,14 +123,14 @@ Instance Instance::related(string a_label) const
 
 
 //Get next instance in 'a_label'
-Instance Instance::pull_next(string a_label) const
+Instance Instance::GetNextInstance(string a_label) const
 {
     // get next instance with respect to entity identified by a_label
     Instance owner;
 
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
-    if(!(owner = this->related(a_label)).is_valid())
+    if(!(owner = this->GetRelatedInstance(a_label)).is_valid())
         return Instance(kOwner_, NULL_INST);
 
     //------------------------------------------
@@ -184,7 +184,7 @@ Instance Instance::pull_next(string a_label) const
 
 
 
-Instance Instance::pull_previous(string a_label) const
+Instance Instance::GetPreviousInstance(string a_label) const
 {
 
     return Instance();
@@ -198,7 +198,7 @@ bool Instance::is_valid() const
 
 
 
-int32_t Instance::find(std::string a_value_to_search_for, int32_t offset) const
+int32_t Instance::FindIndexOfValue(std::string a_value_to_search_for, int32_t offset) const
 {
     //------------------------------------------
     //      step through value iterator

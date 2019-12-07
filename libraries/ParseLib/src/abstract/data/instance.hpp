@@ -34,12 +34,12 @@ public:
     const std::vector<std::string>::iterator begin();           //returns an iterator to the beginning of the value list.
     const std::vector<std::string>::iterator end();             //returns an iterator at the end of the value list.
 
-    Instance pull_next(std::string a_descriptor_id) const;      //next value in a set of instances.
-    Instance pull_previous(std::string a_descriptor_id) const;  //previous value in a set of instances.
-    Instance related(std::string a_descriptor_id) const;        //returns a related entity.
+    Instance GetNextInstance(std::string a_descriptor_id) const;      //next value in a set of instances.
+    Instance GetPreviousInstance(std::string a_descriptor_id) const;  //previous value in a set of instances.
+    Instance GetRelatedInstance(std::string a_descriptor_id) const;        //returns a related entity.
     
     bool is_valid() const;                                      //tells us if the instance is valid.
-    int32_t find(std::string a_value_to_search_for, int32_t offset=0) const;    //finds the index of a certain value within the instance if it exists.
+    int32_t FindIndexOfValue(std::string a_value_to_search_for, int32_t offset=0) const;    //finds the index of a certain value within the instance if it exists.
 
 
     //-- Mutators --

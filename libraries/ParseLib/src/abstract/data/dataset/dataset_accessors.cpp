@@ -53,7 +53,7 @@ sdg::Instance sdg::DataSet::where(std::string descriptor, std::string value) con
     if(!(ret = this->get(descriptor)).is_valid())
         return sdg::Instance(this, sdg::Instance::NULL_INST);
 
-    int32_t pos = ret.find(value);
+    int32_t pos = ret.FindIndexOfValue(value);
 
     vector<string> missing_desc = this->get_missing_descriptors(descriptor);        
 

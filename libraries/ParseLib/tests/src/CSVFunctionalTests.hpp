@@ -202,7 +202,7 @@ TEST_F(CSVFunctionalSpec, TestR5_1)
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     Instance inst = ds.get("R1-F1");
-    Instance inst2 = inst.related("R");
+    Instance inst2 = inst.GetRelatedInstance("R");
     std::string str = inst2.at(1);
 
 
@@ -214,7 +214,7 @@ TEST_F(CSVFunctionalSpec, TestR5_2)
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     Instance inst = ds.get("R1-F1");
-    Instance inst2 = inst.related("F");
+    Instance inst2 = inst.GetRelatedInstance("F");
 
     ASSERT_EQ(inst2.at(0), "1");
     ASSERT_EQ(inst2.at(1), "2");
@@ -235,7 +235,7 @@ TEST_F(CSVFunctionalSpec, TestR5_3)
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     Instance inst = ds.get("R1-F0");
-    Instance inst2 = inst.pull_next("R");
+    Instance inst2 = inst.GetNextInstance("R");
 
     ASSERT_EQ(inst2.get(), "2");
 }
@@ -245,7 +245,7 @@ TEST_F(CSVFunctionalSpec, TestR5_4)
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     Instance inst = ds.get("R3-F0");
-    Instance inst2 = inst.pull_next("F");
+    Instance inst2 = inst.GetNextInstance("F");
 
     ASSERT_EQ(inst2.get(), "May");
 }
@@ -257,7 +257,7 @@ TEST_F(CSVFunctionalSpec, TestR5_5)
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
     Instance inst = ds.get("F1");
-    Instance inst2 = inst.related("H");
+    Instance inst2 = inst.GetRelatedInstance("H");
 
     ASSERT_EQ(inst2.get(), "field_nameB");
 }
