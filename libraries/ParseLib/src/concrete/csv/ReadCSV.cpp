@@ -1,7 +1,9 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "ReadCSV.hpp"
+
 #include <iostream>
-#include "../../../include/loadText.h"
+
+#include "../../utils/loadText.h"
 #include "CSVFilters.hpp"
 
 using namespace std;

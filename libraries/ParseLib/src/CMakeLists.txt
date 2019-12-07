@@ -16,12 +16,15 @@ file(
     GLOB Mods 
     ${PROJECT_SOURCE_DIR}/*.cpp 
     ${PROJECT_SOURCE_DIR}/abstract/Factories/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/data/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/meta/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/structures/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/dataset/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/instance/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Reads/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
     ${PROJECT_SOURCE_DIR}/concrete/csv/*.cpp
+    ${PROJECT_SOURCE_DIR}/utils/source/*.cpp
     )
 
 add_library(parse ${Mods})
@@ -31,6 +34,8 @@ if(ENABLE_DEBUG)
 file( 
     GLOB parse_includes
     ${PROJECT_SOURCE_DIR}/../include/*.h
+    ${PROJECT_SOURCE_DIR}/../include/*.hpp
+    ${PROJECT_SOURCE_DIR}/../include/concrete/*.hpp
     )
 endif()
 

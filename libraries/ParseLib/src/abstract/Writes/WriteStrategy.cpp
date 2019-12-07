@@ -4,13 +4,13 @@
 #include <iostream>
 #include <fstream>
 #include "../Factories/AbstractFactory.hpp"
-#include "../../../include/writeText.h"
+#include "../../utils/writeText.h"
 
 
 
 using namespace std;
 
-int32_t WriteStrategy::execute_write(plDataSet dataset, std::string path)
+int32_t WriteStrategy::execute_write(sdg::DataSet dataset, std::string path)
 {
 
     std::string out_str;

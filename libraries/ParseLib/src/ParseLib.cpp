@@ -1,17 +1,17 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../include/ParseLib.h"
-#include "abstract/data/plDataSet.hpp"
+#include <ParseLib.hpp>
+#include <objects/data_set.hpp>
 
 #include <iostream>
 #include <string>
 
+#include <formats/csv_data_set.hpp>
 #include "abstract/Reads/ReadStrategy.hpp"
-#include "concrete/csv/CSVData.hpp"
 #include "concrete/csv/CSV_Factory.hpp"
 
 using namespace std;
 
-int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options)
+int32_t ParseLib::read_file(sdg::DataSet& data_store, const char * filepath, std::vector<option> read_options)
 {
 
     //-----------------------|   Parse file path   |-----------------------//
@@ -49,7 +49,7 @@ int32_t ParseLib::read_file(plDataSet& data_store, const char * filepath, std::v
     return READ_SUCCESSFUL;
 }
 
-int32_t ParseLib::write_file(plDataSet& data_store, const char * filepath, std::vector<option> read_options)
+int32_t ParseLib::write_file(sdg::DataSet& data_store, const char * filepath, std::vector<option> read_options)
 {
     //STEP 1 -- FACTORY.
     //-----------------------|   Generate strategies & Data   |-----------------------//

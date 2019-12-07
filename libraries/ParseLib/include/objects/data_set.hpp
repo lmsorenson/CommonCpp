@@ -2,17 +2,24 @@
 #pragma once
 #include <vector>
 #include <iostream>
-#include "structures/plHash.hpp"
-#include "plInstance.hpp"
-#include "meta/DataModel.hpp"
+
+#include <objects/instance.hpp>
+#include "../src/abstract/data/structures/plHash.hpp"
+#include "../src/abstract/data/meta/DataModel.hpp"
 
 
 #define NO_INDEX -1
 #define END_OF_ENTITY_LIST -1
 
+//soli deo gloria
+namespace sdg {
+
+class SelectionVisitor;
+class EntitySelection;
 
 
-class plDataSet
+
+class DataSet
 {
 
 public:
@@ -25,28 +32,22 @@ public:
     } state;
 
     //constructors//---------------------------------------------
-    plDataSet();
-    plDataSet(State a_state);
-    plDataSet(int32_t a_hash_table_size);
-    ~plDataSet();
+    DataSet();
+    DataSet(State a_state);
+    DataSet(int32_t a_hash_table_size);
+    ~DataSet();
 
-    plInstance operator[](std::string i)
-    {
-        plInstance ret = this->get("R0");
-         std::cout << i << std::endl;
-         
-         return ret;
-    }
+    Instance operator[](std::string i);
 
 
 
     //accessors//------------------------------------------------
     
     
-    plInstance get(std::string a_descriptor) const;
+    Instance get(std::string a_descriptor) const;
     
     //finds a specific instance without specifying an identifier.
-    plInstance where(std::string descriptor, std::string value) const;
+    Instance where(std::string descriptor, std::string value) const;
     
     //get a copy of the metadata
     Model get_data_model() const;
@@ -79,6 +80,8 @@ public:
     virtual int32_t pad_entity_count(std::string entity_id, int32_t a_num_blanks=1);
 
     
+    void accept(SelectionVisitor a_selection);
+
 
     std::string id_lexer(
         std::string a_identifier, 
@@ -136,5 +139,10 @@ public:
     };
 
     //epected descriptors are descriptors needed to identify a hash value.
-    std::vector<std::shared_ptr<plDataSet::EntityKey>> expected_descriptors;
+    std::vector<std::shared_ptr<DataSet::EntityKey>> expected_descriptors;
 };
+
+
+
+
+}//namespace sdg

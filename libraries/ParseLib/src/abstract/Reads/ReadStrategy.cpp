@@ -3,19 +3,19 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../../../include/loadText.h"
+#include "../../utils/loadText.h"
 
 
 
 using namespace std;
 
-int32_t ReadStrategy::execute_read(const char * filepath, plDataSet &ds, std::vector<option> read_options)
+int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<option> read_options)
 {
     //load text
     string raw_text;
     if ((raw_text=loadText(filepath))==LOAD_ERROR_STR)
     {
-        ds = plDataSet(plDataSet::DATA_SET_BAD);
+        ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
         return FILE_NOT_FOUND;
     }
     

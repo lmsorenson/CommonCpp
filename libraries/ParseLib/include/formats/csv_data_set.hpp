@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 
-#include "../../abstract/data/plDataSet.hpp"
+#include <objects/data_set.hpp>
 #include <vector>
 #include <string>
 
@@ -9,7 +9,7 @@ typedef std::string field;
 typedef std::vector<field> record;
 typedef std::vector<record> csv_file;
 
-class CSVData : public plDataSet
+class CSVData : public sdg::DataSet
 {
     csv_file file;
 

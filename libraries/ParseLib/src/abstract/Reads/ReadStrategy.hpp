@@ -2,9 +2,9 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "../data/plDataSet.hpp"
 #include "ParserPipeline.hpp"
-#include "../../../include/ParseLib.h"
+#include <objects/data_set.hpp>
+#include <ParseLib.hpp>
 
 
 class ReadStrategy
@@ -14,7 +14,7 @@ class ReadStrategy
     virtual int32_t set_read_options(std::vector<option> read_options)=0;
 
 public:
-    int32_t execute_read(const char * path, plDataSet &ds, std::vector<option> read_options);
+    int32_t execute_read(const char * path, sdg::DataSet &ds, std::vector<option> read_options);
 
     enum : int32_t
     {

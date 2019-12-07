@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "CSVData.hpp"
+#include <formats/csv_data_set.hpp>
 #include <iostream>
 
 #include "../../abstract/data/meta/DataModel.hpp"
@@ -51,7 +51,7 @@ void CSVData::csv_model()
 }
 
 CSVData::CSVData()
-: plDataSet()
+: DataSet()
 {
     this->add_optional_flag("H");
     this->register_descriptor("R");
@@ -60,7 +60,7 @@ CSVData::CSVData()
 }
 
 CSVData::CSVData(int32_t hash_table_size)
-: plDataSet(hash_table_size)
+: DataSet(hash_table_size)
 {
     this->add_optional_flag("H");
     this->register_descriptor("R");
