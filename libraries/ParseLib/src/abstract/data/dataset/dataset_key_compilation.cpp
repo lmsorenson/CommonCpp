@@ -138,11 +138,6 @@ std::string sdg::DataSet::increment_descriptor_in_key(std::string a_entity_id, s
             std::string copy_new_key = new_key;
             increment_descriptor_value(token, copy_new_key, descriptor_id);
             new_key.append(copy_new_key);
-        
-            for(int i=0; i<a_position; ++i)
-            {
-                // this->increment_counter(descriptor_id);
-            }
         }
         else
         {

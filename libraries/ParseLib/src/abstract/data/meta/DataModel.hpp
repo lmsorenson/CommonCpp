@@ -25,13 +25,12 @@ public:
     std::vector<std::string> get_entity_identifier(std::string a_entity_label);
 
     //increment the counter for the entity specified
-    void increment_entity_counter(std::string a_entity_label);
     void found_descriptor(std::string a_descriptor);
-    int32_t get_entity_count(std::string a_entity_label);
+    int32_t get_entity_count(std::string a_entity_label) const;
 
 
 private:
     ManyLink<Thing> thing_array;
 
-    std::shared_ptr<Entity> get_entity(std::string a_entity_id_label);
+    std::shared_ptr<Entity> get_entity(std::string a_entity_id_label) const;
 };

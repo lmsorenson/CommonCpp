@@ -33,11 +33,6 @@ std::string Thing::get_id()
     return thing_id;
 }
 
-void Thing::increment_counter()
-{
-    counter++;
-}
-
 int32_t Thing::get_count()
 {
     return counter;

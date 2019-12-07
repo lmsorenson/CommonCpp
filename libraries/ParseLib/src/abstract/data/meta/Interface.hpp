@@ -18,8 +18,6 @@ public:
     virtual void print();
     std::string get_id();
 
-    //pass in a descriptor to update the count
-    void increment_counter();
     void set_counter(int32_t a_value);
     int32_t get_count();
 

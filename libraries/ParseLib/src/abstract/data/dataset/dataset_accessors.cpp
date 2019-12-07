@@ -27,15 +27,9 @@ int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor) const
     return r;
 }
 
-int32_t sdg::DataSet::number_of_entity_instances(std::string a_entity_id)
+int32_t sdg::DataSet::number_of_entity_instances(std::string a_entity_id) const
 {
     return this->logical_data_structure.get_entity_count(a_entity_id);
-}
-
-int32_t sdg::DataSet::increment_counter(std::string a_entity_id)
-{
-    // logical_data_structure.increment_entity_counter(a_entity_id);
-    return 0;
 }
 
 Model sdg::DataSet::get_data_model() const

@@ -16,7 +16,7 @@ void Model::add_thing(shared_ptr<Thing> a_thing)
     thing_array.push_back(a_thing);
 }
 
-shared_ptr<Entity> Model::get_entity(string a_entity_id_label)
+shared_ptr<Entity> Model::get_entity(string a_entity_id_label) const
 {
     shared_ptr<Entity> result;
 
@@ -61,13 +61,6 @@ vector<string> Model::get_entity_identifier(string a_entity_label)
     return str_vec;
 }
 
-void Model::increment_entity_counter(string a_entity_label)
-{
-    shared_ptr<Entity> e = get_entity(a_entity_label);
-    
-    e->increment_counter();
-}
-
 void Model::found_descriptor(std::string a_descriptor)
 {
     char scanned_label[1];
@@ -85,9 +78,9 @@ void Model::found_descriptor(std::string a_descriptor)
     }
 }
 
-int32_t Model::get_entity_count(string a_entity_label)
+int32_t Model::get_entity_count(string a_entity_label) const
 {
-    shared_ptr<Entity> e = get_entity(a_entity_label);
+    shared_ptr<Entity> e = this->get_entity(a_entity_label);
     
     return e->get_count();
 }

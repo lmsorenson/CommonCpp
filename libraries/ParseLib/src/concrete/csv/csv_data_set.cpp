@@ -194,7 +194,7 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
                 if(i<entity_values.size())
                 {
                     this->set(key_buffer, plHashValue(entity_values[i], str), "F");
-                    // this->increment_counter("F");
+                    
                 }
                 else
                 {

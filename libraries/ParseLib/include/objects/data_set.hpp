@@ -57,7 +57,7 @@ public:
     int32_t IsDescriptorRequired(std::string a_descriptor) const;
     
     //returns the number of instances of the chosen entity
-    int32_t number_of_entity_instances(std::string entity_id);
+    int32_t number_of_entity_instances(std::string entity_id) const;
 
 
 
@@ -71,7 +71,6 @@ public:
     //add an atomic value
     int32_t register_descriptor(std::string a_new_descriptor);
     int32_t add_optional_flag(std::string a_new_descriptor);  
-    int32_t increment_counter(std::string a_entity_id);
 
     //API for modifying a data set
     virtual void add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
