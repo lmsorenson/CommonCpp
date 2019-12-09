@@ -47,39 +47,6 @@ shared_ptr<Entity> Model::get_entity(string a_entity_id_label) const
     return result;
 }
 
-//todo--> get_attribute() is broken: does not search for attributes where attributes can be found
-std::shared_ptr<Attribute> Model::get_attribute(std::string a_attribute_id_label) const
-{
-    shared_ptr<Attribute> result;
-
-    //get the entity.
-    for(auto thing : this->thing_array)
-    {
-        shared_ptr<Attribute> found_attribute = nullptr;
-
-        //thing is an entity and the label matches the argument label.
-        if( (found_attribute=dynamic_pointer_cast<Attribute>(thing)) )
-        {
-            
-            if (a_attribute_id_label.compare(found_attribute->get_id())==0)
-            {
-                //if the found entity doesn't exist.
-                if(!result)
-                    result = found_attribute;
-
-                //if it does exist there has been an error.
-                //no two entities should have the same id_label.
-                else
-                    return nullptr;
-            }
-
-        }
-        
-    }
-
-    return result;
-}
-
 vector<string> Model::get_entity_identifier(string a_entity_label) const
 {
     vector<string> str_vec;
@@ -106,15 +73,6 @@ std::vector<std::shared_ptr<Descriptor>> Model::get_identifier_of_granular_entit
         shared_descriptor_vec=e->get_identifying_descriptor_set();
 
     return shared_descriptor_vec;
-}
-
-Attribute::Scale Model::lookup_attribute_scale(std::string a_descriptor_id) const
-{
-    shared_ptr<Attribute> a = get_attribute(a_descriptor_id);
-
-    return (a)
-    ? a->get_scale()
-    : Attribute::Scale::Unknown;
 }
 
 void Model::found_descriptor(std::string a_descriptor)

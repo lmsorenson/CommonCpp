@@ -82,23 +82,23 @@ string Instance::at(int8_t index) const
 
 
 
-Instance Instance::GetRelatedInstance(string a_label) const
+Instance Instance::GetRelatedInstance(string a_entity_id) const
 { 
     //get the descriptor-index value off the entity identified
     //by 'a_label'
     string attr_buffer;
     
     
-    if( GetDescriptorByDescriptorID(a_label) != "NO_VALUE" )
-        attr_buffer.append( GetDescriptorByDescriptorID(a_label) );
+    if( GetDescriptorByDescriptorID(a_entity_id) != "NO_VALUE" )
+        attr_buffer.append( GetDescriptorByDescriptorID(a_entity_id) );
 
-    else if(!kOwner_->IsDescriptorRequired(a_label))
-        attr_buffer.append(a_label);
+    else if(!kOwner_->IsDescriptorRequired(a_entity_id))
+        attr_buffer.append(a_entity_id);
 
     std::cout << "ATTR" << attr_buffer << endl;
 
     //get any other descriptors that might be necessary
-    vector<string> identifier = kOwner_->get_data_model().get_entity_identifier(a_label);
+    vector<string> identifier = kOwner_->get_data_model().get_entity_identifier(a_entity_id);
 
     for(int i=0; i<identifier.size();++i)
     {
