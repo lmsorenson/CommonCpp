@@ -1,6 +1,8 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <objects/data_set.hpp>
 
+#include "../keys/keys.hpp"
+
 
 using ::std::string;
 using ::std::to_string;
@@ -14,20 +16,24 @@ using ::std::make_shared;
 
 
 
-int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor) const
+int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
 {
     int32_t r=-1;
 
     bool b_descriptor_found = false;
 
-    for(auto descriptor : this->expected_descriptors)
+    //go through IDs of all expected descriptors
+    for( auto descriptor : this->logical_data_structure.get_identifier_of_granular_entity() )
     {
-        if(descriptor->GetLabel() == a_descriptor)//if this is never called return an error.
+        //if the current descriptor is a match with the argument...
+        if(descriptor->get_id() == a_descriptor_id)//if this is never called return an error.
         {       
             if (b_descriptor_found)//if this is ever called return an error.
                 r=-1;
 
-            r=descriptor->IsRequired();
+            std::shared_ptr<Attribute> attribute = dynamic_pointer_cast<Attribute>(descriptor);
+
+            r=( attribute && (attribute->get_scale() != Attribute::Scale::Boolean) );
         }
     }
 
@@ -86,12 +92,12 @@ sdg::Instance sdg::DataSet::get(std::string a_descriptor) const
     //initializing a valid instance return buffer.
     Instance return_buffer = Instance(this, Instance::VALID_INST, a_descriptor);
 
-    //get a set of descriptors from a list of expected descriptor ids
-    std::vector<DataSet::EntityKey> 
-        expected_descriptor_buffer = helper(a_descriptor, this->expected_descriptors);
+    //get a set of descriptors from a list of expected descriptor IDs
+    std::vector<hash::DescriptorInstance> 
+        expected_descriptor_buffer = helper(a_descriptor, this->logical_data_structure.get_identifier_of_granular_entity());
 
     //try to compile the hash key
-    HashKey generated_key = compile_hash_key(expected_descriptor_buffer); 
+    hash::HashKey generated_key = compile_hash_key(expected_descriptor_buffer);
 
     //does this key contain all necessary descriptors for a query?
     if ( generated_key.is_partial_key() )
@@ -103,8 +109,11 @@ sdg::Instance sdg::DataSet::get(std::string a_descriptor) const
         }
     }
     else 
+    {
         //return the value at the generated key
         return_buffer.add_value(hash_table.get(generated_key.value()));
+    }
+        
     
 
     return (state==DATA_SET_GOOD)

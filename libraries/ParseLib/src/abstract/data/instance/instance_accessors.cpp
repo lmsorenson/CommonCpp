@@ -7,6 +7,8 @@
 using ::std::vector;
 using ::std::string;
 using ::std::to_string;
+using ::std::cout;
+using ::std::endl;
 using ::sdg::Instance;
 
 
@@ -92,6 +94,8 @@ Instance Instance::GetRelatedInstance(string a_label) const
 
     else if(!kOwner_->IsDescriptorRequired(a_label))
         attr_buffer.append(a_label);
+
+    std::cout << "ATTR" << attr_buffer << endl;
 
     //get any other descriptors that might be necessary
     vector<string> identifier = kOwner_->get_data_model().get_entity_identifier(a_label);
@@ -187,7 +191,7 @@ Instance Instance::GetNextInstance(string a_label) const
 
 Instance Instance::GetPreviousInstance(string a_label) const
 {
-
+    //todo->GetPreviousInstance undefined.
     return Instance();
 }
 

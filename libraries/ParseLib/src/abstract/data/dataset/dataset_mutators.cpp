@@ -70,19 +70,19 @@ int32_t sdg::DataSet::set(std::string a_descriptor_list, plHashValue a_value, st
 
 
 
-int32_t sdg::DataSet::register_descriptor(std::string a_new_descriptor)
-{
-    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor)));
+// int32_t sdg::DataSet::register_descriptor(std::string a_new_descriptor)
+// {
+//     expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor)));
 
-    return 0;
-}
+//     return 0;
+// }
 
-int32_t sdg::DataSet::add_optional_flag(std::string a_new_descriptor)
-{
-    expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor, false, false)));
+// int32_t sdg::DataSet::add_optional_flag(std::string a_new_descriptor)
+// {
+//     expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor, false, false)));
 
-    return 0;
-}
+//     return 0;
+// }
 
 
 

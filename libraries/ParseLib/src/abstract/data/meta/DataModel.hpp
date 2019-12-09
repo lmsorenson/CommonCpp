@@ -21,8 +21,10 @@ public:
     //add a thing to the data model.
     void add_thing(std::shared_ptr<Thing> a_thing);
 
-    //get identifying descriptors for the entity specified
-    std::vector<std::string> get_entity_identifier(std::string a_entity_label);
+    //get a list of descriptor IDs representing identifying descriptors of the entity specified.
+    std::vector<std::string> get_entity_identifier(std::string a_entity_label) const;
+    std::vector<std::shared_ptr<Descriptor>> get_identifier_of_granular_entity() const;
+    Attribute::Scale lookup_attribute_scale(std::string a_descriptor_id) const;
 
     //increment the counter for the entity specified
     void found_descriptor(std::string a_descriptor);
@@ -33,4 +35,5 @@ private:
     ManyLink<Thing> thing_array;
 
     std::shared_ptr<Entity> get_entity(std::string a_entity_id_label) const;
+    std::shared_ptr<Attribute> get_attribute(std::string a_entity_id_label) const;
 };

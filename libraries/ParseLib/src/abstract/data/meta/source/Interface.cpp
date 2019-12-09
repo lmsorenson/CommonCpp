@@ -28,12 +28,12 @@ void Thing::print()
     std::cout << this->name << std::endl;
 }
 
-std::string Thing::get_id()
+std::string Thing::get_id() const
 {
     return thing_id;
 }
 
-int32_t Thing::get_count()
+int32_t Thing::get_count() const
 {
     return counter;
 }
