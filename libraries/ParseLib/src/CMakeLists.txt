@@ -17,6 +17,9 @@ file(
     ${PROJECT_SOURCE_DIR}/*.cpp 
     ${PROJECT_SOURCE_DIR}/abstract/Factories/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/dataset/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/instance/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/data/keys/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/meta/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/structures/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Reads/*.cpp

@@ -16,12 +16,10 @@ public:
     ~Thing()=default;
 
     virtual void print();
-    std::string get_id();
+    std::string get_id() const;
 
-    //pass in a descriptor to update the count
-    void increment_counter();
     void set_counter(int32_t a_value);
-    int32_t get_count();
+    int32_t get_count() const;
 
 private:
     std::string name;

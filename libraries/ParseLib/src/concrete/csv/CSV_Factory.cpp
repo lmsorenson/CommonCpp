@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "../../../include/concrete/CSVData.hpp"
+#include <formats/csv_data_set.hpp>
 #include "ReadCSV.hpp"
 #include "CSV_Write.hpp"
 
@@ -22,7 +22,7 @@ std::shared_ptr<WriteStrategy> CSV_Factory::make_write()
     return make_shared<CSV_Write>(CSV_Write());
 }
 
-std::shared_ptr<plDataSet> CSV_Factory::make_data()
+std::shared_ptr<sdg::DataSet> CSV_Factory::make_data()
 {
     return make_shared<CSVData>(CSVData(100));
 }

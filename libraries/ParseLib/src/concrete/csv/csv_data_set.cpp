@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../../../include/concrete/CSVData.hpp"
+#include <formats/csv_data_set.hpp>
 #include <iostream>
 
 #include "../../abstract/data/meta/DataModel.hpp"
@@ -13,20 +13,22 @@ void CSVData::csv_model()
 {
     shared_ptr<Entity>
         eRecord = make_shared<Entity>("R", "record"),
-        eCell = make_shared<Entity>("C", "cell"),
+        eCell = make_shared<Entity>("G", "cell"),
         eField = make_shared<Entity>("F", "field"),
         eField_name = make_shared<Entity>("H", "field_name");
 
     shared_ptr<Attribute>
         eRecord_line_id,
         eCell_value,
+        eCell_BE_header,
         eField_field_id,
         eField_name_value;
 
-    eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("record_id", "R")), true);
-    eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value", "V")));
-    eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id", "F")), true);
-    eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("name", "N")));
+    eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("record_id", "R", Attribute::Scale::Numeric)), true);
+    eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value", "V", Attribute::Scale::Numeric)));
+    eCell->add_descriptor( eCell_BE_header=make_shared<Attribute>(Attribute("is_a_header", "H", Attribute::Scale::Boolean)), true );
+    eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id", "F", Attribute::Scale::Numeric)), true);
+    eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("name", "N", Attribute::Scale::Nominal)));
 
     shared_ptr<Relationship>
         cell_to_record = make_shared<Relationship>("cell_to_record", eCell, eRecord,  false, Relationship::IDENTIFY_BY::LINK_1),
@@ -51,20 +53,20 @@ void CSVData::csv_model()
 }
 
 CSVData::CSVData()
-: plDataSet()
+: DataSet()
 {
-    this->add_optional_flag("H");
-    this->register_descriptor("R");
-    this->register_descriptor("F");
+    // this->add_optional_flag("H");
+    // this->register_descriptor("R");
+    // this->register_descriptor("F");
     this->csv_model();//generate the meta data
 }
 
 CSVData::CSVData(int32_t hash_table_size)
-: plDataSet(hash_table_size)
+: DataSet(hash_table_size)
 {
-    this->add_optional_flag("H");
-    this->register_descriptor("R");
-    this->register_descriptor("F");
+    // this->add_optional_flag("H");
+    // this->register_descriptor("R");
+    // this->register_descriptor("F");
     this->csv_model();//generate the meta data
 }
 
@@ -194,7 +196,7 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
                 if(i<entity_values.size())
                 {
                     this->set(key_buffer, plHashValue(entity_values[i], str), "F");
-                    // this->increment_counter("F");
+                    
                 }
                 else
                 {

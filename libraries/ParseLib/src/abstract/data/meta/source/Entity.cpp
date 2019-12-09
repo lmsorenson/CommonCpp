@@ -33,13 +33,25 @@ void Entity::add_descriptor(shared_ptr<Descriptor> a_descriptor, bool b_is_ident
     }
 }
 
-vector<string> Entity::get_identifying_descriptors()
+vector<string> Entity::get_identifying_descriptor_id_set()
 {
     vector<string> result;
 
     //todo-->support multiple identifiers
     if(!identifier_array.empty())//only populate result as per this proposition.
-        result = this->identifier_array[0]->get_descriptor_labels();
+        result = this->identifier_array[0]->get_descriptor_ids();
+    
+    return result;
+}
+
+
+vector<shared_ptr<Descriptor>> Entity::get_identifying_descriptor_set()
+{
+    vector<shared_ptr<Descriptor>> result;
+
+    //todo-->support multiple identifiers
+    if(!identifier_array.empty())//only populate result as per this proposition.
+        result = this->identifier_array[0]->get_descriptors();
     
     return result;
 }
@@ -57,7 +69,7 @@ void Identifier::add_descriptor(shared_ptr<Descriptor> a_descriptor)
     this->descriptor_array.push_back(a_descriptor);
 }
 
-vector<string> Identifier::get_descriptor_labels()
+vector<string> Identifier::get_descriptor_ids()
 {
     vector<string> result;
     for(int i=0; i<this->descriptor_array.size(); i++)
@@ -69,9 +81,30 @@ vector<string> Identifier::get_descriptor_labels()
 
         else if((l=dynamic_pointer_cast<Link>(this->descriptor_array[i])))
         {
-            for( string label : l->get_labels())
+            for( string ID : l->get_descriptor_IDs())
             {
-                result.push_back(label);
+                result.push_back(ID);
+            }
+        }
+    }
+    return result;
+}
+
+vector<std::shared_ptr<Descriptor>> Identifier::get_descriptors()
+{
+    vector<std::shared_ptr<Descriptor>> result;
+    for(int i=0; i<this->descriptor_array.size(); i++)
+    {
+        shared_ptr<Attribute> a;
+        shared_ptr<Link> l;
+        if((a=dynamic_pointer_cast<Attribute>(this->descriptor_array[i])))
+            result.push_back(a);
+
+        else if((l=dynamic_pointer_cast<Link>(this->descriptor_array[i])))
+        {
+            for( auto descriptor : l->get_descriptors())
+            {
+                result.push_back(descriptor);
             }
         }
     }

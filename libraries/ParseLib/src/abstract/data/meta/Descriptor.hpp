@@ -17,6 +17,7 @@ class Descriptor : public Thing
 
 public:
     Descriptor(std::string a_name);
+    Descriptor(std::string a_name, std::string a_id);
     ~Descriptor()=default;
 
 private:
@@ -38,7 +39,8 @@ public:
     Link(std::string a_name, std::shared_ptr<Entity> a_entity, std::string a_link_label="");
     ~Link()=default;
 
-    std::vector<std::string> get_labels();
+    std::vector<std::string> get_descriptor_IDs();
+    std::vector<std::shared_ptr<Descriptor>> get_descriptors();
 };
 
 
@@ -47,12 +49,6 @@ class Attribute : public Descriptor
 {
 
 public:
-    Attribute(std::string a_name, std::string a_label);
-    ~Attribute()=default;
-
-    std::string get_label();
-
-private:
     enum Scale
     {
         Numeric,
@@ -60,8 +56,19 @@ private:
         Ordinal,
         Boolean,
         Unknown
-    } 
-    scale;
+    } ;
+
+    Attribute(std::string a_name, std::string a_label, Scale a_scale);
+    ~Attribute()=default;
+
+    bool IsRequired();
+
+    std::string get_label() const;
+    Scale get_scale() const;
+
+private:
+    
+    Scale attr_scale;
 
     std::string attribute_label;
 };

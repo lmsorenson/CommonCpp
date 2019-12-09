@@ -42,7 +42,7 @@ TEST_F(CSVPerformanceSpec, TestR3)
 
     start = std::clock();
 
-    plDataSet ds;
+    DataSet ds;
 
     ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test2.csv");
 

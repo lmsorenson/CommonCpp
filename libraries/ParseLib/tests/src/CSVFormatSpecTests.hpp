@@ -7,6 +7,9 @@
 #include <ParseLib.hpp>
 #include "TestFramework.hpp"
 
+using sdg::DataSet;
+using sdg::Instance;
+
 
 class CSVFormatTests : public ::LucTestFramework
 {
@@ -40,22 +43,22 @@ protected:
 //Each record is located on a separate line, delimited by a line break (CRLF). 
 TEST_F(CSVFormatTests, TestR1)
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1.csv").c_str());
-    //plInstance str = ds['A']['1'];
-    // plInstance str = ds.get("R0-F0");
-    plInstance str = ds["R0"]["F0"];
+    //Instance str = ds['A']['1'];
+    // Instance str = ds.get("R0-F0");
+    Instance str = ds["R0"]["F0"];
 
     ASSERT_EQ(str.get(), "aaa");
 }
 //HEADER 
 TEST_F(CSVFormatTests, TestR1_WithHeader)
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1H.csv").c_str(), options);
-    plInstance str = ds["R0"]["F0"];
+    Instance str = ds["R0"]["F0"];
 
     ASSERT_EQ(str.get(), "aaa");
 }
@@ -65,11 +68,11 @@ TEST_F(CSVFormatTests, TestR1_WithHeader)
 //The last record in the file may or may not have an ending line break.
 TEST_F(CSVFormatTests, TestR2_1)//has a line break
 {
-    plDataSet ds;
+    DataSet ds;
     
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1-1.csv").c_str());
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -81,12 +84,12 @@ TEST_F(CSVFormatTests, TestR2_1)//has a line break
 //The last record in the file may or may not have an ending line break.
 TEST_F(CSVFormatTests, TestR2_1_WithHeader)//has a line break
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1-1H.csv").c_str(), options);
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -98,11 +101,11 @@ TEST_F(CSVFormatTests, TestR2_1_WithHeader)//has a line break
 
 TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 {
-    plDataSet ds;
+    DataSet ds;
     
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1.csv").c_str());
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -114,12 +117,12 @@ TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 
 TEST_F(CSVFormatTests, TestR2_2_WithHeader)//does not have a line break
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1H.csv").c_str(), options);
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -140,20 +143,20 @@ TEST_F(CSVFormatTests, TestR2_2_WithHeader)//does not have a line break
 //this MIME type).
 TEST_F(CSVFormatTests, TestR3)
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
 
-    plInstance H1 = ds.get("H-R0-F0");
-    plInstance H2 = ds.get("H-R0-F1");
-    plInstance H3 = ds.get("H-R0-F2");
-    plInstance A1 = ds.get("R0-F0");
-    plInstance A2 = ds.get("R0-F1");
-    plInstance A3 = ds.get("R0-F2");
-    plInstance B1 = ds.get("R1-F0");
-    plInstance B2 = ds.get("R1-F1");
-    plInstance B3 = ds.get("R1-F2");
+    Instance H1 = ds.get("H-R0-F0");
+    Instance H2 = ds.get("H-R0-F1");
+    Instance H3 = ds.get("H-R0-F2");
+    Instance A1 = ds.get("R0-F0");
+    Instance A2 = ds.get("R0-F1");
+    Instance A3 = ds.get("R0-F2");
+    Instance B1 = ds.get("R1-F0");
+    Instance B2 = ds.get("R1-F1");
+    Instance B3 = ds.get("R1-F2");
 
     ASSERT_EQ(H1.get(), "field_nameA");
     ASSERT_EQ(H2.get(), "field_nameB");
@@ -175,7 +178,7 @@ TEST_F(CSVFormatTests, TestR3)
 //must not be followed by a comma. 
 TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 {
-    plDataSet ds;
+    DataSet ds;
     
     int32_t return_code;
 
@@ -188,7 +191,7 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 } 
 TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 {
-    plDataSet ds;
+    DataSet ds;
     
     int32_t return_code;
 
@@ -203,7 +206,7 @@ TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 } 
 TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
 {
-    plDataSet ds;
+    DataSet ds;
     
     int32_t return_code;
 
@@ -214,7 +217,7 @@ TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fi
 }
 TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same number of fields.
 {
-    plDataSet ds;
+    DataSet ds;
     
     int32_t return_code;
     std::vector<option> options;
@@ -227,7 +230,7 @@ TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same n
 TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {   
 
-    plDataSet ds;
+    DataSet ds;
     
     int32_t return_code;
 
@@ -238,7 +241,7 @@ TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 } 
 TEST_F(CSVFormatTests, TestR4_3_WithHeader)//must not be followed by a comma
 {   
-    plDataSet ds;
+    DataSet ds;
     
     int32_t return_code;
     std::vector<option> options;
@@ -257,11 +260,11 @@ TEST_F(CSVFormatTests, TestR4_3_WithHeader)//must not be followed by a comma
 //double quotes may not appear inside the fields.
 TEST_F(CSVFormatTests, TestR5)
 {
-    plDataSet ds;
+    DataSet ds;
     
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4.csv").c_str());
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -272,13 +275,13 @@ TEST_F(CSVFormatTests, TestR5)
 }  
 TEST_F(CSVFormatTests, TestR5_WithHeader)
 {
-    plDataSet ds;
+    DataSet ds;
     
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4H.csv").c_str(), options);
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -289,10 +292,10 @@ TEST_F(CSVFormatTests, TestR5_WithHeader)
 } 
 TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
 {
-    plDataSet ds;
+    DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4-1.csv").c_str());
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -303,12 +306,12 @@ TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
 }  
 TEST_F(CSVFormatTests, TestR5_1_WithHeader)//Dobule quotes may not appear inside the fields
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4-1H.csv").c_str(), options);
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -324,11 +327,11 @@ TEST_F(CSVFormatTests, TestR5_1_WithHeader)//Dobule quotes may not appear inside
 //should be enclosed in double-quotes.
 TEST_F(CSVFormatTests, TestR6_1)
 {
-    plDataSet ds;
+    DataSet ds;
 
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5.csv").c_str());
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -339,12 +342,12 @@ TEST_F(CSVFormatTests, TestR6_1)
 }  
 TEST_F(CSVFormatTests, TestR6_1_WithHeader)
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5H.csv").c_str(), options);
 
-    plInstance
+    Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -355,11 +358,11 @@ TEST_F(CSVFormatTests, TestR6_1_WithHeader)
 } 
 TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
 {
-    plDataSet ds;
+    DataSet ds;
     
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5-1.csv").c_str());
 
-   plInstance
+   Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -370,12 +373,12 @@ TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
 }  
 TEST_F(CSVFormatTests, TestR6_2_WithHeader)//commas can be enclosed in double quotes
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5-1H.csv").c_str(), options);
 
-   plInstance
+   Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -392,11 +395,11 @@ TEST_F(CSVFormatTests, TestR6_2_WithHeader)//commas can be enclosed in double qu
 //another double quote. For example:
 TEST_F(CSVFormatTests, TestR7)
 {
-    plDataSet ds;
+    DataSet ds;
     
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv6.csv").c_str());
 
-   plInstance
+   Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
@@ -407,12 +410,12 @@ TEST_F(CSVFormatTests, TestR7)
 }  
 TEST_F(CSVFormatTests, TestR7_WithHeader)
 {
-    plDataSet ds;
+    DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv6H.csv").c_str(), options);
 
-   plInstance
+   Instance
         field1 = ds.get("R0-F0"),
         field2 = ds.get("R0-F1"),
         field3 = ds.get("R0-F2");
