@@ -11,7 +11,7 @@
 #define NO_INDEX -1
 #define END_OF_ENTITY_LIST -1
 
-//soli deo gloria
+
 namespace sdg {
 
 class SelectionVisitor;
@@ -41,13 +41,12 @@ public:
     DataSet(int32_t a_hash_table_size);
     ~DataSet();
 
+
     Instance operator[](std::string i);
 
 
 
     //accessors//------------------------------------------------
-    
-    
     Instance get(std::string a_descriptor) const;
     
     //finds a specific instance without specifying an identifier.
@@ -65,16 +64,10 @@ public:
 
 
 
-
     //Mutators//-------------------------------------------------
-
     //add an atomic value to the store identified by a list of descriptors
     int32_t set(std::string a_descriptor_list, plHashValue a_value);
     int32_t set(std::string a_descriptor_list, plHashValue a_value, std::string a_entity_id);
-
-    //add an atomic value
-    // int32_t register_descriptor(std::string a_new_descriptor);
-    // int32_t add_optional_flag(std::string a_new_descriptor);  
 
     //API for modifying a data set
     virtual void add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
@@ -82,43 +75,14 @@ public:
     virtual void increment_instance_id(std::string entity_id, int32_t position=1);
     virtual int32_t pad_entity_count(std::string entity_id, int32_t a_num_blanks=1);
 
+
+
     std::string id_lexer(
         std::string a_identifier, 
         std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr,
         std::function<void(std::string label_not_found)> lambda_expr2=nullptr,
         std::function<void(std::string label_unrecognized)> callback_unrecognized_desc=nullptr) const;
     std::vector<std::string> get_missing_descriptors(std::string a_descriptor_labels) const;
-    
-    //descriptors used in the identifier for an atomic entity.
-    //atomic refers to the smallest entity in a data set.
-    //atomic entities are also the elements stored in the hash table.
-    //this entity describes individual descriptors needed to identify a hash element.
-    // class EntityKey
-    // {
-
-    // public:
-    //     EntityKey();
-    //     EntityKey(std::string a_label, bool a_required = true, bool a_has_index = true);
-    //     ~EntityKey();
-
-    //     std::string GetLabel() const;
-    //     int32_t SetIndex(int32_t a_index);
-    //     int32_t SetFound();
-    //     bool IsFound() const;
-    //     int32_t GetIndex() const;
-    //     bool IsRequired() const;
-    //     bool HasIndex() const;
-
-    // private:
-    //     std::string label;
-    //     int32_t index;
-    //     bool 
-    //         required,
-    //         has_index;
-
-    //     bool b_found;
-
-    // };
 
 protected:
     //the logical data structure is meta data about the data stored in this hash table.
@@ -138,7 +102,5 @@ protected:
     // std::vector<std::shared_ptr<hash::DescriptorID>> expected_descriptors;
 };
 
-
-
-
 }//namespace sdg
+//soli deo gloria

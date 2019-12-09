@@ -12,10 +12,6 @@ using ::std::dynamic_pointer_cast;
 using ::std::make_shared;
 
 
-
-
-
-
 int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
 {
     int32_t r=-1;

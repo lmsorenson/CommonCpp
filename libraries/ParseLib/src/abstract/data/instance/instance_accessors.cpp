@@ -67,9 +67,8 @@ string Instance::at(int8_t index) const
     if(state_ == VALID_INST && value_.size()!= 0)
     {
         if(value_.size()>=(index+1))
-        {
             return value_[index];
-        }
+
         else
             return "NULL";
     }
@@ -92,10 +91,8 @@ Instance Instance::GetRelatedInstance(string a_entity_id) const
     if( GetDescriptorByDescriptorID(a_entity_id) != "NO_VALUE" )
         attr_buffer.append( GetDescriptorByDescriptorID(a_entity_id) );
 
-    else if(!kOwner_->IsDescriptorRequired(a_entity_id))
+    else if( !kOwner_->IsDescriptorRequired(a_entity_id) )
         attr_buffer.append(a_entity_id);
-
-    std::cout << "ATTR" << attr_buffer << endl;
 
     //get any other descriptors that might be necessary
     vector<string> identifier = kOwner_->get_data_model().get_entity_identifier(a_entity_id);
@@ -111,7 +108,7 @@ Instance Instance::GetRelatedInstance(string a_entity_id) const
         }
             
 
-        else if(!kOwner_->IsDescriptorRequired(identifier[i]))
+        else if( !kOwner_->IsDescriptorRequired(identifier[i]) )
         {
             if(!attr_buffer.empty())
                 attr_buffer.append("-");
@@ -172,13 +169,9 @@ Instance Instance::GetNextInstance(string a_label) const
         }
         //todo-->so far this should never happen
         else if(missing_desc.size()>1)
-        {
             return Instance(kOwner_, NULL_INST);
-        }
         else
-        {
             return Instance(kOwner_, NULL_INST);
-        }
     }
 
     //if the next item doesn't exist then end here.
@@ -241,10 +234,7 @@ string Instance::GetDescriptorByDescriptorID(string a_descriptor_id) const
             // where found_label is the label being processed in a loop.
             // and the argument is equal to the found label.
             if(found_label==desc_buffer)
-            {
-                //pull the index out of the lexer.
                 index_buffer = index;
-            }
         }
         );
 
