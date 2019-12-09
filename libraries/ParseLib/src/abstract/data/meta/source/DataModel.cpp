@@ -16,7 +16,7 @@ void Model::add_thing(shared_ptr<Thing> a_thing)
     thing_array.push_back(a_thing);
 }
 
-shared_ptr<Entity> Model::get_entity(string a_entity_id_label)
+shared_ptr<Entity> Model::get_entity(string a_entity_id_label) const
 {
     shared_ptr<Entity> result;
 
@@ -47,7 +47,7 @@ shared_ptr<Entity> Model::get_entity(string a_entity_id_label)
     return result;
 }
 
-vector<string> Model::get_entity_identifier(string a_entity_label)
+vector<string> Model::get_entity_identifier(string a_entity_label) const
 {
     vector<string> str_vec;
 
@@ -56,16 +56,23 @@ vector<string> Model::get_entity_identifier(string a_entity_label)
 
     //ask the entity for it's identifying descriptors.
     if (e!=nullptr)
-        str_vec=e->get_identifying_descriptors();
+        str_vec=e->get_identifying_descriptor_id_set();
 
     return str_vec;
 }
 
-void Model::increment_entity_counter(string a_entity_label)
+std::vector<std::shared_ptr<Descriptor>> Model::get_identifier_of_granular_entity() const
 {
-    shared_ptr<Entity> e = get_entity(a_entity_label);
-    
-    e->increment_counter();
+    vector<std::shared_ptr<Descriptor>> shared_descriptor_vec;
+
+    //select the entity.
+    shared_ptr<Entity> e = get_entity("G");
+
+    // ask the entity for its identifying descriptors.
+    if (e!=nullptr)
+        shared_descriptor_vec=e->get_identifying_descriptor_set();
+
+    return shared_descriptor_vec;
 }
 
 void Model::found_descriptor(std::string a_descriptor)
@@ -85,9 +92,9 @@ void Model::found_descriptor(std::string a_descriptor)
     }
 }
 
-int32_t Model::get_entity_count(string a_entity_label)
+int32_t Model::get_entity_count(string a_entity_label) const
 {
-    shared_ptr<Entity> e = get_entity(a_entity_label);
+    shared_ptr<Entity> e = this->get_entity(a_entity_label);
     
     return e->get_count();
 }
