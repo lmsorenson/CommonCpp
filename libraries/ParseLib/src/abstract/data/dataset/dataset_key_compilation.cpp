@@ -1,11 +1,17 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <objects/data_set.hpp>
 
+#include "../keys/keys.hpp"
+
 
 
 using std::string;
 using std::vector;
 using std::function;
+using std::shared_ptr;
+using std::dynamic_pointer_cast;
+using std::cout;
+using std::endl;
 
 
 
@@ -21,14 +27,17 @@ string sdg::DataSet::id_lexer(
     function<void(string label_not_found)> callback_desc_not_found,
     function<void(string label_unrecognized)> callback_unrecognized_desc) const
 {
+
     string r_new_id;
     char * token = strtok((char*)a_identifier.c_str(),"-");
 
     vector<bool> v_b_found;
 
+    vector<shared_ptr<Descriptor>> identifying_descriptors = this->logical_data_structure.get_identifier_of_granular_entity();
+
     //initialize a boolean for each expected descriptor,
     //that indicates if that descriptor was found
-    for (int i=0; i<this->expected_descriptors.size();++i)
+    for (int i=0; i<identifying_descriptors.size();++i)
     {
         //before searching this is false.
         v_b_found.push_back(false);
@@ -49,10 +58,10 @@ string sdg::DataSet::id_lexer(
 
         
         //iterate over expected descriptors
-        for(int i=0; i<this->expected_descriptors.size(); ++i)
+        for(int i=0; i<identifying_descriptors.size(); ++i)
         {
             //Check if the token's key matches the current descriptor's label.
-            if (strcmp(this->expected_descriptors[i]->GetLabel().c_str(), scanned_label)==0)
+            if (strcmp(identifying_descriptors[i]->get_id().c_str(), scanned_label)==0)
             {
                 //if the token was a match, it was expected
                 b_token_recognized = true;
@@ -66,11 +75,22 @@ string sdg::DataSet::id_lexer(
                 //only add recognized descriptors to the output.
                 r_new_id.append(token);
 
+                std::shared_ptr<const Attribute> attr_descriptor = dynamic_pointer_cast<const Attribute>(identifying_descriptors[i]);
+
                 //run the callback
-                if (this->expected_descriptors[i]->HasIndex())
-                    callback_desc_found(i, scanned_index, this->expected_descriptors[i]->GetLabel());
-                else
-                    callback_desc_found(i, NO_INDEX, this->expected_descriptors[i]->GetLabel());
+                if (attr_descriptor && (attr_descriptor->get_scale() == Attribute::Scale::Numeric ))
+                {
+                    callback_desc_found(i, scanned_index, attr_descriptor->get_id());
+                }
+                    
+                else if(attr_descriptor && (attr_descriptor->get_scale() == Attribute::Scale::Boolean ))
+                {
+                    callback_desc_found(i, NO_INDEX, identifying_descriptors[i]->get_id());
+                }
+                    
+                //todo -- error
+                //else
+                //error
             }
         }
 
@@ -86,12 +106,14 @@ string sdg::DataSet::id_lexer(
         //execute the callback only if it exists.
         if(callback_desc_not_found)
         {
-            for (int i=0; i<this->expected_descriptors.size();++i)
+            for (int i=0; i<identifying_descriptors.size();++i)
             {
+                std::shared_ptr<const Attribute> attr_descriptor = dynamic_pointer_cast<const Attribute>(identifying_descriptors[i]);
+
                 //pass the missing descriptor to the calling context
                 //if the descriptor was not matched.
-                if (!v_b_found[i] && this->expected_descriptors[i]->IsRequired())
-                    callback_desc_not_found(this->expected_descriptors[i]->GetLabel());   
+                if (!v_b_found[i] && attr_descriptor && attr_descriptor->get_scale() != Attribute::Scale::Boolean )
+                    callback_desc_not_found(identifying_descriptors[i]->get_id());   
             }
         }  
 
@@ -138,11 +160,6 @@ std::string sdg::DataSet::increment_descriptor_in_key(std::string a_entity_id, s
             std::string copy_new_key = new_key;
             increment_descriptor_value(token, copy_new_key, descriptor_id);
             new_key.append(copy_new_key);
-        
-            for(int i=0; i<a_position; ++i)
-            {
-                // this->increment_counter(descriptor_id);
-            }
         }
         else
         {
@@ -201,3 +218,99 @@ void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_
 
 
 
+
+
+sdg::hash::HashKey sdg::DataSet::compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const
+{
+
+    std::string compiled_key;
+    bool data_missing;
+
+    /*-----------------------------------*
+    *             Compiler               *
+    * ----------------------------------*/
+    for(int i=0; i<expected_descriptors.size(); ++i)
+    {
+
+        //-- if the descriptor value is not a null value. --
+        if(expected_descriptors[i].get_descriptor_value()!=-1)
+        {
+            //add the delimiter
+            if (!compiled_key.empty())
+                compiled_key.append("-");
+
+            //push key to the format.
+            compiled_key.append(expected_descriptors[i].get_descriptor_id());
+            
+
+
+            if( expected_descriptors[i].get_scale() == Attribute::Scale::Numeric)
+                compiled_key.append(std::to_string(expected_descriptors[i].get_descriptor_value()));
+        }
+
+        //-- if the descriptor value is not required. --
+        else if (expected_descriptors[i].get_scale() == Attribute::Scale::Boolean)
+        {
+            //add the delimiter
+            if (!compiled_key.empty())
+                compiled_key.append("-");
+
+            if (expected_descriptors[i].is_found())
+                compiled_key.append(expected_descriptors[i].get_descriptor_id());
+        }
+
+        //-- note missing data. --
+        else
+        {
+            //if any token returns missing record it.
+            data_missing = true;
+        }
+    }
+
+    return sdg::hash::HashKey(compiled_key, data_missing);
+}
+
+std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(std::string key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
+{
+    using sdg::hash::DescriptorInstance;
+
+    std::vector<DescriptorInstance> buffer;
+
+    for(auto descriptor : expected_descriptor_buffer)
+    {
+        std::shared_ptr<Attribute> attribute;
+        if( (attribute=dynamic_pointer_cast<Attribute>(descriptor)) )
+        {
+            buffer.push_back( DescriptorInstance(descriptor->get_id(), attribute->get_scale()) );
+        }
+        else
+        {
+            return buffer;
+        }
+
+        
+    }
+
+    
+
+    /*-----------------------------------*
+    *              Lexer                 *
+    * ----------------------------------*/
+    key_buffer = this->id_lexer(
+        key_buffer, 
+        [&](int32_t key_i,int32_t index, string found_label)
+        {
+            if (buffer[key_i].get_scale() == Attribute::Scale::Numeric)
+            {
+                buffer[key_i].set_value(index);
+            }
+            else
+            {
+                buffer[key_i].set_found();
+            }
+        }
+        );
+
+    return buffer;
+
+}

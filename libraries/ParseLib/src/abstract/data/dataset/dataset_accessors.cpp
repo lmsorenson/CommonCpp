@@ -1,41 +1,44 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <objects/data_set.hpp>
 
+#include "../keys/keys.hpp"
+
 
 using ::std::string;
 using ::std::to_string;
 using ::std::vector;
+using ::std::shared_ptr;
+using ::std::dynamic_pointer_cast;
+using ::std::make_shared;
 
 
-int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor) const
+int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
 {
     int32_t r=-1;
 
     bool b_descriptor_found = false;
 
-    for(auto descriptor : this->expected_descriptors)
+    //go through IDs of all expected descriptors
+    for( auto descriptor : this->logical_data_structure.get_identifier_of_granular_entity() )
     {
-        if(descriptor->GetLabel() == a_descriptor)//if this is never called return an error.
+        //if the current descriptor is a match with the argument...
+        if(descriptor->get_id() == a_descriptor_id)//if this is never called return an error.
         {       
             if (b_descriptor_found)//if this is ever called return an error.
                 r=-1;
 
-            r=descriptor->IsRequired();
+            std::shared_ptr<Attribute> attribute = dynamic_pointer_cast<Attribute>(descriptor);
+
+            r=( attribute && (attribute->get_scale() != Attribute::Scale::Boolean) );
         }
     }
 
     return r;
 }
 
-int32_t sdg::DataSet::number_of_entity_instances(std::string a_entity_id)
+int32_t sdg::DataSet::number_of_entity_instances(std::string a_entity_id) const
 {
     return this->logical_data_structure.get_entity_count(a_entity_id);
-}
-
-int32_t sdg::DataSet::increment_counter(std::string a_entity_id)
-{
-    // logical_data_structure.increment_entity_counter(a_entity_id);
-    return 0;
 }
 
 Model sdg::DataSet::get_data_model() const
@@ -80,93 +83,40 @@ sdg::Instance sdg::DataSet::where(std::string descriptor, std::string value) con
 sdg::Instance sdg::DataSet::get(std::string a_descriptor) const
 {
     if (state == DATA_SET_BAD)
-        return sdg::Instance(this, Instance::NO_FILE);
+        return Instance(this, Instance::NO_FILE);
 
-    Instance return_var;
-   
-    string 
-        key_buffer = a_descriptor,
-        generated_key,
-        result;
+    //initializing a valid instance return buffer.
+    Instance return_buffer = Instance(this, Instance::VALID_INST, a_descriptor);
 
-    bool data_missing = false;
+    //get a set of descriptors from a list of expected descriptor IDs
+    std::vector<hash::DescriptorInstance> 
+        expected_descriptor_buffer = helper(a_descriptor, this->logical_data_structure.get_identifier_of_granular_entity());
 
-    //buffer the expected_descriptors to avoid modifying the data set.
-    std::vector<DataSet::EntityKey> expected_descriptor_buffer;
-    for(int32_t i=0; i<expected_descriptors.size(); ++i)
+    //try to compile the hash key
+    hash::HashKey generated_key = compile_hash_key(expected_descriptor_buffer);
+
+    //does this key contain all necessary descriptors for a query?
+    if ( generated_key.is_partial_key() )
     {
-        expected_descriptor_buffer.push_back(*(expected_descriptors[i]));
-    }
-
-    return_var = sdg::Instance(this, Instance::VALID_INST);
-    return_var.set_key(a_descriptor);//assign the key which was passed into this function.
-
-    /*-----------------------------------*
-    *              Lexer                 *
-    * ----------------------------------*/
-    key_buffer = this->id_lexer(
-        key_buffer, 
-        [&](int32_t key_i,int32_t index, string found_label)
-        {
-            if (expected_descriptor_buffer[key_i].HasIndex())
-                expected_descriptor_buffer[key_i].SetIndex(index);
-            else
-                expected_descriptor_buffer[key_i].SetFound();
-        }
-        );
-    
-    /*-----------------------------------*
-    *             Compiler               *
-    * ----------------------------------*/
-    for(int i=0; i<expected_descriptor_buffer.size(); ++i)
-    {
-        
-
-        if(expected_descriptor_buffer[i].GetIndex()!=-1)
-        {
-            //add the delimiter
-            if (!generated_key.empty())
-                generated_key.append("-");
-
-            //push key to the format.
-            generated_key.append(expected_descriptor_buffer[i].GetLabel());
-            
-            if(expected_descriptor_buffer[i].HasIndex())
-                generated_key.append(to_string(expected_descriptor_buffer[i].GetIndex()));
-        }
-        else if (!expected_descriptor_buffer[i].IsRequired())
-        {
-            //add the delimiter
-            if (!generated_key.empty())
-                generated_key.append("-");
-
-            if (expected_descriptor_buffer[i].IsFound())
-                generated_key.append(expected_descriptor_buffer[i].GetLabel());
-        }
-        else
-        {
-            //if any token returns missing record it.
-            data_missing = true;
-        }
-    }
-
-    //Ask the storage for all valid keys with matching descriptors.
-    if (data_missing)
-    {
-        vector<string> matching_keys = hash_table.GetMatchingKeys(generated_key);
-
+        vector<string> matching_keys = hash_table.GetMatchingKeys(generated_key.value());
         for(int i=0; i<matching_keys.size(); ++i)
         {
-            return_var.add_value(hash_table.get(matching_keys[i]));
+            return_buffer.add_value(hash_table.get(matching_keys[i]));
         }
     }
-    else
+    else 
     {
         //return the value at the generated key
-        return_var.add_value(hash_table.get(generated_key));
+        return_buffer.add_value(hash_table.get(generated_key.value()));
     }
+        
+    
 
     return (state==DATA_SET_GOOD)
-    ? return_var
+
+    //success
+    ? return_buffer
+
+    //failure
     : sdg::Instance(this, Instance::NULL_INST);
 }

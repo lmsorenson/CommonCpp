@@ -21,7 +21,8 @@ public:
     ~Entity()=default;
 
     void add_descriptor(std::shared_ptr<Descriptor> a_descriptor, bool b_is_identifying_descriptor = false, int32_t identifier_index = 0);
-    std::vector<std::string> get_identifying_descriptors();
+    std::vector<std::string> get_identifying_descriptor_id_set();
+    std::vector<std::shared_ptr<Descriptor>> get_identifying_descriptor_set();
 };
 
 class Identifier 
@@ -33,7 +34,8 @@ public:
     Identifier(std::shared_ptr<Entity> a_owner);
     ~Identifier()=default;
     void add_descriptor(std::shared_ptr<Descriptor> a_descriptor);
-    std::vector<std::string> get_descriptor_labels();
+    std::vector<std::string> get_descriptor_ids();
+    std::vector<std::shared_ptr<Descriptor>> get_descriptors();
 };
 
 
