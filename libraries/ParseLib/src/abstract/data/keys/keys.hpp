@@ -14,7 +14,7 @@ class HashKey
 {
 public:
     HashKey() = default;
-    HashKey(std::string a_value, bool a_is_partial_key);
+    HashKey(std::string a_value, bool a_is_partial_key=false);
 
     bool is_partial_key();
     std::string value();

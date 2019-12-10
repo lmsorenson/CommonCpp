@@ -7,6 +7,8 @@
 #include "../src/abstract/data/structures/hash_table.hpp"
 #include "../src/abstract/data/meta/DataModel.hpp"
 
+#include "../src/abstract/data/keys/keys.hpp"
+
 
 #define NO_INDEX -1
 #define END_OF_ENTITY_LIST -1
@@ -47,7 +49,7 @@ public:
 
 
     //accessors//------------------------------------------------
-    Instance get(std::string a_descriptor) const;
+    Instance get(hash::HashKey a_descriptor) const;
     
     //finds a specific instance without specifying an identifier.
     Instance where(std::string descriptor, std::string value) const;
@@ -66,8 +68,8 @@ public:
 
     //Mutators//-------------------------------------------------
     //add an atomic value to the store identified by a list of descriptors
-    int32_t set(std::string a_descriptor_list, plHashValue a_value);
-    int32_t set(std::string a_descriptor_list, plHashValue a_value, std::string a_entity_id);
+    int32_t set(hash::HashKey a_descriptor_list, plHashValue a_value);
+    int32_t set(hash::HashKey a_descriptor_list, plHashValue a_value, std::string a_entity_id);
 
     //API for modifying a data set
     virtual void add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);

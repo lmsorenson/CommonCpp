@@ -43,7 +43,7 @@ TEST_F(CSVFunctionalSpec, TestR1)
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
 
-    Instance str = ds.get("R0-F0");
+    Instance str = ds["R0"]["F0"];
 
     ASSERT_EQ(str.get(), "January");
 }
@@ -55,7 +55,7 @@ TEST_F(CSVFunctionalSpec, TestR2_2)
     int32_t exit_code = ParseLib().read_file(ds, this->path("Invalid-Path").c_str());
     
     ASSERT_EQ(exit_code, ParseLib::READ_FILE_NOT_FOUND);
-    ASSERT_EQ(ds.get("R0-F0").get(), "NO_FILE");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "NO_FILE");
 }
 
 TEST_F(CSVFunctionalSpec, TestR3)
@@ -67,30 +67,30 @@ TEST_F(CSVFunctionalSpec, TestR3)
 
     //Test every value in the file.
     Instance 
-    R0F0 = ds.get("R0-F0"),
-    R0F1 = ds.get("R0-F1"),
-    R1F0 = ds.get("R1-F0"),
-    R1F1 = ds.get("R1-F1"), 
-    R2F0 = ds.get("R2-F0"),
-    R2F1 = ds.get("R2-F1"),
-    R3F0 = ds.get("R3-F0"),
-    R3F1 = ds.get("R3-F1"),
-    R4F0 = ds.get("R4-F0"),
-    R4F1 = ds.get("R4-F1"),
-    R5F0 = ds.get("R5-F0"),
-    R5F1 = ds.get("R5-F1"),
-    R6F0 = ds.get("R6-F0"),
-    R6F1 = ds.get("R6-F1"),
-    R7F0 = ds.get("R7-F0"),
-    R7F1 = ds.get("R7-F1"),
-    R8F0 = ds.get("R8-F0"),
-    R8F1 = ds.get("R8-F1"),
-    R9F0 = ds.get("R9-F0"),
-    R9F1 = ds.get("R9-F1"),
-    R10F0 = ds.get("R10-F0"),
-    R10F1 = ds.get("R10-F1"),
-    R11F0 = ds.get("R11-F0"),
-    R11F1 = ds.get("R11-F1");
+    R0F0 = ds["R0"]["F0"],
+    R0F1 = ds["R0"]["F1"],
+    R1F0 = ds["R1"]["F0"],
+    R1F1 = ds["R1"]["F1"], 
+    R2F0 = ds["R2"]["F0"],
+    R2F1 = ds["R2"]["F1"],
+    R3F0 = ds["R3"]["F0"],
+    R3F1 = ds["R3"]["F1"],
+    R4F0 = ds["R4"]["F0"],
+    R4F1 = ds["R4"]["F1"],
+    R5F0 = ds["R5"]["F0"],
+    R5F1 = ds["R5"]["F1"],
+    R6F0 = ds["R6"]["F0"],
+    R6F1 = ds["R6"]["F1"],
+    R7F0 = ds["R7"]["F0"],
+    R7F1 = ds["R7"]["F1"],
+    R8F0 = ds["R8"]["F0"],
+    R8F1 = ds["R8"]["F1"],
+    R9F0 = ds["R9"]["F0"],
+    R9F1 = ds["R9"]["F1"],
+    R10F0 = ds["R10"]["F0"],
+    R10F1 = ds["R10"]["F1"],
+    R11F0 = ds["R11"]["F0"],
+    R11F1 = ds["R11"]["F1"];
 
     ASSERT_EQ(R0F0.get(), "January");
     ASSERT_EQ(R0F1.get(), "1");
@@ -124,7 +124,7 @@ TEST_F(CSVFunctionalSpec, TestR3_1_1)
     
     int32_t exit_code = ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
-    Instance str = ds.get("R100000F0");
+    Instance str = ds["R100000"]["F0"];
     
 
     ASSERT_EQ(str.get(), "NULL");
@@ -136,7 +136,7 @@ TEST_F(CSVFunctionalSpec, TestR3_1_2)
     
     int32_t exit_code = ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
-    Instance str = ds.get("R0-F0");
+    Instance str = ds["R0"]["F0"];
     
 
     ASSERT_EQ(str.at(1), "NULL");
@@ -162,7 +162,7 @@ TEST_F(CSVFunctionalSpec, TestR4_2)
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
     //IN -- R0
-    Instance inst = ds.get("R0");//get all records in record 0
+    Instance inst = ds["R0"];//get all records in record 0
 
     //OUT -- January,1
     ASSERT_EQ(inst.at(0) , "January");
@@ -174,7 +174,7 @@ TEST_F(CSVFunctionalSpec, TestR4_3)
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
     
     //IN -- F1
-    Instance inst = ds.get("F1");//get all records in field 0
+    Instance inst = ds["F1"];//get all records in field 0
 
     //OUT -- January,1
     ASSERT_EQ(inst.at(0), "1");
@@ -201,7 +201,7 @@ TEST_F(CSVFunctionalSpec, TestR5_1)
 {
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
-    Instance inst = ds.get("R1-F1");
+    Instance inst = ds["R1"]["F1"];
     Instance inst2 = inst.GetRelatedInstance("R");
     std::string str = inst2.at(1);
 
@@ -213,7 +213,7 @@ TEST_F(CSVFunctionalSpec, TestR5_2)
 {
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
-    Instance inst = ds.get("R1-F1");
+    Instance inst = ds["R1"]["F1"];
     Instance inst2 = inst.GetRelatedInstance("F");
 
     ASSERT_EQ(inst2.at(0), "1");
@@ -234,7 +234,7 @@ TEST_F(CSVFunctionalSpec, TestR5_3)
 {
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
-    Instance inst = ds.get("R1-F0");
+    Instance inst = ds["R1"]["F0"];
     Instance inst2 = inst.GetNextInstance("R");
 
     ASSERT_EQ(inst2.get(), "2");
@@ -244,7 +244,7 @@ TEST_F(CSVFunctionalSpec, TestR5_4)
 {
     DataSet ds;
     ParseLib().read_file(ds, this->path("../test_data/test1.csv").c_str());
-    Instance inst = ds.get("R3-F0");
+    Instance inst = ds["R3"]["F0"];
     Instance inst2 = inst.GetNextInstance("F");
 
     ASSERT_EQ(inst2.get(), "May");
@@ -256,7 +256,7 @@ TEST_F(CSVFunctionalSpec, TestR5_5)
     std::vector<option> options;
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
-    Instance inst = ds.get("F1");
+    Instance inst = ds["F1"];
     Instance inst2 = inst.GetRelatedInstance("H");
 
     ASSERT_EQ(inst2.get(), "field_nameB");
@@ -286,14 +286,14 @@ TEST_F(CSVFunctionalSpec, TestR7_1)
 
 
     //asserts that one line exists and line 2 does not.
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+    ASSERT_EQ(ds["R1"]["F0"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
 
     //adds line 2 to the end of the document.
     ds.add_instance("R", {"A2", "B2", "C2", "D2"});
@@ -306,14 +306,14 @@ TEST_F(CSVFunctionalSpec, TestR7_1)
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_1.csv").c_str());
 
     //asserts that both lines exist.
-    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds2.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds2.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds2.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds2.get("R1-F3").get(), "D2");
+    ASSERT_EQ(ds2["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds2["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds2["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds2["R0"]["F3"].get(), "D1");
+    ASSERT_EQ(ds2["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds2["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds2["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds2["R1"]["F3"].get(), "D2");
 }
 
 TEST_F(CSVFunctionalSpec, TestR7_2)
@@ -325,14 +325,14 @@ TEST_F(CSVFunctionalSpec, TestR7_2)
     ParseLib().read_file(ds, this->path("../test_data/CSV/csvR7_2_read.csv").c_str());
 
     //asserts that one line exists and line 2 does not.
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+    ASSERT_EQ(ds["R1"]["F0"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
 
     //adds line 2 to the end of the document.
     ds.add_instance("R", {"AH", "BH", "CH", "DH"}, 0);
@@ -345,14 +345,14 @@ TEST_F(CSVFunctionalSpec, TestR7_2)
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_2.csv").c_str());
 
     //asserts that both lines exist.
-    ASSERT_EQ(ds2.get("R0-F0").get(), "AH");
-    ASSERT_EQ(ds2.get("R0-F1").get(), "BH");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "CH");
-    ASSERT_EQ(ds2.get("R0-F3").get(), "DH");
-    ASSERT_EQ(ds2.get("R1-F0").get(), "A1");
-    ASSERT_EQ(ds2.get("R1-F1").get(), "B1");
-    ASSERT_EQ(ds2.get("R1-F2").get(), "C1");
-    ASSERT_EQ(ds2.get("R1-F3").get(), "D1");
+    ASSERT_EQ(ds2["R0"]["F0"].get(), "AH");
+    ASSERT_EQ(ds2["R0"]["F1"].get(), "BH");
+    ASSERT_EQ(ds2["R0"]["F2"].get(), "CH");
+    ASSERT_EQ(ds2["R0"]["F3"].get(), "DH");
+    ASSERT_EQ(ds2["R1"]["F0"].get(), "A1");
+    ASSERT_EQ(ds2["R1"]["F1"].get(), "B1");
+    ASSERT_EQ(ds2["R1"]["F2"].get(), "C1");
+    ASSERT_EQ(ds2["R1"]["F3"].get(), "D1");
 
 }
 
@@ -365,22 +365,22 @@ TEST_F(CSVFunctionalSpec, TestR7_3)
     ParseLib().read_file(ds, this->path("../test_data/CSV/csvR7_3_read.csv").c_str());
 
     //asserts that one line exists and line 2 does not.
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
-    ASSERT_EQ(ds.get("R2-F0").get(), "A3");
-    ASSERT_EQ(ds.get("R2-F1").get(), "B3");
-    ASSERT_EQ(ds.get("R2-F2").get(), "C3");
-    ASSERT_EQ(ds.get("R2-F3").get(), "D3");
-    ASSERT_EQ(ds.get("R3-F0").get(), "A4");
-    ASSERT_EQ(ds.get("R3-F1").get(), "B4");
-    ASSERT_EQ(ds.get("R3-F2").get(), "C4");
-    ASSERT_EQ(ds.get("R3-F3").get(), "D4");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+    ASSERT_EQ(ds["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
+    ASSERT_EQ(ds["R2"]["F0"].get(), "A3");
+    ASSERT_EQ(ds["R2"]["F1"].get(), "B3");
+    ASSERT_EQ(ds["R2"]["F2"].get(), "C3");
+    ASSERT_EQ(ds["R2"]["F3"].get(), "D3");
+    ASSERT_EQ(ds["R3"]["F0"].get(), "A4");
+    ASSERT_EQ(ds["R3"]["F1"].get(), "B4");
+    ASSERT_EQ(ds["R3"]["F2"].get(), "C4");
+    ASSERT_EQ(ds["R3"]["F3"].get(), "D4");
 
     //adds line 2 to the end of the document.
     ds.add_instance("R", {"AM", "BM", "CM", "DM"}, 2);
@@ -393,28 +393,28 @@ TEST_F(CSVFunctionalSpec, TestR7_3)
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_3.csv").c_str());
 
     //asserts that both lines exist.
-    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds2.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds2.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds2.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds2.get("R1-F3").get(), "D2");
+    ASSERT_EQ(ds2["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds2["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds2["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds2["R0"]["F3"].get(), "D1");
+    ASSERT_EQ(ds2["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds2["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds2["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds2["R1"]["F3"].get(), "D2");
     
-    ASSERT_EQ(ds2.get("R2-F0").get(), "AM");
-    ASSERT_EQ(ds2.get("R2-F1").get(), "BM");
-    ASSERT_EQ(ds2.get("R2-F2").get(), "CM");
-    ASSERT_EQ(ds2.get("R2-F3").get(), "DM");
+    ASSERT_EQ(ds2["R2"]["F0"].get(), "AM");
+    ASSERT_EQ(ds2["R2"]["F1"].get(), "BM");
+    ASSERT_EQ(ds2["R2"]["F2"].get(), "CM");
+    ASSERT_EQ(ds2["R2"]["F3"].get(), "DM");
 
-    ASSERT_EQ(ds2.get("R3-F0").get(), "A3");
-    ASSERT_EQ(ds2.get("R3-F1").get(), "B3");
-    ASSERT_EQ(ds2.get("R3-F2").get(), "C3");
-    ASSERT_EQ(ds2.get("R3-F3").get(), "D3");
-    ASSERT_EQ(ds2.get("R4-F0").get(), "A4");
-    ASSERT_EQ(ds2.get("R4-F1").get(), "B4");
-    ASSERT_EQ(ds2.get("R4-F2").get(), "C4");
-    ASSERT_EQ(ds2.get("R4-F3").get(), "D4");
+    ASSERT_EQ(ds2["R3"]["F0"].get(), "A3");
+    ASSERT_EQ(ds2["R3"]["F1"].get(), "B3");
+    ASSERT_EQ(ds2["R3"]["F2"].get(), "C3");
+    ASSERT_EQ(ds2["R3"]["F3"].get(), "D3");
+    ASSERT_EQ(ds2["R4"]["F0"].get(), "A4");
+    ASSERT_EQ(ds2["R4"]["F1"].get(), "B4");
+    ASSERT_EQ(ds2["R4"]["F2"].get(), "C4");
+    ASSERT_EQ(ds2["R4"]["F3"].get(), "D4");
 
 }
 
@@ -429,11 +429,11 @@ TEST_F(CSVFunctionalSpec, TestR7_4)
 
 
     //asserts that one line exists and line 2 does not.
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R0-F4").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+    ASSERT_EQ(ds["R0"]["F4"].get(), "NULL");
 
     //adds line 2 to the end of the document.
     ds.add_instance("F", {"E1"});
@@ -446,11 +446,11 @@ TEST_F(CSVFunctionalSpec, TestR7_4)
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_4.csv").c_str());
 
     //asserts that both lines exist.
-    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds2.get("R0-F4").get(), "E1");
+    ASSERT_EQ(ds2["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds2["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds2["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds2["R0"]["F3"].get(), "D1");
+    ASSERT_EQ(ds2["R0"]["F4"].get(), "E1");
 }
 
 TEST_F(CSVFunctionalSpec, TestR7_5)
@@ -462,11 +462,11 @@ TEST_F(CSVFunctionalSpec, TestR7_5)
     ParseLib().read_file(ds, this->path("../test_data/CSV/csvR7_5_read.csv").c_str());
 
     //asserts that one line exists and line 2 does not.
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R0-F4").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+    ASSERT_EQ(ds["R0"]["F4"].get(), "NULL");
 
     //adds line 2 to the end of the document.
     ds.add_instance("F", {"N1"}, 0);
@@ -479,11 +479,11 @@ TEST_F(CSVFunctionalSpec, TestR7_5)
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_5.csv").c_str());
 
     //asserts that both lines exist.
-    ASSERT_EQ(ds2.get("R0-F0").get(), "N1");//new field at beginning
-    ASSERT_EQ(ds2.get("R0-F1").get(), "A1");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "B1");
-    ASSERT_EQ(ds2.get("R0-F3").get(), "C1");
-    ASSERT_EQ(ds2.get("R0-F4").get(), "D1");
+    ASSERT_EQ(ds2["R0"]["F0"].get(), "N1");//new field at beginning
+    ASSERT_EQ(ds2["R0"]["F1"].get(), "A1");
+    ASSERT_EQ(ds2["R0"]["F2"].get(), "B1");
+    ASSERT_EQ(ds2["R0"]["F3"].get(), "C1");
+    ASSERT_EQ(ds2["R0"]["F4"].get(), "D1");
 
 }
 
@@ -496,25 +496,25 @@ TEST_F(CSVFunctionalSpec, TestR7_6)
     ParseLib().read_file(ds, this->path("../test_data/CSV/csvR7_6_read.csv").c_str());
 
     //asserts that one line exists and line 2 does not.
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
 
-    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
+    ASSERT_EQ(ds["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
 
-    ASSERT_EQ(ds.get("R2-F0").get(), "A3");
-    ASSERT_EQ(ds.get("R2-F1").get(), "B3");
-    ASSERT_EQ(ds.get("R2-F2").get(), "C3");
-    ASSERT_EQ(ds.get("R2-F3").get(), "D3");
+    ASSERT_EQ(ds["R2"]["F0"].get(), "A3");
+    ASSERT_EQ(ds["R2"]["F1"].get(), "B3");
+    ASSERT_EQ(ds["R2"]["F2"].get(), "C3");
+    ASSERT_EQ(ds["R2"]["F3"].get(), "D3");
     
-    ASSERT_EQ(ds.get("R3-F0").get(), "A4");
-    ASSERT_EQ(ds.get("R3-F1").get(), "B4");
-    ASSERT_EQ(ds.get("R3-F2").get(), "C4");
-    ASSERT_EQ(ds.get("R3-F3").get(), "D4");
+    ASSERT_EQ(ds["R3"]["F0"].get(), "A4");
+    ASSERT_EQ(ds["R3"]["F1"].get(), "B4");
+    ASSERT_EQ(ds["R3"]["F2"].get(), "C4");
+    ASSERT_EQ(ds["R3"]["F3"].get(), "D4");
 
     //adds line 2 to the end of the document.
     ds.add_instance("F", {"NF", "NF", "NF", "NF"}, 2);
@@ -527,29 +527,29 @@ TEST_F(CSVFunctionalSpec, TestR7_6)
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR7_6.csv").c_str());
 
     //asserts that both lines exist.
-    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "NF");//new_field
-    ASSERT_EQ(ds2.get("R0-F3").get(), "C1");
-    ASSERT_EQ(ds2.get("R0-F4").get(), "D1");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "NF");//new field
+    ASSERT_EQ(ds["R0"]["F3"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F4"].get(), "D1");
 
-    ASSERT_EQ(ds2.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds2.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds2.get("R1-F2").get(), "NF");//new field
-    ASSERT_EQ(ds2.get("R1-F3").get(), "C2");
-    ASSERT_EQ(ds2.get("R1-F4").get(), "D2");
+    ASSERT_EQ(ds["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "NF");//new field
+    ASSERT_EQ(ds["R1"]["F3"].get(), "C2");
+    ASSERT_EQ(ds["R1"]["F4"].get(), "D2");
 
-    ASSERT_EQ(ds2.get("R2-F0").get(), "A3");
-    ASSERT_EQ(ds2.get("R2-F1").get(), "B3");
-    ASSERT_EQ(ds2.get("R2-F2").get(), "NF");//new field
-    ASSERT_EQ(ds2.get("R2-F3").get(), "C3");
-    ASSERT_EQ(ds2.get("R2-F4").get(), "D3");
-
-    ASSERT_EQ(ds2.get("R3-F0").get(), "A4");
-    ASSERT_EQ(ds2.get("R3-F1").get(), "B4");
-    ASSERT_EQ(ds2.get("R3-F2").get(), "NF");//new field
-    ASSERT_EQ(ds2.get("R3-F3").get(), "C4");
-    ASSERT_EQ(ds2.get("R3-F4").get(), "D4");
+    ASSERT_EQ(ds["R2"]["F0"].get(), "A3");
+    ASSERT_EQ(ds["R2"]["F1"].get(), "B3");
+    ASSERT_EQ(ds["R2"]["F2"].get(), "NF");//new field
+    ASSERT_EQ(ds["R2"]["F3"].get(), "C3");
+    ASSERT_EQ(ds["R2"]["F4"].get(), "D3");
+    
+    ASSERT_EQ(ds["R3"]["F0"].get(), "A4");
+    ASSERT_EQ(ds["R3"]["F1"].get(), "B4");
+    ASSERT_EQ(ds["R3"]["F2"].get(), "NF");//new field
+    ASSERT_EQ(ds["R3"]["F3"].get(), "C4");
+    ASSERT_EQ(ds["R3"]["F4"].get(), "D4");
 
 }
 
@@ -566,40 +566,43 @@ TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
     ds.add_instance("R", {"A1", "B1", "C1", "D1"});
     ds.add_instance("R", {"A2", "B2", "C2", "D2"});
 
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
 
     ds.remove_instance("R1");//remove row 3
 
     //assert row 3 = NULL
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
 
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR8_1.csv").c_str());
 
     DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR8_1.csv").c_str());
 
-    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds2.get("R1-F0").get(), "NULL");
-    ASSERT_EQ(ds2.get("R1-F1").get(), "NULL");
-    ASSERT_EQ(ds2.get("R1-F2").get(), "NULL");
-    ASSERT_EQ(ds2.get("R1-F3").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
 }
 
 TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
@@ -610,48 +613,53 @@ TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
     ds.add_instance("R", {"A1", "B1", "C1", "D1"});
     ds.add_instance("R", {"A2", "B2", "C2", "D2"});
 
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
 
     ds.increment_instance_id("R1");//remove row 3
 
     //assert row 3 = NULL
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
-    ASSERT_EQ(ds.get("R2-F0").get(), "A2");
-    ASSERT_EQ(ds.get("R2-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R2-F2").get(), "C2");
-    ASSERT_EQ(ds.get("R2-F3").get(), "D2");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
+
+    ASSERT_EQ(ds["R2"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R2"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R2"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R2"]["F3"].get(), "D2");
 
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR8_2.csv").c_str());
 
     DataSet ds2;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR8_2.csv").c_str());
 
-    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds2.get("R1-F0").get(), "NULL");
-    ASSERT_EQ(ds2.get("R1-F1").get(), "NULL");
-    ASSERT_EQ(ds2.get("R1-F2").get(), "NULL");
-    ASSERT_EQ(ds2.get("R1-F3").get(), "NULL");
-    ASSERT_EQ(ds2.get("R2-F0").get(), "A2");
-    ASSERT_EQ(ds2.get("R2-F1").get(), "B2");
-    ASSERT_EQ(ds2.get("R2-F2").get(), "C2");
-    ASSERT_EQ(ds2.get("R2-F3").get(), "D2");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
+    
+    ASSERT_EQ(ds["R2"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R2"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R2"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R2"]["F3"].get(), "D2");
 }
 
 TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already has a record
@@ -664,46 +672,53 @@ TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already 
     ds.add_instance("R", {"A3", "B3", "C3", "D3"});
     ds.add_instance("R", {"A4", "B4", "C4", "D4"});
 
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
-    ASSERT_EQ(ds.get("R2-F0").get(), "A3");
-    ASSERT_EQ(ds.get("R2-F1").get(), "B3");
-    ASSERT_EQ(ds.get("R2-F2").get(), "C3");
-    ASSERT_EQ(ds.get("R2-F3").get(), "D3");
-    ASSERT_EQ(ds.get("R3-F0").get(), "A4");
-    ASSERT_EQ(ds.get("R3-F1").get(), "B4");
-    ASSERT_EQ(ds.get("R3-F2").get(), "C4");
-    ASSERT_EQ(ds.get("R3-F3").get(), "D4");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
+
+    ASSERT_EQ(ds["R2"]["F0"].get(), "A3");
+    ASSERT_EQ(ds["R2"]["F1"].get(), "B3");
+    ASSERT_EQ(ds["R2"]["F2"].get(), "C3");
+    ASSERT_EQ(ds["R2"]["F3"].get(), "D3");
+    
+    ASSERT_EQ(ds["R3"]["F0"].get(), "A4");
+    ASSERT_EQ(ds["R3"]["F1"].get(), "B4");
+    ASSERT_EQ(ds["R3"]["F2"].get(), "C4");
+    ASSERT_EQ(ds["R3"]["F3"].get(), "D4");
 
     ds.increment_instance_id("R1");//remove row 3
 
     //assert row 3 = NULL
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F1").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F2").get(), "NULL");
-    ASSERT_EQ(ds.get("R1-F3").get(), "NULL");
-    ASSERT_EQ(ds.get("R2-F0").get(), "A2");
-    ASSERT_EQ(ds.get("R2-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R2-F2").get(), "C2");
-    ASSERT_EQ(ds.get("R2-F3").get(), "D2");
-    ASSERT_EQ(ds.get("R3-F0").get(), "A3");
-    ASSERT_EQ(ds.get("R3-F1").get(), "B3");
-    ASSERT_EQ(ds.get("R3-F2").get(), "C3");
-    ASSERT_EQ(ds.get("R3-F3").get(), "D3");
-    ASSERT_EQ(ds.get("R4-F0").get(), "A4");
-    ASSERT_EQ(ds.get("R4-F1").get(), "B4");
-    ASSERT_EQ(ds.get("R4-F2").get(), "C4");
-    ASSERT_EQ(ds.get("R4-F3").get(), "D4");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "NULL");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
+
+    ASSERT_EQ(ds["R2"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R2"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R2"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R2"]["F3"].get(), "D2");
+
+    ASSERT_EQ(ds["R3"]["F0"].get(), "A3");
+    ASSERT_EQ(ds["R3"]["F1"].get(), "B3");
+    ASSERT_EQ(ds["R3"]["F2"].get(), "C3");
+    ASSERT_EQ(ds["R3"]["F3"].get(), "D3");
+    
+    ASSERT_EQ(ds["R4"]["F0"].get(), "A4");
+    ASSERT_EQ(ds["R4"]["F1"].get(), "B4");
+    ASSERT_EQ(ds["R4"]["F2"].get(), "C4");
+    ASSERT_EQ(ds["R4"]["F3"].get(), "D4");
 }
 
 //Create a write transaction on an empty file path.
@@ -714,14 +729,15 @@ TEST_F(CSVFunctionalSpec, TestR9)
     ds.add_instance("R", {"A1", "B1", "C1", "D1"});
     ds.add_instance("R", {"A2", "B2", "C2", "D2"});
 
-    ASSERT_EQ(ds.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds.get("R1-F3").get(), "D2");
+    ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
 
     ParseLib().write_file(ds, this->path("../test_data/CSV/Write/csvR9.csv").c_str());
 
@@ -729,13 +745,14 @@ TEST_F(CSVFunctionalSpec, TestR9)
     std::cout << "path: " << this->path("../test_data/CSV/Write/csvR9.csv").c_str() << std::endl;
     ParseLib().read_file(ds2, this->path("../test_data/CSV/Write/csvR9.csv").c_str());
 
-    ASSERT_EQ(ds2.get("R0-F0").get(), "A1");
-    ASSERT_EQ(ds2.get("R0-F1").get(), "B1");
-    ASSERT_EQ(ds2.get("R0-F2").get(), "C1");
-    ASSERT_EQ(ds2.get("R0-F3").get(), "D1");
-    ASSERT_EQ(ds2.get("R1-F0").get(), "A2");
-    ASSERT_EQ(ds2.get("R1-F1").get(), "B2");
-    ASSERT_EQ(ds2.get("R1-F2").get(), "C2");
-    ASSERT_EQ(ds2.get("R1-F3").get(), "D2");
+    ASSERT_EQ(ds2["R0"]["F0"].get(), "A1");
+    ASSERT_EQ(ds2["R0"]["F1"].get(), "B1");
+    ASSERT_EQ(ds2["R0"]["F2"].get(), "C1");
+    ASSERT_EQ(ds2["R0"]["F3"].get(), "D1");
+
+    ASSERT_EQ(ds2["R1"]["F0"].get(), "A2");
+    ASSERT_EQ(ds2["R1"]["F1"].get(), "B2");
+    ASSERT_EQ(ds2["R1"]["F2"].get(), "C2");
+    ASSERT_EQ(ds2["R1"]["F3"].get(), "D2");
 }
 
