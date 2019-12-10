@@ -44,7 +44,9 @@ protected:
 TEST_F(CSVFormatTests, TestR1)
 {
     DataSet ds;
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1.csv").c_str());
+
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv1.csv"));
+    // ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1.csv").c_str());
     //Instance str = ds['A']['1'];
     // Instance str = ds.get("R0-F0");
     Instance str = ds["R0"]["F0"];
@@ -57,7 +59,7 @@ TEST_F(CSVFormatTests, TestR1_WithHeader)
     DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1H.csv").c_str(), options);
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv1H.csv"), options);
     Instance str = ds["R0"]["F0"];
 
     ASSERT_EQ(str.get(), "aaa");
@@ -70,7 +72,7 @@ TEST_F(CSVFormatTests, TestR2_1)//has a line break
 {
     DataSet ds;
     
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1-1.csv").c_str());
+   ds.Read(this->path("../test_data/CSV/FormatSpec/csv1-1.csv"));
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -87,7 +89,7 @@ TEST_F(CSVFormatTests, TestR2_1_WithHeader)//has a line break
     DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1-1H.csv").c_str(), options);
+    ds.Read( this->path("../test_data/CSV/FormatSpec/csv1-1H.csv"), options);
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -103,7 +105,7 @@ TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
 {
     DataSet ds;
     
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1.csv").c_str());
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv1.csv"));
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -120,7 +122,7 @@ TEST_F(CSVFormatTests, TestR2_2_WithHeader)//does not have a line break
     DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1H.csv").c_str(), options);
+    ds.Read( this->path("../test_data/CSV/FormatSpec/csv1H.csv"), options );
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -146,7 +148,7 @@ TEST_F(CSVFormatTests, TestR3)
     DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv2.csv"), options );
 
     Instance H1 = ds["H"]["R0"]["F0"];
     Instance H2 = ds["H"]["R0"]["F1"];
@@ -179,11 +181,10 @@ TEST_F(CSVFormatTests, TestR3)
 TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 {
     DataSet ds;
-    
     int32_t return_code;
 
     //read empty file
-    return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-1.csv").c_str());
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv3-1.csv"), &return_code);
 
     //return READ_FILE_EMPTY
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
@@ -198,7 +199,7 @@ TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
     //read empty file
     std::vector<option> options;
     options.push_back({"header_line", true});
-    return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-1.csv").c_str(), options);
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv3-1.csv"), options, &return_code);
 
     //return READ_FILE_EMPTY
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
@@ -207,10 +208,9 @@ TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
 {
     DataSet ds;
-    
     int32_t return_code;
-
-    return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-3.csv").c_str());
+    
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv3-3.csv"), &return_code);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
     ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
@@ -218,11 +218,11 @@ TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fi
 TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same number of fields.
 {
     DataSet ds;
-    
     int32_t return_code;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-3H.csv").c_str(), options);
+
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv3-3H.csv"), options, &return_code);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
     ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
@@ -231,10 +231,9 @@ TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {   
 
     DataSet ds;
-    
     int32_t return_code;
 
-    return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-2.csv").c_str());
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv3-2.csv"), &return_code);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
     ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
@@ -246,7 +245,8 @@ TEST_F(CSVFormatTests, TestR4_3_WithHeader)//must not be followed by a comma
     int32_t return_code;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-2H.csv").c_str(), options);
+
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv3-2H.csv"), options, &return_code);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
     ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
@@ -262,7 +262,7 @@ TEST_F(CSVFormatTests, TestR5)
 {
     DataSet ds;
     
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4.csv").c_str());
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv4.csv"));
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -279,7 +279,7 @@ TEST_F(CSVFormatTests, TestR5_WithHeader)
     
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4H.csv").c_str(), options);
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv4H.csv"), options);
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -293,7 +293,7 @@ TEST_F(CSVFormatTests, TestR5_WithHeader)
 TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
 {
     DataSet ds;
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4-1.csv").c_str());
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv4-1.csv"));
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -309,7 +309,8 @@ TEST_F(CSVFormatTests, TestR5_1_WithHeader)//Dobule quotes may not appear inside
     DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4-1H.csv").c_str(), options);
+
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv4-1H.csv"), options);
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -329,7 +330,7 @@ TEST_F(CSVFormatTests, TestR6_1)
 {
     DataSet ds;
 
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5.csv").c_str());
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv5.csv"));
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -345,7 +346,7 @@ TEST_F(CSVFormatTests, TestR6_1_WithHeader)
     DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5H.csv").c_str(), options);
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv5H.csv"), options);
 
     Instance
         field1 = ds["R0"]["F0"],
@@ -360,7 +361,7 @@ TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
 {
     DataSet ds;
     
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5-1.csv").c_str());
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv5-1.csv"));
 
    Instance
         field1 = ds["R0"]["F0"],
@@ -376,7 +377,8 @@ TEST_F(CSVFormatTests, TestR6_2_WithHeader)//commas can be enclosed in double qu
     DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5-1H.csv").c_str(), options);
+
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv5-1H.csv"), options);
 
    Instance
         field1 = ds["R0"]["F0"],
@@ -397,7 +399,7 @@ TEST_F(CSVFormatTests, TestR7)
 {
     DataSet ds;
     
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv6.csv").c_str());
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv6.csv"));
 
    Instance
         field1 = ds["R0"]["F0"],
@@ -413,7 +415,7 @@ TEST_F(CSVFormatTests, TestR7_WithHeader)
     DataSet ds;
     std::vector<option> options;
     options.push_back({"header_line", true});
-    ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv6H.csv").c_str(), options);
+    ds.Read(this->path("../test_data/CSV/FormatSpec/csv6H.csv"), options);
 
    Instance
         field1 = ds["R0"]["F0"],
