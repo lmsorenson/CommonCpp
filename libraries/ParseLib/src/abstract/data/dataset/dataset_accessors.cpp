@@ -80,7 +80,7 @@ sdg::Instance sdg::DataSet::where(std::string descriptor, std::string value) con
 }
 
 
-sdg::Instance sdg::DataSet::get(hash::HashKey a_descriptor) const
+sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
 {
     if (state == DATA_SET_BAD)
         return Instance(this, Instance::NO_FILE);
@@ -93,7 +93,7 @@ sdg::Instance sdg::DataSet::get(hash::HashKey a_descriptor) const
         expected_descriptor_buffer = helper(a_descriptor.value(), this->logical_data_structure.get_identifier_of_granular_entity());
 
     //try to compile the hash key
-    hash::HashKey generated_key = compile_hash_key(expected_descriptor_buffer);
+    hash::KeyInstance generated_key = compile_hash_key(expected_descriptor_buffer);
 
     //does this key contain all necessary descriptors for a query?
     if ( generated_key.is_partial_key() )

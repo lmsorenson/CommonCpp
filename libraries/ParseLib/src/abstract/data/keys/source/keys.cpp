@@ -2,17 +2,17 @@
 #include "../keys.hpp"
 
 
-sdg::hash::HashKey::HashKey(std::string a_value, bool a_is_partial_key)
+sdg::hash::KeyInstance::KeyInstance(std::string a_value, bool a_is_partial_key)
 : value_(a_value)
 , is_partial_key_(a_is_partial_key)
 {}
 
 
-bool sdg::hash::HashKey::is_partial_key()
+bool sdg::hash::KeyInstance::is_partial_key()
 {
     return is_partial_key_;
 }
-std::string sdg::hash::HashKey::value()
+std::string sdg::hash::KeyInstance::value()
 {
     return value_;
 }

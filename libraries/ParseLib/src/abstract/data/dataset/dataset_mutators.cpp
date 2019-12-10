@@ -11,7 +11,7 @@ using std::make_shared;
 
 std::string get_matching_descriptor(std::string a_descriptor_list, std::string a_meta_entity_id);
 
-int32_t sdg::DataSet::set(hash::HashKey a_descriptor_list, plHashValue a_value)
+int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value)
 {
     switch (state)
     {
@@ -30,7 +30,7 @@ int32_t sdg::DataSet::set(hash::HashKey a_descriptor_list, plHashValue a_value)
 
 
 
-int32_t sdg::DataSet::set(hash::HashKey a_descriptor_list, plHashValue a_value, std::string a_entity_id)
+int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value, std::string a_entity_id)
 {
     plHashValue replaced_value;
     std::string new_entity_id, new_key, copy_entity_id = a_entity_id;
