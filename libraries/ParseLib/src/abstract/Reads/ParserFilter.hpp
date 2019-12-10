@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <vector>
-#include "../data/structures/plNode.hpp"
+#include "../data/structures/node.hpp"
 
 
 /* Each element/entity output by the filter is identified using the format:

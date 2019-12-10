@@ -73,9 +73,9 @@ TEST_F(CSVFormatTests, TestR2_1)//has a line break
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1-1.csv").c_str());
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -90,9 +90,9 @@ TEST_F(CSVFormatTests, TestR2_1_WithHeader)//has a line break
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1-1H.csv").c_str(), options);
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -106,9 +106,9 @@ TEST_F(CSVFormatTests, TestR2_2)//does not have a line break
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1.csv").c_str());
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -123,9 +123,9 @@ TEST_F(CSVFormatTests, TestR2_2_WithHeader)//does not have a line break
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv1H.csv").c_str(), options);
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -148,15 +148,15 @@ TEST_F(CSVFormatTests, TestR3)
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
 
-    Instance H1 = ds.get("H-R0-F0");
-    Instance H2 = ds.get("H-R0-F1");
-    Instance H3 = ds.get("H-R0-F2");
-    Instance A1 = ds.get("R0-F0");
-    Instance A2 = ds.get("R0-F1");
-    Instance A3 = ds.get("R0-F2");
-    Instance B1 = ds.get("R1-F0");
-    Instance B2 = ds.get("R1-F1");
-    Instance B3 = ds.get("R1-F2");
+    Instance H1 = ds["H"]["R0"]["F0"];
+    Instance H2 = ds["H"]["R0"]["F1"];
+    Instance H3 = ds["H"]["R0"]["F2"];
+    Instance A1 = ds["R0"]["F0"];
+    Instance A2 = ds["R0"]["F1"];
+    Instance A3 = ds["R0"]["F2"];
+    Instance B1 = ds["R1"]["F0"];
+    Instance B2 = ds["R1"]["F1"];
+    Instance B3 = ds["R1"]["F2"];
 
     ASSERT_EQ(H1.get(), "field_nameA");
     ASSERT_EQ(H2.get(), "field_nameB");
@@ -187,7 +187,7 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 
     //return READ_FILE_EMPTY
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
-    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
 } 
 TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 {
@@ -202,7 +202,7 @@ TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 
     //return READ_FILE_EMPTY
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
-    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
 } 
 TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fields.
 {
@@ -213,7 +213,7 @@ TEST_F(CSVFormatTests, TestR4_2)//Each line should contain the same number of fi
     return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-3.csv").c_str());
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
-    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
 }
 TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same number of fields.
 {
@@ -225,7 +225,7 @@ TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same n
     return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-3H.csv").c_str(), options);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
-    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
 }
 TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {   
@@ -237,7 +237,7 @@ TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
     return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-2.csv").c_str());
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
-    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
 } 
 TEST_F(CSVFormatTests, TestR4_3_WithHeader)//must not be followed by a comma
 {   
@@ -249,7 +249,7 @@ TEST_F(CSVFormatTests, TestR4_3_WithHeader)//must not be followed by a comma
     return_code = ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv3-2H.csv").c_str(), options);
 
     ASSERT_EQ(return_code, ParseLib::READ_FORMAT_INVALID);
-    ASSERT_EQ(ds.get("R0-F1").get(), "NULL");
+    ASSERT_EQ(ds["R0"]["F1"].get(), "NULL");
 } 
 
 
@@ -265,9 +265,9 @@ TEST_F(CSVFormatTests, TestR5)
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4.csv").c_str());
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -282,9 +282,9 @@ TEST_F(CSVFormatTests, TestR5_WithHeader)
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4H.csv").c_str(), options);
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -296,9 +296,9 @@ TEST_F(CSVFormatTests, TestR5_1)//Dobule quotes may not appear inside the fields
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4-1.csv").c_str());
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -312,9 +312,9 @@ TEST_F(CSVFormatTests, TestR5_1_WithHeader)//Dobule quotes may not appear inside
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv4-1H.csv").c_str(), options);
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "bbb");
@@ -332,9 +332,9 @@ TEST_F(CSVFormatTests, TestR6_1)
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5.csv").c_str());
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b\r\rbb");
@@ -348,9 +348,9 @@ TEST_F(CSVFormatTests, TestR6_1_WithHeader)
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5H.csv").c_str(), options);
 
     Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b\r\r\rbb");
@@ -363,9 +363,9 @@ TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5-1.csv").c_str());
 
    Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b,bb");
@@ -379,9 +379,9 @@ TEST_F(CSVFormatTests, TestR6_2_WithHeader)//commas can be enclosed in double qu
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv5-1H.csv").c_str(), options);
 
    Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b,bb");
@@ -400,9 +400,9 @@ TEST_F(CSVFormatTests, TestR7)
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv6.csv").c_str());
 
    Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b\"bb");
@@ -416,9 +416,9 @@ TEST_F(CSVFormatTests, TestR7_WithHeader)
     ParseLib().read_file(ds, this->path("../test_data/CSV/FormatSpec/csv6H.csv").c_str(), options);
 
    Instance
-        field1 = ds.get("R0-F0"),
-        field2 = ds.get("R0-F1"),
-        field3 = ds.get("R0-F2");
+        field1 = ds["R0"]["F0"],
+        field2 = ds["R0"]["F1"],
+        field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
     ASSERT_EQ(field2.get(), "b\"bb");

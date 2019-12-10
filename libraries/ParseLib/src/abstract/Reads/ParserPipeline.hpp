@@ -4,7 +4,7 @@
 #include <string>
 #include "ParserFilter.hpp"
 #include "ParserOutput.hpp"
-#include "../data/structures/plNode.hpp"
+#include "../data/structures/node.hpp"
 #include <objects/data_set.hpp>
 
 

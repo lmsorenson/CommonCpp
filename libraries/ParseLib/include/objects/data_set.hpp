@@ -4,8 +4,10 @@
 #include <iostream>
 
 #include <objects/instance.hpp>
-#include "../src/abstract/data/structures/plHash.hpp"
+#include "../src/abstract/data/structures/hash_table.hpp"
 #include "../src/abstract/data/meta/DataModel.hpp"
+
+#include "../src/abstract/data/keys/keys.hpp"
 
 
 #define NO_INDEX -1
@@ -18,7 +20,7 @@ class SelectionVisitor;
 class EntitySelection;
 
 namespace hash{
-class HashKey;
+class KeyInstance;
 class DescriptorInstance;
 }//namespace hash
 
@@ -47,7 +49,7 @@ public:
 
 
     //accessors//------------------------------------------------
-    Instance get(std::string a_descriptor) const;
+    Instance get(hash::KeyInstance a_descriptor) const;
     
     //finds a specific instance without specifying an identifier.
     Instance where(std::string descriptor, std::string value) const;
@@ -66,8 +68,8 @@ public:
 
     //Mutators//-------------------------------------------------
     //add an atomic value to the store identified by a list of descriptors
-    int32_t set(std::string a_descriptor_list, plHashValue a_value);
-    int32_t set(std::string a_descriptor_list, plHashValue a_value, std::string a_entity_id);
+    int32_t set(hash::KeyInstance a_descriptor_list, plHashValue a_value);
+    int32_t set(hash::KeyInstance a_descriptor_list, plHashValue a_value, std::string a_entity_id);
 
     //API for modifying a data set
     virtual void add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
@@ -95,7 +97,7 @@ protected:
     void displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key);
     std::string increment_descriptor_in_key(std::string entity_id, std::string hash_key, int32_t position);
     void update_descriptor_counts(std::string a_descriptor_list);
-    hash::HashKey compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const;
+    hash::KeyInstance compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const;
     std::vector<hash::DescriptorInstance> helper(std::string key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const;
 
     //epected descriptors are descriptors needed to identify a hash value.
