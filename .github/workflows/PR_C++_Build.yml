@@ -1,0 +1,26 @@
+name: macOS--ParseLib C/C++ CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build, Run, Test
+    runs-on: macOS-latest
+    
+    steps:
+    - name: Checkout Source Code
+      run: |
+        git clone --recurse-submodules https://${{secrets.NAME_U}}:${{secrets.WF_NAME}}@github.com/lmsorenson/CommonCpp.git
+        cd CommonCpp
+    - name: Compile the project
+      run: |
+        cd CommonCpp/libraries/ParseLib/tests/
+        mkdir cmake
+        cd ./cmake 
+        cmake ..
+        make
+    - name: Validation Test
+      run: |
+        mkdir ./CommonCpp/libraries/ParseLib/tests/test_data/CSV/Write
+        cd ./CommonCpp/libraries/ParseLib/tests/out
+        sudo ./tests
