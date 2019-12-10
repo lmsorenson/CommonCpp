@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../plNode.hpp"
+#include "../node.hpp"
 #include <iostream>
 
 using namespace std;
