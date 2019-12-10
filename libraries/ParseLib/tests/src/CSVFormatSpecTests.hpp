@@ -150,9 +150,9 @@ TEST_F(CSVFormatTests, TestR3)
     options.push_back({"header_line", true});
     ds.Read(this->path("../test_data/CSV/FormatSpec/csv2.csv"), options );
 
-    Instance H1 = ds["H"]["R0"]["F0"];
-    Instance H2 = ds["H"]["R0"]["F1"];
-    Instance H3 = ds["H"]["R0"]["F2"];
+    Instance H1 = ds["H"]["F0"];
+    Instance H2 = ds["H"]["F1"];
+    Instance H3 = ds["H"]["F2"];
     Instance A1 = ds["R0"]["F0"];
     Instance A2 = ds["R0"]["F1"];
     Instance A3 = ds["R0"]["F2"];
