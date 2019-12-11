@@ -220,7 +220,7 @@ void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_
 
 
 
-sdg::hash::HashKey sdg::DataSet::compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const
+sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const
 {
 
     std::string compiled_key;
@@ -267,7 +267,7 @@ sdg::hash::HashKey sdg::DataSet::compile_hash_key(const std::vector<hash::Descri
         }
     }
 
-    return sdg::hash::HashKey(compiled_key, data_missing);
+    return sdg::hash::KeyInstance(compiled_key, data_missing);
 }
 
 std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(std::string key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const

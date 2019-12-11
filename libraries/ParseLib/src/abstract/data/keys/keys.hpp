@@ -10,11 +10,11 @@ namespace sdg {
 namespace hash {
 
 
-class HashKey
+class KeyInstance
 {
 public:
-    HashKey() = default;
-    HashKey(std::string a_value, bool a_is_partial_key);
+    KeyInstance() = default;
+    KeyInstance(std::string a_value, bool a_is_partial_key=false);
 
     bool is_partial_key();
     std::string value();
