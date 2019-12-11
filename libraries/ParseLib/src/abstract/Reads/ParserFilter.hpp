@@ -4,6 +4,9 @@
 #include "../data/structures/node.hpp"
 
 
+using sdg::plNode;
+
+
 /* Each element/entity output by the filter is identified using the format:
     label + index
      */

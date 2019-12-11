@@ -8,9 +8,9 @@
 #include <objects/data_set.hpp>
 
 
-typedef std::vector<std::vector<std::shared_ptr<plNode>>> plNodeBuffer;
-typedef std::vector<std::shared_ptr<plNode>> plNodeSet;
-typedef std::shared_ptr<plNode> plNodePtr;
+typedef std::vector<std::vector<std::shared_ptr<sdg::plNode>>> plNodeBuffer;
+typedef std::vector<std::shared_ptr<sdg::plNode>> plNodeSet;
+typedef std::shared_ptr<sdg::plNode> plNodePtr;
 
 class ParserPipeline
 {

@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 
+namespace sdg {
 
 /* 
 * Hash Value
@@ -156,3 +157,6 @@ public:
     //returns a list of keys that matches the passed in descriptors.(hyphen delimited)
     std::vector<std::string> GetMatchingKeys(std::string descriptor_list_str) const;
 };
+
+
+} //namespace sdg

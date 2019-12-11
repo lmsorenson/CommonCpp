@@ -271,7 +271,7 @@
                 else
                 {
                     //add the plNode value to the hash table.
-                    data_store.set( in[i]->GetID(), plHashValue( in[i]->GetValue(), in[i]->GetPath() ) );
+                    data_store.set( in[i]->GetID(), sdg::plHashValue( in[i]->GetValue(), in[i]->GetPath() ) );
                 }
             }//i
         }

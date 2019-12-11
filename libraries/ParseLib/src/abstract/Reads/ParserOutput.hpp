@@ -4,6 +4,10 @@
 #include <objects/data_set.hpp>
 #include <vector>
 
+
+using sdg::plNode;
+
+
 class ParserOutput
 {
 public:

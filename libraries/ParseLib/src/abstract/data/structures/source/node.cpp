@@ -2,9 +2,12 @@
 #include "../node.hpp"
 #include <iostream>
 
-using namespace std;
+using sdg::plNode;
 
-plNode::plNode(string text, std::shared_ptr<plNode> aParent)
+
+
+
+plNode::plNode(std::string text, std::shared_ptr<plNode> aParent)
 : value(text)
 , parent(aParent)
 {
@@ -23,17 +26,17 @@ plNode::~plNode()
     // cout << SetColor(RED, "deleting plNode:" ) << value << endl;
 }
 
-string plNode::GetValue(){return value;}
+std::string plNode::GetValue(){return value;}
 void plNode::SetValue(const char * text){value = text;}
-string plNode::GetID(){return id;}
-plNode plNode::AppendID(string new_id){id.append(new_id); return *this;}
+std::string plNode::GetID(){return id;}
+plNode plNode::AppendID(std::string new_id){id.append(new_id); return *this;}
 bool plNode::EmptyID(){return (id.empty());};
 
-string plNode::GetPath()
+std::string plNode::GetPath()
 {
-    string path;
+    std::string path;
 
-    shared_ptr<plNode> current_node;
+    std::shared_ptr<plNode> current_node;
     
     if (!current_node && this->has_parent())
     {
@@ -54,9 +57,9 @@ string plNode::GetPath()
 
 void plNode::AddChild(plNode n)
 {
-    children.push_back(make_shared<plNode>(n));
+    children.push_back(std::make_shared<plNode>(n));
 }
-shared_ptr<plNode> plNode::GetChild(int32_t index){return this->children[index];}
+std::shared_ptr<plNode> plNode::GetChild(int32_t index){return this->children[index];}
 
 int32_t plNode::GetNumberOfChildren(){return children.size();}
 bool plNode::HasChildren(){return (children.size()>0);}

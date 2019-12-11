@@ -3,6 +3,12 @@
 #include <vector>
 #include <string>
 
+
+
+
+
+namespace sdg {
+
 class plNode
 {
 public:
@@ -36,3 +42,6 @@ private:
     std::shared_ptr<plNode> parent;
     std::vector<std::shared_ptr<plNode>> children;
 };
+
+
+} //namespace sdg
