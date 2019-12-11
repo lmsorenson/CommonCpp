@@ -42,14 +42,14 @@ void CSVData::csv_model()
             true, //true indicates that this relationship is a be relationship.
             Relationship::IDENTIFY_BY::LINK_2);//the link to entity 1 will be an identifying descriptor for entity_2
 
-    logical_data_structure.add_thing(eRecord);
-    logical_data_structure.add_thing(eCell); 
-    logical_data_structure.add_thing(eField);
-    logical_data_structure.add_thing(eField_name);
+    logical_data_structure_.add_thing(eRecord);
+    logical_data_structure_.add_thing(eCell); 
+    logical_data_structure_.add_thing(eField);
+    logical_data_structure_.add_thing(eField_name);
 
-    logical_data_structure.add_thing(cell_to_record);
-    logical_data_structure.add_thing(cell_to_field); 
-    logical_data_structure.add_thing(cell_to_field_name);
+    logical_data_structure_.add_thing(cell_to_record);
+    logical_data_structure_.add_thing(cell_to_field); 
+    logical_data_structure_.add_thing(cell_to_field_name);
 }
 
 CSVData::CSVData()
@@ -85,8 +85,8 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
     {
         //get the number of fields in the dataset.
         int32_t 
-            field_count = this->logical_data_structure.get_entity_count("F"),
-            record_count = this->logical_data_structure.get_entity_count("R");
+            field_count = this->logical_data_structure_.get_entity_count("F"),
+            record_count = this->logical_data_structure_.get_entity_count("R");
 
         //cell values 
         if(entity_values.size()<=field_count)
@@ -163,8 +163,8 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
     {
         //get the number of fields in the dataset.
         int32_t 
-            field_count = this->logical_data_structure.get_entity_count("F"),
-            record_count = this->logical_data_structure.get_entity_count("R");
+            field_count = this->logical_data_structure_.get_entity_count("F"),
+            record_count = this->logical_data_structure_.get_entity_count("R");
 
         //cell values 
         if(entity_values.size()<=record_count)
@@ -224,9 +224,9 @@ void CSVData::remove_instance(std::string entity_id)
 {
     //todo-->define
 
-    for (auto key : hash_table.GetMatchingKeys(entity_id))
+    for (auto key : hash_table_.GetMatchingKeys(entity_id))
     {
-        hash_table.delete_value(key);
+        hash_table_.delete_value(key);
     }
 }
 
@@ -235,7 +235,7 @@ void CSVData::increment_instance_id(std::string entity_id, int32_t position)
     //todo-->define
     
     //iterates through all keys matching the passed in entity_id
-    for (auto key : hash_table.GetMatchingKeys(entity_id))
+    for (auto key : hash_table_.GetMatchingKeys(entity_id))
     {
         bool done = false;
         std::string new_key;
@@ -243,7 +243,7 @@ void CSVData::increment_instance_id(std::string entity_id, int32_t position)
 
         new_key = increment_descriptor_in_key(entity_id, key, position);
         
-        replaced_value = hash_table.move(key, new_key);
+        replaced_value = hash_table_.move(key, new_key);
         
         update_descriptor_counts(new_key);
 
@@ -256,8 +256,8 @@ int32_t CSVData::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 {
     //get the current number of fields.
     int32_t 
-        record_count = this->logical_data_structure.get_entity_count("R"),
-        field_count = this->logical_data_structure.get_entity_count("F");
+        record_count = this->logical_data_structure_.get_entity_count("R"),
+        field_count = this->logical_data_structure_.get_entity_count("F");
 
     std::string r_buffer, f_buffer, c_buffer;
 

@@ -33,7 +33,7 @@ string sdg::DataSet::id_lexer(
 
     vector<bool> v_b_found;
 
-    vector<shared_ptr<Descriptor>> identifying_descriptors = this->logical_data_structure.get_identifier_of_granular_entity();
+    vector<shared_ptr<Descriptor>> identifying_descriptors = this->logical_data_structure_.get_identifier_of_granular_entity();
 
     //initialize a boolean for each expected descriptor,
     //that indicates if that descriptor was found
@@ -187,7 +187,7 @@ void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, std::s
         std::string scanned_meta_descriptor_id;
         increment_descriptor_value(new_entity_id, new_entity_id, scanned_meta_descriptor_id);
         new_key = increment_descriptor_in_key(new_entity_id, new_key, 1);
-        replaced = this->hash_table.insert(new_key, replaced);
+        replaced = this->hash_table_.insert(new_key, replaced);
         this->update_descriptor_counts(new_key);
     }
 }

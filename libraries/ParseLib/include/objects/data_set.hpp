@@ -97,10 +97,10 @@ public:
 
 protected:
     //the logical data structure is meta data about the data stored in this hash table.
-    Model logical_data_structure;
+    Model logical_data_structure_;
 
     //a hash table to store the data in.
-    plHashTable hash_table;
+    plHashTable hash_table_;
 
     /* Helpers */
     void displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key);
@@ -108,9 +108,6 @@ protected:
     void update_descriptor_counts(std::string a_descriptor_list);
     hash::KeyInstance compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const;
     std::vector<hash::DescriptorInstance> helper(std::string key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const;
-
-    //epected descriptors are descriptors needed to identify a hash value.
-    // std::vector<std::shared_ptr<hash::DescriptorID>> expected_descriptors;
 };
 
 }//namespace sdg

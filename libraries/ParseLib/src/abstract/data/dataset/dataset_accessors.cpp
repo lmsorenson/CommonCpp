@@ -19,7 +19,7 @@ int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
     bool b_descriptor_found = false;
 
     //go through IDs of all expected descriptors
-    for( auto descriptor : this->logical_data_structure.get_identifier_of_granular_entity() )
+    for( auto descriptor : this->logical_data_structure_.get_identifier_of_granular_entity() )
     {
         //if the current descriptor is a match with the argument...
         if(descriptor->get_id() == a_descriptor_id)//if this is never called return an error.
@@ -38,12 +38,12 @@ int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
 
 int32_t sdg::DataSet::number_of_entity_instances(std::string a_entity_id) const
 {
-    return this->logical_data_structure.get_entity_count(a_entity_id);
+    return this->logical_data_structure_.get_entity_count(a_entity_id);
 }
 
 Model sdg::DataSet::get_data_model() const
 {
-    return logical_data_structure;
+    return logical_data_structure_;
 }
 
 
@@ -90,7 +90,7 @@ sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
 
     //get a set of descriptors from a list of expected descriptor IDs
     std::vector<hash::DescriptorInstance> 
-        expected_descriptor_buffer = helper(a_descriptor.value(), this->logical_data_structure.get_identifier_of_granular_entity());
+        expected_descriptor_buffer = helper(a_descriptor.value(), this->logical_data_structure_.get_identifier_of_granular_entity());
 
     //try to compile the hash key
     hash::KeyInstance generated_key = compile_hash_key(expected_descriptor_buffer);
@@ -98,16 +98,16 @@ sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
     //does this key contain all necessary descriptors for a query?
     if ( generated_key.is_partial_key() )
     {
-        vector<string> matching_keys = hash_table.GetMatchingKeys(generated_key.value());
+        vector<string> matching_keys = hash_table_.GetMatchingKeys(generated_key.value());
         for(int i=0; i<matching_keys.size(); ++i)
         {
-            return_buffer.add_value(hash_table.get(matching_keys[i]));
+            return_buffer.add_value(hash_table_.get(matching_keys[i]));
         }
     }
     else 
     {
         //return the value at the generated key
-        return_buffer.add_value(hash_table.get(generated_key.value()));
+        return_buffer.add_value(hash_table_.get(generated_key.value()));
     }
         
     

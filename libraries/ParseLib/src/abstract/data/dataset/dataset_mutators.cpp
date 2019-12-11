@@ -18,7 +18,7 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
     case DATA_SET_EMPTY: 
         state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
-        hash_table.insert(a_descriptor_list.value(), plHashValue(a_value));
+        hash_table_.insert(a_descriptor_list.value(), plHashValue(a_value));
         this->update_descriptor_counts(a_descriptor_list.value());
         return 0; 
         break;
@@ -42,7 +42,7 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
     case DATA_SET_GOOD: 
 
 
-        replaced_value = hash_table.insert(a_descriptor_list.value(), plHashValue(a_value));
+        replaced_value = hash_table_.insert(a_descriptor_list.value(), plHashValue(a_value));
         this->update_descriptor_counts(a_descriptor_list.value());
 
         if(replaced_value.is_valid())
@@ -51,7 +51,7 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
             
             new_key = increment_descriptor_in_key(new_entity_id, a_descriptor_list.value(), 0);
 
-            replaced_value = hash_table.insert(new_key, plHashValue(replaced_value));
+            replaced_value = hash_table_.insert(new_key, plHashValue(replaced_value));
             
             this->update_descriptor_counts(new_key);
             
@@ -120,7 +120,7 @@ void sdg::DataSet::update_descriptor_counts(std::string a_descriptor_list)
 
     while(token!=NULL)
     {
-        logical_data_structure.found_descriptor(token);
+        logical_data_structure_.found_descriptor(token);
 
         token = strtok(NULL,"-");
     }
