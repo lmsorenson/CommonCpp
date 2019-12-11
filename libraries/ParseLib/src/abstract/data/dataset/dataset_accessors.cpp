@@ -80,20 +80,20 @@ sdg::Instance sdg::DataSet::where(std::string descriptor, std::string value) con
 }
 
 
-sdg::Instance sdg::DataSet::get(std::string a_descriptor) const
+sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
 {
     if (state == DATA_SET_BAD)
         return Instance(this, Instance::NO_FILE);
 
     //initializing a valid instance return buffer.
-    Instance return_buffer = Instance(this, Instance::VALID_INST, a_descriptor);
+    Instance return_buffer = Instance(this, Instance::VALID_INST, a_descriptor.value());
 
     //get a set of descriptors from a list of expected descriptor IDs
     std::vector<hash::DescriptorInstance> 
-        expected_descriptor_buffer = helper(a_descriptor, this->logical_data_structure.get_identifier_of_granular_entity());
+        expected_descriptor_buffer = helper(a_descriptor.value(), this->logical_data_structure.get_identifier_of_granular_entity());
 
     //try to compile the hash key
-    hash::HashKey generated_key = compile_hash_key(expected_descriptor_buffer);
+    hash::KeyInstance generated_key = compile_hash_key(expected_descriptor_buffer);
 
     //does this key contain all necessary descriptors for a query?
     if ( generated_key.is_partial_key() )

@@ -11,15 +11,15 @@ using std::make_shared;
 
 std::string get_matching_descriptor(std::string a_descriptor_list, std::string a_meta_entity_id);
 
-int32_t sdg::DataSet::set(std::string a_descriptor_list, plHashValue a_value)
+int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value)
 {
     switch (state)
     {
     case DATA_SET_EMPTY: 
         state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
-        hash_table.insert(a_descriptor_list, plHashValue(a_value));
-        this->update_descriptor_counts(a_descriptor_list);
+        hash_table.insert(a_descriptor_list.value(), plHashValue(a_value));
+        this->update_descriptor_counts(a_descriptor_list.value());
         return 0; 
         break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
@@ -30,7 +30,7 @@ int32_t sdg::DataSet::set(std::string a_descriptor_list, plHashValue a_value)
 
 
 
-int32_t sdg::DataSet::set(std::string a_descriptor_list, plHashValue a_value, std::string a_entity_id)
+int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value, std::string a_entity_id)
 {
     plHashValue replaced_value;
     std::string new_entity_id, new_key, copy_entity_id = a_entity_id;
@@ -42,14 +42,14 @@ int32_t sdg::DataSet::set(std::string a_descriptor_list, plHashValue a_value, st
     case DATA_SET_GOOD: 
 
 
-        replaced_value = hash_table.insert(a_descriptor_list, plHashValue(a_value));
-        this->update_descriptor_counts(a_descriptor_list);
+        replaced_value = hash_table.insert(a_descriptor_list.value(), plHashValue(a_value));
+        this->update_descriptor_counts(a_descriptor_list.value());
 
         if(replaced_value.is_valid())
         {
-            new_entity_id = get_matching_descriptor(a_descriptor_list, copy_entity_id);
+            new_entity_id = get_matching_descriptor(a_descriptor_list.value(), copy_entity_id);
             
-            new_key = increment_descriptor_in_key(new_entity_id, a_descriptor_list, 0);
+            new_key = increment_descriptor_in_key(new_entity_id, a_descriptor_list.value(), 0);
 
             replaced_value = hash_table.insert(new_key, plHashValue(replaced_value));
             
