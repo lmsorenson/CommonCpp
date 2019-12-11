@@ -98,7 +98,7 @@ void sdg::DataSet::remove_instance(std::string entity_id)
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::increment_instance_id(std::string entity_id, int32_t position)
+void sdg::DataSet::move_instance(std::string entity_id, int32_t position)
 {
     //todo-->handle definition of this function
 }
