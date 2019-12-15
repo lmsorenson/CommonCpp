@@ -1,13 +1,13 @@
 #ifndef MODELSCENE_H
 #define MODELSCENE_H
 
-#include <QObject>
+#include <QGraphicsScene>
 
-class modelscene
+class ModelScene : public QGraphicsScene
 {
-    Q_OBJECT
 public:
-    modelscene();
+    ModelScene(QObject*owner);
+
 };
 
 #endif // MODELSCENE_H

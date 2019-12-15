@@ -1,6 +1,7 @@
 #include "modelscene.h"
 
-modelscene::modelscene()
+ModelScene::ModelScene(QObject*owner)
+    : QGraphicsScene(owner)
 {
 
 }

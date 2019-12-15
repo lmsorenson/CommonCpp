@@ -18,6 +18,10 @@ add_executable(prototype
   mainwindow.cpp
   mainwindow.h
   mainwindow.ui
+  myentity.cpp
+  myentity.h
+  modelscene.cpp
+  modelscene.h
 )
 
 target_link_libraries(prototype PRIVATE Qt5::Widgets)
