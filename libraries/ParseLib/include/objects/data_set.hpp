@@ -14,6 +14,9 @@
 #define END_OF_ENTITY_LIST -1
 
 
+
+struct option;
+
 namespace sdg {
 
 class SelectionVisitor;
@@ -46,6 +49,12 @@ public:
 
     Instance operator[](std::string i);
 
+
+    DataSet Read(std::string a_path, int32_t *status_code=nullptr);
+    DataSet Read(std::string a_path, std::vector<option> read_options, int32_t * status_code=nullptr);
+    void Write(std::string a_path, int32_t * status_code=nullptr);
+    void Write(std::string a_path, std::vector<option> write_options, int32_t * status_code=nullptr);
+    
 
 
     //accessors//------------------------------------------------
