@@ -9,22 +9,16 @@ public:
     MyEntity(std::string, QPointF);
 
     virtual QRectF boundingRect() const Q_DECL_OVERRIDE;
-
-    virtual void paint(QPainter * painter,
-               const QStyleOptionGraphicsItem * option,
-               QWidget * widget) override;
-
+    virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget) override;
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value) Q_DECL_OVERRIDE;
+    void AddLine(QGraphicsLineItem * Line, bool isOrigin);
+    void FindLineAnchor(QPointF);
 
-    void AddLine(QGraphicsLineItem * Line, bool b_p1);
+    std::vector<QGraphicsLineItem *> _relationship;
+    std::vector<bool> _IsRelationshipOrigin;
 
-    void Center(QPointF);
-
-    std::vector<QGraphicsLineItem *> relationship;
-    std::vector<bool> p1;
-
-    std::string entity_name;
-    QPointF origin;
+    std::string _entity_name;
+    QPointF _origin;
 
 };
 

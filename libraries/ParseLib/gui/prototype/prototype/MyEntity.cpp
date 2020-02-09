@@ -1,25 +1,97 @@
 #include "myentity.h"
 #include <QDebug>
 #include <QPainter>
+#include <QtMath>
 
 
 
 
 
 
-void MyEntity::Center(QPointF point)
+void MyEntity::FindLineAnchor(QPointF point)
 {
-    int xDisplacement = boundingRect().x() + boundingRect().width()/2;
-    int yDisplacement = boundingRect().y() + boundingRect().height()/2;
+    //calculate the center coordinates of the box.
+    int xDisplacement = this->boundingRect().x() + this->boundingRect().width()/2;
+    int yDisplacement = this->boundingRect().y() + this->boundingRect().height()/2;
 
-    QPointF new_point = QPointF(point.x() + xDisplacement, point.y() + yDisplacement);
+    //create a point at the center of the box.
+    QPointF entity_center = QPointF(point.x() + xDisplacement, point.y() + yDisplacement);
 
-    for(int32_t i=0; i < relationship.size(); ++i)
+    for(int32_t i=0; i < _relationship.size(); ++i)
     {
-        QPointF point1 = p1[i] ? new_point : relationship[i]->line().p1();
-        QPointF point2 = p1[i] ? relationship[i]->line().p2() : new_point;
+        QPointF point1, point2;
 
-        this->relationship[i]->setLine(QLineF(point1, point2));
+        if(_IsRelationshipOrigin[i])
+        {
+            point1 = entity_center;
+            point2 = _relationship[i]->line().p2();
+
+
+            if( (point2.x() - point1.x()) > (point2.y() - point1.y()))
+            {
+                //right
+                if(point2.x() > point1.x())
+                {
+                    point1 = QPointF(point1.x() + this->boundingRect().width()/2, point1.y());
+                }
+                //left
+                else
+                {
+                    point1 = QPointF(point1.x() - this->boundingRect().width()/2, point1.y());
+                }
+            }
+            else
+            {
+                //up
+                if( point2.y() > point1.y() )
+                {
+                    point1 = QPointF(point1.x(), point1.y() + this->boundingRect().height()/2);
+                }
+                //down
+                else
+                {
+                    point1 = QPointF(point1.x(), point1.y() - this->boundingRect().height()/2);
+                }
+            }
+
+        }
+        else
+        {
+            point1 = _relationship[i]->line().p1();
+            point2 = entity_center;
+
+
+            //adjust the x position
+            if( (point2.x() - point1.x()) > (point2.y() - point1.y()) )
+            {
+                //right
+                if( point2.x() < point1.x() )
+                {
+                    point2 = QPointF(point2.x() + this->boundingRect().width()/2, point2.y());
+                }
+                //left
+                else
+                {
+                    point2 = QPointF(point2.x() - this->boundingRect().width()/2, point2.y());
+                }
+            }
+            else
+            {
+                //up
+                if( point2.y() < point1.y() )
+                {
+                    point2 = QPointF(point2.x(), point2.y() + this->boundingRect().height()/2);
+                }
+                //down
+                else
+                {
+                    point2 = QPointF(point2.x(), point2.y() - this->boundingRect().height()/2);
+                }
+            }
+
+        }
+
+        this->_relationship[i]->setLine(QLineF(point1, point2));
     }
 
 }
@@ -28,8 +100,8 @@ void MyEntity::Center(QPointF point)
 
 MyEntity::MyEntity(std::string entity_name_arg, QPointF rect_arg)
 {
-    this->entity_name = entity_name_arg;
-    this->origin = rect_arg;
+    this->_entity_name = entity_name_arg;
+    this->_origin = rect_arg;
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
 }
@@ -37,7 +109,7 @@ MyEntity::MyEntity(std::string entity_name_arg, QPointF rect_arg)
 
 QRectF MyEntity::boundingRect() const
 {
-    QRectF rect(origin, QPointF(origin.x() + 125, origin.y() + 125));
+    QRectF rect(_origin, QPointF(_origin.x() + 125, _origin.y() + 125));
     return rect;
 }
 
@@ -46,8 +118,8 @@ void MyEntity::paint(QPainter * painter, const QStyleOptionGraphicsItem * option
     painter->setPen(QPen(Qt::black, 1));
     painter->setFont(QFont("Arial", 20));
     painter->drawRect(boundingRect());
-    painter->drawText(QPointF(origin.x() + 7, origin.y() + 20), entity_name.c_str());
-    painter->drawLine(QPointF( origin.x() + 0, origin.y() + 25), QPointF( origin.x() + 125, origin.y() + 25));
+    painter->drawText(QPointF(_origin.x() + 7, _origin.y() + 20), _entity_name.c_str());
+    painter->drawLine(QPointF( _origin.x() + 0, _origin.y() + 25), QPointF( _origin.x() + 125, _origin.y() + 25));
 
 }
 
@@ -58,7 +130,7 @@ QVariant MyEntity::itemChange(GraphicsItemChange change, const QVariant &value)
     {
         QPointF point = value.toPointF();
 
-        Center(point);
+        this->FindLineAnchor(point);
     }
 
     return QGraphicsItem::itemChange(change,value);
@@ -66,6 +138,6 @@ QVariant MyEntity::itemChange(GraphicsItemChange change, const QVariant &value)
 
 void MyEntity::AddLine(QGraphicsLineItem * line, bool b_p1)
 {
-    relationship.push_back(line);
-    p1.push_back(b_p1);
+    _relationship.push_back(line);
+    _IsRelationshipOrigin.push_back(b_p1);
 }

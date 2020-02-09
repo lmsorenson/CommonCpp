@@ -45,10 +45,10 @@ MainWindow::MainWindow(QWidget *parent)
     QGraphicsLineItem *line2 = scene->addLine(QLineF(425, 62.5, 600, 62.5));
 
 
-    ent->AddLine(line, true);
+    ent->AddLine(line, true);//origin of the line.
     ent2->AddLine(line, false);
 
-    ent2->AddLine(line2, true);
+    ent2->AddLine(line2, true);//origin of the line.
     ent3->AddLine(line2, false);
 
     scene->addItem(ent);
