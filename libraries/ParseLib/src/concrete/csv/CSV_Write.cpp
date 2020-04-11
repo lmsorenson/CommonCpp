@@ -17,7 +17,7 @@ void CSV_Write::configure_pipeline(ParserPipeline & pipeline)
     pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 
-int32_t CSV_Write::set_write_options(std::vector<option> write_options)
+int32_t CSV_Write::set_write_options(std::vector<sdg::option> write_options)
 {
     for (auto option : write_options)
     {

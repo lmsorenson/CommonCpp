@@ -9,6 +9,9 @@
 
 using sdg::DataSet;
 using sdg::Instance;
+using sdg::ParseLib;
+using sdg::CSVData;
+using sdg::option;
 
 
 class CSVFormatTests : public ::LucTestFramework

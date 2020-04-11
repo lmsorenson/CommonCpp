@@ -7,12 +7,10 @@
 
 
 
-using namespace std;
-
-int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<option> read_options)
+int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<sdg::option> read_options)
 {
     //load text
-    string raw_text;
+    std::string raw_text;
     if ((raw_text=loadText(filepath))==LOAD_ERROR_STR)
     {
         ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
@@ -22,7 +20,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
     //set the read options before anything else
     this->set_read_options(read_options);
 
-    shared_ptr<plNode> n = make_shared<plNode>(plNode(raw_text, nullptr));
+    std::shared_ptr<plNode> n = std::make_shared<plNode>(plNode(raw_text, nullptr));
     
     //decrypt
     

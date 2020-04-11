@@ -12,3 +12,5 @@ libraries/ParseLib/tests/test_data/CSV/Write/csvR7_6.csv
 libraries/ParseLib/tests/test_data/CSV/Write/csvR8_1.csv
 libraries/ParseLib/tests/test_data/CSV/Write/csvR8_2.csv
 libraries/ParseLib/tests/test_data/CSV/Write/csvR9.csv
+build-prototype-*
+CMakeLists.txt.user
