@@ -4,7 +4,7 @@
 
 
 
-class CSV_Factory : public AbstractFactory
+class CSV_Factory : public sdg::AbstractFactory
 {
 public:
     virtual std::shared_ptr<ReadStrategy> make_read() override;
