@@ -232,11 +232,7 @@ void CSV::remove_instance(std::string entity_id)
     }
 }
 
-<<<<<<< HEAD
-void CSVData::move_instance(std::string entity_id, int32_t position)
-=======
-void CSV::increment_instance_id(std::string entity_id, int32_t position)
->>>>>>> 36f752dbdda818512d276c5e5bb1020f73e41db6
+void CSV::move_instance(std::string entity_id, int32_t position)
 {
     //todo-->define
     
