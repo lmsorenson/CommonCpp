@@ -279,7 +279,7 @@ TEST_F(CSVFunctionalSpec, TestR6)
 TEST_F(CSVFunctionalSpec, TestR7_1)
 {
     //adds a new record to the end of an exsiting file.
-    CSVData ds;
+    CSV ds;
 
     //reads in the file.
     ParseLib().read_file(ds, this->path("test_data/CSV/csvR7_1_read.csv").c_str());
@@ -319,7 +319,7 @@ TEST_F(CSVFunctionalSpec, TestR7_1)
 TEST_F(CSVFunctionalSpec, TestR7_2)
 {
     //adds a new record to the end of an exsiting file.
-    CSVData ds;
+    CSV ds;
 
     //reads in the file.
     ParseLib().read_file(ds, this->path("test_data/CSV/csvR7_2_read.csv").c_str());
@@ -359,7 +359,7 @@ TEST_F(CSVFunctionalSpec, TestR7_2)
 TEST_F(CSVFunctionalSpec, TestR7_3)
 {
     //adds a new record to the end of an exsiting file.
-    CSVData ds;
+    CSV ds;
 
     //reads in the file.
     ParseLib().read_file(ds, this->path("test_data/CSV/csvR7_3_read.csv").c_str());
@@ -422,7 +422,7 @@ TEST_F(CSVFunctionalSpec, TestR7_3)
 TEST_F(CSVFunctionalSpec, TestR7_4)
 {
     //adds a new record to the end of an exsiting file.
-    CSVData ds;
+    CSV ds;
 
     //reads in the file.
     ParseLib().read_file(ds, this->path("test_data/CSV/csvR7_4_read.csv").c_str());
@@ -456,7 +456,7 @@ TEST_F(CSVFunctionalSpec, TestR7_4)
 TEST_F(CSVFunctionalSpec, TestR7_5)
 {
     //adds a new record to the end of an exsiting file.
-    CSVData ds;
+    CSV ds;
 
     //reads in the file.
     ParseLib().read_file(ds, this->path("test_data/CSV/csvR7_5_read.csv").c_str());
@@ -490,7 +490,7 @@ TEST_F(CSVFunctionalSpec, TestR7_5)
 TEST_F(CSVFunctionalSpec, TestR7_6)
 {
     //adds a new record to the end of an exsiting file.
-    CSVData ds;
+    CSV ds;
 
     //reads in the file.
     ParseLib().read_file(ds, this->path("test_data/CSV/csvR7_6_read.csv").c_str());
@@ -560,7 +560,7 @@ TEST_F(CSVFunctionalSpec, TestR7_6)
 // * overwrite all fields in an existing record.
 TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
 {
-    CSVData ds;
+    CSV ds;
 
     //create three records
     ds.add_instance("R", {"A1", "B1", "C1", "D1"});
@@ -607,7 +607,7 @@ TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
 
 TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
 {
-    CSVData ds;
+    CSV ds;
 
     //create three records
     ds.add_instance("R", {"A1", "B1", "C1", "D1"});
@@ -664,7 +664,7 @@ TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
 
 TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already has a record
 {
-    CSVData ds;
+    CSV ds;
 
     //create four records
     ds.add_instance("R", {"A1", "B1", "C1", "D1"});
@@ -725,7 +725,7 @@ TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already 
 TEST_F(CSVFunctionalSpec, TestR9)
 {
     //adds a new record to the end of a 
-    CSVData ds;
+    CSV ds;
     ds.add_instance("R", {"A1", "B1", "C1", "D1"});
     ds.add_instance("R", {"A2", "B2", "C2", "D2"});
 

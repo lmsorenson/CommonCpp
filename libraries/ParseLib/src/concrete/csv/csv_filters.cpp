@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "CSVFilters.hpp"
+#include "csv_filters.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -10,16 +10,18 @@ using std::istringstream;
 using std::shared_ptr;
 using sdg::plNode;
 using sdg::plHashValue;
+using sdg::ParserFilter;
 
 
+
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-HeaderFilter::HeaderFilter(std::string new_filter_id) 
+sdg::csv::HeaderFilter::HeaderFilter(std::string new_filter_id) 
 : ParserFilter(new_filter_id)
 {}
 
-int32_t HeaderFilter::execute(string text, vector<plNode>& output)
+int32_t sdg::csv::HeaderFilter::execute(string text, vector<plNode>& output)
 {
     istringstream file(text);
     string line, r_buffer;
@@ -49,23 +51,23 @@ int32_t HeaderFilter::execute(string text, vector<plNode>& output)
     return FILTER_SUCCESS;
 }
 
-int32_t HeaderFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
+int32_t sdg::csv::HeaderFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
 {
     return 0;
 }
 
-string HeaderFilter::name()
+string sdg::csv::HeaderFilter::name()
 {
     return "header";
 }
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-RecordFilter::RecordFilter(std::string new_filter_id) 
+sdg::csv::RecordFilter::RecordFilter(std::string new_filter_id) 
 : ParserFilter(new_filter_id)
 {}
 
-int32_t RecordFilter::execute(string text, vector<plNode>& output)
+int32_t sdg::csv::RecordFilter::execute(string text, vector<plNode>& output)
 {
     istringstream file(text);
     string line, rBuffer;
@@ -117,7 +119,7 @@ int32_t RecordFilter::execute(string text, vector<plNode>& output)
     return FILTER_SUCCESS;
 }
 
-int32_t RecordFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
+int32_t sdg::csv::RecordFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
 {
     for(int32_t i=0; i<string_set.size(); ++i)
     {
@@ -133,7 +135,7 @@ int32_t RecordFilter::inverse(std::vector<std::string> string_set, std::string &
     return FILTER_SUCCESS;
 }
 
-string RecordFilter::name()
+string sdg::csv::RecordFilter::name()
 {
     return "record";
 }
@@ -142,12 +144,12 @@ string RecordFilter::name()
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-FieldFilter::FieldFilter(std::string new_filter_id) 
+sdg::csv::FieldFilter::FieldFilter(std::string new_filter_id) 
 : ParserFilter(new_filter_id)
 , field_count(-1)
 {}
 
-int32_t FieldFilter::execute(string text, vector<plNode>& output)
+int32_t sdg::csv::FieldFilter::execute(string text, vector<plNode>& output)
 {
     if (text.back()==',')
         return FILTER_FORMAT_ERROR;
@@ -203,7 +205,7 @@ int32_t FieldFilter::execute(string text, vector<plNode>& output)
     return FILTER_SUCCESS;
 }
 
-int32_t FieldFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
+int32_t sdg::csv::FieldFilter::inverse(std::vector<std::string> string_set, std::string &compiled_string)
 {
     for(int32_t i=0; i<string_set.size(); ++i)
     {
@@ -219,12 +221,12 @@ int32_t FieldFilter::inverse(std::vector<std::string> string_set, std::string &c
     return FILTER_SUCCESS;
 }
 
-string FieldFilter::name()
+string sdg::csv::FieldFilter::name()
 {
     return "field";
 }
 
-bool FieldFilter::IsFieldCountValid(int32_t field_count_param)
+bool sdg::csv::FieldFilter::IsFieldCountValid(int32_t field_count_param)
 {
     //if the field_count is null '-1' set the field count to the first entry.
     if (field_count==-1)
@@ -245,7 +247,7 @@ bool FieldFilter::IsFieldCountValid(int32_t field_count_param)
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-void CSVOutput::execute(std::shared_ptr<plNode>& text, sdg::DataSet& data_store)
+void sdg::csv::CSVOutput::execute(std::shared_ptr<plNode>& text, sdg::DataSet& data_store)
 {
     //set of nodes to check
     vector<shared_ptr<plNode>> in;

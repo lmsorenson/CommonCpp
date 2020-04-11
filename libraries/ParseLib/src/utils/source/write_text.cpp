@@ -1,4 +1,4 @@
-#include "../writeText.h"
+#include "../write_text.h"
 
 #include <iostream>
 #include <fstream>
@@ -6,9 +6,13 @@
 #include "unistd.h"
 #include <fcntl.h>
 
-using namespace std;
 
-string writeText(string filepath, string contents)
+using ::std::string;
+using ::std::ofstream;
+
+
+
+string sdg::utils::writeText(string filepath, string contents)
 {   
     //open file
     ofstream file (filepath.c_str());
