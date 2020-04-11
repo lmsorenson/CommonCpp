@@ -14,6 +14,7 @@ public:
     {
         std::string path_buffer = root;
         path_buffer.append(relative_path);
+        std::cout << "Path used: " << path_buffer << std::endl;
         return path_buffer;
     }
 protected:
