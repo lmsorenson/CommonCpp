@@ -10,6 +10,8 @@ using std::istringstream;
 using std::shared_ptr;
 using sdg::plNode;
 using sdg::plHashValue;
+using sdg::ParserFilter;
+
 
 
 //---------------------------------------------------------------------------//

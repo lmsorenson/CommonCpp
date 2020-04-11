@@ -7,6 +7,11 @@
 #include "../../utils/writeText.h"
 
 
+using sdg::ParserPipeline;
+
+
+
+
 int32_t WriteStrategy::execute_write(sdg::DataSet dataset, std::string path)
 {
 

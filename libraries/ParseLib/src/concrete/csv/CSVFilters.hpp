@@ -7,7 +7,7 @@
 
 
 
-class HeaderFilter : public ParserFilter
+class HeaderFilter : public ::sdg::ParserFilter
 {
 public:
     HeaderFilter(std::string new_filter_id);
@@ -18,7 +18,7 @@ public:
     virtual std::string name() override;
 };
 
-class RecordFilter : public ParserFilter
+class RecordFilter : public ::sdg::ParserFilter
 {
 public:
     RecordFilter(std::string new_filter_id);
@@ -30,7 +30,7 @@ public:
 };
 
 
-class FieldFilter : public ParserFilter
+class FieldFilter : public ::sdg::ParserFilter
 {
     int32_t field_count;
 
@@ -45,7 +45,7 @@ public:
 };
 
 
-class CSVOutput : public ParserOutput
+class CSVOutput : public ::sdg::ParserOutput
 {
     virtual void execute(std::shared_ptr<sdg::plNode>& text, sdg::DataSet& data_store) override;
 };

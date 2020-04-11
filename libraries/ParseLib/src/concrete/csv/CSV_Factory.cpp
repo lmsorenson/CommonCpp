@@ -7,7 +7,7 @@
 #include "ReadCSV.hpp"
 #include "CSV_Write.hpp"
 
-std::shared_ptr<ReadStrategy> CSV_Factory::make_read()
+std::shared_ptr<sdg::ReadStrategy> CSV_Factory::make_read()
 {
     return std::make_shared<ReadCSV>(ReadCSV());
 }

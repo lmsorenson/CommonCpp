@@ -7,6 +7,11 @@
 
 
 
+using ::sdg::ReadStrategy;
+using ::sdg::ParserPipeline;
+
+
+
 int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<sdg::option> read_options)
 {
     //load text

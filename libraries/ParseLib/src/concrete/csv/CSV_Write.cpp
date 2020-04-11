@@ -3,11 +3,11 @@
 #include "CSVFilters.hpp"
 
 
+using ::std::shared_ptr;
 
 
-using namespace std;
 
-void CSV_Write::configure_pipeline(ParserPipeline & pipeline)
+void CSV_Write::configure_pipeline(::sdg::ParserPipeline & pipeline)
 {
     if(this->b_use_header_line)
         pipeline.add_filter(std::shared_ptr<HeaderFilter> (new HeaderFilter("~H")));

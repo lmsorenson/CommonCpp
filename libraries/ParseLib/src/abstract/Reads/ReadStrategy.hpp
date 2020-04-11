@@ -7,6 +7,8 @@
 #include <ParseLib.hpp>
 
 
+namespace sdg {
+
 class ReadStrategy
 {
     //ops
@@ -24,3 +26,5 @@ public:
         UNKNOWN_ERROR
     };
 };
+
+}// namespace sdg

@@ -6,7 +6,10 @@
 #include "../../utils/loadText.h"
 #include "CSVFilters.hpp"
 
-using namespace std;
+
+using ::std::shared_ptr;
+using ::sdg::ParserPipeline;
+using ::sdg::option;
 
 
 ReadCSV::ReadCSV(){}
@@ -24,7 +27,7 @@ void ReadCSV::configure_pipeline(ParserPipeline &pipeline)
     pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 
-int32_t ReadCSV::set_read_options(std::vector<sdg::option> read_options)
+int32_t ReadCSV::set_read_options(std::vector<option> read_options)
 {
     for (auto option : read_options)
     {

@@ -10,7 +10,7 @@
 class CSV_Write : public WriteStrategy
 {
     //this method sets up the pipeline.
-    virtual void configure_pipeline(ParserPipeline &pipeline) override;
+    virtual void configure_pipeline(sdg::ParserPipeline &pipeline) override;
 
     //this function reads special parameters into the write strategy.
     virtual int32_t set_write_options(std::vector<sdg::option> write_options) override;
