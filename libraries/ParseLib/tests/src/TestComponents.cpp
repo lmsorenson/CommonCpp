@@ -6,9 +6,7 @@
 #include <gtest/gtest.h>
 #include <ParseLib.hpp>
 
-#include "CSVFormatSpecTests.hpp"
-#include "CSVFunctionalTests.hpp"
-// #include "CSVPerformanceTests.hpp"
+#include "ComponentTests/Manifest.hpp"
 
 using namespace std;
 

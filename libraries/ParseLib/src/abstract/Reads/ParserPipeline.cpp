@@ -4,7 +4,10 @@
 #include <vector>
 
 
-using namespace std;
+using std::shared_ptr;
+using std::vector;
+using std::string;
+using sdg::plNode;
 
 
 int32_t ParserPipeline::add_filter(shared_ptr<ParserFilter> filter)

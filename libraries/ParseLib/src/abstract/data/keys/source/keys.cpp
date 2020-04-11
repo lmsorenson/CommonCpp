@@ -41,7 +41,7 @@ std::string sdg::hash::DescriptorInstance::get_descriptor_id() const
 {
     return id_;
 }
-Attribute::Scale sdg::hash::DescriptorInstance::get_scale() const
+sdg::Attribute::Scale sdg::hash::DescriptorInstance::get_scale() const
 {
     return attribute_scale_;
 }

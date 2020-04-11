@@ -19,7 +19,7 @@ jobs:
         cd ./cmake 
         cmake ..
         make
-    - name: Validation Test
+    - name: Validation Tests
       run: |
         mkdir ./CommonCpp/libraries/ParseLib/tests/test_data/CSV/Write
         cd ./CommonCpp/libraries/ParseLib/tests/out

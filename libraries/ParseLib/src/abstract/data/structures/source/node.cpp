@@ -2,7 +2,10 @@
 #include "../node.hpp"
 #include <iostream>
 
-using namespace std;
+using std::string;
+using std::shared_ptr;
+using std::make_shared;
+using sdg::plNode;
 
 plNode::plNode(string text, std::shared_ptr<plNode> aParent)
 : value(text)

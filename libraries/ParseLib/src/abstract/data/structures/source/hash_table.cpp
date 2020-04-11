@@ -8,6 +8,8 @@ using std::make_shared;
 using std::vector;
 using std::endl;
 using std::cout;
+using sdg::plHashTable;
+using sdg::plHashValue;
 
 plHashTable::plHashTable()
 : hash_table_size(100)
