@@ -10,7 +10,7 @@ using ::std::vector;
 using ::std::shared_ptr;
 using ::std::dynamic_pointer_cast;
 using ::std::make_shared;
-
+using ::sdg::Model;
 
 int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
 {

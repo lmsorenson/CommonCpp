@@ -4,6 +4,8 @@
 #include "../Writes/WriteStrategy.hpp"
 
 
+namespace sdg
+{
 
 class AbstractFactory
 {
@@ -12,3 +14,5 @@ public:
     virtual std::shared_ptr<WriteStrategy> make_write() = 0;
     virtual std::shared_ptr<sdg::DataSet> make_data() = 0;
 };
+
+}// namespace sdg

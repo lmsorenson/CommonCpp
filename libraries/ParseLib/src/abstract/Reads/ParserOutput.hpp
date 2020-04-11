@@ -7,5 +7,5 @@
 class ParserOutput
 {
 public:
-    virtual void execute(std::shared_ptr<plNode>& text, sdg::DataSet& data_store) = 0;
+    virtual void execute(std::shared_ptr<sdg::plNode>& text, sdg::DataSet& data_store) = 0;
 };

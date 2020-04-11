@@ -7,6 +7,9 @@
 
 
 
+namespace sdg 
+{
+
 
 struct option
 {
@@ -32,3 +35,5 @@ public:
         UNKNOWN_ERROR
     };
 };
+
+} // namespace sdg

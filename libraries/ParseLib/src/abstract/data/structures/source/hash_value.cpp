@@ -3,6 +3,9 @@
 
 
 using std::string;
+using sdg::plHashValue;
+
+
 
 plHashValue::plHashValue()
 : value("")

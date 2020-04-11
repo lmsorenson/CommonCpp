@@ -7,6 +7,9 @@
 
 #include "Interface.hpp"
 
+namespace sdg
+{
+
 class Descriptor;
 class Identifier;
 
@@ -38,8 +41,4 @@ public:
     std::vector<std::shared_ptr<Descriptor>> get_descriptors();
 };
 
-
-
-
-
-
+}// namespace sdg
