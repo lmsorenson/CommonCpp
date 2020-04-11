@@ -7,9 +7,6 @@
 #include "../../utils/writeText.h"
 
 
-
-using namespace std;
-
 int32_t WriteStrategy::execute_write(sdg::DataSet dataset, std::string path)
 {
 

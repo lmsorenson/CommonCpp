@@ -6,7 +6,7 @@
 class ReadCSV : public ReadStrategy
 {
     virtual void configure_pipeline(ParserPipeline &pipeline);
-    virtual int32_t set_read_options(std::vector<option> read_options);
+    virtual int32_t set_read_options(std::vector<sdg::option> read_options);
 
     //csv read options
     bool b_use_header_line;

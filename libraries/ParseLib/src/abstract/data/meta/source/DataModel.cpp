@@ -6,10 +6,14 @@
 #include "../Entity.hpp"
 
 
-using namespace std;
 
-
-
+using std::shared_ptr;
+using std::vector;
+using std::string;
+using std::dynamic_pointer_cast;
+using sdg::Model;
+using sdg::Entity;
+using sdg::Descriptor;
 
 void Model::add_thing(shared_ptr<Thing> a_thing)
 {
