@@ -1,13 +1,13 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "CSV_Write.hpp"
-#include "CSVFilters.hpp"
+#include "csv_write.hpp"
+#include "csv_filters.hpp"
+
+
+using ::std::shared_ptr;
 
 
 
-
-using namespace std;
-
-void CSV_Write::configure_pipeline(ParserPipeline & pipeline)
+void sdg::csv::Write::configure_pipeline(::sdg::ParserPipeline & pipeline)
 {
     if(this->b_use_header_line)
         pipeline.add_filter(std::shared_ptr<HeaderFilter> (new HeaderFilter("~H")));
@@ -17,7 +17,7 @@ void CSV_Write::configure_pipeline(ParserPipeline & pipeline)
     pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 
-int32_t CSV_Write::set_write_options(std::vector<sdg::option> write_options)
+int32_t sdg::csv::Write::set_write_options(std::vector<sdg::option> write_options)
 {
     for (auto option : write_options)
     {
@@ -28,7 +28,7 @@ int32_t CSV_Write::set_write_options(std::vector<sdg::option> write_options)
     return 0;
 }
 
-std::vector<std::vector<std::string>> CSV_Write::get_dataset_contents(sdg::DataSet dataset)
+std::vector<std::vector<std::string>> sdg::csv::Write::get_dataset_contents(sdg::DataSet dataset)
 {
     std::vector<std::vector<std::string>> return_var;
 

@@ -5,9 +5,11 @@
 #include "../Reads/ParserPipeline.hpp"
 
 
+namespace sdg {
+
 class WriteStrategy
 {
-    virtual void configure_pipeline(ParserPipeline &pipeline) = 0;
+    virtual void configure_pipeline(sdg::ParserPipeline &pipeline) = 0;
     virtual int32_t set_write_options(std::vector<sdg::option> write_options)=0;
     virtual std::vector<std::vector<std::string>> get_dataset_contents(sdg::DataSet dataset)=0;
 
@@ -20,3 +22,5 @@ public:
         UNKNOWN_ERROR
     };
 };
+
+}// namespace sdg

@@ -5,23 +5,22 @@
 #include <vector>
 #include <string>
 
-namespace sdg
-{
+namespace sdg {
 
 typedef std::string field;
 typedef std::vector<field> record;
 typedef std::vector<record> csv_file;
 
-class CSVData : public sdg::DataSet
+class CSV : public sdg::DataSet
 {
     csv_file file;
 
     void csv_model();
 
 public:
-    CSVData();
-    CSVData(int32_t hash_table_size);
-    ~CSVData();
+    CSV();
+    CSV(int32_t hash_table_size);
+    ~CSV();
 
     virtual void assign();
     virtual void add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position=-1) override;

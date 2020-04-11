@@ -7,6 +7,8 @@
 using sdg::plNode;
 
 
+
+namespace sdg {
 /* Each element/entity output by the filter is identified using the format:
     label + index
      */
@@ -32,3 +34,5 @@ public:
         FILTER_UNKNOWN_ERROR
     };
 };
+
+}// namespace sdg
