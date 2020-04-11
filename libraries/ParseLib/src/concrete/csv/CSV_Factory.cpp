@@ -12,7 +12,7 @@ std::shared_ptr<sdg::ReadStrategy> CSV_Factory::make_read()
     return std::make_shared<ReadCSV>(ReadCSV());
 }
 
-std::shared_ptr<WriteStrategy> CSV_Factory::make_write()
+std::shared_ptr<sdg::WriteStrategy> CSV_Factory::make_write()
 {
     return std::make_shared<CSV_Write>(CSV_Write());
 }

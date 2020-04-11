@@ -5,6 +5,8 @@
 #include "../Reads/ParserPipeline.hpp"
 
 
+namespace sdg {
+
 class WriteStrategy
 {
     virtual void configure_pipeline(sdg::ParserPipeline &pipeline) = 0;
@@ -20,3 +22,5 @@ public:
         UNKNOWN_ERROR
     };
 };
+
+}// namespace sdg

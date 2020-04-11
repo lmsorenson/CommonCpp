@@ -7,7 +7,7 @@
 
 
 
-class CSV_Write : public WriteStrategy
+class CSV_Write : public ::sdg::WriteStrategy
 {
     //this method sets up the pipeline.
     virtual void configure_pipeline(sdg::ParserPipeline &pipeline) override;
