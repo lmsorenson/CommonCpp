@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../../utils/loadText.h"
+#include "../../utils/load_text.h"
 
 
 
@@ -16,7 +16,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
 {
     //load text
     std::string raw_text;
-    if ((raw_text=loadText(filepath))==LOAD_ERROR_STR)
+    if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
     {
         ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
         return FILE_NOT_FOUND;

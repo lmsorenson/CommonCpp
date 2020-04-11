@@ -1,4 +1,4 @@
-#include "../loadText.h"
+#include "../load_text.h"
 
 #include <iostream>
 #include <fstream>
@@ -6,9 +6,13 @@
 #include "unistd.h"
 #include <fcntl.h>
 
-using namespace std;
 
-string loadText(string filepath)
+using ::std::string;
+using ::std::ifstream;
+
+
+
+string sdg::utils::loadText(string filepath)
 {
     //return file
     string output, line;

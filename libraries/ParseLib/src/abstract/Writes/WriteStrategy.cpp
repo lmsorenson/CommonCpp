@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "../Factories/AbstractFactory.hpp"
-#include "../../utils/writeText.h"
+#include "../../utils/write_text.h"
 
 
 using sdg::ParserPipeline;
@@ -33,7 +33,7 @@ int32_t WriteStrategy::execute_write(sdg::DataSet dataset, std::string path)
         }
     }
 
-    writeText(path, out_str);
+    utils::writeText(path, out_str);
 
     return 0;
 }
