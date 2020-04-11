@@ -15,25 +15,7 @@ add_subdirectory(
 )
 
 include_directories(
-	TestAll
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include/concrete
-)
-
-include_directories(
-	TestComponents
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include/concrete
-)
-
-include_directories(
-	TestIntegration
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include/concrete
-)
-
-include_directories(
-	TestSystem
+	tests
 	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include
 	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include/concrete
 )
@@ -55,8 +37,8 @@ add_executable(TestIntegration ${PROJECT_SOURCE_DIR}/src/TestIntegration.cpp)
 add_executable(TestSystem ${PROJECT_SOURCE_DIR}/src/TestSystem.cpp)
 
 target_include_directories(
-	TestAll PUBLIC
-	${PROJECT_SOURCE_DIR}/../include
+	TestAll PUBLIC 
+	${PROJECT_SOURCE_DIR}/../include/
 	${PROJECT_SOURCE_DIR}/../include/concrete
 	${PROJECT_SOURCE_DIR}/../src/abstract/Factories/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/
@@ -64,16 +46,16 @@ target_include_directories(
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/structures/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/instance/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/dataset/
-    ${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
-    ${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
+	${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
+	${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
 	${PROJECT_SOURCE_DIR}/../src/concrete/csv/
 	${PROJECT_SOURCE_DIR}/../src/utils/
 	${PROJECT_SOURCE_DIR}/../src/utils/source
 )
 
 target_include_directories(
-	TestComponents PUBLIC
-	${PROJECT_SOURCE_DIR}/../include
+	TestComponents PUBLIC 
+	${PROJECT_SOURCE_DIR}/../include/
 	${PROJECT_SOURCE_DIR}/../include/concrete
 	${PROJECT_SOURCE_DIR}/../src/abstract/Factories/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/
@@ -81,16 +63,16 @@ target_include_directories(
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/structures/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/instance/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/dataset/
-    ${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
-    ${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
+	${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
+	${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
 	${PROJECT_SOURCE_DIR}/../src/concrete/csv/
 	${PROJECT_SOURCE_DIR}/../src/utils/
 	${PROJECT_SOURCE_DIR}/../src/utils/source
 )
 
 target_include_directories(
-	TestIntegration PUBLIC
-	${PROJECT_SOURCE_DIR}/../include
+	TestIntegration PUBLIC 
+	${PROJECT_SOURCE_DIR}/../include/
 	${PROJECT_SOURCE_DIR}/../include/concrete
 	${PROJECT_SOURCE_DIR}/../src/abstract/Factories/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/
@@ -98,16 +80,16 @@ target_include_directories(
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/structures/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/instance/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/dataset/
-    ${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
-    ${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
+	${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
+	${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
 	${PROJECT_SOURCE_DIR}/../src/concrete/csv/
 	${PROJECT_SOURCE_DIR}/../src/utils/
 	${PROJECT_SOURCE_DIR}/../src/utils/source
 )
 
 target_include_directories(
-	TestSystem PUBLIC
-	${PROJECT_SOURCE_DIR}/../include
+	TestSystem PUBLIC 
+	${PROJECT_SOURCE_DIR}/../include/
 	${PROJECT_SOURCE_DIR}/../include/concrete
 	${PROJECT_SOURCE_DIR}/../src/abstract/Factories/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/
@@ -115,8 +97,8 @@ target_include_directories(
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/structures/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/instance/
 	${PROJECT_SOURCE_DIR}/../src/abstract/data/dataset/
-    ${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
-    ${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
+	${PROJECT_SOURCE_DIR}/../src/abstract/Reads/
+	${PROJECT_SOURCE_DIR}/../src/abstract/Writes/
 	${PROJECT_SOURCE_DIR}/../src/concrete/csv/
 	${PROJECT_SOURCE_DIR}/../src/utils/
 	${PROJECT_SOURCE_DIR}/../src/utils/source
@@ -145,6 +127,3 @@ target_link_libraries(
 	gtest
 	parse
 )
-
-
-

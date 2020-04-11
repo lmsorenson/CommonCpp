@@ -4,17 +4,18 @@
 #include <ctime>
 
 #include <gtest/gtest.h>
-#include <ParseLib.h>
+#include <ParseLib.hpp>
+#include "../TestFramework.hpp"
 
 
-class ComponentTest : public ::testing::Test
+class ComponentTests : public ::testing::Test
 {
 protected:
     
-    ComponentTest() {
+    ComponentTests() {
     }
     
-    virtual ~ComponentTest() {
+    virtual ~ComponentTests() {
     }
     
 
