@@ -7,7 +7,6 @@
 
 
 
-
 //-- Constructors ----------------------------------
 sdg::DataSet::DataSet()
 : state(DATA_SET_EMPTY) {}
@@ -44,7 +43,7 @@ sdg::DataSet sdg::DataSet::Read(std::string a_path, int32_t * status_code)
     return *this;
 }
 
-sdg::DataSet sdg::DataSet::Read(std::string a_path, std::vector<option> read_options, int32_t * status_code)
+sdg::DataSet sdg::DataSet::Read(std::string a_path, std::vector<sdg::option> read_options, int32_t * status_code)
 {
     int32_t return_code;
     return_code = ParseLib().read_file(*this, a_path.c_str(), read_options);

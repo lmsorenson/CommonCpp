@@ -7,22 +7,17 @@
 #include "ReadCSV.hpp"
 #include "CSV_Write.hpp"
 
-
-
-
-using namespace std;
-
 std::shared_ptr<ReadStrategy> CSV_Factory::make_read()
 {
-    return make_shared<ReadCSV>(ReadCSV());
+    return std::make_shared<ReadCSV>(ReadCSV());
 }
 
 std::shared_ptr<WriteStrategy> CSV_Factory::make_write()
 {
-    return make_shared<CSV_Write>(CSV_Write());
+    return std::make_shared<CSV_Write>(CSV_Write());
 }
 
 std::shared_ptr<sdg::DataSet> CSV_Factory::make_data()
 {
-    return make_shared<CSVData>(CSVData(100));
+    return std::make_shared<sdg::CSVData>(sdg::CSVData(100));
 }

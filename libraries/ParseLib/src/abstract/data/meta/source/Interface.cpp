@@ -5,6 +5,13 @@
 #include "../Entity.hpp"
 #include "../Relationship.hpp"
 
+
+
+using sdg::Thing;
+
+
+
+
 Thing::Thing(std::string a_name)
 : name(a_name)
 , counter(0)

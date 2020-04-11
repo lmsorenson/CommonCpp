@@ -9,6 +9,10 @@ using std::dynamic_pointer_cast;
 using std::string;
 
 
+using sdg::Entity;
+using sdg::Descriptor;
+using sdg::Identifier;
+
 Entity::Entity(string a_entity_id, string a_name)
 : Thing(a_name, a_entity_id )
 {

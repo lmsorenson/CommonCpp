@@ -6,7 +6,7 @@ using std::string;
 using std::make_shared;
 using std::shared_ptr;
 using sdg::plHashElementIterator;
-
+using sdg::plHashValue;
 
 plHashElementIterator::plHashElementIterator(string aKey, plHashValue aValue) 
 : key(aKey)

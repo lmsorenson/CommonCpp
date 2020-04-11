@@ -2,7 +2,12 @@
 #include "../node.hpp"
 #include <iostream>
 
+using std::string;
+using std::shared_ptr;
+using std::make_shared;
 using sdg::plNode;
+
+
 
 
 

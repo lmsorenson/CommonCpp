@@ -5,6 +5,9 @@
 #include <vector>
 #include <string>
 
+namespace sdg
+{
+
 typedef std::string field;
 typedef std::vector<field> record;
 typedef std::vector<record> csv_file;
@@ -26,3 +29,5 @@ public:
     virtual void move_instance(std::string entity_id, int32_t position=1) override;
     virtual int32_t pad_entity_count(std::string entity_id, int32_t a_num_blanks=1) override;
 };
+
+}// namespace sdg

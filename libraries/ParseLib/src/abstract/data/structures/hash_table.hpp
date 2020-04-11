@@ -2,7 +2,13 @@
 #include <vector>
 #include <string>
 
-namespace sdg {
+
+
+
+
+
+namespace sdg
+{
 
 /* 
 * Hash Value
@@ -61,7 +67,6 @@ private:
     std::shared_ptr<plHashElementIterator> next();
     std::shared_ptr<plHashElementIterator> previous();
 
-    
 
 public:
     plHashElementIterator() = default;                            
@@ -159,4 +164,4 @@ public:
 };
 
 
-} //namespace sdg
+}// namespace sdg

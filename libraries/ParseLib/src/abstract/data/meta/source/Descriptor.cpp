@@ -8,6 +8,15 @@
 #include "../Entity.hpp"
 #include "../Relationship.hpp"
 
+
+using sdg::Entity;
+using sdg::Descriptor;
+using sdg::Attribute;
+using sdg::Link;
+
+
+
+
 Descriptor::Descriptor(std::string a_name)
 : Thing(a_name)
 {

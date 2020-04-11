@@ -7,7 +7,9 @@
 
 
 
-namespace sdg {
+namespace sdg
+{
+
 
 class plNode
 {
@@ -42,6 +44,5 @@ private:
     std::shared_ptr<plNode> parent;
     std::vector<std::shared_ptr<plNode>> children;
 };
-
 
 } //namespace sdg

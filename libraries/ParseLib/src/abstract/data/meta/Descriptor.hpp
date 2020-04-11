@@ -3,6 +3,13 @@
 
 #include "Interface.hpp"
 
+
+
+
+
+namespace sdg
+{
+
 class Entity;
 class Relationship;
 class Identifier;
@@ -72,3 +79,5 @@ private:
 
     std::string attribute_label;
 };
+
+}// namespace sdg

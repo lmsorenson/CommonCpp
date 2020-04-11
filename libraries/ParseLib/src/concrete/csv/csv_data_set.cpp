@@ -9,6 +9,7 @@ using std::make_shared;
 using std::cout;
 using std::endl;
 using sdg::plHashValue;
+using sdg::CSVData;
 
 void CSVData::csv_model()
 {
