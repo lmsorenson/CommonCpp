@@ -27,11 +27,9 @@ jobs:
         sudo ./TestComponents
     - name: Run Integration Tests
       run: |
-        mkdir ./CommonCpp/libraries/ParseLib/tests/test_data/CSV/Write
         cd ./CommonCpp/libraries/ParseLib/tests/
         sudo ./TestIntegration
     - name: Run System Tests
       run: |
-          mkdir ./CommonCpp/libraries/ParseLib/tests/test_data/CSV/Write
           cd ./CommonCpp/libraries/ParseLib/tests/
           sudo ./TestSystem
