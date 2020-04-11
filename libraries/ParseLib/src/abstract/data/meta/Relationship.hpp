@@ -9,6 +9,12 @@
 #include "Descriptor.hpp"
 
 
+
+
+
+namespace sdg 
+{
+
 class Relationship : public Thing
 {
 public:
@@ -28,6 +34,4 @@ private:
     ManyLink<Link> link_array;
 };
 
-
-
-
+} // namespace sdg

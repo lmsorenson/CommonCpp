@@ -4,6 +4,12 @@
 #include <vector>
 #include <string>
 
+
+
+
+namespace sdg
+{
+
 template <class T> using ManyLink = std::vector<std::shared_ptr<T>>;
 template <class T> using OneLink = std::shared_ptr<T>;
 
@@ -28,3 +34,5 @@ private:
     int32_t counter; 
 
 };
+
+}// namespace sdg

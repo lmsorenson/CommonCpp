@@ -8,9 +8,9 @@
 #include <objects/data_set.hpp>
 
 
-typedef std::vector<std::vector<std::shared_ptr<plNode>>> plNodeBuffer;
-typedef std::vector<std::shared_ptr<plNode>> plNodeSet;
-typedef std::shared_ptr<plNode> plNodePtr;
+typedef std::vector<std::vector<std::shared_ptr<sdg::plNode>>> plNodeBuffer;
+typedef std::vector<std::shared_ptr<sdg::plNode>> plNodeSet;
+typedef std::shared_ptr<sdg::plNode> plNodePtr;
 
 class ParserPipeline
 {
@@ -39,7 +39,7 @@ class ParserPipeline
     int32_t ProcessIndividual(
         sdg::DataSet &data_set,
         plNodeSet &out_buffer, 
-        std::vector<plNode> &in_buffer, 
+        std::vector<sdg::plNode> &in_buffer, 
         plNodePtr &current_node, 
         std::shared_ptr<ParserFilter> filter);
     
@@ -49,7 +49,7 @@ public:
 
     int32_t add_filter(std::shared_ptr<ParserFilter> filter);
     int32_t add_output(std::shared_ptr<ParserOutput> output);
-    int32_t execute(std::shared_ptr<plNode>& text, sdg::DataSet& data_store);
+    int32_t execute(std::shared_ptr<sdg::plNode>& text, sdg::DataSet& data_store);
     int32_t inverse(std::vector<std::vector<std::string>> vector_vector, std::string &text);
 
     enum : int32_t
@@ -58,6 +58,4 @@ public:
         PIPELINE_FORMAT_ERROR,
         PIPELINE_UNKNOWN_ERROR
     };
-
-    
 };

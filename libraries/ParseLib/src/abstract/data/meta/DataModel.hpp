@@ -11,6 +11,10 @@
 #include "Descriptor.hpp"
 
 
+
+namespace sdg 
+{
+
 class Model
 {
 
@@ -35,3 +39,5 @@ private:
 
     std::shared_ptr<Entity> get_entity(std::string a_entity_id_label) const;\
 };
+
+}// namespace sdg
