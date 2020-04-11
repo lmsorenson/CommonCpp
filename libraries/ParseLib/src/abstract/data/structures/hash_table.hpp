@@ -3,6 +3,13 @@
 #include <string>
 
 
+
+
+
+
+namespace sdg
+{
+
 /* 
 * Hash Value
 * -- Value in a hash bucket.  Includes metadata about the value.
@@ -60,7 +67,6 @@ private:
     std::shared_ptr<plHashElementIterator> next();
     std::shared_ptr<plHashElementIterator> previous();
 
-    
 
 public:
     plHashElementIterator() = default;                            
@@ -156,3 +162,6 @@ public:
     //returns a list of keys that matches the passed in descriptors.(hyphen delimited)
     std::vector<std::string> GetMatchingKeys(std::string descriptor_list_str) const;
 };
+
+
+}// namespace sdg

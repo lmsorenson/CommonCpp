@@ -15,9 +15,11 @@
 
 
 
-struct option;
+
 
 namespace sdg {
+
+struct option;
 
 class SelectionVisitor;
 class EntitySelection;
