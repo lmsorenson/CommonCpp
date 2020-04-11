@@ -4,10 +4,11 @@
 
 
 
+namespace sdg {
+namespace csv {
 
 
-
-class CSV_Write : public ::sdg::WriteStrategy
+class Write : public ::sdg::WriteStrategy
 {
     //this method sets up the pipeline.
     virtual void configure_pipeline(sdg::ParserPipeline &pipeline) override;
@@ -22,6 +23,9 @@ class CSV_Write : public ::sdg::WriteStrategy
     bool b_use_header_line;
 
 public:
-    CSV_Write()=default;
-    ~CSV_Write()=default;
+    Write()=default;
+    ~Write()=default;
 };
+
+}// namespace csv
+}// namespace sdg

@@ -8,9 +8,9 @@ using std::shared_ptr;
 using std::make_shared;
 using std::cout;
 using std::endl;
-using sdg::CSVData;
+using sdg::CSV;
 
-void CSVData::csv_model()
+void CSV::csv_model()
 {
     shared_ptr<Entity>
         eRecord = make_shared<Entity>("R", "record"),
@@ -53,7 +53,7 @@ void CSVData::csv_model()
     logical_data_structure.add_thing(cell_to_field_name);
 }
 
-CSVData::CSVData()
+CSV::CSV()
 : DataSet()
 {
     // this->add_optional_flag("H");
@@ -62,7 +62,7 @@ CSVData::CSVData()
     this->csv_model();//generate the meta data
 }
 
-CSVData::CSVData(int32_t hash_table_size)
+CSV::CSV(int32_t hash_table_size)
 : DataSet(hash_table_size)
 {
     // this->add_optional_flag("H");
@@ -71,15 +71,15 @@ CSVData::CSVData(int32_t hash_table_size)
     this->csv_model();//generate the meta data
 }
 
-CSVData::~CSVData()
+CSV::~CSV()
 {
 }
 
-void CSVData::assign()
+void CSV::assign()
 {
 }
 
-void CSVData::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
+void CSV::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
 {
     //adding a record
     if(entity_id.compare("R")==0)
@@ -221,7 +221,7 @@ void CSVData::add_instance(std::string entity_id, std::vector<std::string> entit
     }
 }
 
-void CSVData::remove_instance(std::string entity_id)
+void CSV::remove_instance(std::string entity_id)
 {
     //todo-->define
 
@@ -231,7 +231,7 @@ void CSVData::remove_instance(std::string entity_id)
     }
 }
 
-void CSVData::increment_instance_id(std::string entity_id, int32_t position)
+void CSV::increment_instance_id(std::string entity_id, int32_t position)
 {
     //todo-->define
     
@@ -253,7 +253,7 @@ void CSVData::increment_instance_id(std::string entity_id, int32_t position)
     }//for
 }
 
-int32_t CSVData::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
+int32_t CSV::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
 {
     //get the current number of fields.
     int32_t 

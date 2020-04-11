@@ -4,8 +4,8 @@
 #include "../../abstract/Reads/ParserOutput.hpp"
 
 
-
-
+namespace sdg {
+namespace csv {
 
 class HeaderFilter : public ::sdg::ParserFilter
 {
@@ -49,3 +49,6 @@ class CSVOutput : public ::sdg::ParserOutput
 {
     virtual void execute(std::shared_ptr<sdg::plNode>& text, sdg::DataSet& data_store) override;
 };
+
+}// namespace csv
+}// namespace sdg

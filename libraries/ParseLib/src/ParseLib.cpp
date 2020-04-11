@@ -7,7 +7,7 @@
 
 #include <formats/csv_data_set.hpp>
 #include "abstract/Reads/ReadStrategy.hpp"
-#include "concrete/csv/CSV_Factory.hpp"
+#include "concrete/csv/csv_factory.hpp"
 
 
 
@@ -19,7 +19,7 @@ int32_t sdg::ParseLib::read_file(sdg::DataSet& data_store, const char * filepath
 
 
     //-----------------------|   Generate strategies & Data   |-----------------------//
-    CSV_Factory factory;                    //TODO-->make factory producer
+    csv::Factory factory;                    //TODO-->make factory producer
     auto data = factory.make_data();         //use the factory to initialize the data variable.
     auto strategy = factory.make_read();     //initialize appropriate read strategy
 
@@ -54,7 +54,7 @@ int32_t sdg::ParseLib::write_file(sdg::DataSet& data_store, const char * filepat
 {
     //STEP 1 -- FACTORY.
     //-----------------------|   Generate strategies & Data   |-----------------------//
-    CSV_Factory factory;                    //TODO-->make factory producer
+    csv::Factory factory;                    //TODO-->make factory producer
     auto data = factory.make_data();         //use the factory to initialize the data variable.
     auto strategy = factory.make_write();     //initialize appropriate read strategy
     

@@ -4,10 +4,16 @@
 
 
 
-class CSV_Factory : public sdg::AbstractFactory
+namespace sdg {
+namespace csv {
+
+class Factory : public sdg::AbstractFactory
 {
 public:
     virtual std::shared_ptr<sdg::ReadStrategy> make_read() override;
     virtual std::shared_ptr<sdg::WriteStrategy> make_write() override;
     virtual std::shared_ptr<sdg::DataSet> make_data() override;
 };
+
+}// namespace csv
+}// namespace sdg
