@@ -9,12 +9,14 @@
 namespace sdg {
 namespace hash {
 
+class DescriptorInstance;
 
 class KeyInstance
 {
 public:
     KeyInstance() = default;
     KeyInstance(std::string a_value, bool a_is_partial_key=false);
+    KeyInstance(std::vector<DescriptorInstance> descriptor, bool a_is_partial_key=false);
 
     bool is_partial_key();
     std::string value();

@@ -47,18 +47,18 @@ Model sdg::DataSet::get_data_model() const
 }
 
 
-sdg::Instance sdg::DataSet::where(std::string descriptor, std::string value) const
+sdg::Instance sdg::DataSet::where(hash::KeyInstance descriptor, std::string value) const
 {
     Instance ret;
 
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
-    if(!(ret = this->get(descriptor)).is_valid())
+    if(!(ret = this->get(descriptor.value())).is_valid())
         return sdg::Instance(this, sdg::Instance::NULL_INST);
 
     int32_t pos = ret.FindIndexOfValue(value);
 
-    vector<string> missing_desc = this->get_missing_descriptors(descriptor);        
+    vector<string> missing_desc = this->get_missing_descriptors(descriptor.value());        
 
     if(missing_desc.size()==1)
     {

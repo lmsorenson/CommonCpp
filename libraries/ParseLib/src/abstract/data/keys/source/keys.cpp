@@ -7,6 +7,19 @@ sdg::hash::KeyInstance::KeyInstance(std::string a_value, bool a_is_partial_key)
 , is_partial_key_(a_is_partial_key)
 {}
 
+sdg::hash::KeyInstance::KeyInstance(std::vector<DescriptorInstance> descriptors, bool a_is_partial_key)
+: is_partial_key_(a_is_partial_key)
+{
+    for(int i=0; i<descriptors.size(); i++)
+    {
+        if(i>0)
+            value_.append("-");
+
+        value_.append(descriptors[i].get_descriptor_id());
+        value_.append(std::to_string(descriptors[i].get_descriptor_value()));
+    }
+}
+
 
 bool sdg::hash::KeyInstance::is_partial_key()
 {
@@ -33,6 +46,8 @@ sdg::hash::DescriptorInstance::DescriptorInstance(std::string a_descriptor_id, A
 , b_is_found_(false)
 {}
 
+
+
 int32_t sdg::hash::DescriptorInstance::get_descriptor_value() const
 {
     return value_;
@@ -52,9 +67,9 @@ bool sdg::hash::DescriptorInstance::is_found() const
 
 void sdg::hash::DescriptorInstance::set_value(int32_t a_value)
 {
-    value_ = a_value;
+    value_=a_value;
 }
 void sdg::hash::DescriptorInstance::set_found()
 {
-    b_is_found_ = true;
+    b_is_found_=true;
 }

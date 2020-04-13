@@ -149,7 +149,10 @@ TEST_F(CSVFunctionalSpec, TestR4_1)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
 
-    Instance inst = ds.where("F0", "May");
+    sdg::hash::DescriptorInstance descriptor_instance("F", sdg::Attribute::Scale::Numeric);
+    descriptor_instance.set_value(0);
+
+    Instance inst = ds.where(sdg::hash::KeyInstance({descriptor_instance}), "May");
     ASSERT_EQ(inst.at(1), "5");
 }
 
