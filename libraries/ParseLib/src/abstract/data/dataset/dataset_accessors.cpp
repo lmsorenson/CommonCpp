@@ -12,7 +12,7 @@ using ::std::dynamic_pointer_cast;
 using ::std::make_shared;
 using ::sdg::Model;
 
-int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
+int32_t sdg::DataSet::IsDescriptorRequired(hash::DescriptorID a_descriptor_id) const
 {
     int32_t r=-1;
 
@@ -22,7 +22,7 @@ int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
     for( auto descriptor : this->logical_data_structure.get_identifier_of_granular_entity() )
     {
         //if the current descriptor is a match with the argument...
-        if(descriptor->get_id() == a_descriptor_id)//if this is never called return an error.
+        if(descriptor->get_id() == a_descriptor_id.to_string())//if this is never called return an error.
         {       
             if (b_descriptor_found)//if this is ever called return an error.
                 r=-1;

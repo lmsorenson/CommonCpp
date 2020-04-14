@@ -11,11 +11,13 @@
 #include "Descriptor.hpp"
 
 
+namespace hash {
+    class DescriptorID;
+}
 
-namespace sdg 
-{
+namespace sdg {
 
-class Model
+class Model 
 {
 
 public:
@@ -26,7 +28,7 @@ public:
     void add_thing(std::shared_ptr<Thing> a_thing);
 
     //get a list of descriptor IDs representing identifying descriptors of the entity specified.
-    std::vector<std::string> get_entity_identifier(std::string a_entity_label) const;
+    std::vector<hash::DescriptorID> get_entity_identifier(hash::DescriptorID a_entity_label) const;
     std::vector<std::shared_ptr<Descriptor>> get_identifier_of_granular_entity() const;
 
     //increment the counter for the entity specified

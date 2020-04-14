@@ -7,7 +7,7 @@
 
 #include "../Entity.hpp"
 #include "../Relationship.hpp"
-
+#include "../../keys/keys.hpp"
 
 using sdg::Entity;
 using sdg::Descriptor;
@@ -35,12 +35,13 @@ Link::Link(std::string a_name, std::shared_ptr<Entity> a_entity, std::string a_l
 {
 }
 
-std::vector<std::string> Link::get_descriptor_IDs()
+std::vector<sdg::hash::DescriptorID> Link::get_descriptor_IDs()
 {
     using std::vector;
     using std::string;
 
-    vector<string> r_descriptor_labels;
+    vector<hash::DescriptorID> r_descriptor_labels;
+
      //if the link subject is valid get descriptors identifying the linked entity.
     if (link_subject)
         r_descriptor_labels = link_subject->get_identifying_descriptor_id_set();

@@ -70,7 +70,7 @@ public:
 
     //is this descriptor required to uniquely identify a value
     //in the hash table.
-    int32_t IsDescriptorRequired(std::string a_descriptor_id) const;
+    int32_t IsDescriptorRequired(hash::DescriptorID a_descriptor_id) const;
     
     //returns the number of instances of the chosen entity
     int32_t number_of_entity_instances(std::string entity_id) const;

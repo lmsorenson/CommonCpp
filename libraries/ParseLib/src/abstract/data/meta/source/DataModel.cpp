@@ -4,7 +4,7 @@
 #include "../DataModel.hpp"
 #include "../Relationship.hpp"
 #include "../Entity.hpp"
-
+#include "../../keys/keys.hpp"
 
 
 using std::shared_ptr;
@@ -51,18 +51,18 @@ shared_ptr<Entity> Model::get_entity(string a_entity_id_label) const
     return result;
 }
 
-vector<string> Model::get_entity_identifier(string a_entity_label) const
+vector<sdg::hash::DescriptorID> Model::get_entity_identifier(hash::DescriptorID a_entity_label) const
 {
-    vector<string> str_vec;
+    vector<hash::DescriptorID> identifying_descriptors;
 
     //select the entity.
-    shared_ptr<Entity> e = get_entity(a_entity_label);
+    shared_ptr<Entity> e = get_entity(a_entity_label.to_string());
 
     //ask the entity for it's identifying descriptors.
     if (e!=nullptr)
-        str_vec=e->get_identifying_descriptor_id_set();
+        identifying_descriptors=e->get_identifying_descriptor_id_set();
 
-    return str_vec;
+    return identifying_descriptors;
 }
 
 std::vector<std::shared_ptr<Descriptor>> Model::get_identifier_of_granular_entity() const

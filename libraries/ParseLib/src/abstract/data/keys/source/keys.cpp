@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "../keys.hpp"
-
+#include "../../meta/Descriptor.hpp"
 
 sdg::hash::KeyInstance::KeyInstance(std::string a_value, bool a_is_partial_key)
 : value_(a_value)
@@ -30,6 +30,15 @@ std::string sdg::hash::KeyInstance::value()
     return value_;
 }
 
+
+sdg::hash::DescriptorID::DescriptorID(std::string a_id)
+: id_(a_id)
+{}
+
+std::string sdg::hash::DescriptorID::to_string()
+{
+    return id_;
+}
 
 
 sdg::hash::DescriptorInstance::DescriptorInstance()

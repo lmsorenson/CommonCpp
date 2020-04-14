@@ -1,13 +1,13 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "../Entity.hpp"
 #include "../Descriptor.hpp"
+#include "../../keys/keys.hpp"
 
 using std::vector;
 using std::shared_ptr;
 using std::make_shared;
 using std::dynamic_pointer_cast;
 using std::string;
-
 
 using sdg::Entity;
 using sdg::Descriptor;
@@ -37,9 +37,9 @@ void Entity::add_descriptor(shared_ptr<Descriptor> a_descriptor, bool b_is_ident
     }
 }
 
-vector<string> Entity::get_identifying_descriptor_id_set()
+vector<sdg::hash::DescriptorID> Entity::get_identifying_descriptor_id_set()
 {
-    vector<string> result;
+    vector<hash::DescriptorID> result;
 
     //todo-->support multiple identifiers
     if(!identifier_array.empty())//only populate result as per this proposition.
@@ -73,19 +73,19 @@ void Identifier::add_descriptor(shared_ptr<Descriptor> a_descriptor)
     this->descriptor_array.push_back(a_descriptor);
 }
 
-vector<string> Identifier::get_descriptor_ids()
+vector<sdg::hash::DescriptorID> Identifier::get_descriptor_ids()
 {
-    vector<string> result;
+    vector<hash::DescriptorID> result;
     for(int i=0; i<this->descriptor_array.size(); i++)
     {
         shared_ptr<Attribute> a;
         shared_ptr<Link> l;
         if((a=dynamic_pointer_cast<Attribute>(this->descriptor_array[i])))
-            result.push_back(a->get_label());
+            result.push_back(hash::DescriptorID( a->get_label() ));
 
         else if((l=dynamic_pointer_cast<Link>(this->descriptor_array[i])))
         {
-            for( string ID : l->get_descriptor_IDs())
+            for( hash::DescriptorID ID : l->get_descriptor_IDs())
             {
                 result.push_back(ID);
             }

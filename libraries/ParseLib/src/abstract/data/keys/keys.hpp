@@ -1,12 +1,11 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 
-
-#include "../meta/DataModel.hpp"
-
-
+#include "../meta/Descriptor.hpp"
 
 namespace sdg {
+
+
 namespace hash {
 
 class DescriptorInstance;
@@ -25,6 +24,21 @@ private:
     std::string value_;
     bool is_partial_key_;
 };
+
+
+class DescriptorID
+{
+public:
+    DescriptorID()=default;
+    DescriptorID(std::string a_id);
+    ~DescriptorID()=default;
+
+    std::string to_string();
+
+private:
+    std::string id_;
+};
+
 
 class DescriptorInstance
 {
