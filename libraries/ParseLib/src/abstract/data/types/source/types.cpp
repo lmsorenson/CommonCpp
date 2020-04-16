@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../keys.hpp"
+#include "../types.hpp"
 #include "../../meta/Descriptor.hpp"
 
 sdg::hash::KeyInstance::KeyInstance(std::string a_value, bool a_is_partial_key)

@@ -6,7 +6,7 @@
 #include <string>
 
 #include "Interface.hpp"
-#include "../keys/keys.hpp"
+#include "../types/types.hpp"
 
 namespace sdg
 {

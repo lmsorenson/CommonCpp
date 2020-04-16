@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include "../Entity.hpp"
 #include "../Descriptor.hpp"
-#include "../../keys/keys.hpp"
+#include "../../types/types.hpp"
 
 using std::vector;
 using std::shared_ptr;

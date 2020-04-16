@@ -4,7 +4,7 @@
 #include "../DataModel.hpp"
 #include "../Relationship.hpp"
 #include "../Entity.hpp"
-#include "../../keys/keys.hpp"
+#include "../../types/types.hpp"
 
 
 using std::shared_ptr;
