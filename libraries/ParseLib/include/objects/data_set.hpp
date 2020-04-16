@@ -60,10 +60,10 @@ public:
 
 
     //accessors//------------------------------------------------
-    Instance get(hash::KeyInstance a_descriptor) const;
+    Instance get(hash::KeyInstance a_key_subset) const;
     
     //finds a specific instance without specifying an identifier.
-    Instance where(hash::KeyInstance descriptor, std::string value) const;
+    Instance where(hash::KeyInstance a_key_subset, std::string value) const;
     
     //get a copy of the metadata
     Model get_data_model() const;
