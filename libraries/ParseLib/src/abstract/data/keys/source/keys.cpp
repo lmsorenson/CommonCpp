@@ -82,3 +82,12 @@ void sdg::hash::DescriptorInstance::set_found()
 {
     b_is_found_=true;
 }
+
+sdg::hash::EntityID::EntityID(std::string a_id)
+: id_(a_id)
+{}
+
+std::string sdg::hash::EntityID::to_string()
+{
+    return id_;
+}

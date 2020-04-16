@@ -142,10 +142,10 @@ vector<std::string> sdg::DataSet::get_missing_descriptors(std::string a_descript
 }
 
 
-std::string sdg::DataSet::increment_descriptor_in_key(std::string a_entity_id, std::string a_hash_key, int32_t a_position)
+std::string sdg::DataSet::increment_descriptor_in_key(hash::EntityID a_entity_id, hash::KeyInstance a_hash_key, int32_t a_position)
 {
     std::string 
-            copy = a_hash_key,
+            copy = a_hash_key.value(),
             new_key,
             descriptor_id;
 
@@ -155,7 +155,7 @@ std::string sdg::DataSet::increment_descriptor_in_key(std::string a_entity_id, s
     while(token!=NULL)
     {
         //if the descriptor mat
-        if(a_entity_id.compare(token)==0)
+        if(a_entity_id.to_string().compare(token)==0)
         {   
             std::string copy_new_key = new_key;
             increment_descriptor_value(token, copy_new_key, descriptor_id);
@@ -242,8 +242,6 @@ sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::De
             //push key to the format.
             compiled_key.append(expected_descriptors[i].get_descriptor_id());
             
-
-
             if( expected_descriptors[i].get_scale() == Attribute::Scale::Numeric)
                 compiled_key.append(std::to_string(expected_descriptors[i].get_descriptor_value()));
         }
@@ -270,7 +268,7 @@ sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::De
     return sdg::hash::KeyInstance(compiled_key, data_missing);
 }
 
-std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(std::string key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
+std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
 {
     using sdg::hash::DescriptorInstance;
 
@@ -297,7 +295,7 @@ std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(std::string key_
     *              Lexer                 *
     * ----------------------------------*/
     key_buffer = this->id_lexer(
-        key_buffer, 
+        key_buffer.value(), 
         [&](int32_t key_i,int32_t index, string found_label)
         {
             if (buffer[key_i].get_scale() == Attribute::Scale::Numeric)

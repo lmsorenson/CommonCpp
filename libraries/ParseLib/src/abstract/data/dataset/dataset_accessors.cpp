@@ -36,9 +36,9 @@ int32_t sdg::DataSet::IsDescriptorRequired(hash::DescriptorID a_descriptor_id) c
     return r;
 }
 
-int32_t sdg::DataSet::number_of_entity_instances(std::string a_entity_id) const
+int32_t sdg::DataSet::number_of_entity_instances(hash::EntityID a_entity_id) const
 {
-    return this->logical_data_structure.get_entity_count(a_entity_id);
+    return this->logical_data_structure.get_entity_count(a_entity_id.to_string());
 }
 
 Model sdg::DataSet::get_data_model() const

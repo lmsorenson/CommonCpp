@@ -88,14 +88,12 @@ Instance Instance::GetRelatedInstance(hash::DescriptorID a_entity_id) const
     //by 'a_label'
     string attr_buffer;
     
-    cout << "ATTR BUFFER: " << utils::SetColor(a_entity_id.to_string(), utils::LogTextColor::Cyan) << endl;
     if( GetDescriptorByDescriptorID(a_entity_id) != "NO_VALUE" )
         attr_buffer.append( GetDescriptorByDescriptorID(a_entity_id) );
 
     else if( !kOwner_->IsDescriptorRequired(a_entity_id) )
         attr_buffer.append(a_entity_id.to_string());
 
-    cout << "ATTR BUFFER: " << utils::SetColor(attr_buffer, utils::LogTextColor::Cyan) << endl;
 
     //get any other descriptors that might be necessary
     vector<hash::DescriptorID> identifier = kOwner_->get_data_model().get_entity_identifier(a_entity_id);
@@ -119,8 +117,6 @@ Instance Instance::GetRelatedInstance(hash::DescriptorID a_entity_id) const
             attr_buffer.append(identifier[i].to_string());
         }
     }
-
-    cout << "ATTR BUFFER: " << attr_buffer << endl;
 
     //get the value from the associated DataSet
     return kOwner_->get(attr_buffer);
@@ -187,7 +183,7 @@ Instance Instance::GetNextInstance(hash::DescriptorID a_label) const
 
 
 
-Instance Instance::GetPreviousInstance(string a_label) const
+Instance Instance::GetPreviousInstance(hash::DescriptorID a_label) const
 {
     //todo->GetPreviousInstance undefined.
     return Instance();

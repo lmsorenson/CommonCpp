@@ -40,6 +40,8 @@ private:
 };
 
 
+
+
 class DescriptorInstance
 {
 public:
@@ -61,6 +63,20 @@ private:
     bool b_is_found_;
 
 };
+
+class EntityID
+{
+public:
+    EntityID()=default;
+    EntityID(std::string a_id);
+    ~EntityID()=default;
+
+    std::string to_string();
+
+private:
+    std::string id_;
+};
+
 
 
 }//namespace hash

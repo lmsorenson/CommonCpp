@@ -32,7 +32,7 @@ std::vector<std::vector<std::string>> sdg::csv::Write::get_dataset_contents(sdg:
 {
     std::vector<std::vector<std::string>> return_var;
 
-    for(int32_t i=0; i<dataset.number_of_entity_instances("R"); ++i)
+    for(int32_t i=0; i<dataset.number_of_entity_instances(hash::EntityID("R")); ++i)
     {
         std::string index = "R";
         index.append(std::to_string(i));

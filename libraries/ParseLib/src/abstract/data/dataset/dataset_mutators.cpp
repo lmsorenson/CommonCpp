@@ -88,26 +88,21 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
 
 
 
-void sdg::DataSet::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
+void sdg::DataSet::add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position)
 {
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::remove_instance(std::string entity_id)
+void sdg::DataSet::remove_instance(hash::KeyInstance a_key_subset)
 {
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::increment_instance_id(std::string entity_id, int32_t position)
+void sdg::DataSet::increment_instance_id(hash::KeyInstance a_key_subset, int32_t position)
 {
     //todo-->handle definition of this function
 }
 
-int32_t sdg::DataSet::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
-{
-    //todo-->handle definition of this function
-    return 0;
-}
 
 
 

@@ -299,7 +299,7 @@ TEST_F(CSVFunctionalSpec, TestR7_1)
     ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
 
     //adds line 2 to the end of the document.
-    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A2", "B2", "C2", "D2"});
 
     //writes the file to a new location.
     ParseLib().write_file(ds, this->path("test_data/CSV/Write/csvR7_1.csv").c_str());
@@ -338,7 +338,7 @@ TEST_F(CSVFunctionalSpec, TestR7_2)
     ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
 
     //adds line 2 to the end of the document.
-    ds.add_instance("R", {"AH", "BH", "CH", "DH"}, 0);
+    ds.add_instance(sdg::hash::EntityID("R"), {"AH", "BH", "CH", "DH"}, 0);
 
     //writes the file to a new location.
     ParseLib().write_file(ds, this->path("test_data/CSV/Write/csvR7_2.csv").c_str());
@@ -386,7 +386,7 @@ TEST_F(CSVFunctionalSpec, TestR7_3)
     ASSERT_EQ(ds["R3"]["F3"].get(), "D4");
 
     //adds line 2 to the end of the document.
-    ds.add_instance("R", {"AM", "BM", "CM", "DM"}, 2);
+    ds.add_instance(sdg::hash::EntityID("R"), {"AM", "BM", "CM", "DM"}, 2);
 
     //writes the file to a new location.
     ParseLib().write_file(ds, this->path("test_data/CSV/Write/csvR7_3.csv").c_str());
@@ -439,7 +439,7 @@ TEST_F(CSVFunctionalSpec, TestR7_4)
     ASSERT_EQ(ds["R0"]["F4"].get(), "NULL");
 
     //adds line 2 to the end of the document.
-    ds.add_instance("F", {"E1"});
+    ds.add_instance(sdg::hash::EntityID("F"), {"E1"});
 
     //writes the file to a new location.
     ParseLib().write_file(ds, this->path("test_data/CSV/Write/csvR7_4.csv").c_str());
@@ -472,7 +472,7 @@ TEST_F(CSVFunctionalSpec, TestR7_5)
     ASSERT_EQ(ds["R0"]["F4"].get(), "NULL");
 
     //adds line 2 to the end of the document.
-    ds.add_instance("F", {"N1"}, 0);
+    ds.add_instance(sdg::hash::EntityID("F"), {"N1"}, 0);
 
     //writes the file to a new location.
     ParseLib().write_file(ds, this->path("test_data/CSV/Write/csvR7_5.csv").c_str());
@@ -520,7 +520,7 @@ TEST_F(CSVFunctionalSpec, TestR7_6)
     ASSERT_EQ(ds["R3"]["F3"].get(), "D4");
 
     //adds line 2 to the end of the document.
-    ds.add_instance("F", {"NF", "NF", "NF", "NF"}, 2);
+    ds.add_instance(sdg::hash::EntityID("F"), {"NF", "NF", "NF", "NF"}, 2);
 
     //writes the file to a new location.
     ParseLib().write_file(ds, this->path("test_data/CSV/Write/csvR7_6.csv").c_str());
@@ -566,8 +566,8 @@ TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
     CSV ds;
 
     //create three records
-    ds.add_instance("R", {"A1", "B1", "C1", "D1"});
-    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A1", "B1", "C1", "D1"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A2", "B2", "C2", "D2"});
 
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
     ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
@@ -579,7 +579,7 @@ TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
     ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
     ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
 
-    ds.remove_instance("R1");//remove row 3
+    ds.remove_instance(sdg::hash::KeyInstance("R1"));//remove row 3
 
     //assert row 3 = NULL
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
@@ -613,8 +613,8 @@ TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
     CSV ds;
 
     //create three records
-    ds.add_instance("R", {"A1", "B1", "C1", "D1"});
-    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A1", "B1", "C1", "D1"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A2", "B2", "C2", "D2"});
 
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
     ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
@@ -626,7 +626,7 @@ TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
     ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
     ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
 
-    ds.increment_instance_id("R1");//remove row 3
+    ds.increment_instance_id(sdg::hash::KeyInstance("R1"));//remove row 3
 
     //assert row 3 = NULL
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
@@ -670,10 +670,10 @@ TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already 
     CSV ds;
 
     //create four records
-    ds.add_instance("R", {"A1", "B1", "C1", "D1"});
-    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
-    ds.add_instance("R", {"A3", "B3", "C3", "D3"});
-    ds.add_instance("R", {"A4", "B4", "C4", "D4"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A1", "B1", "C1", "D1"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A2", "B2", "C2", "D2"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A3", "B3", "C3", "D3"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A4", "B4", "C4", "D4"});
 
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
     ASSERT_EQ(ds["R0"]["F1"].get(), "B1");
@@ -695,7 +695,7 @@ TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already 
     ASSERT_EQ(ds["R3"]["F2"].get(), "C4");
     ASSERT_EQ(ds["R3"]["F3"].get(), "D4");
 
-    ds.increment_instance_id("R1");//remove row 3
+    ds.increment_instance_id(sdg::hash::KeyInstance("R1"));//remove row 3
 
     //assert row 3 = NULL
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
@@ -729,8 +729,8 @@ TEST_F(CSVFunctionalSpec, TestR9)
 {
     //adds a new record to the end of a 
     CSV ds;
-    ds.add_instance("R", {"A1", "B1", "C1", "D1"});
-    ds.add_instance("R", {"A2", "B2", "C2", "D2"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A1", "B1", "C1", "D1"});
+    ds.add_instance(sdg::hash::EntityID("R"), {"A2", "B2", "C2", "D2"});
 
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
     ASSERT_EQ(ds["R0"]["F1"].get(), "B1");

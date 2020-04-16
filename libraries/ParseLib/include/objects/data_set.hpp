@@ -73,7 +73,7 @@ public:
     int32_t IsDescriptorRequired(hash::DescriptorID a_descriptor_id) const;
     
     //returns the number of instances of the chosen entity
-    int32_t number_of_entity_instances(std::string entity_id) const;
+    int32_t number_of_entity_instances(hash::EntityID entity_id) const;
 
 
 
@@ -83,13 +83,12 @@ public:
     int32_t set(hash::KeyInstance a_descriptor_list, plHashValue a_value, std::string a_entity_id);
 
     //API for modifying a data set
-    virtual void add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
-    virtual void remove_instance(std::string entity_id);
-    virtual void increment_instance_id(std::string entity_id, int32_t position=1);
-    virtual int32_t pad_entity_count(std::string entity_id, int32_t a_num_blanks=1);
+    virtual void add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
+    virtual void remove_instance(hash::KeyInstance a_key_subset);
+    virtual void increment_instance_id(hash::KeyInstance a_key_subset, int32_t position=1);
 
 
-
+    //todo -- refactor this ugly function
     std::string id_lexer(
         std::string a_identifier, 
         std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr,
@@ -105,11 +104,19 @@ protected:
     plHashTable hash_table;
 
     /* Helpers */
+    //todo -- describe this function better
+    //overwrites an entity record.  recursively repositions all overwritten elements
     void displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key);
-    std::string increment_descriptor_in_key(std::string entity_id, std::string hash_key, int32_t position);
+
+    //todo describe these functions
+    std::string increment_descriptor_in_key(hash::EntityID entity_id, hash::KeyInstance hash_key, int32_t position);
     void update_descriptor_counts(std::string a_descriptor_list);
+
+    //used in get accessor
     hash::KeyInstance compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const;
-    std::vector<hash::DescriptorInstance> helper(std::string key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const;
+
+    //todo -- what does this function do?
+    std::vector<hash::DescriptorInstance> helper(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const;
 
     //epected descriptors are descriptors needed to identify a hash value.
     // std::vector<std::shared_ptr<hash::DescriptorID>> expected_descriptors;

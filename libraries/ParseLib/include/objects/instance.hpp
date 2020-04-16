@@ -38,7 +38,7 @@ public:
     const std::vector<std::string>::iterator end();             //returns an iterator at the end of the value list.
 
     Instance GetNextInstance(hash::DescriptorID a_descriptor_id) const;      //next value in a set of instances.
-    Instance GetPreviousInstance(std::string a_descriptor_id) const;  //previous value in a set of instances.
+    Instance GetPreviousInstance(hash::DescriptorID a_descriptor_id) const;  //previous value in a set of instances.
     Instance GetRelatedInstance(hash::DescriptorID a_descriptor_id) const;        //returns a related entity.
     
     bool is_valid() const;                                      //tells us if the instance is valid.
