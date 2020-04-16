@@ -115,7 +115,7 @@ void sdg::DataSet::update_descriptor_counts(std::string a_descriptor_list)
 
     while(token!=NULL)
     {
-        logical_data_structure.found_descriptor(token);
+        logical_data_structure.found_descriptor(hash::DescriptorID(token));
 
         token = strtok(NULL,"-");
     }

@@ -155,7 +155,7 @@ std::string sdg::DataSet::increment_descriptor_in_key(hash::EntityID a_entity_id
     while(token!=NULL)
     {
         //if the descriptor mat
-        if(a_entity_id.to_string().compare(token)==0)
+        if(a_entity_id == token)
         {   
             std::string copy_new_key = new_key;
             increment_descriptor_value(token, copy_new_key, descriptor_id);

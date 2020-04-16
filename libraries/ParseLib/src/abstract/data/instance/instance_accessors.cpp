@@ -82,21 +82,21 @@ string Instance::at(int8_t index) const
 
 
 
-Instance Instance::GetRelatedInstance(hash::DescriptorID a_entity_id) const
+Instance Instance::GetRelatedInstance(hash::DescriptorID a_descriptor_id) const
 { 
     //get the descriptor-index value off the entity identified
     //by 'a_label'
     string attr_buffer;
     
-    if( GetDescriptorByDescriptorID(a_entity_id) != "NO_VALUE" )
-        attr_buffer.append( GetDescriptorByDescriptorID(a_entity_id) );
+    if( GetDescriptorByDescriptorID(a_descriptor_id) != "NO_VALUE" )
+        attr_buffer.append( GetDescriptorByDescriptorID(a_descriptor_id) );
 
-    else if( !kOwner_->IsDescriptorRequired(a_entity_id) )
-        attr_buffer.append(a_entity_id.to_string());
+    else if( !kOwner_->IsDescriptorRequired(a_descriptor_id) )
+        attr_buffer.append(a_descriptor_id.to_string());
 
 
     //get any other descriptors that might be necessary
-    vector<hash::DescriptorID> identifier = kOwner_->get_data_model().get_entity_identifier(a_entity_id);
+    vector<hash::DescriptorID> identifier = kOwner_->get_data_model().get_entity_identifier(a_descriptor_id);
 
     for(int i=0; i<identifier.size();++i)
     {

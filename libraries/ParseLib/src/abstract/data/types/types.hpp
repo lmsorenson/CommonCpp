@@ -73,11 +73,19 @@ public:
 
     std::string to_string();
 
+    bool operator== (const char * &str)
+    {
+        return (id_.compare(std::string(str))==0);
+    }
+
+    bool operator== (const std::string &str)
+    {
+        return (id_.compare(str)==0);
+    }
+
 private:
     std::string id_;
 };
-
-
 
 }//namespace hash
 }//namespace sdg

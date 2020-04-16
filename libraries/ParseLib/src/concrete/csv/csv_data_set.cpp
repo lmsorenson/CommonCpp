@@ -82,12 +82,12 @@ void CSV::assign()
 void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position)
 {
     //adding a record
-    if(entity_id.to_string().compare("R")==0)
+    if(entity_id=="R")
     {
         //get the number of fields in the dataset.
         int32_t 
-            field_count = this->logical_data_structure.get_entity_count("F"),
-            record_count = this->logical_data_structure.get_entity_count("R");
+            field_count = this->logical_data_structure.get_entity_count(hash::EntityID("F")),
+            record_count = this->logical_data_structure.get_entity_count(hash::EntityID("R"));
 
         //cell values 
         if(entity_values.size()<=field_count)
@@ -159,12 +159,12 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
     }
 
     //adding a field
-    else if(entity_id.to_string().compare("F")==0)
+    else if(entity_id=="F")
     {
         //get the number of fields in the dataset.
         int32_t 
-            field_count = this->logical_data_structure.get_entity_count("F"),
-            record_count = this->logical_data_structure.get_entity_count("R");
+            field_count = this->logical_data_structure.get_entity_count(hash::EntityID("F")),
+            record_count = this->logical_data_structure.get_entity_count(hash::EntityID("R"));
 
         //cell values 
         if(entity_values.size()<=record_count)
