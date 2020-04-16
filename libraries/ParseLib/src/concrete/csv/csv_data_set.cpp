@@ -229,7 +229,7 @@ void CSV::remove_instance(hash::KeyInstance a_key_subset)
     }
 }
 
-void CSV::increment_instance_id(hash::KeyInstance a_key_subset, int32_t position)
+void CSV::reposition_instance(hash::KeyInstance a_key_subset, int32_t position)
 {
     //iterates through all keys matching the passed in entity_id
     for (auto key : hash_table.GetMatchingKeys(a_key_subset.value()))

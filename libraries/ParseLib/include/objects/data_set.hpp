@@ -84,8 +84,13 @@ public:
 
     //API for modifying a data set
     virtual void add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position=END_OF_ENTITY_LIST);
+    
+    //removes an entity instance
     virtual void remove_instance(hash::KeyInstance a_key_subset);
-    virtual void increment_instance_id(hash::KeyInstance a_key_subset, int32_t position=1);
+
+    //moves an instance along a dimension
+    //increases the position of the entity in the list.
+    virtual void reposition_instance(hash::KeyInstance a_key_subset, int32_t position=1);
 
 
     //todo -- refactor this ugly function
@@ -94,6 +99,7 @@ public:
         std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr,
         std::function<void(std::string label_not_found)> lambda_expr2=nullptr,
         std::function<void(std::string label_unrecognized)> callback_unrecognized_desc=nullptr) const;
+
     std::vector<std::string> get_missing_descriptors(std::string a_descriptor_labels) const;
 
 protected:

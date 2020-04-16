@@ -98,7 +98,7 @@ void sdg::DataSet::remove_instance(hash::KeyInstance a_key_subset)
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::increment_instance_id(hash::KeyInstance a_key_subset, int32_t position)
+void sdg::DataSet::reposition_instance(hash::KeyInstance a_key_subset, int32_t position)
 {
     //todo-->handle definition of this function
 }
