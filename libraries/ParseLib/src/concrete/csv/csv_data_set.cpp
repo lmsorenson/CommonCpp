@@ -119,11 +119,11 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
                 if(i<entity_values.size())
                 {
                     
-                    this->set(key_buffer, plHashValue(entity_values[i], str), "R");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue(entity_values[i], str), sdg::hash::DescriptorID("R"));
                 }
                 else
                 {
-                    this->set(key_buffer, plHashValue("", str),"R");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue("", str), sdg::hash::DescriptorID("R"));
                 }
                 
             }
@@ -147,11 +147,11 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
 
                 if(i<entity_values.size())
                 {
-                    this->set(key_buffer, plHashValue(entity_values[i], str), "R");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue(entity_values[i], str), sdg::hash::DescriptorID("R"));
                 }
                 else
                 {
-                    this->set(key_buffer, plHashValue("", str), "R");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue("", str), sdg::hash::DescriptorID("R"));
                 }
             }
         }
@@ -195,12 +195,12 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
                 
                 if(i<entity_values.size())
                 {
-                    this->set(key_buffer, plHashValue(entity_values[i], str), "F");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue(entity_values[i], str), sdg::hash::DescriptorID("F"));
                     
                 }
                 else
                 {
-                    this->set(key_buffer, plHashValue("", str),"F");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue("", str),sdg::hash::DescriptorID("F"));
                 }
                 
             }
@@ -229,22 +229,22 @@ void CSV::remove_instance(hash::KeyInstance a_key_subset)
     }
 }
 
-void CSV::reposition_instance(hash::KeyInstance a_key_subset, int32_t position)
+void CSV::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t position)
 {
     //iterates through all keys matching the passed in entity_id
-    for (auto key : hash_table.GetMatchingKeys(a_key_subset.value()))
+    for (auto key : hash_table.GetMatchingKeys(hash::KeyInstance({a_descriptor}).value()))
     {
-        bool done = false;
+        bool done=false;
         std::string new_key;
         plHashValue replaced_value;
 
-        new_key = increment_descriptor_in_key(a_key_subset.value(), key, position);
-        
+        //todo -- this can only apply to numeric attributes, so far attributes exist in both boolean and numberic type
+        new_key=increment_descriptor_in_key(a_descriptor, key, position);
+
         replaced_value = hash_table.move(key, new_key);
-        
+
         update_descriptor_counts(new_key);
 
-        displace_overwritten_keys(replaced_value, a_key_subset.value(), new_key);
-        
+        displace_overwritten_keys(replaced_value, a_descriptor, new_key);
     }//for
 }

@@ -50,11 +50,30 @@ public:
 
     int32_t get_descriptor_value() const;
     std::string get_descriptor_id() const;
+
+    std::string as_string();
+    
     Attribute::Scale get_scale() const;
     bool is_found() const;
 
     void set_value(int32_t a_value);
     void set_found();
+
+    bool operator== (const char * &str)
+    {
+        std::string buffer;
+        buffer.append(id_).append(std::to_string(value_));
+        return (buffer.compare(std::string(str))==0);
+    }
+
+    bool operator== (const std::string &str)
+    {
+        std::string buffer;
+        buffer.append(id_).append(std::to_string(value_));
+        return (buffer.compare(str)==0);
+    }
+
+    DescriptorInstance &operator++( int n );
 
 private:
     std::string id_;

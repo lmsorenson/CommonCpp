@@ -626,7 +626,9 @@ TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
     ASSERT_EQ(ds["R1"]["F2"].get(), "C2");
     ASSERT_EQ(ds["R1"]["F3"].get(), "D2");
 
-    ds.reposition_instance(sdg::hash::KeyInstance("R1"));//remove row 3
+    sdg::hash::DescriptorInstance descriptor = sdg::hash::DescriptorInstance("R", sdg::Attribute::Scale::Numeric);
+    descriptor.set_value(1);
+    ds.reposition_instance(descriptor);//remove row 3
 
     //assert row 3 = NULL
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");
@@ -695,7 +697,9 @@ TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already 
     ASSERT_EQ(ds["R3"]["F2"].get(), "C4");
     ASSERT_EQ(ds["R3"]["F3"].get(), "D4");
 
-    ds.reposition_instance(sdg::hash::KeyInstance("R1"));//remove row 3
+    sdg::hash::DescriptorInstance descriptor = sdg::hash::DescriptorInstance("R", sdg::Attribute::Scale::Numeric);
+    descriptor.set_value(1);
+    ds.reposition_instance(descriptor);//remove row 3
 
     //assert row 3 = NULL
     ASSERT_EQ(ds["R0"]["F0"].get(), "A1");

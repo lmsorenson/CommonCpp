@@ -55,6 +55,16 @@ sdg::hash::DescriptorInstance::DescriptorInstance(std::string a_descriptor_id, A
 , b_is_found_(false)
 {}
 
+sdg::hash::DescriptorInstance& sdg::hash::DescriptorInstance::operator++( int n )
+{
+    if( n != 0 )
+        value_ += n;
+    else
+        value_++;
+
+    return *this;
+}
+
 
 
 int32_t sdg::hash::DescriptorInstance::get_descriptor_value() const
@@ -64,6 +74,12 @@ int32_t sdg::hash::DescriptorInstance::get_descriptor_value() const
 std::string sdg::hash::DescriptorInstance::get_descriptor_id() const
 {
     return id_;
+}
+
+std::string sdg::hash::DescriptorInstance::as_string()
+{
+    std::string return_variable;
+    return return_variable.append(id_).append(std::to_string(value_));
 }
 sdg::Attribute::Scale sdg::hash::DescriptorInstance::get_scale() const
 {

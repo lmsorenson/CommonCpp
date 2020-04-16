@@ -25,7 +25,7 @@ public:
     virtual void assign();
     virtual void add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position=-1) override;
     virtual void remove_instance(hash::KeyInstance a_key_subset) override;
-    virtual void reposition_instance(hash::KeyInstance a_key_subset, int32_t position=1) override;
+    virtual void reposition_instance(hash::DescriptorInstance a_descriptor, int32_t position=1) override;
 };
 
 }// namespace sdg
