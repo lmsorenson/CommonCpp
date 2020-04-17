@@ -9,7 +9,7 @@ using std::function;
 using std::make_shared;
 
 
-std::string get_matching_descriptor(std::string a_descriptor_list, std::string a_meta_entity_id);
+sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_key, sdg::hash::DescriptorID a_descriptor_id);
 
 int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value)
 {
@@ -30,10 +30,13 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
 
 
 
-int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value, std::string a_entity_id)
+int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value, hash::DescriptorID a_descriptor_id)
 {
     plHashValue replaced_value;
-    std::string new_entity_id, new_key, copy_entity_id = a_entity_id;
+    std::string new_key;
+
+    hash::DescriptorID copy_descriptor_id = a_descriptor_id;
+    hash::DescriptorInstance new_descriptor;
 
     switch (state)
     {
@@ -41,21 +44,25 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
         state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
 
-
+        //returns a copy of the value that was replaced in the operation.
         replaced_value = hash_table.insert(a_descriptor_list.value(), plHashValue(a_value));
+
+        //maintains count for the list
         this->update_descriptor_counts(a_descriptor_list.value());
 
         if(replaced_value.is_valid())
         {
-            new_entity_id = get_matching_descriptor(a_descriptor_list.value(), copy_entity_id);
+            //
+            new_descriptor = get_matching_descriptor(a_descriptor_list, copy_descriptor_id);
             
-            new_key = increment_descriptor_in_key(new_entity_id, a_descriptor_list.value(), 0);
+            new_key = increment_descriptor_in_key(new_descriptor, a_descriptor_list.value(), 0);
 
             replaced_value = hash_table.insert(new_key, plHashValue(replaced_value));
             
             this->update_descriptor_counts(new_key);
             
-            displace_overwritten_keys(replaced_value, new_entity_id, new_key);
+            //recursively replaces elements that are over written.
+            displace_overwritten_keys(replaced_value, new_descriptor, new_key);
         }
         
         return 0; 
@@ -88,26 +95,21 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
 
 
 
-void sdg::DataSet::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
+void sdg::DataSet::add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position)
 {
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::remove_instance(std::string entity_id)
+void sdg::DataSet::remove_instance(hash::KeyInstance a_key_subset)
 {
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::increment_instance_id(std::string entity_id, int32_t position)
+void sdg::DataSet::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t position)
 {
     //todo-->handle definition of this function
 }
 
-int32_t sdg::DataSet::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
-{
-    //todo-->handle definition of this function
-    return 0;
-}
 
 
 
@@ -120,26 +122,35 @@ void sdg::DataSet::update_descriptor_counts(std::string a_descriptor_list)
 
     while(token!=NULL)
     {
-        logical_data_structure.found_descriptor(token);
+        logical_data_structure.found_descriptor(hash::DescriptorID(token));
 
         token = strtok(NULL,"-");
     }
 }
 
-std::string get_matching_descriptor(std::string a_descriptor_list, std::string a_meta_entity_id)
+
+//gets a copy of the descriptor within a key matching the descriptor id if one exists.
+sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_key, sdg::hash::DescriptorID a_descriptor_id)
 {
-    std::string copy = a_descriptor_list;
-    char * token = strtok((char*)copy.c_str(),"-");
+    std::cout << "get matching descriptor" << std::endl;
+    using namespace sdg::hash;
+
+    KeyInstance copy = a_key;
+
+    char * token = strtok((char*)copy.value().c_str(),"-");
 
     while(token!=NULL)
     {
-        if(std::string(token).substr(0,1).compare(a_meta_entity_id)==0)
+        if(std::string(token).substr(0,1).compare(a_descriptor_id.to_string())==0)
         {
-            return token;
+            DescriptorInstance descriptor = DescriptorInstance(std::string(token).substr(0,1), sdg::Attribute::Scale::Numeric);
+            descriptor.set_value(std::stoi(std::string(token).substr(1,1)));
+
+            return descriptor;
         }
 
         token = strtok(NULL,"-");
     }
 
-    return "NULL";
+    return DescriptorInstance("NULL", sdg::Attribute::Scale::Numeric);
 }

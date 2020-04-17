@@ -5,10 +5,14 @@
 
 
 
-
-
 namespace sdg
 {
+
+namespace hash {
+
+class DescriptorID;
+
+}// namespace hash
 
 class Entity;
 class Relationship;
@@ -46,7 +50,7 @@ public:
     Link(std::string a_name, std::shared_ptr<Entity> a_entity, std::string a_link_label="");
     ~Link()=default;
 
-    std::vector<std::string> get_descriptor_IDs();
+    std::vector<hash::DescriptorID> get_descriptor_IDs();
     std::vector<std::shared_ptr<Descriptor>> get_descriptors();
 };
 

@@ -79,15 +79,15 @@ void CSV::assign()
 {
 }
 
-void CSV::add_instance(std::string entity_id, std::vector<std::string> entity_values, int32_t position)
+void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position)
 {
     //adding a record
-    if(entity_id.compare("R")==0)
+    if(entity_id=="R")
     {
         //get the number of fields in the dataset.
         int32_t 
-            field_count = this->logical_data_structure.get_entity_count("F"),
-            record_count = this->logical_data_structure.get_entity_count("R");
+            field_count = this->logical_data_structure.get_entity_count(hash::EntityID("F")),
+            record_count = this->logical_data_structure.get_entity_count(hash::EntityID("R"));
 
         //cell values 
         if(entity_values.size()<=field_count)
@@ -119,18 +119,17 @@ void CSV::add_instance(std::string entity_id, std::vector<std::string> entity_va
                 if(i<entity_values.size())
                 {
                     
-                    this->set(key_buffer, plHashValue(entity_values[i], str), "R");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue(entity_values[i], str), sdg::hash::DescriptorID("R"));
                 }
                 else
                 {
-                    this->set(key_buffer, plHashValue("", str),"R");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue("", str), sdg::hash::DescriptorID("R"));
                 }
                 
             }
         }
         else
         {
-            // pad_entity_count("F", (entity_values.size() - field_count) );
             std::string str = "R";
             //called if the position parameter is left empty,
             //by default add new records to the end of the document.
@@ -148,11 +147,11 @@ void CSV::add_instance(std::string entity_id, std::vector<std::string> entity_va
 
                 if(i<entity_values.size())
                 {
-                    this->set(key_buffer, plHashValue(entity_values[i], str), "R");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue(entity_values[i], str), sdg::hash::DescriptorID("R"));
                 }
                 else
                 {
-                    this->set(key_buffer, plHashValue("", str), "R");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue("", str), sdg::hash::DescriptorID("R"));
                 }
             }
         }
@@ -160,12 +159,12 @@ void CSV::add_instance(std::string entity_id, std::vector<std::string> entity_va
     }
 
     //adding a field
-    else if(entity_id.compare("F")==0)
+    else if(entity_id=="F")
     {
         //get the number of fields in the dataset.
         int32_t 
-            field_count = this->logical_data_structure.get_entity_count("F"),
-            record_count = this->logical_data_structure.get_entity_count("R");
+            field_count = this->logical_data_structure.get_entity_count(hash::EntityID("F")),
+            record_count = this->logical_data_structure.get_entity_count(hash::EntityID("R"));
 
         //cell values 
         if(entity_values.size()<=record_count)
@@ -196,12 +195,12 @@ void CSV::add_instance(std::string entity_id, std::vector<std::string> entity_va
                 
                 if(i<entity_values.size())
                 {
-                    this->set(key_buffer, plHashValue(entity_values[i], str), "F");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue(entity_values[i], str), sdg::hash::DescriptorID("F"));
                     
                 }
                 else
                 {
-                    this->set(key_buffer, plHashValue("", str),"F");
+                    this->set(sdg::hash::KeyInstance(key_buffer), plHashValue("", str),sdg::hash::DescriptorID("F"));
                 }
                 
             }
@@ -221,101 +220,31 @@ void CSV::add_instance(std::string entity_id, std::vector<std::string> entity_va
     }
 }
 
-void CSV::remove_instance(std::string entity_id)
+void CSV::remove_instance(hash::KeyInstance a_key_subset)
 {
-    //todo-->define
-
-    for (auto key : hash_table.GetMatchingKeys(entity_id))
+    //searches the hash table for a list of Keys that match the descriptors provided
+    for (auto key : hash_table.GetMatchingKeys(a_key_subset.value()))
     {
         hash_table.delete_value(key);
     }
 }
 
-void CSV::increment_instance_id(std::string entity_id, int32_t position)
+void CSV::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t position)
 {
-    //todo-->define
-    
     //iterates through all keys matching the passed in entity_id
-    for (auto key : hash_table.GetMatchingKeys(entity_id))
+    for (auto key : hash_table.GetMatchingKeys(hash::KeyInstance({a_descriptor}).value()))
     {
-        bool done = false;
+        bool done=false;
         std::string new_key;
         plHashValue replaced_value;
 
-        new_key = increment_descriptor_in_key(entity_id, key, position);
-        
+        //todo -- this can only apply to numeric attributes, so far attributes exist in both boolean and numberic type
+        new_key=increment_descriptor_in_key(a_descriptor, key, position);
+
         replaced_value = hash_table.move(key, new_key);
-        
+
         update_descriptor_counts(new_key);
 
-        displace_overwritten_keys(replaced_value, entity_id, new_key);
-        
+        displace_overwritten_keys(replaced_value, a_descriptor, new_key);
     }//for
-}
-
-int32_t CSV::pad_entity_count(std::string entity_id, int32_t a_num_blanks)
-{
-    //get the current number of fields.
-    int32_t 
-        record_count = this->logical_data_structure.get_entity_count("R"),
-        field_count = this->logical_data_structure.get_entity_count("F");
-
-    std::string r_buffer, f_buffer, c_buffer;
-
-    if(entity_id.compare("F")==0)
-    {
-        for(int i=0; i<record_count; ++i)
-        {
-            r_buffer.clear();
-            r_buffer
-                .append("R")
-                .append(std::to_string(i))
-                .append("-");
-
-            for(int k=field_count; k<field_count+a_num_blanks; ++k)
-            {
-                f_buffer.clear();
-                f_buffer
-                    .append("F")
-                    .append(std::to_string(k)); 
-
-
-                c_buffer.clear();
-                c_buffer.append(r_buffer).append(f_buffer);
-
-                this->set(c_buffer, plHashValue("", ""));
-            }
-        }
-
-        return 0;
-    }
-    else if(entity_id.compare("R")==0)
-    {
-        for(int i=record_count; i<record_count+a_num_blanks; ++i)
-        {
-            r_buffer.clear();
-            r_buffer
-                .append("R")
-                .append(std::to_string(i))
-                .append("-");
-
-            for(int k=0; k<field_count; ++k)
-            {
-                f_buffer.clear();
-                f_buffer
-                    .append("F")
-                    .append(std::to_string(k));
-
-                c_buffer.clear();
-                c_buffer.append(r_buffer).append(f_buffer);
-
-                this->set(c_buffer, plHashValue("", ""));
-            }
-        }
-
-        return 0;
-    }
-
-    else
-        return -1;
 }
