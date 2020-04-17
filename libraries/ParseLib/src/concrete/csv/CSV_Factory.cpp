@@ -1,23 +1,23 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "CSV_Factory.hpp"
+#include "csv_factory.hpp"
 
 #include <iostream>
 
 #include <formats/csv_data_set.hpp>
-#include "ReadCSV.hpp"
-#include "CSV_Write.hpp"
+#include "csv_read.hpp"
+#include "csv_write.hpp"
 
-std::shared_ptr<ReadStrategy> CSV_Factory::make_read()
+std::shared_ptr<sdg::ReadStrategy> sdg::csv::Factory::make_read()
 {
-    return std::make_shared<ReadCSV>(ReadCSV());
+    return std::make_shared<Read>(Read());
 }
 
-std::shared_ptr<WriteStrategy> CSV_Factory::make_write()
+std::shared_ptr<sdg::WriteStrategy> sdg::csv::Factory::make_write()
 {
-    return std::make_shared<CSV_Write>(CSV_Write());
+    return std::make_shared<Write>(Write());
 }
 
-std::shared_ptr<sdg::DataSet> CSV_Factory::make_data()
+std::shared_ptr<sdg::DataSet> sdg::csv::Factory::make_data()
 {
-    return std::make_shared<sdg::CSVData>(sdg::CSVData(100));
+    return std::make_shared<CSV>(CSV(100));
 }

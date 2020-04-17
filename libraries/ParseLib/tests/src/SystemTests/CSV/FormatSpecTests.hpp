@@ -10,7 +10,7 @@
 using sdg::DataSet;
 using sdg::Instance;
 using sdg::ParseLib;
-using sdg::CSVData;
+using sdg::CSV;
 using sdg::option;
 
 

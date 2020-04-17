@@ -2,7 +2,8 @@
 #include <objects/instance.hpp>
 
 #include <objects/data_set.hpp>
-
+#include "../types/types.hpp"
+#include "../../../utils/colortext.hpp"
 
 using ::std::vector;
 using ::std::string;
@@ -81,21 +82,21 @@ string Instance::at(int8_t index) const
 
 
 
-Instance Instance::GetRelatedInstance(string a_entity_id) const
+Instance Instance::GetRelatedInstance(hash::DescriptorID a_descriptor_id) const
 { 
     //get the descriptor-index value off the entity identified
     //by 'a_label'
     string attr_buffer;
     
-    
-    if( GetDescriptorByDescriptorID(a_entity_id) != "NO_VALUE" )
-        attr_buffer.append( GetDescriptorByDescriptorID(a_entity_id) );
+    if( GetDescriptorByDescriptorID(a_descriptor_id) != "NO_VALUE" )
+        attr_buffer.append( GetDescriptorByDescriptorID(a_descriptor_id) );
 
-    else if( !kOwner_->IsDescriptorRequired(a_entity_id) )
-        attr_buffer.append(a_entity_id);
+    else if( !kOwner_->IsDescriptorRequired(a_descriptor_id) )
+        attr_buffer.append(a_descriptor_id.to_string());
+
 
     //get any other descriptors that might be necessary
-    vector<string> identifier = kOwner_->get_data_model().get_entity_identifier(a_entity_id);
+    vector<hash::DescriptorID> identifier = kOwner_->get_data_model().get_entity_identifier(a_descriptor_id);
 
     for(int i=0; i<identifier.size();++i)
     {
@@ -113,7 +114,7 @@ Instance Instance::GetRelatedInstance(string a_entity_id) const
             if(!attr_buffer.empty())
                 attr_buffer.append("-");
 
-            attr_buffer.append(identifier[i]);
+            attr_buffer.append(identifier[i].to_string());
         }
     }
 
@@ -125,7 +126,7 @@ Instance Instance::GetRelatedInstance(string a_entity_id) const
 
 
 //Get next instance in 'a_label'
-Instance Instance::GetNextInstance(string a_label) const
+Instance Instance::GetNextInstance(hash::DescriptorID a_label) const
 {
     // get next instance with respect to entity identified by a_label
     Instance owner;
@@ -153,7 +154,7 @@ Instance Instance::GetNextInstance(string a_label) const
     if((itr!=owner.value_.cend()) && (++itr!=owner.value_.cend()))
     {
         vector<string> 
-        missing_desc = kOwner_->get_missing_descriptors(a_label);
+        missing_desc = kOwner_->get_missing_descriptors(a_label.to_string());
         
         pos++;
 
@@ -182,7 +183,7 @@ Instance Instance::GetNextInstance(string a_label) const
 
 
 
-Instance Instance::GetPreviousInstance(string a_label) const
+Instance Instance::GetPreviousInstance(hash::DescriptorID a_label) const
 {
     //todo->GetPreviousInstance undefined.
     return Instance();
@@ -216,10 +217,10 @@ int32_t Instance::FindIndexOfValue(std::string a_value_to_search_for, int32_t of
 }
 
 
-string Instance::GetDescriptorByDescriptorID(string a_descriptor_id) const
+string Instance::GetDescriptorByDescriptorID(hash::DescriptorID a_descriptor_id) const
 {
     //create a buffer to act as a return value and construct it in steps.
-    string desc_buffer = a_descriptor_id;
+    string desc_buffer = a_descriptor_id.to_string();
 
     //the index buffer is an a place to store matching indices from the lexer.
     //the index buffer is null or not found when the value is -1.
