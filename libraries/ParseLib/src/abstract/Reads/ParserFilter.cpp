@@ -3,9 +3,9 @@
 #include <iostream>
 
 
-
-
-using namespace std;
+using ::std::string;
+using ::std::to_string;
+using ::sdg::ParserFilter;
 
 ParserFilter::ParserFilter(string new_filter_id)
 {
@@ -18,7 +18,7 @@ string ParserFilter::name()
     return "abstract";
 }
 
-std::string ParserFilter::GetID(int index)
+string ParserFilter::GetID(int index)
 {
     string out;
     out.append(label).append(to_string(index));

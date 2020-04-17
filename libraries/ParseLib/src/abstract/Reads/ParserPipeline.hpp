@@ -7,10 +7,15 @@
 #include "../data/structures/node.hpp"
 #include <objects/data_set.hpp>
 
+namespace sdg {
 
 typedef std::vector<std::vector<std::shared_ptr<sdg::plNode>>> plNodeBuffer;
 typedef std::vector<std::shared_ptr<sdg::plNode>> plNodeSet;
 typedef std::shared_ptr<sdg::plNode> plNodePtr;
+
+
+
+
 
 class ParserPipeline
 {
@@ -59,3 +64,5 @@ public:
         PIPELINE_UNKNOWN_ERROR
     };
 };
+
+}// namespace sdg
