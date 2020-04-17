@@ -98,7 +98,7 @@ sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
     //does this key contain all necessary descriptors for a query?
     if ( generated_key.is_partial_key() )
     {
-        vector<string> matching_keys = hash_table.GetMatchingKeys(generated_key.value());
+        vector<hash::KeyInstance> matching_keys = hash_table.GetMatchingKeys(generated_key);
         for(int i=0; i<matching_keys.size(); ++i)
         {
             return_buffer.add_value(hash_table.get(matching_keys[i]));

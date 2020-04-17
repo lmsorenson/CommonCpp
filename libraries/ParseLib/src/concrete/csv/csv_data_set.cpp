@@ -223,7 +223,7 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
 void CSV::remove_instance(hash::KeyInstance a_key_subset)
 {
     //searches the hash table for a list of Keys that match the descriptors provided
-    for (auto key : hash_table.GetMatchingKeys(a_key_subset.value()))
+    for (auto key : hash_table.GetMatchingKeys(a_key_subset))
     {
         hash_table.delete_value(key);
     }

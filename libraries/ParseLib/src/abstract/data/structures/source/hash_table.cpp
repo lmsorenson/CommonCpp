@@ -10,6 +10,7 @@ using std::endl;
 using std::cout;
 using sdg::plHashTable;
 using sdg::plHashValue;
+using sdg::hash::KeyInstance;
 
 plHashTable::plHashTable()
 : hash_table_size(100)
@@ -42,18 +43,18 @@ int32_t plHashTable::compute_index(string value) const
     return index;
 }
 
-bool plHashTable::key_value_exists(std::string a_key)
+bool plHashTable::key_value_exists(KeyInstance a_key)
 {
-    int32_t index = compute_index(a_key);
+    int32_t index = compute_index(a_key.value());
 
-    std::string value = table[index]->find(a_key);
+    std::string value = table[index]->find(a_key.value());
 
     return !(value=="NULL");
 }
 
-plHashValue plHashTable::insert(string key, plHashValue value)
+plHashValue plHashTable::insert(KeyInstance key, plHashValue value)
 {
-    int32_t index = compute_index(key);
+    int32_t index = compute_index(key.value());
     shared_ptr<plHashElementIterator> e (table[index]);
 
     plHashValue replaced_key_value;
@@ -63,18 +64,18 @@ plHashValue plHashTable::insert(string key, plHashValue value)
     {
         if(this->key_value_exists(key))
         {
-            replaced_key_value = e->assign_value_to_existing_key(key, value);
+            replaced_key_value = e->assign_value_to_existing_key(key.value(), value);
         }
         else
         {
-            e->set_last(plHashElementIterator(key, value));
+            e->set_last(plHashElementIterator(key.value(), value));
             this->hash_key_list.push_back(key);
         }
     }
     //if the bucket is null
     else
     {
-        table[index]=make_shared<plHashElementIterator>(plHashElementIterator(key, value));
+        table[index]=make_shared<plHashElementIterator>(plHashElementIterator(key.value(), value));
         hash_key_list.push_back(key);
     }
     
@@ -82,7 +83,7 @@ plHashValue plHashTable::insert(string key, plHashValue value)
     return replaced_key_value;
 }
 
-plHashValue plHashTable::move(string old_key, string new_key)
+plHashValue plHashTable::move(KeyInstance old_key, KeyInstance new_key)
 {
     plHashValue replaced_value;
 
@@ -97,30 +98,32 @@ plHashValue plHashTable::move(string old_key, string new_key)
     return replaced_value;
 }
 
-void plHashTable::delete_value(string a_key)
+void plHashTable::delete_value(KeyInstance a_key)
 {
-    //todo-->define this function
-    table[compute_index(a_key)]->remove_value(a_key);
+    table[compute_index(a_key.value())]->remove_value(a_key.value());
 }
 
-string plHashTable::get(string key) const
+//returns the string value of a key in the hash table.
+string plHashTable::get(KeyInstance a_key) const
 {
-    return table[compute_index(key)]->find(key);
+    return table[compute_index(a_key.value())]->find(a_key.value());
 }
 
-plHashValue plHashTable::get_hash_value(string key) const
+//returns a plHashValue value from by a key from the hash_table.
+plHashValue plHashTable::get_hash_value(KeyInstance a_key) const
 {
-    return table[compute_index(key)]->find_hash_value(key);
+    return table[compute_index(a_key.value())]->find_hash_value(a_key.value());
 }
 
-vector<string> plHashTable::GetMatchingKeys(string descriptor_list_str) const
+//returns a list of keys that matches the passed in descriptors.(hyphen delimited)
+std::vector<KeyInstance> plHashTable::GetMatchingKeys(KeyInstance a_key_subset) const
 {
-    vector<string> return_list;
+    vector<KeyInstance> return_list;
+    vector<KeyInstance> local_hash_keys = hash_key_list;
+    vector<KeyInstance> local_hash_key_buffer;
 
-    char * token=strtok((char*)descriptor_list_str.c_str(), "-");
-    vector<string> 
-        local_hash_keys = hash_key_list,
-        local_hash_key_buffer;
+    std::string local_key_subset = a_key_subset.value();
+    char * token=strtok((char*)local_key_subset.c_str(), "-");
 
     while(token!=NULL)
     {
@@ -128,7 +131,7 @@ vector<string> plHashTable::GetMatchingKeys(string descriptor_list_str) const
         for(int i=0; i<local_hash_keys.size(); ++i)
         {
             //check if the key matches the passed in key.
-            if((local_hash_keys[i].find(token))!=string::npos)
+            if((local_hash_keys[i].value().find(token))!=string::npos)
             {
                 local_hash_key_buffer.push_back(local_hash_keys[i]);
             }
@@ -141,12 +144,8 @@ vector<string> plHashTable::GetMatchingKeys(string descriptor_list_str) const
         token=strtok(NULL, "-");
     }
 
-    return_list = local_hash_keys;
+    return_list=local_hash_keys;
 
     delete[] token;
     return return_list;
 }
-
-
-
-

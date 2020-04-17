@@ -132,7 +132,6 @@ void sdg::DataSet::update_descriptor_counts(std::string a_descriptor_list)
 //gets a copy of the descriptor within a key matching the descriptor id if one exists.
 sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_key, sdg::hash::DescriptorID a_descriptor_id)
 {
-    std::cout << "get matching descriptor" << std::endl;
     using namespace sdg::hash;
 
     KeyInstance copy = a_key;
