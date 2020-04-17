@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <objects/data_set.hpp>
 
-#include "../keys/keys.hpp"
+#include "../types/types.hpp"
 
 
 
@@ -12,11 +12,6 @@ using std::shared_ptr;
 using std::dynamic_pointer_cast;
 using std::cout;
 using std::endl;
-
-
-
-/* helpers */
-void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id);
 
 
 //todo -- increase the clarity and readability of the inner workings of the lexer.
@@ -141,11 +136,11 @@ vector<std::string> sdg::DataSet::get_missing_descriptors(std::string a_descript
     return r_missing_descriptors;
 }
 
-
-std::string sdg::DataSet::increment_descriptor_in_key(std::string a_entity_id, std::string a_hash_key, int32_t a_position)
+//searches the key for an instance of a_descriptor
+std::string sdg::DataSet::increment_descriptor_in_key(hash::DescriptorInstance a_descriptor, hash::KeyInstance a_hash_key, int32_t a_position)
 {
     std::string 
-            copy = a_hash_key,
+            copy = a_hash_key.value(),
             new_key,
             descriptor_id;
 
@@ -155,11 +150,11 @@ std::string sdg::DataSet::increment_descriptor_in_key(std::string a_entity_id, s
     while(token!=NULL)
     {
         //if the descriptor mat
-        if(a_entity_id.compare(token)==0)
+        if(a_descriptor == token)
         {   
-            std::string copy_new_key = new_key;
-            increment_descriptor_value(token, copy_new_key, descriptor_id);
-            new_key.append(copy_new_key);
+            a_descriptor++;
+
+            new_key.append(a_descriptor.as_string());
         }
         else
         {
@@ -178,47 +173,26 @@ std::string sdg::DataSet::increment_descriptor_in_key(std::string a_entity_id, s
 
 
 
-//increments the id for each 
-void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, std::string new_entity_id, std::string new_key)
+//recursively replaces elements that are over written.
+void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, hash::DescriptorInstance a_descriptor, hash::KeyInstance new_key)
 {
     plHashValue replaced = replaced_value;
     while(replaced.is_valid())
     {
-        std::string scanned_meta_descriptor_id;
-        increment_descriptor_value(new_entity_id, new_entity_id, scanned_meta_descriptor_id);
-        new_key = increment_descriptor_in_key(new_entity_id, new_key, 1);
-        replaced = this->hash_table_.insert(new_key, replaced);
-        this->update_descriptor_counts(new_key);
+        //increment the value on the descriptor
+        a_descriptor++;
+
+        //takes a descriptor increments it and applys it to the provided key
+        new_key = increment_descriptor_in_key(a_descriptor, new_key, 1);
+
+        //apply the previously replaced value and assign the newly replaced value(if one exists) 
+        replaced = this->hash_table_.insert(new_key.value(), replaced);
+
+        //update the count of descriptors.
+        //todo-- check naming of this function, readability is a bit challenging
+        this->update_descriptor_counts(new_key.value());
     }
 }
-
-
-
-
-/* helpers */
-void increment_descriptor_value(std::string a_descriptor_id, std::string &a_out_descriptor_id, std::string &a_out_meta_descriptor_id)
-{
-    char* descriptor_id = (char*)a_descriptor_id.c_str();
-    char scanned_descriptor_id[1];
-    int32_t scanned_descriptor_value;
-
-    //scan the token
-    sscanf(descriptor_id, "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
-
-    //increment the numeric descriptor value
-    scanned_descriptor_value++;
-
-    //assign the value of the descriptor_id to the reference parameter
-    a_out_meta_descriptor_id=scanned_descriptor_id;
-
-    a_out_descriptor_id.clear();
-    a_out_descriptor_id.append(scanned_descriptor_id).append(std::to_string(scanned_descriptor_value));
-}
-
-
-
-
-
 
 sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const
 {
@@ -242,8 +216,6 @@ sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::De
             //push key to the format.
             compiled_key.append(expected_descriptors[i].get_descriptor_id());
             
-
-
             if( expected_descriptors[i].get_scale() == Attribute::Scale::Numeric)
                 compiled_key.append(std::to_string(expected_descriptors[i].get_descriptor_value()));
         }
@@ -270,7 +242,7 @@ sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::De
     return sdg::hash::KeyInstance(compiled_key, data_missing);
 }
 
-std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(std::string key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
+std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
 {
     using sdg::hash::DescriptorInstance;
 
@@ -297,7 +269,7 @@ std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(std::string key_
     *              Lexer                 *
     * ----------------------------------*/
     key_buffer = this->id_lexer(
-        key_buffer, 
+        key_buffer.value(), 
         [&](int32_t key_i,int32_t index, string found_label)
         {
             if (buffer[key_i].get_scale() == Attribute::Scale::Numeric)

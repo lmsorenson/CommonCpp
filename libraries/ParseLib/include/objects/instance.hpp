@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "../src/abstract/data/types/types.hpp"
+
 
 
 namespace sdg {
@@ -35,9 +37,9 @@ public:
     const std::vector<std::string>::iterator begin();           //returns an iterator to the beginning of the value list.
     const std::vector<std::string>::iterator end();             //returns an iterator at the end of the value list.
 
-    Instance GetNextInstance(std::string a_descriptor_id) const;      //next value in a set of instances.
-    Instance GetPreviousInstance(std::string a_descriptor_id) const;  //previous value in a set of instances.
-    Instance GetRelatedInstance(std::string a_descriptor_id) const;        //returns a related entity.
+    Instance GetNextInstance(hash::DescriptorID a_descriptor_id) const;      //next value in a set of instances.
+    Instance GetPreviousInstance(hash::DescriptorID a_descriptor_id) const;  //previous value in a set of instances.
+    Instance GetRelatedInstance(hash::DescriptorID a_descriptor_id) const;        //returns a related entity.
     
     bool is_valid() const;                                      //tells us if the instance is valid.
     int32_t FindIndexOfValue(std::string a_value_to_search_for, int32_t offset=0) const;    //finds the index of a certain value within the instance if it exists.
@@ -60,7 +62,7 @@ private:
     //gets the descriptor for an entity containing this entity instance.
     //used to get references to related instances.
     //*** takes in a descriptor id, returns a descriptor with a value, or if null "NO_VALUE" ***
-    std::string GetDescriptorByDescriptorID(std::string a_descriptor_id) const;
+    std::string GetDescriptorByDescriptorID(hash::DescriptorID a_descriptor_id) const;
 };
 
 }//namespace sdg

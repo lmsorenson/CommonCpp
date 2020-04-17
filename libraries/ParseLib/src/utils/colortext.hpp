@@ -15,13 +15,13 @@ namespace utils {
 enum class LogTextColor : int
 {
     Black = 30,
-    Red,
-    Green,
-    Yellow,
-    Blue,
-    Magenta,
-    Cyan,
-    White
+    Red = 31,
+    Green = 32,
+    Yellow = 33,
+    Blue = 34,
+    Magenta = 36,
+    Cyan = 37,
+    White = 38
 };
 
 

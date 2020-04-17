@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <objects/data_set.hpp>
 
-#include "../keys/keys.hpp"
+#include "../types/types.hpp"
 
 
 using ::std::string;
@@ -12,7 +12,7 @@ using ::std::dynamic_pointer_cast;
 using ::std::make_shared;
 using ::sdg::Model;
 
-int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
+int32_t sdg::DataSet::IsDescriptorRequired(hash::DescriptorID a_descriptor_id) const
 {
     int32_t r=-1;
 
@@ -22,7 +22,7 @@ int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
     for( auto descriptor : this->logical_data_structure_.get_identifier_of_granular_entity() )
     {
         //if the current descriptor is a match with the argument...
-        if(descriptor->get_id() == a_descriptor_id)//if this is never called return an error.
+        if(descriptor->get_id() == a_descriptor_id.to_string())//if this is never called return an error.
         {       
             if (b_descriptor_found)//if this is ever called return an error.
                 r=-1;
@@ -36,9 +36,9 @@ int32_t sdg::DataSet::IsDescriptorRequired(string a_descriptor_id) const
     return r;
 }
 
-int32_t sdg::DataSet::number_of_entity_instances(std::string a_entity_id) const
+int32_t sdg::DataSet::number_of_entity_instances(hash::EntityID a_entity_id) const
 {
-    return this->logical_data_structure_.get_entity_count(a_entity_id);
+    return this->logical_data_structure_.get_entity_count(a_entity_id.to_string());
 }
 
 Model sdg::DataSet::get_data_model() const
@@ -47,18 +47,18 @@ Model sdg::DataSet::get_data_model() const
 }
 
 
-sdg::Instance sdg::DataSet::where(std::string descriptor, std::string value) const
+sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string value) const
 {
     Instance ret;
 
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
-    if(!(ret = this->get(descriptor)).is_valid())
+    if(!(ret = this->get(a_key_subset.value())).is_valid())
         return sdg::Instance(this, sdg::Instance::NULL_INST);
 
     int32_t pos = ret.FindIndexOfValue(value);
 
-    vector<string> missing_desc = this->get_missing_descriptors(descriptor);        
+    vector<string> missing_desc = this->get_missing_descriptors(a_key_subset.value());        
 
     if(missing_desc.size()==1)
     {
