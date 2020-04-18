@@ -11,15 +11,16 @@ using std::make_shared;
 
 sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_key, sdg::hash::DescriptorID a_descriptor_id);
 
-int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value)
+int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
 {
     switch (state)
     {
     case DATA_SET_EMPTY: 
         state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
-        hash_table.insert(a_descriptor_list.as_string(), plHashValue(a_value));
-        this->update_descriptor_counts(a_descriptor_list.as_string());
+        //todo -- investigate difference between key and subset key.
+        hash_table.insert(a_key, plHashValue(a_value));
+        this->update_descriptor_counts(a_key);
         return 0; 
         break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
@@ -30,10 +31,10 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
 
 
 
-int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_value, hash::DescriptorID a_descriptor_id)
+int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::DescriptorID a_descriptor_id)
 {
     plHashValue replaced_value;
-    std::string new_key;
+    hash::KeyInstance new_key;
 
     hash::DescriptorID copy_descriptor_id = a_descriptor_id;
     hash::DescriptorInstance new_descriptor;
@@ -45,17 +46,17 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
     case DATA_SET_GOOD: 
 
         //returns a copy of the value that was replaced in the operation.
-        replaced_value = hash_table.insert(a_descriptor_list.as_string(), plHashValue(a_value));
+        replaced_value = hash_table.insert(a_key, plHashValue(a_value));
 
         //maintains count for the list
-        this->update_descriptor_counts(a_descriptor_list.as_string());
+        this->update_descriptor_counts(a_key);
 
         if(replaced_value.is_valid())
         {
             //
-            new_descriptor = get_matching_descriptor(a_descriptor_list, copy_descriptor_id);
+            new_descriptor = get_matching_descriptor(a_key, copy_descriptor_id);
             
-            new_key = increment_descriptor_in_key(new_descriptor, a_descriptor_list.as_string(), 0);
+            new_key = increment_descriptor_in_key(new_descriptor, a_key, 0);
 
             replaced_value = hash_table.insert(new_key, plHashValue(replaced_value));
             

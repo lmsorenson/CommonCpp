@@ -66,7 +66,7 @@ sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string va
         generated_identifier.append(missing_desc[0]);
         generated_identifier.append(to_string(pos));
 
-        return this->get(generated_identifier);
+        return this->get(hash::KeyInstance(generated_identifier));
     }
     //todo-->so far this should never happen
     else if(missing_desc.size()>1)

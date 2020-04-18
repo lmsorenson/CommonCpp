@@ -28,7 +28,7 @@ sdg::DataSet::~DataSet(){}
 //-- Operators -------------------------------------
 sdg::Instance sdg::DataSet::operator[](std::string i)
 {
-    return this->get(i);
+    return this->get(hash::KeyInstance(i));
 }
 
 

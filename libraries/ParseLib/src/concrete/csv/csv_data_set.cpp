@@ -232,7 +232,7 @@ void CSV::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t pos
     for (auto key : hash_table.GetMatchingKeys(hash::KeyInstance({a_descriptor})))
     {
         bool done=false;
-        std::string new_key;
+        hash::KeyInstance new_key;
         plHashValue replaced_value;
 
         //todo -- this can only apply to numeric attributes, so far attributes exist in both boolean and numberic type

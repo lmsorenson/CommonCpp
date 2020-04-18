@@ -112,7 +112,7 @@ Instance Instance::GetRelatedInstance(hash::EntityID a_entity_id) const
     }
 
     //get the value from the associated DataSet
-    return kOwner_->get(attr_buffer);
+    return kOwner_->get(hash::KeyInstance(attr_buffer));
 }
 
 
@@ -147,7 +147,7 @@ Instance Instance::GetNextInstance(hash::EntityID a_entity_id) const
     if((itr!=owner.value_.cend()) && (++itr!=owner.value_.cend()))
     {
         vector<string> 
-        missing_desc = kOwner_->get_missing_descriptors(a_entity_id.as_string());
+        missing_desc = kOwner_->get_missing_descriptors(hash::KeyInstance(a_entity_id.as_string()));
         
         pos++;
 
@@ -159,7 +159,7 @@ Instance Instance::GetNextInstance(hash::EntityID a_entity_id) const
             generated_identifier.append(missing_desc[0]);
             generated_identifier.append(to_string(pos));
 
-            return kOwner_->get(generated_identifier);
+            return kOwner_->get(hash::KeyInstance(generated_identifier));
         }
         //todo-->so far this should never happen
         else if(missing_desc.size()>1)
@@ -221,7 +221,7 @@ string Instance::GetDescriptorByDescriptorID(hash::DescriptorID a_descriptor_id)
 
     //find the matching descriptor.
     kOwner_->id_lexer(
-        this->key_.as_string(), //passes in the partial key used to create this instance.
+        this->key_, //passes in the partial key used to create this instance.
                     //in the lexer this is broken down into descriptors and compared with the argument.
         [&](int32_t key_i, int32_t index, string found_label) mutable
         {

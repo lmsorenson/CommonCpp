@@ -34,10 +34,10 @@ std::vector<std::vector<std::string>> sdg::csv::Write::get_dataset_contents(sdg:
 
     for(int32_t i=0; i<dataset.number_of_entity_instances(hash::EntityID("R")); ++i)
     {
-        std::string index = "R";
-        index.append(std::to_string(i));
+        hash::DescriptorInstance descriptor("R", Attribute::Scale::Numeric);
+        descriptor.set_value(i);
 
-        return_var.push_back(dataset.get(index).get_vector());
+        return_var.push_back(dataset.get(hash::KeyInstance({descriptor})).get_vector());
     }
 
     return return_var;

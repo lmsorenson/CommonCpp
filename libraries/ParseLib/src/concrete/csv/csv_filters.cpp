@@ -278,7 +278,7 @@ void sdg::csv::CSVOutput::execute(std::shared_ptr<plNode>& text, sdg::DataSet& d
             else
             {
                 //add the plNode value to the hash table.
-                data_store.set( in[i]->GetID(), plHashValue( in[i]->GetValue(), in[i]->GetPath() ) );
+                data_store.set( hash::KeyInstance(in[i]->GetID()), plHashValue( in[i]->GetValue(), in[i]->GetPath() ) );
             }
         }//i
     }

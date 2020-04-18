@@ -13,8 +13,8 @@ class DescriptorInstance;
 class KeyInstance
 {
 public:
-    KeyInstance()=default;
-    KeyInstance(std::string a_value, bool a_is_partial_key=false);
+    explicit KeyInstance()=default;
+    explicit KeyInstance(std::string a_value, bool a_is_partial_key=false);
     KeyInstance(std::vector<DescriptorInstance> descriptor, bool a_is_partial_key=false);
 
     bool is_partial_key() const;
@@ -29,7 +29,7 @@ private:
 class DescriptorID
 {
 public:
-    DescriptorID()=default;
+    explicit DescriptorID()=default;
     explicit DescriptorID(std::string a_id);
     ~DescriptorID()=default;
 
@@ -45,7 +45,7 @@ private:
 class DescriptorInstance
 {
 public:
-    DescriptorInstance();
+    explicit DescriptorInstance();
     explicit DescriptorInstance(std::string a_descriptor_id, Attribute::Scale a_attr_scale);
 
     int32_t get_descriptor_value() const;
@@ -86,7 +86,7 @@ private:
 class EntityID
 {
 public:
-    EntityID()=default;
+    explicit EntityID()=default;
     explicit EntityID(std::string a_id);
     ~EntityID()=default;
 

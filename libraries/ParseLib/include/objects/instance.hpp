@@ -47,7 +47,7 @@ public:
 
     //-- Mutators --
     void add_value(std::string str_value);      //add a value
-    void set_key(std::string a_key);            //assign the key
+    void set_key(hash::KeyInstance a_key);            //assign the key
 
 
 private:

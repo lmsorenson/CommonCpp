@@ -94,8 +94,8 @@ public:
 
 
     //todo -- refactor this ugly function
-    std::string id_lexer(
-        std::string a_identifier, 
+    hash::KeyInstance id_lexer(
+        hash::KeyInstance a_identifier, 
         std::function<void(int32_t key_i, int32_t index, std::string label)> lambda_expr,
         std::function<void(std::string label_not_found)> lambda_expr2=nullptr,
         std::function<void(std::string label_unrecognized)> callback_unrecognized_desc=nullptr) const;
@@ -114,7 +114,7 @@ protected:
     void displace_overwritten_keys( plHashValue replaced_value, hash::DescriptorInstance a_descriptor, hash::KeyInstance new_key);
 
     //increments the value on a specified numeric descriptor by 1, applys the change to the key
-    std::string increment_descriptor_in_key(hash::DescriptorInstance a_descriptor, hash::KeyInstance hash_key, int32_t position);
+    hash::KeyInstance increment_descriptor_in_key(hash::DescriptorInstance a_descriptor, hash::KeyInstance hash_key, int32_t position);
 
     //takes in a full key, checks each descriptor 
     //to see if this value is greater than the current
