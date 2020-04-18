@@ -82,10 +82,6 @@ string sdg::DataSet::id_lexer(
                 {
                     callback_desc_found(i, NO_INDEX, identifying_descriptors[i]->get_id());
                 }
-                    
-                //todo -- error
-                //else
-                //error
             }
         }
 

@@ -32,7 +32,7 @@ public:
     std::vector<std::shared_ptr<Descriptor>> get_identifier_of_granular_entity() const;
 
     //increment the counter for the entity specified
-    void found_descriptor(hash::DescriptorID a_descriptor_id);
+    void found_descriptor(hash::DescriptorInstance a_descriptor);
     int32_t get_entity_count(hash::EntityID a_entity_id) const;
 
 

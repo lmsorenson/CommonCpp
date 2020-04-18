@@ -110,17 +110,19 @@ protected:
     plHashTable hash_table;
 
     /* Helpers */
-    //todo -- describe this function better
     //overwrites an entity record.  recursively repositions all overwritten elements
     void displace_overwritten_keys( plHashValue replaced_value, hash::DescriptorInstance a_descriptor, hash::KeyInstance new_key);
 
-    //
+    //increments the value on a specified numeric descriptor by 1, applys the change to the key
     std::string increment_descriptor_in_key(hash::DescriptorInstance a_descriptor, hash::KeyInstance hash_key, int32_t position);
 
-    //todo describe these functions
-    void update_descriptor_counts(hash::KeyInstance a_descriptor_list);
+    //takes in a full key, checks each descriptor 
+    //to see if this value is greater than the current
+    //count for that entity
+    void update_descriptor_counts(hash::KeyInstance a_key);
 
-    //used in get accessor
+    //takes a list of descriptors, compiles existing descriptors in the key format.
+    //ignores booleans, returns a KeyInstance.  If assigns it as a partial key if there are descriptor values missing.
     hash::KeyInstance compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const;
 
     //todo -- what does this function do?

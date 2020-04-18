@@ -104,9 +104,6 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
             {
                 str.append(std::to_string(position));
             }
-                
-
-            //todo->after creating the new line push everything else down a record.
 
             for(int32_t i=0;i<field_count;++i)
             {
@@ -216,7 +213,7 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
     //error
     else
     {
-        //todo --> populate this function.
+        //todo --> define this
     }
 }
 

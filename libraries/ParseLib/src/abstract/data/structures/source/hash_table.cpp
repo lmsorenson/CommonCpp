@@ -93,8 +93,6 @@ plHashValue plHashTable::move(KeyInstance old_key, KeyInstance new_key)
     //delete the value at the old location.
     this->delete_value(old_key);
 
-    //todo-->finish defining this function.
-
     return replaced_value;
 }
 

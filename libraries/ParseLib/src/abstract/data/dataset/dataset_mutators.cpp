@@ -122,7 +122,14 @@ void sdg::DataSet::update_descriptor_counts(hash::KeyInstance a_key)
 
     while(token!=NULL)
     {
-        logical_data_structure.found_descriptor(hash::DescriptorID(token));
+        char scanned_descriptor_id[1];
+        int32_t scanned_descriptor_value;
+        sscanf(token, "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
+
+        auto descriptor = hash::DescriptorInstance(scanned_descriptor_id, Attribute::Scale::Numeric);
+        descriptor.set_value(scanned_descriptor_value);
+        
+        logical_data_structure.found_descriptor(descriptor);
 
         token = strtok(NULL,"-");
     }
