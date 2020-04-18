@@ -21,11 +21,11 @@ sdg::hash::KeyInstance::KeyInstance(std::vector<DescriptorInstance> descriptors,
 }
 
 
-bool sdg::hash::KeyInstance::is_partial_key()
+bool sdg::hash::KeyInstance::is_partial_key() const
 {
     return is_partial_key_;
 }
-std::string sdg::hash::KeyInstance::value()
+std::string sdg::hash::KeyInstance::as_string() const
 {
     return value_;
 }
@@ -35,7 +35,7 @@ sdg::hash::DescriptorID::DescriptorID(std::string a_id)
 : id_(a_id)
 {}
 
-std::string sdg::hash::DescriptorID::to_string()
+std::string sdg::hash::DescriptorID::as_string() const
 {
     return id_;
 }
@@ -76,7 +76,7 @@ std::string sdg::hash::DescriptorInstance::get_descriptor_id() const
     return id_;
 }
 
-std::string sdg::hash::DescriptorInstance::as_string()
+std::string sdg::hash::DescriptorInstance::as_string() const
 {
     std::string return_variable;
     return return_variable.append(id_).append(std::to_string(value_));
@@ -103,7 +103,7 @@ sdg::hash::EntityID::EntityID(std::string a_id)
 : id_(a_id)
 {}
 
-std::string sdg::hash::EntityID::to_string()
+std::string sdg::hash::EntityID::as_string() const
 {
     return id_;
 }

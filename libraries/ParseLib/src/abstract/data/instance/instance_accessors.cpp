@@ -92,7 +92,7 @@ Instance Instance::GetRelatedInstance(hash::DescriptorID a_descriptor_id) const
         attr_buffer.append( GetDescriptorByDescriptorID(a_descriptor_id) );
 
     else if( !kOwner_->IsDescriptorRequired(a_descriptor_id) )
-        attr_buffer.append(a_descriptor_id.to_string());
+        attr_buffer.append(a_descriptor_id.as_string());
 
 
     //get any other descriptors that might be necessary
@@ -114,7 +114,7 @@ Instance Instance::GetRelatedInstance(hash::DescriptorID a_descriptor_id) const
             if(!attr_buffer.empty())
                 attr_buffer.append("-");
 
-            attr_buffer.append(identifier[i].to_string());
+            attr_buffer.append(identifier[i].as_string());
         }
     }
 
@@ -126,14 +126,14 @@ Instance Instance::GetRelatedInstance(hash::DescriptorID a_descriptor_id) const
 
 
 //Get next instance in 'a_label'
-Instance Instance::GetNextInstance(hash::DescriptorID a_label) const
+Instance Instance::GetNextInstance(hash::DescriptorID a_descriptor_id) const
 {
-    // get next instance with respect to entity identified by a_label
+    // get next instance with respect to entity identified by a_descriptor_id
     Instance owner;
 
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
-    if(!(owner = this->GetRelatedInstance(a_label)).is_valid())
+    if(!(owner = this->GetRelatedInstance(a_descriptor_id)).is_valid())
         return Instance(kOwner_, NULL_INST);
 
     //------------------------------------------
@@ -154,14 +154,14 @@ Instance Instance::GetNextInstance(hash::DescriptorID a_label) const
     if((itr!=owner.value_.cend()) && (++itr!=owner.value_.cend()))
     {
         vector<string> 
-        missing_desc = kOwner_->get_missing_descriptors(a_label.to_string());
+        missing_desc = kOwner_->get_missing_descriptors(a_descriptor_id.as_string());
         
         pos++;
 
         if(missing_desc.size()==1)
         {
             string generated_identifier;
-            generated_identifier.append(key_);
+            generated_identifier.append(key_.as_string());
             generated_identifier.append("-");
             generated_identifier.append(missing_desc[0]);
             generated_identifier.append(to_string(pos));
@@ -183,7 +183,7 @@ Instance Instance::GetNextInstance(hash::DescriptorID a_label) const
 
 
 
-Instance Instance::GetPreviousInstance(hash::DescriptorID a_label) const
+Instance Instance::GetPreviousInstance(hash::DescriptorID a_descriptor_id) const
 {
     //todo->GetPreviousInstance undefined.
     return Instance();
@@ -220,7 +220,7 @@ int32_t Instance::FindIndexOfValue(std::string a_value_to_search_for, int32_t of
 string Instance::GetDescriptorByDescriptorID(hash::DescriptorID a_descriptor_id) const
 {
     //create a buffer to act as a return value and construct it in steps.
-    string desc_buffer = a_descriptor_id.to_string();
+    string desc_buffer = a_descriptor_id.as_string();
 
     //the index buffer is an a place to store matching indices from the lexer.
     //the index buffer is null or not found when the value is -1.
@@ -228,7 +228,7 @@ string Instance::GetDescriptorByDescriptorID(hash::DescriptorID a_descriptor_id)
 
     //find the matching descriptor.
     kOwner_->id_lexer(
-        this->key_, //passes in the partial key used to create this instance.
+        this->key_.as_string(), //passes in the partial key used to create this instance.
                     //in the lexer this is broken down into descriptors and compared with the argument.
         [&](int32_t key_i, int32_t index, string found_label) mutable
         {

@@ -56,7 +56,7 @@ vector<sdg::hash::DescriptorID> Model::get_entity_identifier(hash::DescriptorID 
     vector<hash::DescriptorID> identifying_descriptors;
 
     //select the entity.
-    shared_ptr<Entity> e = get_entity(a_descriptor_id.to_string());
+    shared_ptr<Entity> e = get_entity(a_descriptor_id.as_string());
 
     //ask the entity for it's identifying descriptors.
     if (e!=nullptr)
@@ -85,7 +85,7 @@ void Model::found_descriptor(sdg::hash::DescriptorID a_descriptor_id)
     int32_t scanned_index;
 
     //scan the token
-    sscanf(a_descriptor_id.to_string().c_str(), "%1s%i", scanned_label, &scanned_index);
+    sscanf(a_descriptor_id.as_string().c_str(), "%1s%i", scanned_label, &scanned_index);
 
     std::shared_ptr<Entity> e = get_entity(hash::EntityID(scanned_label));
     scanned_index++;

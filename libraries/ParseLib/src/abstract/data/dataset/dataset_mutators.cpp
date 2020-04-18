@@ -18,8 +18,8 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
     case DATA_SET_EMPTY: 
         state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
-        hash_table.insert(a_descriptor_list.value(), plHashValue(a_value));
-        this->update_descriptor_counts(a_descriptor_list.value());
+        hash_table.insert(a_descriptor_list.as_string(), plHashValue(a_value));
+        this->update_descriptor_counts(a_descriptor_list.as_string());
         return 0; 
         break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
@@ -45,17 +45,17 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_descriptor_list, plHashValue a_val
     case DATA_SET_GOOD: 
 
         //returns a copy of the value that was replaced in the operation.
-        replaced_value = hash_table.insert(a_descriptor_list.value(), plHashValue(a_value));
+        replaced_value = hash_table.insert(a_descriptor_list.as_string(), plHashValue(a_value));
 
         //maintains count for the list
-        this->update_descriptor_counts(a_descriptor_list.value());
+        this->update_descriptor_counts(a_descriptor_list.as_string());
 
         if(replaced_value.is_valid())
         {
             //
             new_descriptor = get_matching_descriptor(a_descriptor_list, copy_descriptor_id);
             
-            new_key = increment_descriptor_in_key(new_descriptor, a_descriptor_list.value(), 0);
+            new_key = increment_descriptor_in_key(new_descriptor, a_descriptor_list.as_string(), 0);
 
             replaced_value = hash_table.insert(new_key, plHashValue(replaced_value));
             
@@ -115,9 +115,9 @@ void sdg::DataSet::reposition_instance(hash::DescriptorInstance a_descriptor, in
 
 
 
-void sdg::DataSet::update_descriptor_counts(std::string a_descriptor_list)
+void sdg::DataSet::update_descriptor_counts(hash::KeyInstance a_key)
 {
-    std::string copy = a_descriptor_list;
+    std::string copy = a_key.as_string();
     char * token = strtok((char*)copy.c_str(),"-");
 
     while(token!=NULL)
@@ -136,11 +136,11 @@ sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_k
 
     KeyInstance copy = a_key;
 
-    char * token = strtok((char*)copy.value().c_str(),"-");
+    char * token = strtok((char*)copy.as_string().c_str(),"-");
 
     while(token!=NULL)
     {
-        if(std::string(token).substr(0,1).compare(a_descriptor_id.to_string())==0)
+        if(std::string(token).substr(0,1).compare(a_descriptor_id.as_string())==0)
         {
             DescriptorInstance descriptor = DescriptorInstance(std::string(token).substr(0,1), sdg::Attribute::Scale::Numeric);
             descriptor.set_value(std::stoi(std::string(token).substr(1,1)));

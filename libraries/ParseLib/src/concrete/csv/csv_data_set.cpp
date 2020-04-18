@@ -232,7 +232,7 @@ void CSV::remove_instance(hash::KeyInstance a_key_subset)
 void CSV::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t position)
 {
     //iterates through all keys matching the passed in entity_id
-    for (auto key : hash_table.GetMatchingKeys(hash::KeyInstance({a_descriptor}).value()))
+    for (auto key : hash_table.GetMatchingKeys(hash::KeyInstance({a_descriptor})))
     {
         bool done=false;
         std::string new_key;

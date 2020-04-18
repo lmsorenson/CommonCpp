@@ -116,12 +116,12 @@ string sdg::DataSet::id_lexer(
     return r_new_id;
 }
 
-vector<std::string> sdg::DataSet::get_missing_descriptors(std::string a_descriptor_labels) const
+vector<std::string> sdg::DataSet::get_missing_descriptors(hash::KeyInstance a_key_subset) const
 {
     vector<std::string> r_missing_descriptors;
 
     this->id_lexer(
-        a_descriptor_labels,
+        a_key_subset.as_string(),
         [=](int32_t key_i,int32_t index, string found_label)
         {
             //if there is a match
@@ -140,7 +140,7 @@ vector<std::string> sdg::DataSet::get_missing_descriptors(std::string a_descript
 std::string sdg::DataSet::increment_descriptor_in_key(hash::DescriptorInstance a_descriptor, hash::KeyInstance a_hash_key, int32_t a_position)
 {
     std::string 
-            copy = a_hash_key.value(),
+            copy = a_hash_key.as_string(),
             new_key,
             descriptor_id;
 
@@ -186,11 +186,11 @@ void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, hash::
         new_key = increment_descriptor_in_key(a_descriptor, new_key, 1);
 
         //apply the previously replaced value and assign the newly replaced value(if one exists) 
-        replaced = this->hash_table.insert(new_key.value(), replaced);
+        replaced = this->hash_table.insert(new_key, replaced);
 
         //update the count of descriptors.
         //todo-- check naming of this function, readability is a bit challenging
-        this->update_descriptor_counts(new_key.value());
+        this->update_descriptor_counts(new_key);
     }
 }
 
@@ -269,7 +269,7 @@ std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(hash::KeyInstanc
     *              Lexer                 *
     * ----------------------------------*/
     key_buffer = this->id_lexer(
-        key_buffer.value(), 
+        key_buffer.as_string(), 
         [&](int32_t key_i,int32_t index, string found_label)
         {
             if (buffer[key_i].get_scale() == Attribute::Scale::Numeric)

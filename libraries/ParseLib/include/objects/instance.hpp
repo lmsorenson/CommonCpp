@@ -24,7 +24,7 @@ public:
 
     Instance() = default;
     Instance(const sdg::DataSet * owner, State a_state);
-    Instance(const sdg::DataSet * owner, State a_state, std::string a_key);
+    Instance(const sdg::DataSet * owner, State a_state, hash::KeyInstance a_key);
     ~Instance();
 
     Instance operator[](std::string i);
@@ -54,7 +54,7 @@ private:
     //instance meta data
     const sdg::DataSet * kOwner_;           //<-- the DataSet of origin.
     State state_;                           //<-- the State of the instance.
-    std::string key_;                       //<-- the key used to get this instance.
+    hash::KeyInstance key_;                 //<-- the key used to get this instance.
 
     //instance data
     std::vector<std::string> value_;        //<-- the values stored.

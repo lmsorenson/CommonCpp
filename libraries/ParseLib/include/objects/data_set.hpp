@@ -100,7 +100,7 @@ public:
         std::function<void(std::string label_not_found)> lambda_expr2=nullptr,
         std::function<void(std::string label_unrecognized)> callback_unrecognized_desc=nullptr) const;
 
-    std::vector<std::string> get_missing_descriptors(std::string a_descriptor_labels) const;
+    std::vector<std::string> get_missing_descriptors(hash::KeyInstance a_key_subset) const;
 
 protected:
     //the logical data structure is meta data about the data stored in this hash table.
@@ -114,20 +114,17 @@ protected:
     //overwrites an entity record.  recursively repositions all overwritten elements
     void displace_overwritten_keys( plHashValue replaced_value, hash::DescriptorInstance a_descriptor, hash::KeyInstance new_key);
 
-    
+    //
     std::string increment_descriptor_in_key(hash::DescriptorInstance a_descriptor, hash::KeyInstance hash_key, int32_t position);
 
     //todo describe these functions
-    void update_descriptor_counts(std::string a_descriptor_list);
+    void update_descriptor_counts(hash::KeyInstance a_descriptor_list);
 
     //used in get accessor
     hash::KeyInstance compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const;
 
     //todo -- what does this function do?
     std::vector<hash::DescriptorInstance> helper(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const;
-
-    //epected descriptors are descriptors needed to identify a hash value.
-    // std::vector<std::shared_ptr<hash::DescriptorID>> expected_descriptors;
 };
 
 }//namespace sdg

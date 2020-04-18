@@ -17,8 +17,8 @@ public:
     KeyInstance(std::string a_value, bool a_is_partial_key=false);
     KeyInstance(std::vector<DescriptorInstance> descriptor, bool a_is_partial_key=false);
 
-    bool is_partial_key();
-    std::string value();
+    bool is_partial_key() const;
+    std::string as_string() const ;
 
 private:
     std::string value_;
@@ -33,7 +33,7 @@ public:
     DescriptorID(std::string a_id);
     ~DescriptorID()=default;
 
-    std::string to_string();
+    std::string as_string() const;
 
 private:
     std::string id_;
@@ -51,7 +51,7 @@ public:
     int32_t get_descriptor_value() const;
     std::string get_descriptor_id() const;
 
-    std::string as_string();
+    std::string as_string() const;
     
     Attribute::Scale get_scale() const;
     bool is_found() const;
@@ -90,7 +90,7 @@ public:
     EntityID(std::string a_id);
     ~EntityID()=default;
 
-    std::string to_string();
+    std::string as_string() const;
 
     bool operator== (const char * &str)
     {

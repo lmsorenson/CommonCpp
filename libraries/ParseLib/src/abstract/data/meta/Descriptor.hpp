@@ -5,9 +5,8 @@
 
 
 
-namespace sdg
-{
-
+namespace sdg {
+    
 namespace hash {
 
 class DescriptorID;
