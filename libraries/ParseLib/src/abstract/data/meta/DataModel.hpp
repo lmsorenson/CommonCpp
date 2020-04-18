@@ -28,7 +28,7 @@ public:
     void add_thing(std::shared_ptr<Thing> a_thing);
 
     //get a list of descriptor IDs representing identifying descriptors of the entity specified.
-    std::vector<hash::DescriptorID> get_entity_identifier(hash::DescriptorID a_descriptor_id) const;
+    std::vector<hash::DescriptorID> get_entity_identifier(hash::EntityID a_entity_id) const;
     std::vector<std::shared_ptr<Descriptor>> get_identifier_of_granular_entity() const;
 
     //increment the counter for the entity specified

@@ -51,12 +51,12 @@ shared_ptr<Entity> Model::get_entity(sdg::hash::EntityID a_entity_id) const
     return result;
 }
 
-vector<sdg::hash::DescriptorID> Model::get_entity_identifier(hash::DescriptorID a_descriptor_id) const
+vector<sdg::hash::DescriptorID> Model::get_entity_identifier(hash::EntityID a_entity_id) const
 {
     vector<hash::DescriptorID> identifying_descriptors;
 
     //select the entity.
-    shared_ptr<Entity> e = get_entity(a_descriptor_id.as_string());
+    shared_ptr<Entity> e = get_entity(a_entity_id);
 
     //ask the entity for it's identifying descriptors.
     if (e!=nullptr)

@@ -205,7 +205,7 @@ TEST_F(CSVFunctionalSpec, TestR5_1)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     Instance inst = ds["R1"]["F1"];
-    Instance inst2 = inst.GetRelatedInstance( sdg::hash::DescriptorID("R") );
+    Instance inst2 = inst.GetRelatedInstance( sdg::hash::EntityID("R") );
     std::string str = inst2.at(1);
 
 
@@ -217,7 +217,7 @@ TEST_F(CSVFunctionalSpec, TestR5_2)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     Instance inst = ds["R1"]["F1"];
-    Instance inst2 = inst.GetRelatedInstance( sdg::hash::DescriptorID("F") );
+    Instance inst2 = inst.GetRelatedInstance( sdg::hash::EntityID("F") );
 
     ASSERT_EQ(inst2.at(0), "1");
     ASSERT_EQ(inst2.at(1), "2");
@@ -238,7 +238,7 @@ TEST_F(CSVFunctionalSpec, TestR5_3)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     Instance inst = ds["R1"]["F0"];
-    Instance inst2 = inst.GetNextInstance( sdg::hash::DescriptorID("R") );
+    Instance inst2 = inst.GetNextInstance( sdg::hash::EntityID("R") );
 
     ASSERT_EQ(inst2.get(), "2");
 }
@@ -248,7 +248,7 @@ TEST_F(CSVFunctionalSpec, TestR5_4)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     Instance inst = ds["R3"]["F0"];
-    Instance inst2 = inst.GetNextInstance( sdg::hash::DescriptorID("F") );
+    Instance inst2 = inst.GetNextInstance( sdg::hash::EntityID("F") );
 
     ASSERT_EQ(inst2.get(), "May");
 }
@@ -260,7 +260,7 @@ TEST_F(CSVFunctionalSpec, TestR5_5)
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
     Instance inst = ds["F1"];
-    Instance inst2 = inst.GetRelatedInstance( sdg::hash::DescriptorID("H") );
+    Instance inst2 = inst.GetRelatedInstance( sdg::hash::EntityID("H") );
 
     ASSERT_EQ(inst2.get(), "field_nameB");
 }
