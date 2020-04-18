@@ -13,7 +13,7 @@ public:
     HeaderFilter(std::string new_filter_id);
     ~HeaderFilter()=default;
 
-    virtual int32_t execute(std::string text, std::vector<sdg::plNode>& output) override;
+    virtual int32_t execute(std::string text, std::vector<sdg::SyntaxNode>& output) override;
     virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;
     virtual std::string name() override;
 };
@@ -24,7 +24,7 @@ public:
     RecordFilter(std::string new_filter_id);
     ~RecordFilter()=default;
 
-    virtual int32_t execute(std::string text, std::vector<sdg::plNode>& output) override;
+    virtual int32_t execute(std::string text, std::vector<sdg::SyntaxNode>& output) override;
     virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;
     virtual std::string name() override;
 };
@@ -38,7 +38,7 @@ public:
     FieldFilter(std::string new_filter_id);
     ~FieldFilter()=default;
 
-    virtual int32_t execute(std::string text, std::vector<sdg::plNode>& output) override;
+    virtual int32_t execute(std::string text, std::vector<sdg::SyntaxNode>& output) override;
     virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;
     virtual std::string name() override;
     bool IsFieldCountValid(int32_t field_count_param);
@@ -47,7 +47,7 @@ public:
 
 class CSVOutput : public ::sdg::ParserOutput
 {
-    virtual void execute(std::shared_ptr<sdg::plNode>& text, sdg::DataSet& data_store) override;
+    virtual void execute(std::shared_ptr<sdg::SyntaxNode>& text, sdg::DataSet& data_store) override;
 };
 
 }// namespace csv
