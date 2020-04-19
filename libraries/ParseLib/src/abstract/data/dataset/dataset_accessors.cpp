@@ -22,7 +22,7 @@ int32_t sdg::DataSet::IsDescriptorRequired(hash::DescriptorID a_descriptor_id) c
     for( auto descriptor : this->logical_data_structure.get_identifier_of_granular_entity() )
     {
         //if the current descriptor is a match with the argument...
-        if(descriptor->get_id() == a_descriptor_id.to_string())//if this is never called return an error.
+        if(descriptor->get_id() == a_descriptor_id.as_string())//if this is never called return an error.
         {       
             if (b_descriptor_found)//if this is ever called return an error.
                 r=-1;
@@ -38,7 +38,7 @@ int32_t sdg::DataSet::IsDescriptorRequired(hash::DescriptorID a_descriptor_id) c
 
 int32_t sdg::DataSet::number_of_entity_instances(hash::EntityID a_entity_id) const
 {
-    return this->logical_data_structure.get_entity_count(a_entity_id.to_string());
+    return this->logical_data_structure.get_entity_count(a_entity_id);
 }
 
 Model sdg::DataSet::get_data_model() const
@@ -53,12 +53,12 @@ sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string va
 
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
-    if(!(ret = this->get(a_key_subset.value())).is_valid())
+    if(!(ret = this->get(a_key_subset)).is_valid())
         return sdg::Instance(this, sdg::Instance::NULL_INST);
 
     int32_t pos = ret.FindIndexOfValue(value);
 
-    vector<string> missing_desc = this->get_missing_descriptors(a_key_subset.value());        
+    vector<string> missing_desc = this->get_missing_descriptors(a_key_subset);        
 
     if(missing_desc.size()==1)
     {
@@ -66,7 +66,7 @@ sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string va
         generated_identifier.append(missing_desc[0]);
         generated_identifier.append(to_string(pos));
 
-        return this->get(generated_identifier);
+        return this->get(hash::KeyInstance(generated_identifier));
     }
     //todo-->so far this should never happen
     else if(missing_desc.size()>1)
@@ -80,17 +80,16 @@ sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string va
 }
 
 
-sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
+sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor_list) const
 {
     if (state == DATA_SET_BAD)
         return Instance(this, Instance::NO_FILE);
 
     //initializing a valid instance return buffer.
-    Instance return_buffer = Instance(this, Instance::VALID_INST, a_descriptor.value());
+    Instance return_buffer = Instance(this, Instance::VALID_INST, a_descriptor_list);
 
     //get a set of descriptors from a list of expected descriptor IDs
-    std::vector<hash::DescriptorInstance> 
-        expected_descriptor_buffer = helper(a_descriptor.value(), this->logical_data_structure.get_identifier_of_granular_entity());
+    std::vector<hash::DescriptorInstance> expected_descriptor_buffer = get_descriptors_from_descriptor_id_set(a_descriptor_list, this->logical_data_structure.get_identifier_of_granular_entity());
 
     //try to compile the hash key
     hash::KeyInstance generated_key = compile_hash_key(expected_descriptor_buffer);
@@ -98,7 +97,7 @@ sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
     //does this key contain all necessary descriptors for a query?
     if ( generated_key.is_partial_key() )
     {
-        vector<string> matching_keys = hash_table.GetMatchingKeys(generated_key.value());
+        vector<hash::KeyInstance> matching_keys = hash_table.GetMatchingKeys(generated_key);
         for(int i=0; i<matching_keys.size(); ++i)
         {
             return_buffer.add_value(hash_table.get(matching_keys[i]));
@@ -107,7 +106,7 @@ sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
     else 
     {
         //return the value at the generated key
-        return_buffer.add_value(hash_table.get(generated_key.value()));
+        return_buffer.add_value(hash_table.get(generated_key));
     }
         
     

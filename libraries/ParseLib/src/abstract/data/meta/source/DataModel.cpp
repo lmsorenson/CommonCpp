@@ -51,12 +51,12 @@ shared_ptr<Entity> Model::get_entity(sdg::hash::EntityID a_entity_id) const
     return result;
 }
 
-vector<sdg::hash::DescriptorID> Model::get_entity_identifier(hash::DescriptorID a_descriptor_id) const
+vector<sdg::hash::DescriptorID> Model::get_entity_identifier(hash::EntityID a_entity_id) const
 {
     vector<hash::DescriptorID> identifying_descriptors;
 
     //select the entity.
-    shared_ptr<Entity> e = get_entity(a_descriptor_id.to_string());
+    shared_ptr<Entity> e = get_entity(a_entity_id);
 
     //ask the entity for it's identifying descriptors.
     if (e!=nullptr)
@@ -79,20 +79,13 @@ std::vector<std::shared_ptr<Descriptor>> Model::get_identifier_of_granular_entit
     return shared_descriptor_vec;
 }
 
-void Model::found_descriptor(sdg::hash::DescriptorID a_descriptor_id)
+void Model::found_descriptor(sdg::hash::DescriptorInstance a_descriptor)
 {
-    char scanned_label[1];
-    int32_t scanned_index;
+    std::shared_ptr<Entity> e = get_entity(hash::EntityID(a_descriptor.get_descriptor_id()));
 
-    //scan the token
-    sscanf(a_descriptor_id.to_string().c_str(), "%1s%i", scanned_label, &scanned_index);
-
-    std::shared_ptr<Entity> e = get_entity(hash::EntityID(scanned_label));
-    scanned_index++;
-
-    if(scanned_index>e->get_count())
+    if(a_descriptor.get_descriptor_value() + 1 > e->get_count())
     {
-        e->set_counter(scanned_index);
+        e->set_counter(a_descriptor.get_descriptor_value() + 1);
     }
 }
 

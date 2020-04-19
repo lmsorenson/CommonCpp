@@ -1,5 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
+#include <functional>
 
 #include "../meta/Descriptor.hpp"
 
@@ -13,12 +14,14 @@ class DescriptorInstance;
 class KeyInstance
 {
 public:
-    KeyInstance() = default;
-    KeyInstance(std::string a_value, bool a_is_partial_key=false);
+    explicit KeyInstance()=default;
+    explicit KeyInstance(std::string a_value, bool a_is_partial_key=false);
     KeyInstance(std::vector<DescriptorInstance> descriptor, bool a_is_partial_key=false);
 
-    bool is_partial_key();
-    std::string value();
+    bool is_partial_key() const;
+    std::string as_string() const;
+
+    void for_each_descriptor(std::function<void(const std::string)> callback);
 
 private:
     std::string value_;
@@ -29,11 +32,11 @@ private:
 class DescriptorID
 {
 public:
-    DescriptorID()=default;
-    DescriptorID(std::string a_id);
+    explicit DescriptorID()=default;
+    explicit DescriptorID(std::string a_id);
     ~DescriptorID()=default;
 
-    std::string to_string();
+    std::string as_string() const;
 
 private:
     std::string id_;
@@ -45,13 +48,13 @@ private:
 class DescriptorInstance
 {
 public:
-    DescriptorInstance();
-    DescriptorInstance(std::string a_descriptor_id, Attribute::Scale a_attr_scale);
+    explicit DescriptorInstance();
+    explicit DescriptorInstance(std::string a_descriptor_id, Attribute::Scale a_attr_scale);
 
     int32_t get_descriptor_value() const;
     std::string get_descriptor_id() const;
 
-    std::string as_string();
+    std::string as_string() const;
     
     Attribute::Scale get_scale() const;
     bool is_found() const;
@@ -86,11 +89,11 @@ private:
 class EntityID
 {
 public:
-    EntityID()=default;
-    EntityID(std::string a_id);
+    explicit EntityID()=default;
+    explicit EntityID(std::string a_id);
     ~EntityID()=default;
 
-    std::string to_string();
+    std::string as_string() const;
 
     bool operator== (const char * &str)
     {

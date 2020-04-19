@@ -81,59 +81,52 @@ string Instance::at(int8_t index) const
 
 
 
-
-Instance Instance::GetRelatedInstance(hash::DescriptorID a_descriptor_id) const
+//takes in an entity identifier and returns an Instance 
+//of the entity.related to the current instance.
+Instance Instance::GetRelatedInstance(hash::EntityID a_entity_id) const
 { 
     //get the descriptor-index value off the entity identified
     //by 'a_label'
     string attr_buffer;
     
-    if( GetDescriptorByDescriptorID(a_descriptor_id) != "NO_VALUE" )
-        attr_buffer.append( GetDescriptorByDescriptorID(a_descriptor_id) );
-
-    else if( !kOwner_->IsDescriptorRequired(a_descriptor_id) )
-        attr_buffer.append(a_descriptor_id.to_string());
-
-
     //get any other descriptors that might be necessary
-    vector<hash::DescriptorID> identifier = kOwner_->get_data_model().get_entity_identifier(a_descriptor_id);
+    vector<hash::DescriptorID> identifier = kOwner_->get_data_model().get_entity_identifier(a_entity_id);
 
     for(int i=0; i<identifier.size();++i)
     {
-        if(GetDescriptorByDescriptorID(identifier[i])!="NO_VALUE")
+        if( this->GetDescriptorByDescriptorID(identifier[i] )!="NO_VALUE")
         {
             if(!attr_buffer.empty())
                 attr_buffer.append("-");
 
-            attr_buffer.append(GetDescriptorByDescriptorID(identifier[i]));
+            attr_buffer.append(this->GetDescriptorByDescriptorID(identifier[i]));
         }
-            
 
         else if( !kOwner_->IsDescriptorRequired(identifier[i]) )
         {
             if(!attr_buffer.empty())
                 attr_buffer.append("-");
 
-            attr_buffer.append(identifier[i].to_string());
+            attr_buffer.append(identifier[i].as_string());
         }
     }
 
     //get the value from the associated DataSet
-    return kOwner_->get(attr_buffer);
+    return kOwner_->get(hash::KeyInstance(attr_buffer));
 }
 
 
 
 
-//Get next instance in 'a_label'
-Instance Instance::GetNextInstance(hash::DescriptorID a_label) const
+//Get next instance in set of entities (identified by 'a_entity_id')
+Instance Instance::GetNextInstance(hash::EntityID a_entity_id) const
 {
-    // get next instance with respect to entity identified by a_label
+    // get next instance with respect to entity identified by a_entity_id
     Instance owner;
 
     //1. get owning entity instance
     //2. check if the instance is valid before continuing
-    if(!(owner = this->GetRelatedInstance(a_label)).is_valid())
+    if(!(owner = this->GetRelatedInstance(a_entity_id)).is_valid())
         return Instance(kOwner_, NULL_INST);
 
     //------------------------------------------
@@ -154,19 +147,19 @@ Instance Instance::GetNextInstance(hash::DescriptorID a_label) const
     if((itr!=owner.value_.cend()) && (++itr!=owner.value_.cend()))
     {
         vector<string> 
-        missing_desc = kOwner_->get_missing_descriptors(a_label.to_string());
+        missing_desc = kOwner_->get_missing_descriptors(hash::KeyInstance(a_entity_id.as_string()));
         
         pos++;
 
         if(missing_desc.size()==1)
         {
             string generated_identifier;
-            generated_identifier.append(key_);
+            generated_identifier.append(key_.as_string());
             generated_identifier.append("-");
             generated_identifier.append(missing_desc[0]);
             generated_identifier.append(to_string(pos));
 
-            return kOwner_->get(generated_identifier);
+            return kOwner_->get(hash::KeyInstance(generated_identifier));
         }
         //todo-->so far this should never happen
         else if(missing_desc.size()>1)
@@ -183,7 +176,7 @@ Instance Instance::GetNextInstance(hash::DescriptorID a_label) const
 
 
 
-Instance Instance::GetPreviousInstance(hash::DescriptorID a_label) const
+Instance Instance::GetPreviousInstance(hash::EntityID a_entity_id) const
 {
     //todo->GetPreviousInstance undefined.
     return Instance();
@@ -220,7 +213,7 @@ int32_t Instance::FindIndexOfValue(std::string a_value_to_search_for, int32_t of
 string Instance::GetDescriptorByDescriptorID(hash::DescriptorID a_descriptor_id) const
 {
     //create a buffer to act as a return value and construct it in steps.
-    string desc_buffer = a_descriptor_id.to_string();
+    string desc_buffer = a_descriptor_id.as_string();
 
     //the index buffer is an a place to store matching indices from the lexer.
     //the index buffer is null or not found when the value is -1.

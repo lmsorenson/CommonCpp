@@ -18,7 +18,7 @@ sdg::Instance::Instance(const sdg::DataSet * owner, State a_state)
 , state_(a_state)
 {}
 
-sdg::Instance::Instance(const sdg::DataSet * owner, State a_state, std::string a_key)
+sdg::Instance::Instance(const sdg::DataSet * owner, State a_state, hash::KeyInstance a_key)
 : kOwner_(owner)
 , state_(a_state)
 , key_(a_key)
@@ -29,8 +29,8 @@ sdg::Instance::~Instance()
 
 sdg::Instance sdg::Instance::operator[](std::string i)
 {
-    std::string new_key_buffer = this->key_;
-    new_key_buffer.append("-").append(i);
+    std::string new_key_buffer;
+    new_key_buffer.append(this->key_.as_string()).append("-").append(i);
 
-    return kOwner_->get(new_key_buffer);
+    return kOwner_->get(hash::KeyInstance(new_key_buffer));
 }

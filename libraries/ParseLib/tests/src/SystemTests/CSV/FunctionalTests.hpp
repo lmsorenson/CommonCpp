@@ -205,7 +205,7 @@ TEST_F(CSVFunctionalSpec, TestR5_1)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     Instance inst = ds["R1"]["F1"];
-    Instance inst2 = inst.GetRelatedInstance( sdg::hash::DescriptorID("R") );
+    Instance inst2 = inst.GetRelatedInstance( sdg::hash::EntityID("R") );
     std::string str = inst2.at(1);
 
 
@@ -217,7 +217,7 @@ TEST_F(CSVFunctionalSpec, TestR5_2)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     Instance inst = ds["R1"]["F1"];
-    Instance inst2 = inst.GetRelatedInstance( sdg::hash::DescriptorID("F") );
+    Instance inst2 = inst.GetRelatedInstance( sdg::hash::EntityID("F") );
 
     ASSERT_EQ(inst2.at(0), "1");
     ASSERT_EQ(inst2.at(1), "2");
@@ -238,7 +238,7 @@ TEST_F(CSVFunctionalSpec, TestR5_3)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     Instance inst = ds["R1"]["F0"];
-    Instance inst2 = inst.GetNextInstance( sdg::hash::DescriptorID("R") );
+    Instance inst2 = inst.GetNextInstance( sdg::hash::EntityID("R") );
 
     ASSERT_EQ(inst2.get(), "2");
 }
@@ -248,7 +248,7 @@ TEST_F(CSVFunctionalSpec, TestR5_4)
     DataSet ds;
     ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     Instance inst = ds["R3"]["F0"];
-    Instance inst2 = inst.GetNextInstance( sdg::hash::DescriptorID("F") );
+    Instance inst2 = inst.GetNextInstance( sdg::hash::EntityID("F") );
 
     ASSERT_EQ(inst2.get(), "May");
 }
@@ -260,13 +260,13 @@ TEST_F(CSVFunctionalSpec, TestR5_5)
     options.push_back({"header_line", true});
     ParseLib().read_file(ds, this->path("test_data/CSV/FormatSpec/csv2.csv").c_str(), options);
     Instance inst = ds["F1"];
-    Instance inst2 = inst.GetRelatedInstance( sdg::hash::DescriptorID("H") );
+    Instance inst2 = inst.GetRelatedInstance( sdg::hash::EntityID("H") );
 
     ASSERT_EQ(inst2.get(), "field_nameB");
 }
 
 // insert two values into one key.
-TEST_F(CSVFunctionalSpec, TestR6)
+TEST_F(CSVFunctionalSpec, R6__Two_Values_in_One_Key)
 {
     // ASSERT_EQ(true, false);
 }
@@ -279,7 +279,7 @@ TEST_F(CSVFunctionalSpec, TestR6)
 // * Add a new field at the end of each record
 // * Add a new field at the beginning of each record.
 // * Add a new field in the middle of each record.
-TEST_F(CSVFunctionalSpec, TestR7_1)
+TEST_F(CSVFunctionalSpec, R7_1__Add_New_Record_to_End_of_File)
 {
     //adds a new record to the end of an exsiting file.
     CSV ds;
@@ -319,9 +319,8 @@ TEST_F(CSVFunctionalSpec, TestR7_1)
     ASSERT_EQ(ds2["R1"]["F3"].get(), "D2");
 }
 
-TEST_F(CSVFunctionalSpec, TestR7_2)
+TEST_F(CSVFunctionalSpec, R7_2__Add_New_Record_to_Beginning_of_File)
 {
-    //adds a new record to the end of an exsiting file.
     CSV ds;
 
     //reads in the file.
@@ -359,7 +358,7 @@ TEST_F(CSVFunctionalSpec, TestR7_2)
 
 }
 
-TEST_F(CSVFunctionalSpec, TestR7_3)
+TEST_F(CSVFunctionalSpec, R7_3__Add_New_Record_to_Middle_of_File)
 {
     //adds a new record to the end of an exsiting file.
     CSV ds;
@@ -422,7 +421,7 @@ TEST_F(CSVFunctionalSpec, TestR7_3)
 }
 
 
-TEST_F(CSVFunctionalSpec, TestR7_4)
+TEST_F(CSVFunctionalSpec, R7_4__Add_Field_to_End_of_File)
 {
     //adds a new record to the end of an exsiting file.
     CSV ds;
@@ -456,7 +455,7 @@ TEST_F(CSVFunctionalSpec, TestR7_4)
     ASSERT_EQ(ds2["R0"]["F4"].get(), "E1");
 }
 
-TEST_F(CSVFunctionalSpec, TestR7_5)
+TEST_F(CSVFunctionalSpec, R7_5__Add_New_Field_to_Beginning_of_File)
 {
     //adds a new record to the end of an exsiting file.
     CSV ds;
@@ -490,9 +489,8 @@ TEST_F(CSVFunctionalSpec, TestR7_5)
 
 }
 
-TEST_F(CSVFunctionalSpec, TestR7_6)
+TEST_F(CSVFunctionalSpec, R7_6__Add_New_Field_to_Middle_of_File)
 {
-    //adds a new record to the end of an exsiting file.
     CSV ds;
 
     //reads in the file.
@@ -561,7 +559,7 @@ TEST_F(CSVFunctionalSpec, TestR7_6)
 // * move a record instance to a different position.
 // * overwrite a field in an existing record.
 // * overwrite all fields in an existing record.
-TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
+TEST_F(CSVFunctionalSpec, R8_1__Delete_a_Record)//delete a record
 {
     CSV ds;
 
@@ -593,7 +591,6 @@ TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
     ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
 
     ParseLib().write_file(ds, this->path("test_data/CSV/Write/csvR8_1.csv").c_str());
-
     DataSet ds2;
     ParseLib().read_file(ds2, this->path("test_data/CSV/Write/csvR8_1.csv").c_str());
 
@@ -608,7 +605,7 @@ TEST_F(CSVFunctionalSpec, TestR8_1)//delete a record
     ASSERT_EQ(ds["R1"]["F3"].get(), "NULL");
 }
 
-TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
+TEST_F(CSVFunctionalSpec, R8_2__Move_a_Record)//move a record
 {
     CSV ds;
 
@@ -667,7 +664,7 @@ TEST_F(CSVFunctionalSpec, TestR8_2)//move a record
     ASSERT_EQ(ds["R2"]["F3"].get(), "D2");
 }
 
-TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already has a record
+TEST_F(CSVFunctionalSpec, R8_3__Overwrite_a_Record)//move a record into a location that already has a record
 {
     CSV ds;
 
@@ -729,7 +726,7 @@ TEST_F(CSVFunctionalSpec, TestR8_3)//move a record into a location that already 
 }
 
 //Create a write transaction on an empty file path.
-TEST_F(CSVFunctionalSpec, TestR9)
+TEST_F(CSVFunctionalSpec, R9__Write_New_File)
 {
     //adds a new record to the end of a 
     CSV ds;

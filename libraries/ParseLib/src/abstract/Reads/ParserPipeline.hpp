@@ -9,9 +9,9 @@
 
 namespace sdg {
 
-typedef std::vector<std::vector<std::shared_ptr<sdg::plNode>>> plNodeBuffer;
-typedef std::vector<std::shared_ptr<sdg::plNode>> plNodeSet;
-typedef std::shared_ptr<sdg::plNode> plNodePtr;
+typedef std::vector<std::vector<std::shared_ptr<sdg::SyntaxNode>>> SyntaxNodeBuffer;
+typedef std::vector<std::shared_ptr<sdg::SyntaxNode>> SyntaxNodeSet;
+typedef std::shared_ptr<sdg::SyntaxNode> SyntaxNodePtr;
 
 
 
@@ -26,26 +26,26 @@ class ParserPipeline
     
     int32_t ApplyFilters(
         sdg::DataSet &data_set, 
-        plNodeBuffer &out_buffer, 
-        plNodeBuffer &in_buffer);
+        SyntaxNodeBuffer &out_buffer, 
+        SyntaxNodeBuffer &in_buffer);
 
     int32_t ProcessNodeSets(
         sdg::DataSet &data_set,
-        plNodeBuffer &out_buffer, 
-        plNodeBuffer &in_buffer, 
+        SyntaxNodeBuffer &out_buffer, 
+        SyntaxNodeBuffer &in_buffer, 
         std::shared_ptr<ParserFilter> filter);
 
     int32_t ProcessNodes(
         sdg::DataSet &data_set,
-        plNodeBuffer &out_buffer, 
-        plNodeSet &in_buffer, 
+        SyntaxNodeBuffer &out_buffer, 
+        SyntaxNodeSet &in_buffer, 
         std::shared_ptr<ParserFilter> filter);
 
     int32_t ProcessIndividual(
         sdg::DataSet &data_set,
-        plNodeSet &out_buffer, 
-        std::vector<sdg::plNode> &in_buffer, 
-        plNodePtr &current_node, 
+        SyntaxNodeSet &out_buffer, 
+        std::vector<sdg::SyntaxNode> &in_buffer, 
+        SyntaxNodePtr &current_node, 
         std::shared_ptr<ParserFilter> filter);
     
 public:
@@ -54,7 +54,7 @@ public:
 
     int32_t add_filter(std::shared_ptr<ParserFilter> filter);
     int32_t add_output(std::shared_ptr<ParserOutput> output);
-    int32_t execute(std::shared_ptr<sdg::plNode>& text, sdg::DataSet& data_store);
+    int32_t execute(std::shared_ptr<sdg::SyntaxNode>& text, sdg::DataSet& data_store);
     int32_t inverse(std::vector<std::vector<std::string>> vector_vector, std::string &text);
 
     enum : int32_t

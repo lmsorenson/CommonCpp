@@ -11,38 +11,38 @@ namespace sdg
 {
 
 
-class plNode
+class SyntaxNode
 {
 public:
-    plNode(std::string text, std::shared_ptr<plNode> aParent);
-    plNode(const plNode &plNode);
-    ~plNode();
+    SyntaxNode(std::string a_value, std::shared_ptr<SyntaxNode> a_parent);
+    SyntaxNode(const SyntaxNode &SyntaxNode);
+    ~SyntaxNode();
 
-    //Get and set the value on the plNode.
-    std::string GetValue();
-    void SetValue(const char * text);
-    std::string GetID();
-    plNode AppendID(std::string new_id);
-    bool EmptyID();
-    std::string GetPath();
+    //Get and set the value on the SyntaxNode.
+    std::string get_item_value();
+    void set_value(const char * text);
+    std::string get_item_key();
+    SyntaxNode append_key(std::string a_new_id);
+    bool is_empty_key();
+    std::string get_path();
     
     //Get Children
-    std::shared_ptr<plNode> GetChild(int32_t index);
-    int32_t GetNumberOfChildren();
-    bool HasChildren();
+    std::shared_ptr<SyntaxNode> get_child(int32_t index);
+    int32_t get_number_of_children();
+    bool has_children();
     bool has_parent();
 
     //Add Children
-    void AddChild(plNode n);
+    void AddChild(SyntaxNode n);
 
     //Printing
     void Print();
     
 private:
-    std::string id;
-    std::string value;
-    std::shared_ptr<plNode> parent;
-    std::vector<std::shared_ptr<plNode>> children;
+    std::string id_;
+    std::string value_;
+    std::shared_ptr<SyntaxNode> parent_;
+    std::vector<std::shared_ptr<SyntaxNode>> children_;
 };
 
 } //namespace sdg

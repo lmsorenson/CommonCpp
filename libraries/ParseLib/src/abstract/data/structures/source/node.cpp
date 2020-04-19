@@ -5,70 +5,68 @@
 using std::string;
 using std::shared_ptr;
 using std::make_shared;
-using sdg::plNode;
+using sdg::SyntaxNode;
 
-plNode::plNode(string text, std::shared_ptr<plNode> aParent)
-: value(text)
-, parent(aParent)
+SyntaxNode::SyntaxNode(string a_value, std::shared_ptr<SyntaxNode> a_parent)
+: value_(a_value)
+, parent_(a_parent)
 {
 }
 
-plNode::plNode(const plNode &plNode)
+SyntaxNode::SyntaxNode(const SyntaxNode &a_syntax_node)
 {
-    id = plNode.id;
-    value = plNode.value;
-    children = plNode.children;
-    parent = plNode.parent;
+    id_ = a_syntax_node.id_;
+    value_ = a_syntax_node.value_;
+    children_ = a_syntax_node.children_;
+    parent_ = a_syntax_node.parent_;
 }
 
-plNode::~plNode()
-{
-    // cout << SetColor(RED, "deleting plNode:" ) << value << endl;
-}
+SyntaxNode::~SyntaxNode(){}
 
-string plNode::GetValue(){return value;}
-void plNode::SetValue(const char * text){value = text;}
-string plNode::GetID(){return id;}
-plNode plNode::AppendID(string new_id){id.append(new_id); return *this;}
-bool plNode::EmptyID(){return (id.empty());};
+string SyntaxNode::get_item_value(){return value_;}
+void SyntaxNode::set_value(const char * text){value_ = text;}
+string SyntaxNode::get_item_key(){return id_;}
 
-string plNode::GetPath()
+SyntaxNode SyntaxNode::append_key(string a_new_id){id_.append(a_new_id); return *this;}
+bool SyntaxNode::is_empty_key(){return (id_.empty());};
+
+string SyntaxNode::get_path()
 {
     string path;
 
-    shared_ptr<plNode> current_node;
+    shared_ptr<SyntaxNode> current_node;
     
     if (!current_node && this->has_parent())
     {
-        current_node = this->parent;
+        current_node = this->parent_;
     }
 
     if (current_node)
     {
         while(current_node->has_parent())
         {
-            path.insert(0, current_node->GetID());
-            current_node = current_node->parent;
+            path.insert(0, current_node->get_item_key());
+            current_node = current_node->parent_;
         }
     }
 
     return path;
 }
 
-void plNode::AddChild(plNode n)
+void SyntaxNode::AddChild(SyntaxNode n)
 {
-    children.push_back(make_shared<plNode>(n));
+    children_.push_back(make_shared<SyntaxNode>(n));
 }
-shared_ptr<plNode> plNode::GetChild(int32_t index){return this->children[index];}
 
-int32_t plNode::GetNumberOfChildren(){return children.size();}
-bool plNode::HasChildren(){return (children.size()>0);}
-bool plNode::has_parent(){return ((bool)parent);}
+shared_ptr<SyntaxNode> SyntaxNode::get_child(int32_t index){return this->children_[index];}
+int32_t SyntaxNode::get_number_of_children(){return children_.size();}
+bool SyntaxNode::has_children(){return (children_.size()>0);}
+bool SyntaxNode::has_parent(){return ((bool)parent_);}
 
-void plNode::Print()
+void SyntaxNode::Print()
 {
-    for (int i=0; i < children.size(); ++i)
+    for (int i=0; i < children_.size(); ++i)
     {
-        children[i]->Print();
+        children_[i]->Print();
     }
 }

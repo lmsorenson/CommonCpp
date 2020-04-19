@@ -104,9 +104,6 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
             {
                 str.append(std::to_string(position));
             }
-                
-
-            //todo->after creating the new line push everything else down a record.
 
             for(int32_t i=0;i<field_count;++i)
             {
@@ -216,14 +213,14 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
     //error
     else
     {
-        //todo --> populate this function.
+        //todo --> define this
     }
 }
 
 void CSV::remove_instance(hash::KeyInstance a_key_subset)
 {
     //searches the hash table for a list of Keys that match the descriptors provided
-    for (auto key : hash_table.GetMatchingKeys(a_key_subset.value()))
+    for (auto key : hash_table.GetMatchingKeys(a_key_subset))
     {
         hash_table.delete_value(key);
     }
@@ -232,10 +229,10 @@ void CSV::remove_instance(hash::KeyInstance a_key_subset)
 void CSV::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t position)
 {
     //iterates through all keys matching the passed in entity_id
-    for (auto key : hash_table.GetMatchingKeys(hash::KeyInstance({a_descriptor}).value()))
+    for (auto key : hash_table.GetMatchingKeys(hash::KeyInstance({a_descriptor})))
     {
         bool done=false;
-        std::string new_key;
+        hash::KeyInstance new_key;
         plHashValue replaced_value;
 
         //todo -- this can only apply to numeric attributes, so far attributes exist in both boolean and numberic type

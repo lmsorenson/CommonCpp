@@ -8,7 +8,7 @@ using std::string;
 using std::vector;
 using std::istringstream;
 using std::shared_ptr;
-using sdg::plNode;
+using sdg::SyntaxNode;
 using sdg::plHashValue;
 using sdg::ParserFilter;
 
@@ -21,7 +21,7 @@ sdg::csv::HeaderFilter::HeaderFilter(std::string new_filter_id)
 : ParserFilter(new_filter_id)
 {}
 
-int32_t sdg::csv::HeaderFilter::execute(string text, vector<plNode>& output)
+int32_t sdg::csv::HeaderFilter::execute(string text, vector<SyntaxNode>& output)
 {
     istringstream file(text);
     string line, r_buffer;
@@ -31,8 +31,8 @@ int32_t sdg::csv::HeaderFilter::execute(string text, vector<plNode>& output)
     {
         if(b_first_line)
         {
-            //push line 1 as a new plNode.
-            output.push_back(plNode(line, nullptr));
+            //push line 1 as a new SyntaxNode.
+            output.push_back(SyntaxNode(line, nullptr));
 
             //once the first line has been separated.
             //indicate this is no longer the first line.
@@ -45,7 +45,7 @@ int32_t sdg::csv::HeaderFilter::execute(string text, vector<plNode>& output)
         }
     }
 
-    output.push_back(plNode(r_buffer, nullptr));
+    output.push_back(SyntaxNode(r_buffer, nullptr));
 
 
     return FILTER_SUCCESS;
@@ -67,7 +67,7 @@ sdg::csv::RecordFilter::RecordFilter(std::string new_filter_id)
 : ParserFilter(new_filter_id)
 {}
 
-int32_t sdg::csv::RecordFilter::execute(string text, vector<plNode>& output)
+int32_t sdg::csv::RecordFilter::execute(string text, vector<SyntaxNode>& output)
 {
     istringstream file(text);
     string line, rBuffer;
@@ -108,9 +108,9 @@ int32_t sdg::csv::RecordFilter::execute(string text, vector<plNode>& output)
             }
         }//last character in line
 
-        //add the new plNode to the filter output.
+        //add the new SyntaxNode to the filter output.
         if(!record_value.empty())
-            output.push_back(plNode(record_value.c_str(), nullptr));
+            output.push_back(SyntaxNode(record_value.c_str(), nullptr));
     }//last line
     
     if(output.size()==0)
@@ -149,7 +149,7 @@ sdg::csv::FieldFilter::FieldFilter(std::string new_filter_id)
 , field_count(-1)
 {}
 
-int32_t sdg::csv::FieldFilter::execute(string text, vector<plNode>& output)
+int32_t sdg::csv::FieldFilter::execute(string text, vector<SyntaxNode>& output)
 {
     if (text.back()==',')
         return FILTER_FORMAT_ERROR;
@@ -181,10 +181,10 @@ int32_t sdg::csv::FieldFilter::execute(string text, vector<plNode>& output)
             last_char = *it;
         }
 
-        //if there is not an open quotation, push the plNode to the buffer
+        //if there is not an open quotation, push the SyntaxNode to the buffer
         if ((number_of_quotes%2==0))
         {
-            output.push_back(plNode(buffer, nullptr));
+            output.push_back(SyntaxNode(buffer, nullptr));
             buffer.clear();
         }
         //if there is a quotation open put the comma back, and do NOT clear the buffer
@@ -247,11 +247,11 @@ bool sdg::csv::FieldFilter::IsFieldCountValid(int32_t field_count_param)
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-void sdg::csv::CSVOutput::execute(std::shared_ptr<plNode>& text, sdg::DataSet& data_store)
+void sdg::csv::CSVOutput::execute(std::shared_ptr<SyntaxNode>& text, sdg::DataSet& data_store)
 {
     //set of nodes to check
-    vector<shared_ptr<plNode>> in;
-    vector<shared_ptr<plNode>> out;
+    vector<shared_ptr<SyntaxNode>> in;
+    vector<shared_ptr<SyntaxNode>> out;
     out.push_back(text);
 
     //run the following loop while there are still nodes to parse.
@@ -261,24 +261,24 @@ void sdg::csv::CSVOutput::execute(std::shared_ptr<plNode>& text, sdg::DataSet& d
         in = out;       //set i equal to the previous o
         out.clear();    //clear o for new nodes.
 
-        //loop through a plNode set
+        //loop through a SyntaxNode set
         for (int i=0; i<in.size(); ++i)
         { 
-            //if the plNode has children:
-            if (in[i]->HasChildren())
+            //if the SyntaxNode has children:
+            if (in[i]->has_children())
             {
                 //loop through all children
-                for(int j=0; j<in[i]->GetNumberOfChildren(); ++j)
+                for(int j=0; j<in[i]->get_number_of_children(); ++j)
                 {
                     //add them to a new set of nodes to parse.
-                    out.push_back(in[i]->GetChild(j));
+                    out.push_back(in[i]->get_child(j));
                 }//j
             }
             //if not:
             else
             {
-                //add the plNode value to the hash table.
-                data_store.set( in[i]->GetID(), plHashValue( in[i]->GetValue(), in[i]->GetPath() ) );
+                //add the SyntaxNode value to the hash table.
+                data_store.set( hash::KeyInstance(in[i]->get_item_key()), plHashValue( in[i]->get_item_value(), in[i]->get_path() ) );
             }
         }//i
     }

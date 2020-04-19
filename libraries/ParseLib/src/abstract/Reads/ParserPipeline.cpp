@@ -7,7 +7,7 @@
 using std::shared_ptr;
 using std::vector;
 using std::string;
-using sdg::plNode;
+using sdg::SyntaxNode;
 using sdg::ParserPipeline;
 
 
@@ -25,14 +25,14 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
 }
 
 //execute will populate the DataSet
-int32_t ParserPipeline::execute(std::shared_ptr<plNode>& text, sdg::DataSet& data_store)
+int32_t ParserPipeline::execute(std::shared_ptr<SyntaxNode>& text, sdg::DataSet& data_store)
 {
     int32_t result;
 
-    vector<vector<shared_ptr<plNode>>> in_buffer;
-    vector<vector<shared_ptr<plNode>>> out_buffer;
+    vector<vector<shared_ptr<SyntaxNode>>> in_buffer;
+    vector<vector<shared_ptr<SyntaxNode>>> out_buffer;
     
-    vector<shared_ptr<plNode>> svn;
+    vector<shared_ptr<SyntaxNode>> svn;
     svn.push_back(text);
     out_buffer.push_back(svn);
 
@@ -99,60 +99,60 @@ int32_t ParserPipeline::inverse(std::vector<std::vector<std::string>> vector_vec
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::ProcessIndividual(sdg::DataSet &data_set, plNodeSet &out_buffer, vector<plNode> &in_buffer, plNodePtr &current_node, std::shared_ptr<ParserFilter> filter)
+int32_t ParserPipeline::ProcessIndividual(sdg::DataSet &data_set, SyntaxNodeSet &out_buffer, vector<SyntaxNode> &in_buffer, SyntaxNodePtr &current_node, std::shared_ptr<ParserFilter> filter)
 {
     //Breakup the filter output.
     for(int l = 0; l < in_buffer.size(); ++l)
     {
-        //create a new plNode to be added to the tree
-        plNode newNode = plNode(in_buffer[l].GetValue().c_str(), current_node);
+        //create a new SyntaxNode to be added to the tree
+        SyntaxNode newNode = SyntaxNode(in_buffer[l].get_item_value().c_str(), current_node);
 
-            //Append the id of the parent plNode
-            newNode.AppendID(current_node->GetID());
+            //Append the id of the parent SyntaxNode
+            newNode.append_key(current_node->get_item_key());
             
             //add the delimiter
-            if(!newNode.EmptyID())
-                newNode.AppendID("-");
+            if(!newNode.is_empty_key())
+                newNode.append_key("-");
 
             //functionality for the special (~) flag
             if (filter->GetLabel().substr(0,1)=="~")
             {
                 if (l==0)
                 {
-                    newNode.AppendID(filter->GetLabel().substr(1));
+                    newNode.append_key(filter->GetLabel().substr(1));
                 }
             }
-            //Append the id of this plNode
+            //Append the id of this SyntaxNode
             else 
             {
-                newNode.AppendID(filter->GetID(l));
+                newNode.append_key(filter->GetID(l));
             }
                 
 
-        //Add this to the current plNode's child set.
+        //Add this to the current SyntaxNode's child set.
         current_node->AddChild(newNode);
 
         //Will be added to the output buffer.
-        out_buffer.push_back(current_node->GetChild(l));
+        out_buffer.push_back(current_node->get_child(l));
     }//vector
 
     return PIPELINE_SUCCESS;
 
 }
 
-int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, plNodeBuffer &out_buffer, plNodeSet &in_buffer, std::shared_ptr<ParserFilter> filter)
+int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, SyntaxNodeBuffer &out_buffer, SyntaxNodeSet &in_buffer, std::shared_ptr<ParserFilter> filter)
 {
     int32_t result;
 
-    // Apply filters to all nodes in the plNode set.
+    // Apply filters to all nodes in the SyntaxNode set.
     for (int k=0; k < in_buffer.size(); ++k)
     {
         //assign the results of the filter to the children vector.
-        string str = in_buffer[k]->GetValue();
+        string str = in_buffer[k]->get_item_value();
 
-        vector<shared_ptr<plNode>> filter_result_set;
+        vector<shared_ptr<SyntaxNode>> filter_result_set;
         
-        vector<plNode> vn;
+        vector<SyntaxNode> vn;
         int32_t err;
         if( (err=filter->execute(str.c_str(), vn))!=ParserFilter::FILTER_SUCCESS )
         {
@@ -175,11 +175,11 @@ int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, plNodeBuffer &out_b
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::ProcessNodeSets(sdg::DataSet &data_set, plNodeBuffer &out_buffer, plNodeBuffer &in_buffer, shared_ptr<ParserFilter> filter)
+int32_t ParserPipeline::ProcessNodeSets(sdg::DataSet &data_set, SyntaxNodeBuffer &out_buffer, SyntaxNodeBuffer &in_buffer, shared_ptr<ParserFilter> filter)
 {
     int32_t result;
 
-    // Apply filters to all plNode sets.
+    // Apply filters to all SyntaxNode sets.
     for(int j=0; j < in_buffer.size(); ++j)
     {
         if ((result=ProcessNodes(data_set, out_buffer, in_buffer[j], filter))!= PIPELINE_SUCCESS)
@@ -191,7 +191,7 @@ int32_t ParserPipeline::ProcessNodeSets(sdg::DataSet &data_set, plNodeBuffer &ou
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::ApplyFilters(sdg::DataSet &data_set, plNodeBuffer &out_buffer, plNodeBuffer &in_buffer)
+int32_t ParserPipeline::ApplyFilters(sdg::DataSet &data_set, SyntaxNodeBuffer &out_buffer, SyntaxNodeBuffer &in_buffer)
 {
     int32_t result;
 

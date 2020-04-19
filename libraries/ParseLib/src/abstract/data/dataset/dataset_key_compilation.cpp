@@ -14,17 +14,18 @@ using std::cout;
 using std::endl;
 
 
-//todo -- increase the clarity and readability of the inner workings of the lexer.
-//-- also adjust this algorithm to more closely adhere to concepts of lexical analysis, and assess time complexity.
-string sdg::DataSet::id_lexer(
-    string a_identifier, // the identifier to be broken down into descriptors.
+//id lexer matches descriptors against expected descriptors
+//todo-- also adjust this algorithm to more closely adhere to concepts of lexical analysis, and assess time complexity.
+sdg::hash::KeyInstance sdg::DataSet::id_lexer(
+    hash::KeyInstance a_key, // the identifier to be broken down into descriptors.
     function<void(int32_t key_i, int32_t index, string found_label)> callback_desc_found,
     function<void(string label_not_found)> callback_desc_not_found,
     function<void(string label_unrecognized)> callback_unrecognized_desc) const
 {
 
     string r_new_id;
-    char * token = strtok((char*)a_identifier.c_str(),"-");
+    string key_as_string(a_key.as_string());
+    char * token = strtok((char*)key_as_string.c_str(),"-");
 
     vector<bool> v_b_found;
 
@@ -82,10 +83,6 @@ string sdg::DataSet::id_lexer(
                 {
                     callback_desc_found(i, NO_INDEX, identifying_descriptors[i]->get_id());
                 }
-                    
-                //todo -- error
-                //else
-                //error
             }
         }
 
@@ -113,15 +110,15 @@ string sdg::DataSet::id_lexer(
         }  
 
     delete[] token;
-    return r_new_id;
+    return hash::KeyInstance(r_new_id);
 }
 
-vector<std::string> sdg::DataSet::get_missing_descriptors(std::string a_descriptor_labels) const
+vector<std::string> sdg::DataSet::get_missing_descriptors(hash::KeyInstance a_key_subset) const
 {
     vector<std::string> r_missing_descriptors;
 
     this->id_lexer(
-        a_descriptor_labels,
+        a_key_subset,
         [=](int32_t key_i,int32_t index, string found_label)
         {
             //if there is a match
@@ -137,38 +134,35 @@ vector<std::string> sdg::DataSet::get_missing_descriptors(std::string a_descript
 }
 
 //searches the key for an instance of a_descriptor
-std::string sdg::DataSet::increment_descriptor_in_key(hash::DescriptorInstance a_descriptor, hash::KeyInstance a_hash_key, int32_t a_position)
+sdg::hash::KeyInstance sdg::DataSet::increment_descriptor_in_key(hash::DescriptorInstance a_descriptor, hash::KeyInstance a_hash_key, int32_t a_position)
 {
-    std::string 
-            copy = a_hash_key.value(),
-            new_key,
-            descriptor_id;
+    std::string hash_key_as_string = a_hash_key.as_string();
+    std::vector<hash::DescriptorInstance> descriptor_list;
 
-    char * token = strtok((char*)copy.c_str(),"-");
-
-    //iterates through all tokens(descriptors)
-    while(token!=NULL)
+    auto function = [&](const std::string callback_token)
     {
-        //if the descriptor mat
-        if(a_descriptor == token)
-        {   
+        //if the descriptor matches increment 
+        //the value on the descriptor
+        if(a_descriptor==callback_token)
+        {  
+            //increments the descriptor's value
             a_descriptor++;
 
-            new_key.append(a_descriptor.as_string());
+            descriptor_list.push_back(a_descriptor);
         }
         else
         {
-            new_key.append(token);
+            std::string token_as_string(callback_token);
+            hash::DescriptorInstance local_descriptor(token_as_string.substr(0,1), Attribute::Scale::Numeric);
+            local_descriptor.set_value(std::stoi(token_as_string.substr(1,1)));
+
+            descriptor_list.push_back(local_descriptor);
         }
-        
-        token = strtok(NULL,"-");
+    };
 
-        if(token!=NULL)
-            new_key.append("-");
-    }
-    delete[] token;
+    a_hash_key.for_each_descriptor(function);
 
-    return new_key;
+    return hash::KeyInstance(descriptor_list);
 }
 
 
@@ -183,14 +177,13 @@ void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, hash::
         a_descriptor++;
 
         //takes a descriptor increments it and applys it to the provided key
-        new_key = increment_descriptor_in_key(a_descriptor, new_key, 1);
+        new_key=increment_descriptor_in_key(a_descriptor, new_key, 1);
 
         //apply the previously replaced value and assign the newly replaced value(if one exists) 
-        replaced = this->hash_table.insert(new_key.value(), replaced);
+        replaced=this->hash_table.insert(new_key, replaced);
 
         //update the count of descriptors.
-        //todo-- check naming of this function, readability is a bit challenging
-        this->update_descriptor_counts(new_key.value());
+        this->update_descriptor_counts(new_key);
     }
 }
 
@@ -242,15 +235,18 @@ sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::De
     return sdg::hash::KeyInstance(compiled_key, data_missing);
 }
 
-std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
+
+//applies key values to expected descriptors
+std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::get_descriptors_from_descriptor_id_set(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
 {
     using sdg::hash::DescriptorInstance;
-
     std::vector<DescriptorInstance> buffer;
+
 
     for(auto descriptor : expected_descriptor_buffer)
     {
         std::shared_ptr<Attribute> attribute;
+        //if the current descriptor is an attribute
         if( (attribute=dynamic_pointer_cast<Attribute>(descriptor)) )
         {
             buffer.push_back( DescriptorInstance(descriptor->get_id(), attribute->get_scale()) );
@@ -259,17 +255,14 @@ std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(hash::KeyInstanc
         {
             return buffer;
         }
-
-        
     }
 
-    
 
     /*-----------------------------------*
     *              Lexer                 *
     * ----------------------------------*/
     key_buffer = this->id_lexer(
-        key_buffer.value(), 
+        key_buffer, 
         [&](int32_t key_i,int32_t index, string found_label)
         {
             if (buffer[key_i].get_scale() == Attribute::Scale::Numeric)

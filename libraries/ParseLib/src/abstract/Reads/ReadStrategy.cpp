@@ -25,7 +25,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
     //set the read options before anything else
     this->set_read_options(read_options);
 
-    std::shared_ptr<sdg::plNode> n = std::make_shared<sdg::plNode>(sdg::plNode(raw_text, nullptr));
+    std::shared_ptr<sdg::SyntaxNode> n = std::make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
     
     //decrypt
     

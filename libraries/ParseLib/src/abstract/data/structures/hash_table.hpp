@@ -2,13 +2,12 @@
 #include <vector>
 #include <string>
 
+#include "../types/types.hpp"
 
 
 
 
-
-namespace sdg
-{
+namespace sdg {
 
 /* 
 * Hash Value
@@ -40,8 +39,6 @@ public:
 };
 
 
-
-
 /* 
 * Hash Element Iterator
 * -- a hash value on a linked list.
@@ -66,7 +63,6 @@ private:
     //element during a delete procedure.
     std::shared_ptr<plHashElementIterator> next();
     std::shared_ptr<plHashElementIterator> previous();
-
 
 public:
     plHashElementIterator() = default;                            
@@ -104,8 +100,6 @@ public:
 };
  
 
-
- 
 /* 
 * Hash Table
 * -- 
@@ -125,11 +119,11 @@ private:
     std::vector<std::shared_ptr<plHashElementIterator>> table;  
 
     //a list of keys entered into this table.
-    std::vector<std::string> hash_key_list;             
+    std::vector<hash::KeyInstance> hash_key_list;             
 
 
-    bool key_value_exists(std::string a_key);
-    
+    bool key_value_exists(hash::KeyInstance a_key);
+
 public:
     //Constructors
     plHashTable();
@@ -141,26 +135,26 @@ public:
     /*      Mutators        */
 
     //inserts a key and value into the hash table.
-    plHashValue insert(std::string key, plHashValue aValue);
+    plHashValue insert(hash::KeyInstance key, plHashValue aValue);
 
     //moves a hash value from one key to another.
-    plHashValue move(std::string old_key, std::string new_key);
+    plHashValue move(hash::KeyInstance old_key, hash::KeyInstance new_key);
 
     //deletes a hash key and hash value from the hash table.
-    void delete_value(std::string a_key);
+    void delete_value(hash::KeyInstance a_key);
 
 
 
     /*      Accessors     */
 
     //returns the string value of a key in the hash table.
-    std::string get(std::string key) const;
+    std::string get(hash::KeyInstance a_key) const;
 
     //returns a plHashValue value from by a key from the hash_table.
-    plHashValue get_hash_value(std::string key) const;
+    plHashValue get_hash_value(hash::KeyInstance a_key) const;
 
     //returns a list of keys that matches the passed in descriptors.(hyphen delimited)
-    std::vector<std::string> GetMatchingKeys(std::string descriptor_list_str) const;
+    std::vector<hash::KeyInstance> GetMatchingKeys(hash::KeyInstance a_key_subset) const;
 };
 
 
