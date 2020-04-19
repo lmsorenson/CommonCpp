@@ -14,8 +14,8 @@ using std::cout;
 using std::endl;
 
 
-//todo -- increase the clarity and readability of the inner workings of the lexer.
-//-- also adjust this algorithm to more closely adhere to concepts of lexical analysis, and assess time complexity.
+//id lexer matches descriptors against expected descriptors
+//todo-- also adjust this algorithm to more closely adhere to concepts of lexical analysis, and assess time complexity.
 sdg::hash::KeyInstance sdg::DataSet::id_lexer(
     hash::KeyInstance a_key, // the identifier to be broken down into descriptors.
     function<void(int32_t key_i, int32_t index, string found_label)> callback_desc_found,
@@ -235,15 +235,18 @@ sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::De
     return sdg::hash::KeyInstance(compiled_key, data_missing);
 }
 
-std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
+
+//applies key values to expected descriptors
+std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::get_descriptors_from_descriptor_id_set(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const
 {
     using sdg::hash::DescriptorInstance;
-
     std::vector<DescriptorInstance> buffer;
+
 
     for(auto descriptor : expected_descriptor_buffer)
     {
         std::shared_ptr<Attribute> attribute;
+        //if the current descriptor is an attribute
         if( (attribute=dynamic_pointer_cast<Attribute>(descriptor)) )
         {
             buffer.push_back( DescriptorInstance(descriptor->get_id(), attribute->get_scale()) );
@@ -252,11 +255,8 @@ std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::helper(hash::KeyInstanc
         {
             return buffer;
         }
-
-        
     }
 
-    
 
     /*-----------------------------------*
     *              Lexer                 *

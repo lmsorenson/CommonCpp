@@ -80,17 +80,16 @@ sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string va
 }
 
 
-sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor) const
+sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor_list) const
 {
     if (state == DATA_SET_BAD)
         return Instance(this, Instance::NO_FILE);
 
     //initializing a valid instance return buffer.
-    Instance return_buffer = Instance(this, Instance::VALID_INST, a_descriptor);
+    Instance return_buffer = Instance(this, Instance::VALID_INST, a_descriptor_list);
 
     //get a set of descriptors from a list of expected descriptor IDs
-    std::vector<hash::DescriptorInstance> 
-        expected_descriptor_buffer = helper(a_descriptor, this->logical_data_structure.get_identifier_of_granular_entity());
+    std::vector<hash::DescriptorInstance> expected_descriptor_buffer = get_descriptors_from_descriptor_id_set(a_descriptor_list, this->logical_data_structure.get_identifier_of_granular_entity());
 
     //try to compile the hash key
     hash::KeyInstance generated_key = compile_hash_key(expected_descriptor_buffer);

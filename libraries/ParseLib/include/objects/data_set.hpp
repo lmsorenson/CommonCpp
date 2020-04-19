@@ -109,7 +109,6 @@ protected:
     //a hash table to store the data in.
     plHashTable hash_table;
 
-    /* Helpers */
     //overwrites an entity record.  recursively repositions all overwritten elements
     void displace_overwritten_keys( plHashValue replaced_value, hash::DescriptorInstance a_descriptor, hash::KeyInstance new_key);
 
@@ -125,8 +124,8 @@ protected:
     //ignores booleans, returns a KeyInstance.  If assigns it as a partial key if there are descriptor values missing.
     hash::KeyInstance compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const;
 
-    //todo -- what does this function do?
-    std::vector<hash::DescriptorInstance> helper(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const;
+    //gets a list of descriptors from a list of descriptor ids
+    std::vector<hash::DescriptorInstance> get_descriptors_from_descriptor_id_set(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const;
 };
 
 }//namespace sdg
