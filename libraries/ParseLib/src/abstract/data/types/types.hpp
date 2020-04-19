@@ -1,5 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
+#include <functional>
 
 #include "../meta/Descriptor.hpp"
 
@@ -18,7 +19,9 @@ public:
     KeyInstance(std::vector<DescriptorInstance> descriptor, bool a_is_partial_key=false);
 
     bool is_partial_key() const;
-    std::string as_string() const ;
+    std::string as_string() const;
+
+    void for_each_descriptor(std::function<void(const std::string)> callback);
 
 private:
     std::string value_;

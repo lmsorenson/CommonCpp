@@ -121,15 +121,14 @@ std::vector<KeyInstance> plHashTable::GetMatchingKeys(KeyInstance a_key_subset) 
     vector<KeyInstance> local_hash_key_buffer;
 
     std::string local_key_subset = a_key_subset.as_string();
-    char * token=strtok((char*)local_key_subset.c_str(), "-");
 
-    while(token!=NULL)
+    auto function = [&](const std::string callback_token)
     {
         //iterate through all valid keys.
         for(int i=0; i<local_hash_keys.size(); ++i)
         {
             //check if the key matches the passed in key.
-            if((local_hash_keys[i].as_string().find(token))!=string::npos)
+            if((local_hash_keys[i].as_string().find(callback_token))!=string::npos)
             {
                 local_hash_key_buffer.push_back(local_hash_keys[i]);
             }
@@ -138,12 +137,11 @@ std::vector<KeyInstance> plHashTable::GetMatchingKeys(KeyInstance a_key_subset) 
         local_hash_keys.clear();
         local_hash_keys=local_hash_key_buffer;
         local_hash_key_buffer.clear();
+    };
 
-        token=strtok(NULL, "-");
-    }
+    a_key_subset.for_each_descriptor(function);
 
     return_list=local_hash_keys;
 
-    delete[] token;
     return return_list;
 }

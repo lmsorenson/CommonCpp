@@ -119,21 +119,20 @@ void sdg::DataSet::reposition_instance(hash::DescriptorInstance a_descriptor, in
 void sdg::DataSet::update_descriptor_counts(hash::KeyInstance a_key)
 {
     std::string copy = a_key.as_string();
-    char * token = strtok((char*)copy.c_str(),"-");
-
-    while(token!=NULL)
+    
+    auto function = [&](const std::string callback_token)
     {
         char scanned_descriptor_id[1];
         int32_t scanned_descriptor_value;
-        sscanf(token, "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
+        sscanf(callback_token.c_str(), "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
 
         auto descriptor = hash::DescriptorInstance(scanned_descriptor_id, Attribute::Scale::Numeric);
         descriptor.set_value(scanned_descriptor_value);
-        
+    
         logical_data_structure.found_descriptor(descriptor);
+    };
 
-        token = strtok(NULL,"-");
-    }
+    a_key.for_each_descriptor(function);
 }
 
 
@@ -144,20 +143,21 @@ sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_k
 
     KeyInstance copy = a_key;
 
-    char * token = strtok((char*)copy.as_string().c_str(),"-");
+    DescriptorInstance local_descriptor = DescriptorInstance("NULL", sdg::Attribute::Scale::Numeric);
 
-    while(token!=NULL)
+    auto function = [&](const std::string callback_token)
     {
-        if(std::string(token).substr(0,1).compare(a_descriptor_id.as_string())==0)
+        if(std::string(callback_token).substr(0,1).compare(a_descriptor_id.as_string())==0)
         {
-            DescriptorInstance descriptor = DescriptorInstance(std::string(token).substr(0,1), sdg::Attribute::Scale::Numeric);
-            descriptor.set_value(std::stoi(std::string(token).substr(1,1)));
+            DescriptorInstance descriptor = DescriptorInstance(std::string(callback_token).substr(0,1), sdg::Attribute::Scale::Numeric);
+            descriptor.set_value(std::stoi(std::string(callback_token).substr(1,1)));
 
-            return descriptor;
+            local_descriptor=descriptor;
+            return;
         }
+    };
 
-        token = strtok(NULL,"-");
-    }
+    copy.for_each_descriptor(function);
 
-    return DescriptorInstance("NULL", sdg::Attribute::Scale::Numeric);
+    return local_descriptor;
 }

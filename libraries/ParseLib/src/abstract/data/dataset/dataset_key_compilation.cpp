@@ -139,14 +139,11 @@ sdg::hash::KeyInstance sdg::DataSet::increment_descriptor_in_key(hash::Descripto
     std::string hash_key_as_string = a_hash_key.as_string();
     std::vector<hash::DescriptorInstance> descriptor_list;
 
-    char * token = strtok((char*)hash_key_as_string.c_str(),"-");
-
-    //iterates through all tokens(descriptors)
-    while(token!=NULL)
+    auto function = [&](const std::string callback_token)
     {
         //if the descriptor matches increment 
         //the value on the descriptor
-        if(a_descriptor == token)
+        if(a_descriptor==callback_token)
         {  
             //increments the descriptor's value
             a_descriptor++;
@@ -155,16 +152,15 @@ sdg::hash::KeyInstance sdg::DataSet::increment_descriptor_in_key(hash::Descripto
         }
         else
         {
-            std::string token_as_string(token);
+            std::string token_as_string(callback_token);
             hash::DescriptorInstance local_descriptor(token_as_string.substr(0,1), Attribute::Scale::Numeric);
             local_descriptor.set_value(std::stoi(token_as_string.substr(1,1)));
 
             descriptor_list.push_back(local_descriptor);
         }
-        token = strtok(NULL,"-");
-    }
+    };
 
-    delete[] token;
+    a_hash_key.for_each_descriptor(function);
 
     return hash::KeyInstance(descriptor_list);
 }
