@@ -2,6 +2,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <queue>
 #include <memory>
 #include "public/TokenFilter.hpp"
 #include "public/TokenTarget.hpp"
@@ -25,12 +26,15 @@ class Lexer
     std::string buffer_;
     std::string previous_token_;
 
+    std::queue<std::string> outgoing_;
+
     bool bAllowDuplicates_;
 
 public:
     Lexer(): bAllowDuplicates_(false){}
 
-    void accept_char(char ch);
+    void add_char(char ch);
+    void run();
 
     void produce_token();
     void produce_token(std::string);

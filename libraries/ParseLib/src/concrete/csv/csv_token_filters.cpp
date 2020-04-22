@@ -44,7 +44,7 @@ sdg::csv::RecordTokenFilter::RecordTokenFilter(Lexer * owner, std::string new_fi
 bool sdg::csv::RecordTokenFilter::execute(char ch)
 {
     if(is_a_delimeter(ch))
-    { 
+    {
         owner_->produce_token(filter_id_);
         return true;
     }

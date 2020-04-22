@@ -9,8 +9,9 @@ namespace csv {
 
 class Read : public ::sdg::ReadStrategy
 {
-    virtual void configure_pipeline(sdg::ParserPipeline &pipeline);
-    virtual int32_t set_read_options(std::vector<sdg::option> read_options);
+    virtual void configure_pipeline(sdg::ParserPipeline &pipeline) override;
+    virtual void configure_lexer(Lexer &lexer) override;
+    virtual int32_t set_read_options(std::vector<sdg::option> read_options) override;
 
     //csv read options
     bool b_use_header_line;

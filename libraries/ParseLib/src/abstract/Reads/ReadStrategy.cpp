@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "../../utils/load_text.h"
-#include "../../concrete/csv/csv_token_filters.hpp"
 
 
 using ::sdg::ReadStrategy;
@@ -22,14 +21,18 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
         return FILE_NOT_FOUND;
     }
 
-    int32_t index = lexer_.add_filter<csv::RecordTokenFilter>("R");
-    lexer_.add_filter<csv::FieldTokenFilter>("F", index);
-    lexer_.set_target<csv::CSVTarget>();
+    configure_lexer(lexer_);
 
     for(auto itr=raw_text.begin(); itr!=raw_text.end();  itr++)
     {
-        lexer_.accept_char(*itr);
+        lexer_.add_char(*itr);
     }
+    
+    std::cout << std::endl;
+
+    lexer_.run();
+
+    std::cout << std::endl;
     
     //set the read options before anything else
     this->set_read_options(read_options);

@@ -17,7 +17,10 @@ class ReadStrategy
 {
     //ops
     virtual void configure_pipeline(ParserPipeline &pipeline) = 0;
+    virtual void configure_lexer(Lexer &lexer)=0;
     virtual int32_t set_read_options(std::vector<sdg::option> read_options)=0;
+
+    Lexer lexer_;
 
 public:
     int32_t execute_read(const char * path, sdg::DataSet &ds, std::vector<sdg::option> read_options);
@@ -29,8 +32,6 @@ public:
         FILE_FORMAT_INVALID,
         UNKNOWN_ERROR
     };
-
-    Lexer lexer_;
 };
 
 }// namespace sdg

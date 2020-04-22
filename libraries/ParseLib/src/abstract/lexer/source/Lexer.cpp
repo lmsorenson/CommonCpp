@@ -12,7 +12,7 @@ using ::std::shared_ptr;
 
 
 
-void Lexer::accept_char(char ch)
+void Lexer::add_char(char ch)
 {
     bool flush_token;
 
@@ -21,6 +21,16 @@ void Lexer::accept_char(char ch)
 
     if(!flush_token)
         buffer_.append(std::string(1, ch));
+}
+
+void Lexer::run()
+{
+    while ( !outgoing_.empty() )
+    {
+        std::string token = outgoing_.front();
+        outgoing_.pop();
+        cout << token << " ";
+    }
 }
 
 void Lexer::produce_token()
@@ -32,6 +42,7 @@ void Lexer::produce_token()
         buffer_.clear();
 
         cout << " " << previous_token_ << " ";
+        outgoing_.push(previous_token_);
     }
 }
 
@@ -43,6 +54,7 @@ void Lexer::produce_token(std::string token_content)
         previous_token_.append(token_content);
 
         cout << " " << previous_token_ << " ";
+        outgoing_.push(previous_token_);
     }
 }
 
@@ -58,6 +70,6 @@ void Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
         buffer_.clear();
 
         cout << " " << previous_token_ << " ";
-        
+        outgoing_.push(previous_token_);
     }
 }
