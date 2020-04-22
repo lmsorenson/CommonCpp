@@ -23,15 +23,6 @@ void Lexer::add_char(char ch)
         buffer_.append(std::string(1, ch));
 }
 
-void Lexer::run()
-{
-    while ( !outgoing_.empty() )
-    {
-        std::string token = outgoing_.front();
-        outgoing_.pop();
-        cout << token << " ";
-    }
-}
 
 void Lexer::produce_token()
 {
@@ -39,9 +30,10 @@ void Lexer::produce_token()
     {
         previous_token_.clear();
         previous_token_.append(buffer_);
-        buffer_.clear();
 
-        outgoing_.push(previous_token_);
+        target_->add_token(buffer_);
+
+        buffer_.clear();
     }
 }
 
@@ -52,7 +44,7 @@ void Lexer::produce_token(std::string token_content)
         previous_token_.clear();
         previous_token_.append(token_content);
 
-        outgoing_.push(previous_token_);
+        target_->add_token(previous_token_);
     }
 }
 
@@ -61,12 +53,14 @@ void Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
     if(!buffer_.empty() && (previous_token_.compare(buffer_)!=0 && !bAllowDuplicates_))
     {
         previous_token_.clear();
+
         previous_token_
         .append(tag.first)
         .append(buffer_)
         .append(tag.second);
+
         buffer_.clear();
 
-        outgoing_.push(previous_token_);
+        target_->add_token(previous_token_);
     }
 }

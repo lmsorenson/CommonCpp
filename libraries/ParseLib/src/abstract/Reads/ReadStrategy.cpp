@@ -13,6 +13,10 @@ using ::sdg::ParserPipeline;
 
 int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<sdg::option> read_options)
 {
+    //set the read options before anything else
+    this->set_read_options(read_options);
+
+
     //load text
     std::string raw_text;
     if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
@@ -21,27 +25,29 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
         return FILE_NOT_FOUND;
     }
 
-    configure_lexer(lexer_);
+    configure_lexer(lexer_, token_buffer_);
+    configure_parser();
 
     for(auto itr=raw_text.begin(); itr!=raw_text.end();  itr++)
     {
         lexer_.add_char(*itr);
     }
-    
-    std::cout << std::endl;
 
-    lexer_.run();
+    while ( !token_buffer_.empty() )
+    {   
+        std::string token = token_buffer_.front();
+        token_buffer_.pop();
+        std::cout << "Token read in ReadStrategy: " << token << " " << std::endl;
+    }
 
-    std::cout << std::endl;
+    std::cout<<std::endl;
     
-    //set the read options before anything else
-    this->set_read_options(read_options);
+
 
     std::shared_ptr<sdg::SyntaxNode> n = std::make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
     
     //decrypt
     
-
     //Configure pipeline
     ParserPipeline pipeline;
     this->configure_pipeline(pipeline);

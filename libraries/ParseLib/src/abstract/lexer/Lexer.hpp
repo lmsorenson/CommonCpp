@@ -26,15 +26,12 @@ class Lexer
     std::string buffer_;
     std::string previous_token_;
 
-    std::queue<std::string> outgoing_;
-
     bool bAllowDuplicates_;
 
 public:
     Lexer(): bAllowDuplicates_(false){}
 
     void add_char(char ch);
-    void run();
 
     void produce_token();
     void produce_token(std::string);
@@ -60,9 +57,9 @@ public:
     }
 
     template<class T>
-    void set_target()
+    void set_target(std::queue<std::string> *queue_ptr)
     {
-        target_=std::shared_ptr<T>(new T());
+        target_=std::shared_ptr<T>( new T( queue_ptr ) );
     }
 };
 

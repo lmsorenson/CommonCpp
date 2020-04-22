@@ -17,10 +17,14 @@ class ReadStrategy
 {
     //ops
     virtual void configure_pipeline(ParserPipeline &pipeline) = 0;
-    virtual void configure_lexer(Lexer &lexer)=0;
+    virtual void configure_lexer(Lexer &lexer, std::queue<std::string> &token_stream)=0;
+    virtual void configure_parser()=0;
     virtual int32_t set_read_options(std::vector<sdg::option> read_options)=0;
 
     Lexer lexer_;
+    std::queue<std::string> token_buffer_;
+    //Parser parser_
+    //syntax_tree_
 
 public:
     int32_t execute_read(const char * path, sdg::DataSet &ds, std::vector<sdg::option> read_options);

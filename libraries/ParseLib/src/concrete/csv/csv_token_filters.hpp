@@ -44,7 +44,9 @@ public:
 
 class CSVTarget : public ::sdg::TokenTarget
 {
-    virtual void execute(std::string token) override;
+public:
+    CSVTarget(std::queue<std::string> * token_stream_ptr) 
+    : TokenTarget(token_stream_ptr){}
 };
 
 }// namespace csv
