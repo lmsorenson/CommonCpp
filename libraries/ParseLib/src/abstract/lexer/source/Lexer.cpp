@@ -41,7 +41,6 @@ void Lexer::produce_token()
         previous_token_.append(buffer_);
         buffer_.clear();
 
-        cout << " " << previous_token_ << " ";
         outgoing_.push(previous_token_);
     }
 }
@@ -53,7 +52,6 @@ void Lexer::produce_token(std::string token_content)
         previous_token_.clear();
         previous_token_.append(token_content);
 
-        cout << " " << previous_token_ << " ";
         outgoing_.push(previous_token_);
     }
 }
@@ -69,7 +67,6 @@ void Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
         .append(tag.second);
         buffer_.clear();
 
-        cout << " " << previous_token_ << " ";
         outgoing_.push(previous_token_);
     }
 }
