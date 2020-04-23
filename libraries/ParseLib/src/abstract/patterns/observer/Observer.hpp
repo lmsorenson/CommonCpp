@@ -9,12 +9,18 @@ class Subject;
 
 class Observer 
 {
+    // adds a subject
     Subject *subject_;
 
 public:
-    void set_subject(Subject *new_subject);
+    Observer() : subject_(nullptr) {}
+    ~Observer() = default;
 
-    virtual void receive_subject_notification() = 0;
+    // sets the subject 
+    void set_subject( Subject *new_subject );
+
+    // receives an event notificaton
+    virtual void receive_event() = 0;
 };
 
 }// namespace pattern

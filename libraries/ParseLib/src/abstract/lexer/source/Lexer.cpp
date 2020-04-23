@@ -12,7 +12,7 @@ using ::std::shared_ptr;
 
 
 
-void Lexer::receive_subject_notification()
+void Lexer::receive_event()
 {
     this->run();
 }

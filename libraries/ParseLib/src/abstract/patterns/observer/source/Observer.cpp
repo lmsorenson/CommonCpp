@@ -8,6 +8,7 @@ using ::std::shared_ptr;
 using ::std::cout;
 using ::std::endl;
 
+//sets the subject pointer
 void Observer::set_subject(Subject *new_subject)
 {
     if (new_subject)

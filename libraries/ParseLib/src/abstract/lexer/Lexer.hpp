@@ -34,7 +34,7 @@ class Lexer : public pattern::Observer
 public:
     Lexer() : bAllowDuplicates_(false){}
 
-    virtual void receive_subject_notification() override;
+    virtual void receive_event() override;
 
     void run();
 

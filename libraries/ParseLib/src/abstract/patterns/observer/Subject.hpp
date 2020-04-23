@@ -10,10 +10,17 @@ class Observer;
 
 class Subject 
 {
+    //a set of observers that will want to receive notifications
     std::vector<Observer*> observers_;
 
 public:
-    void attach_observer(Observer * new_observer);
+    Subject() = default;
+    ~Subject() = default;
+
+    //attaches an observer to a "distribution list".
+    void attach_observer( Observer *new_observer );
+
+    //notifies observers that the state of the subject has changed.
     void notify_observers();
 };
 
