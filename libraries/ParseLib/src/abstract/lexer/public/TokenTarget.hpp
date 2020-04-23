@@ -13,7 +13,7 @@ public:
     TokenTarget(std::deque<std::string> * token_stream_ptr) 
     : token_stream_(token_stream_ptr){}
 
-    void add_token(std::string);
+    void send_token(std::string);
 };
 
 }// namespace sdg

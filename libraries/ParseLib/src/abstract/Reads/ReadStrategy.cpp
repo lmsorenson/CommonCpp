@@ -25,20 +25,15 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
         return FILE_NOT_FOUND;
     }
 
-    configure_lexer(lexer_, token_buffer_);
-    configure_parser();
-
     for(auto itr=raw_text.begin(); itr!=raw_text.end();  itr++)
     {
         character_buffer_.push_back(*itr);
     }
 
-    while ( !character_buffer_.empty() )
-    {   
-        char ch = character_buffer_.front();
-        character_buffer_.pop_front();
-        lexer_.add_char(ch);
-    }
+    configure_lexer( lexer_, token_buffer_, character_buffer_ );
+    configure_parser();
+
+    lexer_.run();
 
     while ( !token_buffer_.empty() )
     {   

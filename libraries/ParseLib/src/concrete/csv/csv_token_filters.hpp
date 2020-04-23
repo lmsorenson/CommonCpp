@@ -1,6 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include "../../abstract/lexer/public/TokenFilter.hpp"
+#include "../../abstract/lexer/public/CharacterSource.hpp"
 #include "../../abstract/lexer/public/TokenTarget.hpp"
 
 
@@ -41,6 +42,13 @@ public:
     // virtual std::string name() override;
 };
 
+
+class CSVSource : public ::sdg::CharacterSource
+{
+public:
+    CSVSource(std::deque<char> * character_source_ptr) 
+    : CharacterSource(character_source_ptr){}
+};
 
 class CSVTarget : public ::sdg::TokenTarget
 {

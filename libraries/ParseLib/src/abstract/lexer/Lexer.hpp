@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include <memory>
+#include "public/CharacterSource.hpp"
 #include "public/TokenFilter.hpp"
 #include "public/TokenTarget.hpp"
 
@@ -12,6 +13,7 @@
 
 namespace sdg {
 
+class CharacterSource;
 class TokenFilter;
 class ChildTokenFilter;
 class TokenTarget;
@@ -20,6 +22,7 @@ class TokenTarget;
 //creates a stream of tokens
 class Lexer
 {
+    std::shared_ptr<CharacterSource> source_;
     std::vector<std::shared_ptr<TokenFilter>> filters_;
     std::shared_ptr<TokenTarget> target_;
 
@@ -31,12 +34,18 @@ class Lexer
 public:
     Lexer(): bAllowDuplicates_(false){}
 
-    void add_char(char ch);
+    void run();
 
     void produce_token();
     void produce_token(std::string);
     void produce_tagged_token(std::pair<std::string, std::string>);
 
+
+    template<class T>
+    void set_source(std::deque<char> *queue_ptr)
+    {
+        source_=std::shared_ptr<T>( new T( queue_ptr ) );
+    }
 
     template<class T>
     int32_t add_filter(std::string a_filter_id)

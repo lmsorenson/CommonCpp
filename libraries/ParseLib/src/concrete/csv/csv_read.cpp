@@ -31,11 +31,14 @@ void sdg::csv::Read::configure_pipeline(ParserPipeline &pipeline)
     pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 
-void Read::configure_lexer(Lexer &lexer, deque<string> &token_stream)
+void Read::configure_lexer(Lexer &lexer, deque<string> &token_stream, deque<char> &character_stream)
 {
+    lexer.set_source<csv::CSVSource>( &character_stream );
+
     int32_t index = 
-    lexer.add_filter<csv::RecordTokenFilter>("R");
-    lexer.add_filter<csv::FieldTokenFilter>("F", index);
+    lexer.add_filter<csv::RecordTokenFilter>( "R" );
+    lexer.add_filter<csv::FieldTokenFilter>( "F", index );
+
     lexer.set_target<csv::CSVTarget>( &token_stream );
 }
 
