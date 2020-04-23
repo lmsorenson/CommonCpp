@@ -6,6 +6,8 @@
 #include <objects/data_set.hpp>
 #include <ParseLib.hpp>
 
+#include "SharedQueue.hpp"
+
 #include "../lexer/Lexer.hpp"
 #include "../parser/Parser.hpp"
 #include "ParserPipeline.hpp"
@@ -17,7 +19,7 @@ class ReadStrategy
 {
     //ops
     virtual void configure_pipeline(ParserPipeline &pipeline) = 0;
-    virtual void configure_lexer(Lexer &lexer, std::deque<std::string> &token_stream, std::deque<char> &character_stream)=0;
+    virtual void configure_lexer(Lexer &lexer, std::deque<std::string> &token_stream, SharedQueue<char> &character_stream)=0;
     virtual void configure_parser()=0;
     virtual int32_t set_read_options(std::vector<sdg::option> read_options)=0;
 
@@ -25,7 +27,7 @@ class ReadStrategy
     //Parser parser_
 
 
-    std::deque<char> character_buffer_;
+    SharedQueue<char> character_queue_;
     std::deque<std::string> token_buffer_;
     
     //syntax_tree_

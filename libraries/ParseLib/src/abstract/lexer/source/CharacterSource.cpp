@@ -10,13 +10,10 @@ using ::sdg::CharacterSource;
 
 bool CharacterSource::characters_available() const
 {
-    return !character_stream_->empty();
+    return !character_stream_->is_empty();
 }
 
 char CharacterSource::pull_char()
 {
-    char ch = std::move(character_stream_->front());
-    character_stream_->pop_front();
-
-    return ch;
+    return character_stream_->get_char();
 }

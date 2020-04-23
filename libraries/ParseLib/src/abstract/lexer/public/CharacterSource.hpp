@@ -2,16 +2,17 @@
 #pragma once
 #include <string>
 #include <deque>
+#include "../../Reads/SharedQueue.hpp"
 
 namespace sdg {
 
 class CharacterSource
 {
-    std::deque<char> * character_stream_;
+    SharedQueue<char> * character_stream_;
 
 public:
-    CharacterSource(std::deque<char> * character_stream_ptr) 
-    : character_stream_(character_stream_ptr){}
+    CharacterSource( SharedQueue<char> * shared_queue_ptr ) 
+    : character_stream_( shared_queue_ptr ){}
 
     bool characters_available() const;
     char pull_char();

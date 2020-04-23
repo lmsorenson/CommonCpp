@@ -7,8 +7,8 @@
 #include "public/CharacterSource.hpp"
 #include "public/TokenFilter.hpp"
 #include "public/TokenTarget.hpp"
-
-
+#include "../patterns/observer/Observer.hpp"
+#include "../Reads/SharedQueue.hpp"
 
 
 namespace sdg {
@@ -20,7 +20,7 @@ class TokenTarget;
 
 //takes in a stream of characters
 //creates a stream of tokens
-class Lexer
+class Lexer : public pattern::Observer
 {
     std::shared_ptr<CharacterSource> source_;
     std::vector<std::shared_ptr<TokenFilter>> filters_;
@@ -32,7 +32,9 @@ class Lexer
     bool bAllowDuplicates_;
 
 public:
-    Lexer(): bAllowDuplicates_(false){}
+    Lexer() : bAllowDuplicates_(false){}
+
+    virtual void receive_subject_notification() override;
 
     void run();
 
@@ -42,8 +44,9 @@ public:
 
 
     template<class T>
-    void set_source(std::deque<char> *queue_ptr)
+    void set_source(sdg::SharedQueue<char> *queue_ptr)
     {
+        this->set_subject(queue_ptr);
         source_=std::shared_ptr<T>( new T( queue_ptr ) );
     }
 

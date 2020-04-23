@@ -46,7 +46,7 @@ public:
 class CSVSource : public ::sdg::CharacterSource
 {
 public:
-    CSVSource(std::deque<char> * character_source_ptr) 
+    CSVSource(SharedQueue<char> * character_source_ptr) 
     : CharacterSource(character_source_ptr){}
 };
 

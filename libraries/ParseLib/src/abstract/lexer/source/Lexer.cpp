@@ -12,6 +12,12 @@ using ::std::shared_ptr;
 
 
 
+void Lexer::receive_subject_notification()
+{
+    this->run();
+}
+
+
 void Lexer::run()
 {
     while ( source_->characters_available() )
