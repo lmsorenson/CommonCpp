@@ -57,7 +57,7 @@ public:
     }
 
     template<class T>
-    void set_target(std::queue<std::string> *queue_ptr)
+    void set_target(std::deque<std::string> *queue_ptr)
     {
         target_=std::shared_ptr<T>( new T( queue_ptr ) );
     }

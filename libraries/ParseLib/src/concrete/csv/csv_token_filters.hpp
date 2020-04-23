@@ -45,7 +45,7 @@ public:
 class CSVTarget : public ::sdg::TokenTarget
 {
 public:
-    CSVTarget(std::queue<std::string> * token_stream_ptr) 
+    CSVTarget(std::deque<std::string> * token_stream_ptr) 
     : TokenTarget(token_stream_ptr){}
 };
 

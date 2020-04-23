@@ -8,5 +8,5 @@ using ::sdg::TokenTarget;
 
 void TokenTarget::add_token(std::string a_new_token)
 {
-    token_stream_->push(a_new_token);
+    token_stream_->push_back(a_new_token);
 }

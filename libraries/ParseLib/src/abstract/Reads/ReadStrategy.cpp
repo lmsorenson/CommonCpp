@@ -30,13 +30,20 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
 
     for(auto itr=raw_text.begin(); itr!=raw_text.end();  itr++)
     {
-        lexer_.add_char(*itr);
+        character_buffer_.push_back(*itr);
+    }
+
+    while ( !character_buffer_.empty() )
+    {   
+        char ch = character_buffer_.front();
+        character_buffer_.pop_front();
+        lexer_.add_char(ch);
     }
 
     while ( !token_buffer_.empty() )
     {   
         std::string token = token_buffer_.front();
-        token_buffer_.pop();
+        token_buffer_.pop_front();
         std::cout << "Token read in ReadStrategy: " << token << " " << std::endl;
     }
 

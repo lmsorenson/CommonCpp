@@ -9,7 +9,7 @@
 
 
 using ::std::shared_ptr;
-using ::std::queue;
+using ::std::deque;
 using ::std::string;
 using ::sdg::ParserPipeline;
 using ::sdg::option;
@@ -31,7 +31,7 @@ void sdg::csv::Read::configure_pipeline(ParserPipeline &pipeline)
     pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 
-void Read::configure_lexer(Lexer &lexer, queue<string> &token_stream)
+void Read::configure_lexer(Lexer &lexer, deque<string> &token_stream)
 {
     int32_t index = 
     lexer.add_filter<csv::RecordTokenFilter>("R");

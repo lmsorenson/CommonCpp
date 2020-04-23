@@ -7,10 +7,10 @@ namespace sdg {
 
 class TokenTarget
 {
-    std::queue<std::string> * token_stream_;
+    std::deque<std::string> * token_stream_;
 
 public:
-    TokenTarget(std::queue<std::string> * token_stream_ptr) 
+    TokenTarget(std::deque<std::string> * token_stream_ptr) 
     : token_stream_(token_stream_ptr){}
 
     void add_token(std::string);

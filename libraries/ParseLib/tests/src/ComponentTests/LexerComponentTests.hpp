@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <queue>
 #include <cstdio>
 #include <ctime>
 
@@ -9,7 +10,8 @@
 #include "../../../src/abstract/lexer/Lexer.hpp"
 
 using sdg::Lexer;
-
+using std::queue;
+using std::string;
 
 class LexerComponentTests : public ::testing::Test
 {
@@ -40,5 +42,10 @@ protected:
 
 TEST_F(LexerComponentTests, Test1)
 {
+    Lexer lexer;
+    queue<string> stream;
+
+
+
     ASSERT_EQ(true, false);
 }
