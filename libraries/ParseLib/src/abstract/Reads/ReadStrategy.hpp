@@ -6,7 +6,7 @@
 #include <objects/data_set.hpp>
 #include <ParseLib.hpp>
 
-#include "SharedQueue.hpp"
+#include "Stream.hpp"
 
 #include "../lexer/Lexer.hpp"
 #include "../parser/Parser.hpp"

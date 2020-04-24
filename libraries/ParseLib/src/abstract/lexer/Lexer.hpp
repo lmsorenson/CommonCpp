@@ -8,7 +8,7 @@
 #include "private/TokenFilter.hpp"
 #include "private/TokenTarget.hpp"
 #include "../../utils/patterns/observer/Observer.hpp"
-#include "../Reads/SharedQueue.hpp"
+#include "../Reads/Stream.hpp"
 
 
 namespace sdg {

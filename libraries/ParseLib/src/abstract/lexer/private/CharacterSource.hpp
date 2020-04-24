@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include <deque>
-#include "../../Reads/SharedQueue.hpp"
+#include "../../Reads/Stream.hpp"
 
 namespace sdg {
 
