@@ -31,23 +31,24 @@ class Lexer : public pattern::Observer
 
     bool bAllowDuplicates_;
 
+    void run();
+
 public:
     Lexer() : bAllowDuplicates_(false){}
 
     virtual void receive_event() override;
 
-    void run();
-
     void produce_token();
     void produce_token(std::string);
     void produce_tagged_token(std::pair<std::string, std::string>);
-
 
     template<class T>
     void set_source(sdg::pipeline::Stream<char> *queue_ptr)
     {
         this->set_subject(queue_ptr);
         source_=std::shared_ptr<T>( new T( queue_ptr ) );
+
+        this->run();
     }
 
     template<class T>
