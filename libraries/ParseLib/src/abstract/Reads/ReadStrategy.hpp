@@ -19,7 +19,7 @@ class ReadStrategy
 {
     //ops
     virtual void configure_pipeline(ParserPipeline &pipeline) = 0;
-    virtual void configure_lexer(Lexer &lexer, std::deque<std::string> &token_stream, SharedQueue<char> &character_stream)=0;
+    virtual void configure_lexer(Lexer &lexer, std::deque<std::string> &token_stream, pipeline::Stream<char> &character_stream) const =0;
     virtual void configure_parser()=0;
     virtual int32_t set_read_options(std::vector<sdg::option> read_options)=0;
 
@@ -27,7 +27,7 @@ class ReadStrategy
     //Parser parser_
 
 
-    SharedQueue<char> character_queue_;
+    pipeline::Stream<char> character_queue_;
     std::deque<std::string> token_buffer_;
     
     //syntax_tree_

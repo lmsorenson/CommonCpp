@@ -1,5 +1,5 @@
-// Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../public/TokenTarget.hpp"
+// Copyright 2020, Lucas Sorenson, All rights reserved.
+#include "../private/TokenTarget.hpp"
 #include <iostream>
 
 using ::std::string;

@@ -10,7 +10,7 @@ namespace csv {
 class Read : public ::sdg::ReadStrategy
 {
     virtual void configure_pipeline( sdg::ParserPipeline &pipeline ) override;
-    virtual void configure_lexer( Lexer &lexer, std::deque<std::string> &token_stream, SharedQueue<char> &character_stream ) override;
+    virtual void configure_lexer( Lexer &lexer, std::deque<std::string> &token_stream, pipeline::Stream<char> &character_stream ) const override;
     virtual void configure_parser() override;
     virtual int32_t set_read_options(std::vector<sdg::option> read_options) override;
 

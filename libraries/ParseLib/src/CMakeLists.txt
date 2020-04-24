@@ -26,8 +26,8 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/lexer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/patterns/observer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/concrete/csv/*.cpp
+    ${PROJECT_SOURCE_DIR}/utils/patterns/observer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/utils/source/*.cpp
     )
 

@@ -4,10 +4,10 @@
 #include <vector>
 #include <queue>
 #include <memory>
-#include "public/CharacterSource.hpp"
-#include "public/TokenFilter.hpp"
-#include "public/TokenTarget.hpp"
-#include "../patterns/observer/Observer.hpp"
+#include "private/CharacterSource.hpp"
+#include "private/TokenFilter.hpp"
+#include "private/TokenTarget.hpp"
+#include "../../utils/patterns/observer/Observer.hpp"
 #include "../Reads/SharedQueue.hpp"
 
 
@@ -44,7 +44,7 @@ public:
 
 
     template<class T>
-    void set_source(sdg::SharedQueue<char> *queue_ptr)
+    void set_source(sdg::pipeline::Stream<char> *queue_ptr)
     {
         this->set_subject(queue_ptr);
         source_=std::shared_ptr<T>( new T( queue_ptr ) );

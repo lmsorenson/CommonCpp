@@ -8,10 +8,10 @@ namespace sdg {
 
 class CharacterSource
 {
-    SharedQueue<char> * character_stream_;
+    pipeline::Stream<char> * character_stream_;
 
 public:
-    CharacterSource( SharedQueue<char> * shared_queue_ptr ) 
+    CharacterSource( pipeline::Stream<char> * shared_queue_ptr ) 
     : character_stream_( shared_queue_ptr ){}
 
     bool characters_available() const;

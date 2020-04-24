@@ -1,27 +1,34 @@
-// Copyright 2019, Lucas Sorenson, All rights reserved.
+// Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <deque>
-#include "../patterns/observer/Subject.hpp"
+#include "../../utils/patterns/observer/Subject.hpp"
 
 namespace sdg {
+namespace pipeline {
 
 template<class T>
-class SharedQueue : public ::sdg::pattern::Subject
+class Stream : public ::sdg::pattern::Subject
 {
+private:
+    //the actual queue object
     std::deque<T> queue_;
 
 public:
+    //adds an element to the queue and notifies observers that content is available. 
     void add(T element)
     {
         queue_.push_back(element);
-        notify_observers();
+        this->notify_observers();
     }
 
-    bool is_empty()
+    //returns true if the queue is empty
+    bool is_empty() const
     {
         return queue_.empty();
     }
 
+    //pulls a character off the queue.
+    //removes the same character from the queue.
     char get_char()
     {
         char ch = queue_.front();
@@ -31,4 +38,5 @@ public:
     }
 };
 
+}// namespace pipeline
 }// namespace sdg

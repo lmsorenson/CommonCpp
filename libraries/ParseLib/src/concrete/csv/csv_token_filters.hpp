@@ -1,8 +1,6 @@
-// Copyright 2019, Lucas Sorenson, All rights reserved.
+// Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
-#include "../../abstract/lexer/public/TokenFilter.hpp"
-#include "../../abstract/lexer/public/CharacterSource.hpp"
-#include "../../abstract/lexer/public/TokenTarget.hpp"
+#include "../../abstract/lexer/Lexer.hpp"
 
 
 namespace sdg {
@@ -46,7 +44,7 @@ public:
 class CSVSource : public ::sdg::CharacterSource
 {
 public:
-    CSVSource(SharedQueue<char> * character_source_ptr) 
+    CSVSource(pipeline::Stream<char> * character_source_ptr) 
     : CharacterSource(character_source_ptr){}
 };
 
