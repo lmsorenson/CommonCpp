@@ -4,22 +4,18 @@
 #include <string>
 #include <vector>
 #include "../../utils/load_text.h"
-
+#include <stdio.h> 
+#include <time.h> 
 
 using ::sdg::ReadStrategy;
 using ::sdg::ParserPipeline;
 
 
+    
+
 
 int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<sdg::option> read_options)
 {
-    configure_lexer( lexer_, token_queue_, character_queue_ );
-    configure_parser( parser_, syntax_tree_, token_queue_ );
-
-    //set the read options before anything else
-    this->set_read_options(read_options);
-
-
     //load text
     std::string raw_text;
     if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
@@ -27,17 +23,30 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
         ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
         return FILE_NOT_FOUND;
     }
+    
+    clock_t t; 
+    t = clock(); 
+
+    configure_lexer( lexer_, token_queue_, character_queue_ );
+    configure_parser( parser_, syntax_tree_, token_queue_ );
+
+    //set the read options before anything else
+    this->set_read_options(read_options);
+
 
     for(auto itr=raw_text.begin(); itr!=raw_text.end();  itr++)
     {
         character_queue_.add(*itr);
     }
 
-    
     syntax_tree_->Print();
 
-    
+    t = clock() - t; 
+    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    std::cout<<"time taken: "<<time_taken<<std::endl;
 
+    
+    t = clock(); 
     std::shared_ptr<sdg::SyntaxNode> n = std::make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
     
     //decrypt
@@ -59,6 +68,10 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
             default: return UNKNOWN_ERROR;
         }
     }
+
+    t = clock() - t; 
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    std::cout<<"time taken: "<<time_taken<<std::endl;
 
     return SUCCESS;
 }
