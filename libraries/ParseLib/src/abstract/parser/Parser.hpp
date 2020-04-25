@@ -7,6 +7,7 @@
 #include "private/TokenSource.hpp"
 #include "../../utils/patterns/observer/Observer.hpp"
 #include "../Reads/Stream.hpp"
+#include "../data/structures/node.hpp"
 
 
 namespace sdg {
@@ -18,6 +19,8 @@ class Parser : public pattern::Observer
 {
     std::shared_ptr<TokenSource> source_;
 
+    int32_t record_index_, field_index_;
+    std::shared_ptr<sdg::SyntaxNode> syntax_tree_;
 
     void parse();
     bool ready()
@@ -26,7 +29,8 @@ class Parser : public pattern::Observer
     }
 
 public:
-    Parser() = default;
+    Parser();
+    ~Parser() = default;
 
     virtual void receive_event() override;
 
