@@ -14,7 +14,7 @@ using ::sdg::ParserPipeline;
 int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<sdg::option> read_options)
 {
     configure_lexer( lexer_, token_queue_, character_queue_ );
-    configure_parser( parser_, token_queue_ );
+    configure_parser( parser_, syntax_tree_, token_queue_ );
 
     //set the read options before anything else
     this->set_read_options(read_options);
@@ -32,6 +32,9 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
     {
         character_queue_.add(*itr);
     }
+
+    
+    syntax_tree_->Print();
 
     
 

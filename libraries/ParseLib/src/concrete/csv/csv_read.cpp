@@ -9,12 +9,13 @@
 
 
 using ::std::shared_ptr;
-using ::std::deque;
+using ::std::vector;
 using ::std::string;
 using ::sdg::ParserPipeline;
 using ::sdg::option;
 using ::sdg::Lexer;
 using ::sdg::csv::Read;
+using ::sdg::SyntaxTreeTarget;
 
 sdg::csv::Read::Read(){}
 sdg::csv::Read::~Read(){}
@@ -44,13 +45,15 @@ void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream,
     lexer.set_target<csv::CSVTarget>( &token_stream );
 }
 
-void Read::configure_parser(Parser &parser, pipeline::Stream<string> &token_stream) const
+void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<string> &token_stream ) const
 {
     //configures the parser to listen for inputs on this token_stream.
     parser.set_source<csv::CSVTokenSource>( &token_stream );
+
+    parser.set_target<SyntaxTreeTarget>( syntax_tree );
 }
 
-int32_t sdg::csv::Read::set_read_options(std::vector<option> read_options)
+int32_t sdg::csv::Read::set_read_options(vector<option> read_options)
 {
     for (auto option : read_options)
     {

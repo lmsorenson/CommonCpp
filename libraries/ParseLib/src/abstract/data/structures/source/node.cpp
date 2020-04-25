@@ -6,6 +6,8 @@ using std::string;
 using std::shared_ptr;
 using std::make_shared;
 using sdg::SyntaxNode;
+using std::cout;
+using std::endl;
 
 SyntaxNode::SyntaxNode(string a_value, std::shared_ptr<SyntaxNode> a_parent)
 : value_(a_value)
@@ -65,6 +67,7 @@ bool SyntaxNode::has_parent(){return ((bool)parent_);}
 
 void SyntaxNode::Print()
 {
+    cout << "id   : " << id_ << " value: " << value_ << endl;
     for (int i=0; i < children_.size(); ++i)
     {
         children_[i]->Print();
