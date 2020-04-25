@@ -29,12 +29,12 @@ public:
 
     //pulls a character off the queue.
     //removes the same character from the queue.
-    char get_char()
+    T get_element()
     {
-        char ch = queue_.front();
+        T element = queue_.front();
         queue_.pop_front();
 
-        return ch;
+        return element;
     }
 };
 

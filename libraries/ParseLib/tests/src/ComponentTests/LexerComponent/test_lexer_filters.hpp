@@ -45,8 +45,8 @@ public:
 class TestTarget : public ::sdg::TokenTarget
 {
 public:
-    TestTarget( std::deque<std::string> * token_stream_ptr ) 
-    : TokenTarget( token_stream_ptr){}
+    TestTarget( pipeline::Stream<std::string> * token_stream_ptr ) 
+    : TokenTarget( token_stream_ptr ){}
 };
 
 

@@ -31,7 +31,7 @@ void sdg::csv::Read::configure_pipeline(ParserPipeline &pipeline)
     pipeline.add_output(shared_ptr<CSVOutput> (new CSVOutput()));
 }
 
-void Read::configure_lexer(Lexer &lexer, deque<string> &token_stream, pipeline::Stream<char> &character_stream) const
+void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream, pipeline::Stream<char> &character_stream) const
 {
     //configures the lexer to listen for inputs on this character_stream.
     lexer.set_source<csv::CSVSource>( &character_stream );

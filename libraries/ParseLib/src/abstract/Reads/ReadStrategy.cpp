@@ -33,10 +33,9 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
         character_queue_.add(*itr);
     }
 
-    while ( !token_buffer_.empty() )
+    while ( !token_buffer_.is_empty() )
     {   
-        std::string token = token_buffer_.front();
-        token_buffer_.pop_front();
+        std::string token = token_buffer_.get_element();
         std::cout << "Token read in ReadStrategy: " << token << " " << std::endl;
     }
 

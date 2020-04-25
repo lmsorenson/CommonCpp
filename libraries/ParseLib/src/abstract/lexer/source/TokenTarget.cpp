@@ -5,7 +5,7 @@
 using ::std::string;
 using ::sdg::TokenTarget;
 
-void TokenTarget::send_token(std::string a_new_token)
+void TokenTarget::send_token( std::string a_new_token )
 {
-    token_stream_->push_back(a_new_token);
+    token_stream_->add( a_new_token );
 }

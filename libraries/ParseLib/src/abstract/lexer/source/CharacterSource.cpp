@@ -15,5 +15,5 @@ bool CharacterSource::characters_available() const
 
 char CharacterSource::pull_char()
 {
-    return character_stream_->get_char();
+    return character_stream_->get_element();
 }
