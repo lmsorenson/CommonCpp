@@ -44,9 +44,10 @@ void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream,
     lexer.set_target<csv::CSVTarget>( &token_stream );
 }
 
-void Read::configure_parser()
+void Read::configure_parser(Parser &parser, pipeline::Stream<string> &token_stream) const
 {
-
+    //configures the parser to listen for inputs on this token_stream.
+    parser.set_source<csv::CSVTokenSource>( &token_stream );
 }
 
 int32_t sdg::csv::Read::set_read_options(std::vector<option> read_options)

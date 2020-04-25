@@ -1,6 +1,7 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
 #include "../../abstract/lexer/Lexer.hpp"
+#include "../../abstract/parser/Parser.hpp"
 
 
 namespace sdg {
@@ -53,6 +54,13 @@ class CSVTarget : public ::sdg::TokenTarget
 public:
     CSVTarget(pipeline::Stream<std::string> * token_stream_ptr) 
     : TokenTarget(token_stream_ptr){}
+};
+
+class CSVTokenSource : public ::sdg::TokenSource
+{
+public:
+    CSVTokenSource(pipeline::Stream<std::string> * character_source_ptr) 
+    : TokenSource(character_source_ptr){}
 };
 
 }// namespace csv
