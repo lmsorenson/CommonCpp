@@ -31,7 +31,7 @@ class Lexer : public pattern::Observer
 
     bool bAllowDuplicates_;
 
-    void run();
+    void scan();
 
 public:
     Lexer() : bAllowDuplicates_(false){}
@@ -48,7 +48,7 @@ public:
         this->set_subject(queue_ptr);
         source_=std::shared_ptr<T>( new T( queue_ptr ) );
 
-        this->run();
+        this->scan();
     }
 
     template<class T>

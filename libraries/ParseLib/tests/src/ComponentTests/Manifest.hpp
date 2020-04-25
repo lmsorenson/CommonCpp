@@ -1,3 +1,3 @@
 #pragma once
 #include "ComponentTests.hpp"
-#include "LexerComponentTests.hpp"
+#include "LexerComponent/Tests.hpp"

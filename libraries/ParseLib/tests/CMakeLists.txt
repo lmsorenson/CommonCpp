@@ -31,8 +31,12 @@ set(
 	${PROJECT_SOURCE_DIR}
 )
 
-add_executable(TestAll ${PROJECT_SOURCE_DIR}/src/TestAll.cpp)
-add_executable(TestComponents ${PROJECT_SOURCE_DIR}/src/TestComponents.cpp)
+add_executable(TestAll 
+	${PROJECT_SOURCE_DIR}/src/TestAll.cpp
+	${PROJECT_SOURCE_DIR}/src/ComponentTests/LexerComponent/test_lexer_filters.cpp)
+add_executable(TestComponents 
+	${PROJECT_SOURCE_DIR}/src/TestComponents.cpp
+	${PROJECT_SOURCE_DIR}/src/ComponentTests/LexerComponent/test_lexer_filters.cpp)
 add_executable(TestIntegration ${PROJECT_SOURCE_DIR}/src/TestIntegration.cpp)
 add_executable(TestSystem ${PROJECT_SOURCE_DIR}/src/TestSystem.cpp)
 
