@@ -16,6 +16,11 @@ using ::sdg::ParserPipeline;
 
 int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<sdg::option> read_options)
 {
+    clock_t t; 
+    double time_taken;
+
+
+    t = clock(); 
     //load text
     std::string raw_text;
     if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
@@ -23,8 +28,13 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
         ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
         return FILE_NOT_FOUND;
     }
+
+    t = clock() - t; 
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    std::cout<<"time taken: "<<time_taken<<std::endl;
     
-    clock_t t; 
+    
+    
     t = clock(); 
 
     configure_lexer( lexer_, token_queue_, character_queue_ );
@@ -42,7 +52,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
     syntax_tree_->Print();
 
     t = clock() - t; 
-    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     std::cout<<"time taken: "<<time_taken<<std::endl;
 
     
