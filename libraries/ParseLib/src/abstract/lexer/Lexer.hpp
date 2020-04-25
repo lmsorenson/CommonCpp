@@ -32,6 +32,10 @@ class Lexer : public pattern::Observer
     bool bAllowDuplicates_;
 
     void scan();
+    bool ready()
+    {
+        return (source_ && !filters_.empty() && target_);
+    }
 
 public:
     Lexer() : bAllowDuplicates_(false){}
@@ -73,6 +77,8 @@ public:
     void set_target(std::deque<std::string> *queue_ptr)
     {
         target_=std::shared_ptr<T>( new T( queue_ptr ) );
+
+        this->scan();
     }
 };
 

@@ -67,3 +67,64 @@ TEST_F(LexerComponentTests, normal_filter_successful )
 
     ASSERT_EQ( target_stream.front(), string("BBBBB") );
 }
+
+TEST_F(LexerComponentTests, add_content_with_no_components )
+{
+    Lexer lexer;
+    
+    Stream<char> source_stream;
+    deque<string> target_stream;
+
+    for(int i=0; i<5 ;++i)
+    {
+        source_stream.add('B');
+    }
+
+    source_stream.add('\r');
+
+    ASSERT_EQ( target_stream.size(), 0 );
+}
+
+TEST_F(LexerComponentTests, configure_source_after_adding_content )
+{
+    Lexer lexer;
+    
+    Stream<char> source_stream;
+    deque<string> target_stream;
+
+    for(int i=0; i<5 ;++i)
+    {
+        source_stream.add('B');
+    }
+
+    source_stream.add('\r');
+
+    //configure
+    lexer.set_source<TestSource>( &source_stream );
+    lexer.add_filter<TestFilter>("F");
+    lexer.set_target<TestTarget>( &target_stream );
+
+    ASSERT_EQ( target_stream.front(), string("BBBBB") );
+}
+
+TEST_F(LexerComponentTests, configure_source_and_target_after_filters )
+{
+    Lexer lexer;
+    
+    Stream<char> source_stream;
+    deque<string> target_stream;
+
+    for(int i=0; i<5 ;++i)
+    {
+        source_stream.add('B');
+    }
+
+    source_stream.add('\r');
+
+    //configure
+    lexer.add_filter<TestFilter>("F");
+    lexer.set_source<TestSource>( &source_stream );
+    lexer.set_target<TestTarget>( &target_stream );
+
+    ASSERT_EQ( target_stream.front(), string("BBBBB") );
+}

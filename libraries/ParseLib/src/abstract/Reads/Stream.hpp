@@ -15,7 +15,7 @@ private:
 
 public:
     //adds an element to the queue and notifies observers that content is available. 
-    void add(T element)
+    void add( T element )
     {
         queue_.push_back(element);
         this->notify_observers();

@@ -20,7 +20,7 @@ void Lexer::receive_event()
 
 void Lexer::scan()
 {
-    while ( source_ && target_ && !filters_.empty() && source_->characters_available() )
+    while ( this->ready() && this->source_->characters_available() )
     {   
         bool flush_token = 0;
 
