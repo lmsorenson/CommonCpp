@@ -20,6 +20,8 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
     case DATA_SET_GOOD: 
         //todo -- investigate difference between key and subset key.
         hash_table.insert(a_key, plHashValue(a_value));
+        //todo -- the following function call is linked to a crash if called
+        //on a generic dataset
         this->update_descriptor_counts(a_key);
         return 0; 
         break;

@@ -33,13 +33,11 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     std::cout<<"time taken: "<<time_taken<<std::endl;
     
-    
-    
     t = clock(); 
 
     configure_lexer( lexer_, token_queue_, character_queue_ );
     configure_parser( parser_, syntax_tree_, token_queue_ );
-    configure_analyzer( semantic_analyzer_, test_data_set_, syntax_tree_ );
+    configure_analyzer( semantic_analyzer_, &ds, syntax_tree_ );
 
     //set the read options before anything else
     this->set_read_options(read_options);
@@ -51,6 +49,8 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
     }
 
     syntax_tree_->Print();
+    syntax_tree_->notify_observers();
+
 
     t = clock() - t; 
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
@@ -67,18 +67,18 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
     this->configure_pipeline(pipeline);
 
 
-    int32_t err;
-    if( (err=pipeline.execute(n, ds)) )
-    {
-        switch (err)
-        {
-            case ParserPipeline::PIPELINE_FORMAT_ERROR: 
-            return FILE_FORMAT_INVALID; 
-            break;
+    // int32_t err;
+    // if( (err=pipeline.execute(n, ds)) )
+    // {
+    //     switch (err)
+    //     {
+    //         case ParserPipeline::PIPELINE_FORMAT_ERROR: 
+    //         return FILE_FORMAT_INVALID; 
+    //         break;
 
-            default: return UNKNOWN_ERROR;
-        }
-    }
+    //         default: return UNKNOWN_ERROR;
+    //     }
+    // }
 
     t = clock() - t; 
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds

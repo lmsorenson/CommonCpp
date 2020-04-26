@@ -14,6 +14,8 @@ public:
     SyntaxTreeSource(std::shared_ptr<sdg::SyntaxNode> syntax_tree_)
     : syntax_tree_(syntax_tree_) {}
 
+    SyntaxNode get_syntax_tree();
+
 };
 
 }// namespace sdg

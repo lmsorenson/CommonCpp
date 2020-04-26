@@ -41,8 +41,7 @@ void Parser::parse()
         if( token.compare("R")==0 )
         {
             char rec_buffer[10];
-            sprintf(rec_buffer, "R%d", record_index_);
-            this->record_index_++;
+            sprintf(rec_buffer, "R%d", ++record_index_); // important to increment before 
 
             target_->add_to_root(rec_buffer, string());
 

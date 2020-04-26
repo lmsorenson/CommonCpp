@@ -24,7 +24,7 @@ class SemanticAnalyzer : public pattern::Observer
     void analyze();
     bool ready()
     {
-        return (source_ && target_);
+        return ( source_ && target_ );
     }
 
 public:
@@ -34,20 +34,16 @@ public:
     virtual void receive_event() override;
 
     template<class T>
-    void set_source(std::shared_ptr<SyntaxNode> syntax_tree)
+    void set_source( std::shared_ptr<SyntaxNode> syntax_tree )
     {
         this->set_subject( syntax_tree.get() );
         source_ = std::shared_ptr<T>( new T( syntax_tree ) );
-
-        this->analyze();
     }
 
     template<class T>
-    void set_target(std::shared_ptr<DataSet> data_set)
+    void set_target(DataSet *data_set)
     {
         target_ = std::shared_ptr<T>( new T( data_set ) );
-
-        this->analyze();
     }
 };
 

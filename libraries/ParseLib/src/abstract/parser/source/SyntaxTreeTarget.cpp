@@ -31,5 +31,5 @@ void SyntaxTreeTarget::add_to_node(vector<int> path, string id, string value)
 
     SyntaxNode n = SyntaxNode( value, node_buffer );
     n.append_key(id);
-    syntax_tree_->AddChild(n);
+    node_buffer->AddChild(n);
 }

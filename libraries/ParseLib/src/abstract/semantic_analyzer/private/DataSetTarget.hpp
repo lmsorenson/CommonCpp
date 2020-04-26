@@ -3,19 +3,20 @@
 #include <string>
 #include <memory>
 #include <objects/data_set.hpp>
+#include "../../data/structures/node.hpp"
 
 namespace sdg {
 
 class DataSetTarget
 {
-    std::shared_ptr<sdg::DataSet> data_set_;
+    sdg::DataSet * data_set_;
 
 public:
-    DataSetTarget(std::shared_ptr<sdg::DataSet> data_set_)
+    DataSetTarget(sdg::DataSet *data_set_)
     : data_set_(data_set_) {}
 
-    void add_to_root(std::string id, std::string value);
-    void add_to_node(std::vector<int> path, std::string id, std::string value);
+    void add(std::string key, std::string value, std::string path);
+
 };
 
 }// namespace sdg
