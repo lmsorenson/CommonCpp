@@ -35,20 +35,20 @@ void sdg::csv::Read::configure_pipeline(ParserPipeline &pipeline)
 void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream, pipeline::Stream<char> &character_stream) const
 {
     //configures the lexer to listen for inputs on this character_stream.
-    lexer.set_source<csv::CSVSource>( &character_stream );
+    lexer.set_source<CSVSource>( &character_stream );
 
     int32_t index = 
     lexer.add_filter<csv::RecordTokenFilter>( "R" );
     lexer.add_filter<csv::FieldTokenFilter>( "F", index );
 
     //configures the lexer to send tokens to the following token stream.
-    lexer.set_target<csv::CSVTarget>( &token_stream );
+    lexer.set_target<CSVTarget>( &token_stream );
 }
 
 void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<string> &token_stream ) const
 {
     //configures the parser to listen for inputs on this token_stream.
-    parser.set_source<csv::CSVTokenSource>( &token_stream );
+    parser.set_source<CSVTokenSource>( &token_stream );
 
     parser.set_target<SyntaxTreeTarget>( syntax_tree );
 }

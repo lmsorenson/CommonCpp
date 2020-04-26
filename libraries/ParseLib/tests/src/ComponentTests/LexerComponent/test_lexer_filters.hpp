@@ -33,23 +33,5 @@ public:
 
 
 
-class TestSource : public ::sdg::CharacterSource
-{
-public:
-    TestSource( pipeline::Stream<char> * character_source_ptr ) 
-    : CharacterSource( character_source_ptr ){}
-};
-
-
-
-class TestTarget : public ::sdg::TokenTarget
-{
-public:
-    TestTarget( pipeline::Stream<std::string> * token_stream_ptr ) 
-    : TokenTarget( token_stream_ptr ){}
-};
-
-
-
 }// namespace test
 }// namespace sdg

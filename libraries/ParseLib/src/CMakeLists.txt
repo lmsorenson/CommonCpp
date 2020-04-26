@@ -23,6 +23,7 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/data/meta/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/structures/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Reads/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/Reads/Streams/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/lexer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/source/*.cpp

@@ -7,7 +7,6 @@
 #include "private/TokenSource.hpp"
 #include "private/SyntaxTreeTarget.hpp"
 #include "../../utils/patterns/observer/Observer.hpp"
-#include "../Reads/Stream.hpp"
 
 #include "../data/structures/node.hpp"
 

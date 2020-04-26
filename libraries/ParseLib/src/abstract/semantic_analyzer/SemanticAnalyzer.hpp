@@ -6,7 +6,6 @@
 #include "private/SyntaxTreeSource.hpp"
 #include "private/DataSetTarget.hpp"
 #include "../../utils/patterns/observer/Observer.hpp"
-#include "../Reads/Stream.hpp"
 
 #include "../data/structures/node.hpp"
 

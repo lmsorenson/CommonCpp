@@ -1,20 +1,19 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <string>
-#include "../../Reads/Stream.hpp"
+#include "../../Reads/Streams/Stream.hpp"
 
 namespace sdg {
 
 class TokenSource
 {
-    pipeline::Stream<std::string> * token_stream_;
 
 public:
-    TokenSource( pipeline::Stream<std::string> * shared_queue_ptr ) 
-    : token_stream_( shared_queue_ptr ){}
+    TokenSource() = default;
+    ~TokenSource() = default;
 
-    bool tokens_available() const;
-    std::string pull_token();
+    virtual bool tokens_available() const = 0;
+    virtual std::string pull_token() = 0;
 };
 
 }// namespace sdg

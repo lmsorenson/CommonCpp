@@ -1,19 +1,17 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <string>
-#include "../../Reads/Stream.hpp"
+#include "../../Reads/Streams/Stream.hpp"
 
 namespace sdg {
 
 class TokenTarget
 {
-    pipeline::Stream<std::string> * token_stream_;
-
 public:
-    TokenTarget(pipeline::Stream<std::string> * token_stream_ptr) 
-    : token_stream_(token_stream_ptr){}
+    TokenTarget() = default;
+    ~TokenTarget() = default;
 
-    void send_token(std::string);
+    virtual void send_token(std::string) = 0;
 };
 
 }// namespace sdg

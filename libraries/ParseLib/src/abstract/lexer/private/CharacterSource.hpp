@@ -2,20 +2,19 @@
 #pragma once
 #include <string>
 #include <deque>
-#include "../../Reads/Stream.hpp"
+#include "../../Reads/Streams/Stream.hpp"
+
 
 namespace sdg {
 
 class CharacterSource
 {
-    pipeline::Stream<char> * character_stream_;
-
 public:
-    CharacterSource( pipeline::Stream<char> * shared_queue_ptr ) 
-    : character_stream_( shared_queue_ptr ){}
+    CharacterSource() = default;
+    ~CharacterSource() = default;
 
-    bool characters_available() const;
-    char pull_char();
+    virtual bool characters_available() const = 0;
+    virtual char pull_char() = 0;
 };
 
 }// namespace sdg
