@@ -2,7 +2,7 @@
 #pragma once
 #include <vector>
 #include <string>
-
+#include "../../../utils/patterns/observer/Subject.hpp"
 
 
 
@@ -11,7 +11,7 @@ namespace sdg
 {
 
 
-class SyntaxNode
+class SyntaxNode : public sdg::pattern::Subject
 {
 public:
     SyntaxNode(std::string a_value, std::shared_ptr<SyntaxNode> a_parent);

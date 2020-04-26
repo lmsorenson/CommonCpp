@@ -53,6 +53,13 @@ void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, 
     parser.set_target<SyntaxTreeTarget>( syntax_tree );
 }
 
+void Read::configure_analyzer(SemanticAnalyzer &semantic_analyzer, std::shared_ptr<DataSet> data_set, std::shared_ptr<SyntaxNode> syntax_tree) const
+{
+    semantic_analyzer.set_source<SyntaxTreeSource>(syntax_tree);
+
+    semantic_analyzer.set_target<DataSetTarget>(data_set);
+}
+
 int32_t sdg::csv::Read::set_read_options(vector<option> read_options)
 {
     for (auto option : read_options)
