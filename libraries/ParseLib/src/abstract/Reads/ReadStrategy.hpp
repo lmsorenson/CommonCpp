@@ -6,9 +6,6 @@
 #include <objects/data_set.hpp>
 #include <ParseLib.hpp>
 
-#include "Streams/CharacterStream.hpp"
-#include "Streams/TokenStream.hpp"
-
 #include "../lexer/Lexer.hpp"
 #include "../parser/Parser.hpp"
 #include "../semantic_analyzer/SemanticAnalyzer.hpp"

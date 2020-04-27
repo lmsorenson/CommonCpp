@@ -1,18 +1,18 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
-#include "../CharacterStream.hpp"
+#include "../private/CharacterSource.hpp"
 #include <iostream>
 #include <utility>
 
-using ::sdg::CSVSource;
+using ::sdg::CharacterSource;
 using ::std::string;
 
 
-bool CSVSource::characters_available() const
+bool CharacterSource::characters_available() const
 {
     return !character_stream_->is_empty();
 }
 
-char CSVSource::pull_char()
+char CharacterSource::pull_char()
 {
     return character_stream_->get_element();
 }

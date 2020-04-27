@@ -1,7 +1,7 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <deque>
-#include "../../../utils/patterns/observer/Subject.hpp"
+#include "../../utils/patterns/observer/Subject.hpp"
 
 namespace sdg {
 namespace pipeline {
