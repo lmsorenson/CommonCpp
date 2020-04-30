@@ -42,9 +42,10 @@ void check_nodes(SyntaxNode node, std::shared_ptr<DataSetTarget> target)
 //This function is called every time there is a change made to the source.
 void SemanticAnalyzer::analyze()
 {
-    if ( this->ready() )
+    SyntaxNode syntax_tree_ = source_->get_syntax_tree();
+
+    if ( this->ready() && syntax_tree_.has_children() )
     {   
-        SyntaxNode syntax_tree_ = source_->get_syntax_tree();
         check_nodes(syntax_tree_, target_);
     }
 }
