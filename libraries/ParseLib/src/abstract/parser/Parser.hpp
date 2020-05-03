@@ -8,7 +8,7 @@
 #include "private/SyntaxTreeTarget.hpp"
 #include "../../utils/patterns/observer/Observer.hpp"
 
-#include "../data/structures/node.hpp"
+#include "../intermediate/node.hpp"
 #include "private/TokenType.hpp"
 
 namespace sdg {

@@ -11,7 +11,7 @@
 #include "../semantic_analyzer/SemanticAnalyzer.hpp"
 #include "ParserPipeline.hpp"
 
-#include "../data/structures/node.hpp"
+#include "../intermediate/node.hpp"
 
 
 namespace sdg {

@@ -130,7 +130,7 @@ void sdg::DataSet::update_descriptor_counts(hash::KeyInstance a_key)
         auto local_descriptor = hash::DescriptorInstance(scanned_descriptor_id, Attribute::Scale::Numeric);
         local_descriptor.set_value(scanned_descriptor_value);
     
-        this->logical_data_structure.found_descriptor(descriptor);
+        this->logical_data_structure.found_descriptor(local_descriptor);
     };
 
     //runs function in every descriptor.

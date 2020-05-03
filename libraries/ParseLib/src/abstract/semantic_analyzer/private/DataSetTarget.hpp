@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 #include <objects/data_set.hpp>
-#include "../../data/structures/node.hpp"
+#include "../../intermediate/node.hpp"
 
 namespace sdg {
 

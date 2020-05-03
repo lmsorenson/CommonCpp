@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "../../data/structures/node.hpp"
+#include "../../intermediate/node.hpp"
 
 namespace sdg {
 

@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
-#include "../data/structures/node.hpp"
+#include "../intermediate/node.hpp"
 #include <objects/data_set.hpp>
 #include <vector>
 
