@@ -1,7 +1,7 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #include <iostream>
-#include "../Observer.hpp"
-#include "../Subject.hpp"
+#include "../observer/Observer.hpp"
+#include "../observer/Subject.hpp"
 
 using ::sdg::pattern::Observer;
 using ::std::shared_ptr;

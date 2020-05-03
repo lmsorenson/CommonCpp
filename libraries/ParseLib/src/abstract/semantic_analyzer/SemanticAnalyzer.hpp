@@ -5,7 +5,7 @@
 #include <memory>
 #include "private/SyntaxTreeSource.hpp"
 #include "private/DataSetTarget.hpp"
-#include "../../utils/patterns/observer/Observer.hpp"
+#include "../intermediate/observer/Observer.hpp"
 
 #include "../intermediate/node.hpp"
 

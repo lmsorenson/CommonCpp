@@ -7,7 +7,7 @@
 #include "private/CharacterSource.hpp"
 #include "private/TokenFilter.hpp"
 #include "private/TokenTarget.hpp"
-#include "../../utils/patterns/observer/Observer.hpp"
+#include "../intermediate/observer/Observer.hpp"
 #include "../intermediate/Stream.hpp"
 
 

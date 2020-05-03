@@ -6,7 +6,7 @@
 #include <memory>
 #include "private/TokenSource.hpp"
 #include "private/SyntaxTreeTarget.hpp"
-#include "../../utils/patterns/observer/Observer.hpp"
+#include "../intermediate/observer/Observer.hpp"
 
 #include "../intermediate/node.hpp"
 #include "private/TokenType.hpp"
