@@ -3,6 +3,7 @@
 #include <iostream>
 
 using ::sdg::Parser;
+using ::sdg::TokenType;
 using ::std::cout;
 using ::std::endl;
 using ::std::shared_ptr;
@@ -38,24 +39,22 @@ void Parser::parse()
         //removes a token from the token stream.
         string token=source_->pull_token();
 
-        if( token.compare("R")==0 )
-        {
-            char rec_buffer[10];
-            sprintf(rec_buffer, "R%d", ++record_index_); // important to increment before 
+            //todo -- this should be applied on the first write to the syntax tree
+        if(target_->is_empty())
+            target_->add_to_root("R0", std::string());
 
-            target_->add_to_root(rec_buffer, string());
+        for ( shared_ptr<TokenType> type : this->token_types_ )
+            type->handle_type( token );
 
-            this->field_index_ = 0;
-        }
-
-        if( token.substr(0,1).compare("F") == 0 )
-        {
-            char buffer[10];
-            sprintf(buffer, "R%d-F%d", record_index_, field_index_);
-
-            target_->add_to_node({record_index_}, buffer, token.substr( token.find("(")+1, token.length()-(token.find("(")+2) ));
-
-            this->field_index_++;
-        }
     }
+}
+
+void Parser::produce_node(string key, string value)
+{
+    target_->add_to_root(key, value);
+}
+
+void Parser::produce_child_node(std::vector<int> path, std::string key, std::string value)
+{
+    target_->add_to_node(path, key, value);
 }

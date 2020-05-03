@@ -11,6 +11,8 @@ using std::pair;
 using std::shared_ptr;
 using sdg::TokenFilter;
 using sdg::csv::HeaderTokenFilter;
+using ::sdg::csv::RecordToken;
+using ::sdg::csv::FieldToken;
 using ::std::cout;
 using ::std::endl;
 
@@ -85,3 +87,37 @@ bool sdg::csv::FieldTokenFilter::is_a_delimeter(char ch)
 {
     return (ch==',');
 }
+
+
+bool RecordToken::classify(std::string token)
+{
+    if( token.compare(type_id_)==0 )
+    {
+        char rec_buffer[10];
+        sprintf(rec_buffer, "R%d", get_count() ); // important to increment before 
+
+        owner_->produce_node( rec_buffer, string() );
+
+        return true;
+    }
+
+    return false;
+}
+
+bool FieldToken::classify(std::string token)
+{
+
+    if( token.substr(0,1).compare(type_id_) == 0 && parent_ )
+    {
+        char buffer[10];
+        sprintf(buffer, "R%d-F%d", parent_->get_count(), get_count() );
+
+        owner_->produce_child_node({parent_->get_count()}, buffer, token.substr( token.find("(")+1, token.length()-(token.find("(")+2) ));
+
+        return true;
+    }
+
+    return false;
+}
+
+

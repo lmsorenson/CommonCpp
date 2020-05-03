@@ -16,6 +16,8 @@ public:
 
     void add_to_root(std::string id, std::string value);
     void add_to_node(std::vector<int> path, std::string id, std::string value);
+
+    bool is_empty();
 };
 
 }// namespace sdg

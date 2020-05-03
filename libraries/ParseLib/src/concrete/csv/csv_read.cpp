@@ -50,6 +50,10 @@ void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, 
     //configures the parser to listen for inputs on this token_stream.
     parser.set_source<TokenSource>( &token_stream );
 
+    int32_t index =
+    parser.add_token_type<RecordToken>("R");
+    parser.add_token_type<FieldToken>("F", index);
+
     parser.set_target<SyntaxTreeTarget>( syntax_tree );
 }
 

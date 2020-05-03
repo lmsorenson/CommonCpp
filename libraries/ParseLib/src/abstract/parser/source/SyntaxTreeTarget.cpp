@@ -33,3 +33,8 @@ void SyntaxTreeTarget::add_to_node(vector<int> path, string id, string value)
     n.append_key(id);
     node_buffer->AddChild(n);
 }
+
+bool SyntaxTreeTarget::is_empty()
+{
+    return !syntax_tree_->has_children();
+}

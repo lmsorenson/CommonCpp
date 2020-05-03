@@ -25,8 +25,6 @@ public:
     ~TokenFilter()=default;
 
     virtual bool execute(char ch) = 0;
-    // virtual int32_t inverse(std::vector<std::string> vector, std::string &compiled_string) = 0;
-    // std::string get_filter_id(int index);
 
     virtual bool is_a_delimeter(char ch)=0;
 
