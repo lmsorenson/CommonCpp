@@ -25,6 +25,7 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/Reads/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Reads/Streams/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/file_loader/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/lexer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/semantic_analyzer/source/*.cpp

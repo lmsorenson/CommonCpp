@@ -22,12 +22,12 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
 
     t = clock(); 
     //load text
-    std::string raw_text;
-    if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
-    {
-        ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
-        return FILE_NOT_FOUND;
-    }
+    // std::string raw_text;
+    // if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
+    // {
+    //     ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
+    //     return FILE_NOT_FOUND;
+    // }
 
     t = clock() - t; 
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
@@ -35,17 +35,19 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
     
     t = clock(); 
 
+    configure(file_loader_, character_queue_);
     configure_lexer( lexer_, token_queue_, character_queue_ );
     configure_parser( parser_, syntax_tree_, token_queue_ );
     configure_analyzer( semantic_analyzer_, &ds, syntax_tree_ );
 
     //set the read options before anything else
     this->set_read_options(read_options);
+    
 
-
-    for(auto itr=raw_text.begin(); itr!=raw_text.end();  itr++)
+    if (file_loader_.load(filepath) == -1)
     {
-        character_queue_.add(*itr);
+        ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
+        return FILE_NOT_FOUND;
     }
 
     syntax_tree_->Print();
@@ -58,7 +60,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
 
     
     t = clock(); 
-    std::shared_ptr<sdg::SyntaxNode> n = std::make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
+    // std::shared_ptr<sdg::SyntaxNode> n = std::make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
     
     //decrypt
     
