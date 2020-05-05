@@ -4,11 +4,12 @@
 #include <ctime>
 
 #include <gtest/gtest.h>
-#include <ParseLib.h>
+#include <ParseLib.hpp>
+#include "../../TestFramework.hpp"
 
 
 
-class CSVPerformanceSpec : public ::testing::Test
+class CSVPerformanceSpec : public ::LucTestFramework
 {
 protected:
     
@@ -35,7 +36,7 @@ protected:
     // Objects declared here can be used by all tests in the test case for Foo.
 };
 
-TEST_F(CSVPerformanceSpec, TestR3)
+TEST_F(CSVPerformanceSpec, ten_thousand_line)
 {
     std::clock_t start;
     double duration;
@@ -44,11 +45,11 @@ TEST_F(CSVPerformanceSpec, TestR3)
 
     DataSet ds;
 
-    ParseLib().read_file(ds, "/Users/lucassorenson/Code/Common/CommonCpp/tests/test_data/test2.csv");
+    ParseLib().read_file(ds, this->path("test_data/test2.csv").c_str());
 
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
-    cout << "Time elapsed: " << duration * 1000 << "ms" << endl;
+    std::cout << "Time elapsed: " << duration * 1000 << "ms" << std::endl;
 
     ASSERT_LT(duration * 1000, 16);
 }

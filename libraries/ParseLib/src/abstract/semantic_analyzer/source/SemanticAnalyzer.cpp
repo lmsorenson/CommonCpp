@@ -1,6 +1,7 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #include "../SemanticAnalyzer.hpp"
 #include <iostream>
+#include <time.h>
 
 using ::sdg::SemanticAnalyzer;
 using ::std::cout;
@@ -21,19 +22,24 @@ void SemanticAnalyzer::receive_event()
 }
 
 
-
-void check_nodes(SyntaxNode node, std::shared_ptr<DataSetTarget> target)
+double SemanticAnalyzer::get_time() const
 {
-    if (node.has_children())
+    return time_taken_;
+}
+
+
+void check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target)
+{
+    if (node->has_children())
     {
-        for(int i=0; i<node.get_number_of_children();++i)
+        for(int i=0; i<node->get_number_of_children();++i)
         {
-            check_nodes(*node.get_child(i), target);
+            check_nodes(node->get_child(i), target);
         }
     }
     else
     {
-        target->add( node.get_item_key(), node.get_item_value(), node.get_path() );
+        target->add( node->get_item_key(), node->get_item_value(), node->get_path() );
     }
 }
 
@@ -42,10 +48,15 @@ void check_nodes(SyntaxNode node, std::shared_ptr<DataSetTarget> target)
 //This function is called every time there is a change made to the source.
 void SemanticAnalyzer::analyze()
 {
-    SyntaxNode syntax_tree_ = source_->get_syntax_tree();
+    clock_t t = clock();
 
-    if ( this->ready() && syntax_tree_.has_children() )
+    shared_ptr<SyntaxNode> syntax_tree_ = source_->get_syntax_tree();
+
+    if ( this->ready() && syntax_tree_->has_children() )
     {   
         check_nodes(syntax_tree_, target_);
     }
+
+    t = clock() - t; 
+    time_taken_ += ((double)t)/CLOCKS_PER_SEC; // in seconds
 }

@@ -24,6 +24,8 @@ class Parser : public pattern::Observer
     int32_t record_index_, field_index_;
     std::vector<std::shared_ptr<TokenType>> token_types_;
 
+    double time_taken_;
+
     void parse();
     bool ready()
     {
@@ -35,6 +37,8 @@ public:
     ~Parser() = default;
 
     virtual void receive_event() override;
+
+    double get_time() const;
 
     void produce_node(std::string, std::string);
     void produce_child_node(std::vector<int>, std::string, std::string);

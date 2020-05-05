@@ -30,6 +30,7 @@ class Lexer : public pattern::Observer
     std::string previous_token_;
 
     bool bAllowDuplicates_;
+    double time_taken_;
 
     void scan();
     bool ready()
@@ -41,6 +42,8 @@ public:
     Lexer() : bAllowDuplicates_(false){}
 
     virtual void receive_event() override;
+
+    double get_time() const;
 
     void produce_token();
     void produce_token(std::string);

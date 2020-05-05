@@ -1,6 +1,7 @@
 // Copyright 2020 Lucas Sorenson, All rights reserved.
 #include "../Lexer.hpp"
 #include <iostream>
+#include <time.h> 
 
 using ::sdg::Lexer;
 using ::std::cout;
@@ -20,6 +21,8 @@ void Lexer::receive_event()
 
 void Lexer::scan()
 {
+    clock_t t = clock();
+
     while ( this->ready() && this->source_->characters_available() )
     {   
         bool flush_token = 0;
@@ -32,6 +35,14 @@ void Lexer::scan()
         if( !flush_token )
             buffer_.append( string(1, ch) );
     }
+
+    t = clock() - t; 
+    time_taken_ += ((double)t)/CLOCKS_PER_SEC; // in seconds
+}
+
+double Lexer::get_time() const
+{
+    return time_taken_;
 }
 
 

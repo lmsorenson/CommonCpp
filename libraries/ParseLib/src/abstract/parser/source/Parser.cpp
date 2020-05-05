@@ -1,6 +1,7 @@
 // Copyright 2020 Lucas Sorenson, All rights reserved.
 #include "../Parser.hpp"
 #include <iostream>
+#include <time.h>
 
 using ::sdg::Parser;
 using ::sdg::TokenType;
@@ -32,6 +33,8 @@ Parser::Parser()
 //This function is called every time there is a change made to the token stream.
 void Parser::parse()
 {
+    clock_t t = clock();
+
     //this while is executed for each token in the token stream,
     //only when the parser is sufficiently configured.
     while ( this->ready() && this->source_->tokens_available() )
@@ -47,6 +50,14 @@ void Parser::parse()
             type->handle_type( token );
 
     }
+
+    t = clock() - t; 
+    time_taken_ += ((double)t)/CLOCKS_PER_SEC; // in seconds
+}
+
+double Parser::get_time() const
+{
+    return time_taken_;
 }
 
 void Parser::produce_node(string key, string value)

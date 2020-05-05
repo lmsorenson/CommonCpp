@@ -5,6 +5,7 @@
 
 using ::std::string;
 using ::std::vector;
+using ::std::shared_ptr;
 using ::sdg::SyntaxTreeSource;
 using ::sdg::SyntaxNode;
 using ::std::cout;
@@ -12,8 +13,8 @@ using ::std::endl;
 
 
 
-SyntaxNode SyntaxTreeSource::get_syntax_tree()
+shared_ptr<SyntaxNode> SyntaxTreeSource::get_syntax_tree()
 {
-    return *syntax_tree_;
+    return syntax_tree_;
 }
 

@@ -20,6 +20,8 @@ class SemanticAnalyzer : public pattern::Observer
     std::shared_ptr<SyntaxTreeSource> source_;
     std::shared_ptr<DataSetTarget> target_;
 
+    double time_taken_;
+
     void analyze();
     bool ready()
     {
@@ -31,6 +33,8 @@ public:
     ~SemanticAnalyzer() = default;
 
     virtual void receive_event() override;
+
+    double get_time() const;
 
     template<class T>
     void set_source( std::shared_ptr<SyntaxNode> syntax_tree )
