@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include <memory>
-
+#include "LexerError.hpp"
 
 
 
@@ -16,23 +16,31 @@ class Lexer;
      */
 class TokenFilter
 {
-protected:
-    const std::string filter_id_;
     Lexer * owner_;
+    const std::string filter_id_;
+
+protected:
+
+    bool is_cache_empty();
+    char last_delimiter();
+    void notify_error(LexerError error);
+    
+    void stream_token();
+    void stream_tagged_token();
+    
 
 public:
     TokenFilter(Lexer * owner, std::string new_filter_id);
     ~TokenFilter()=default;
 
-    virtual bool execute(char ch) = 0;
-
-    virtual bool is_a_delimeter(char ch)=0;
+    virtual bool execute(char ch, int *error_code=nullptr) = 0;
+    virtual bool is_a_delimiter(char ch)=0;
 
     enum : int32_t
     {
-        FILTER_SUCCESS=0,
-        FILTER_FORMAT_ERROR,
-        FILTER_UNKNOWN_ERROR
+        SUCCESS=0,
+        FORMAT_ERROR,
+        UNKNOWN_ERROR
     };
 };
 

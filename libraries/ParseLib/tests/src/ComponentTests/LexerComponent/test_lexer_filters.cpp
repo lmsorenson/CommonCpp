@@ -23,11 +23,11 @@ sdg::test::TestFilter::TestFilter(Lexer * owner, std::string new_filter_id)
 : TokenFilter(owner, new_filter_id)
 {}
 
-bool sdg::test::TestFilter::execute(char ch)
+bool sdg::test::TestFilter::execute(char ch, int *error_code)
 {
-    if(is_a_delimeter(ch))
+    if(is_a_delimiter(ch))
     {
-        owner_->produce_token();
+        stream_token();
         return true;
     }
     else
@@ -36,7 +36,7 @@ bool sdg::test::TestFilter::execute(char ch)
     }
 }
 
-bool sdg::test::TestFilter::is_a_delimeter(char ch)
+bool sdg::test::TestFilter::is_a_delimiter(char ch)
 {
     return (ch=='\n' || ch=='\r');
 }

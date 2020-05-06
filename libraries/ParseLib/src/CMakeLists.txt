@@ -30,7 +30,8 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/parser/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/semantic_analyzer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/intermediate/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/concrete/csv/*.cpp
+    ${PROJECT_SOURCE_DIR}/concrete/csv/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/concrete/csv/setup/source/*.cpp
     ${PROJECT_SOURCE_DIR}/utils/patterns/observer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/utils/source/*.cpp
     )

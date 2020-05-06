@@ -33,7 +33,7 @@ Parser::Parser()
 //This function is called every time there is a change made to the token stream.
 void Parser::parse()
 {
-    clock_t t = clock();
+    stopwatch_.start();
 
     //this while is executed for each token in the token stream,
     //only when the parser is sufficiently configured.
@@ -51,21 +51,24 @@ void Parser::parse()
 
     }
 
-    t = clock() - t; 
-    time_taken_ += ((double)t)/CLOCKS_PER_SEC; // in seconds
+    stopwatch_.stop();
 }
 
 double Parser::get_time() const
 {
-    return time_taken_;
+    return stopwatch_.read_seconds();
 }
 
 void Parser::produce_node(string key, string value)
 {
+    stopwatch_.stop();
     target_->add_to_root(key, value);
+    stopwatch_.start();
 }
 
 void Parser::produce_child_node(std::vector<int> path, std::string key, std::string value)
 {
+    stopwatch_.stop();
     target_->add_to_node(path, key, value);
+    stopwatch_.start();
 }

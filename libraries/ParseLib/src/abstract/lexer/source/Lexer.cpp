@@ -12,7 +12,6 @@ using ::std::string;
 
 
 
-
 void Lexer::receive_event()
 {
     this->scan();
@@ -21,7 +20,7 @@ void Lexer::receive_event()
 
 void Lexer::scan()
 {
-    clock_t t = clock();
+    stopwatch_.start();
 
     while ( this->ready() && this->source_->characters_available() )
     {   
@@ -34,15 +33,17 @@ void Lexer::scan()
 
         if( !flush_token )
             buffer_.append( string(1, ch) );
+        else
+            previous_delimiter_ = ch;
     }
 
-    t = clock() - t; 
-    time_taken_ += ((double)t)/CLOCKS_PER_SEC; // in seconds
+    stopwatch_.stop();
 }
+
 
 double Lexer::get_time() const
 {
-    return time_taken_;
+    return stopwatch_.read_seconds();
 }
 
 
@@ -53,7 +54,9 @@ void Lexer::produce_token()
         previous_token_.clear();
         previous_token_.append(buffer_);
 
+        stopwatch_.stop();
         target_->send_token(buffer_);
+        stopwatch_.start();
 
         buffer_.clear();
     }
@@ -67,7 +70,9 @@ void Lexer::produce_token(std::string token_content)
         previous_token_.clear();
         previous_token_.append(token_content);
 
+        stopwatch_.stop();
         target_->send_token(previous_token_);
+        stopwatch_.start();
     }
 }
 
@@ -85,6 +90,23 @@ void Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
 
         buffer_.clear();
 
+        stopwatch_.stop();
         target_->send_token(previous_token_);
+        stopwatch_.start();
     }
+}
+
+
+void Lexer::handle_error(LexerError error)
+{
+}
+
+bool Lexer::is_buffer_empty()
+{
+    return buffer_.empty();
+}
+
+char Lexer::last_delimiter()
+{
+    return previous_delimiter_;
 }

@@ -15,5 +15,12 @@ using ::sdg::hash::KeyInstance;
 
 void DataSetTarget::add(string key, string value, string path)
 {
+        stopwatch_.start();
         data_set_->set( KeyInstance(key), sdg::plHashValue( value, path ) );
+        stopwatch_.stop();
+}
+
+double DataSetTarget::get_time()
+{
+        return stopwatch_.read_seconds();
 }

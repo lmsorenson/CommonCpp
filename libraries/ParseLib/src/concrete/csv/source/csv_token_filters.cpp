@@ -1,16 +1,17 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "csv_token_filters.hpp"
+#include "../csv_token_filters.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "../../abstract/lexer/Lexer.hpp"
+#include "../../../abstract/lexer/Lexer.hpp"
 
 using std::string;
 using std::vector;
-using std::pair;
 using std::shared_ptr;
 using sdg::TokenFilter;
 using sdg::csv::HeaderTokenFilter;
+using sdg::csv::RecordTokenFilter;
+using sdg::csv::FieldTokenFilter;
 using ::sdg::csv::RecordToken;
 using ::sdg::csv::FieldToken;
 using ::std::cout;
@@ -25,12 +26,12 @@ HeaderTokenFilter::HeaderTokenFilter(Lexer * owner, std::string new_filter_id)
 : TokenFilter(owner, new_filter_id)
 {}
 
-bool HeaderTokenFilter::execute(char ch)
+bool HeaderTokenFilter::execute(char ch, int *error_code)
 {
     return false;
 }
 
-bool sdg::csv::HeaderTokenFilter::is_a_delimeter(char ch)
+bool HeaderTokenFilter::is_a_delimiter(char ch)
 {
     return (false);
 }
@@ -39,15 +40,16 @@ bool sdg::csv::HeaderTokenFilter::is_a_delimeter(char ch)
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-sdg::csv::RecordTokenFilter::RecordTokenFilter(Lexer * owner, std::string new_filter_id) 
+RecordTokenFilter::RecordTokenFilter(Lexer * owner, std::string new_filter_id) 
 : TokenFilter(owner, new_filter_id)
 {}
 
-bool sdg::csv::RecordTokenFilter::execute(char ch)
+bool RecordTokenFilter::execute(char ch, int *error_code)
 {
-    if(is_a_delimeter(ch))
+    if(is_a_delimiter(ch))
     {
-        owner_->produce_token(filter_id_);
+        stream_token();
+
         return true;
     }
     else
@@ -56,7 +58,7 @@ bool sdg::csv::RecordTokenFilter::execute(char ch)
     }
 }
 
-bool sdg::csv::RecordTokenFilter::is_a_delimeter(char ch)
+bool RecordTokenFilter::is_a_delimiter(char ch)
 {
     return (ch=='\n' || ch=='\r');
 }
@@ -65,25 +67,34 @@ bool sdg::csv::RecordTokenFilter::is_a_delimeter(char ch)
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-sdg::csv::FieldTokenFilter::FieldTokenFilter(Lexer * owner, std::string new_filter_id, TokenFilter * parent_filter) 
+FieldTokenFilter::FieldTokenFilter(Lexer * owner, std::string new_filter_id, TokenFilter * parent_filter) 
 : ChildTokenFilter(owner, new_filter_id, parent_filter)
 {}
 
-bool sdg::csv::FieldTokenFilter::execute(char ch)
+bool FieldTokenFilter::execute(char ch, int *error_code)
 {
-    if( is_a_delimeter(ch) || parent_->is_a_delimeter(ch) )
+    if( is_a_delimiter(ch) )
     {
-        owner_->produce_tagged_token(pair<string, string>(filter_id_ + "(", ")"));
+        stream_tagged_token();
+        return true;
+    }
+    else if(parent_->is_a_delimiter(ch))
+    {
+        //if there have been no characters cached since the last
+        //comma delimiter the record ends on a comma
+        if( is_cache_empty() && is_a_delimiter(last_delimiter()) )
+            notify_error({FORMAT_ERROR});
+
+        stream_tagged_token();
         return true;
     }
     else
     {
         return false;
     }
-    
 }
 
-bool sdg::csv::FieldTokenFilter::is_a_delimeter(char ch)
+bool FieldTokenFilter::is_a_delimiter(char ch)
 {
     return (ch==',');
 }

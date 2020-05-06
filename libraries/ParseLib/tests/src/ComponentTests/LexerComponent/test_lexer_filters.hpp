@@ -8,15 +8,14 @@ namespace test {
 
 
 
-
 class TestFilter : public ::sdg::TokenFilter
 {
 public:
     TestFilter( Lexer *  owner, std::string a_filter_id );
     ~TestFilter()=default;
 
-    virtual bool execute(char ch) override;
-    virtual bool is_a_delimeter(char ch) override;
+    virtual bool execute(char ch, int *error_code=nullptr ) override;
+    virtual bool is_a_delimiter(char ch) override;
 };
 
 
@@ -27,8 +26,8 @@ public:
     FieldTokenFilter( Lexer * owner, std::string a_filter_id, TokenFilter * parent_filter );
     ~FieldTokenFilter()=default;
 
-    virtual bool execute( char ch ) override;
-    virtual bool is_a_delimeter( char ch ) override;
+    virtual bool execute( char ch, int *error_code=nullptr ) override;
+    virtual bool is_a_delimiter( char ch ) override;
 };
 
 

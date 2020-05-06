@@ -1,6 +1,6 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
-#include "../../abstract/Writes/WriteStrategy.hpp"
+#include "../../../abstract/Writes/WriteStrategy.hpp"
 
 
 

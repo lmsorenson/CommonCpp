@@ -11,12 +11,18 @@
 
 using ::sdg::ReadStrategy;
 using ::sdg::ParserPipeline;
-
+using ::std::string;
+using ::std::vector;
+using ::std::make_shared;
+using ::std::shared_ptr;
+using ::std::cout;
+using ::std::fixed;
+using ::std::endl;
 
     
 
 
-int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std::vector<sdg::option> read_options)
+int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, vector<sdg::option> read_options)
 {
     clock_t t; 
     double time_taken;
@@ -40,31 +46,32 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
         return FILE_NOT_FOUND;
     }
 
-    syntax_tree_->Print();
+    // syntax_tree_->Print();
     syntax_tree_->notify_observers();
 
 
-    std::cout<<"scan time taken: "<<lexer_.get_time()<<std::endl;
-    std::cout<<"parse time taken: "<<parser_.get_time()<<std::endl;
-    std::cout<<"semantic analyzer time taken: "<<semantic_analyzer_.get_time()<<std::endl;
+    cout<< fixed << "scan time taken: "<<lexer_.get_time()<<endl;
+    cout<< fixed << "parse time taken: "<<parser_.get_time()<<endl;
+    cout<< fixed <<"semantic analyzer time taken: "<<semantic_analyzer_.get_time()<<endl;
+    cout<< fixed <<"data set target time taken: "<<semantic_analyzer_.get_target_time()<<endl;
 
     t = clock() - t; 
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    std::cout<<"time taken: "<<time_taken<<std::endl;
+    cout<< fixed <<"time taken: "<<time_taken<<endl;
 
 
     t = clock(); 
     CSV test(100);
 
     // load text
-    std::string raw_text;
+    string raw_text;
     if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
     {
         ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
         return FILE_NOT_FOUND;
     }
 
-    std::shared_ptr<sdg::SyntaxNode> n = std::make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
+    shared_ptr<sdg::SyntaxNode> n = make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
     
     //decrypt
     
@@ -88,7 +95,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, std:
 
     t = clock() - t; 
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    std::cout<<"time taken: "<<time_taken<<std::endl;
+    cout<< fixed <<"time taken: "<<time_taken<<endl;
 
     return SUCCESS;
 }

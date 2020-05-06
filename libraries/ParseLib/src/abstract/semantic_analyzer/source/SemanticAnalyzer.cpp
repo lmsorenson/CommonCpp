@@ -24,11 +24,16 @@ void SemanticAnalyzer::receive_event()
 
 double SemanticAnalyzer::get_time() const
 {
-    return time_taken_;
+    return stopwatch_.read_seconds();
+}
+
+double SemanticAnalyzer::get_target_time() const
+{
+    return target_->get_time();
 }
 
 
-void check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target)
+void SemanticAnalyzer::check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target)
 {
     if (node->has_children())
     {
@@ -39,7 +44,11 @@ void check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> tar
     }
     else
     {
+        stopwatch_.stop();
+
         target->add( node->get_item_key(), node->get_item_value(), node->get_path() );
+
+        stopwatch_.start();
     }
 }
 
@@ -48,7 +57,7 @@ void check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> tar
 //This function is called every time there is a change made to the source.
 void SemanticAnalyzer::analyze()
 {
-    clock_t t = clock();
+    stopwatch_.start();
 
     shared_ptr<SyntaxNode> syntax_tree_ = source_->get_syntax_tree();
 
@@ -57,6 +66,5 @@ void SemanticAnalyzer::analyze()
         check_nodes(syntax_tree_, target_);
     }
 
-    t = clock() - t; 
-    time_taken_ += ((double)t)/CLOCKS_PER_SEC; // in seconds
+    stopwatch_.stop();
 }

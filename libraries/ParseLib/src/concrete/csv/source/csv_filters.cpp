@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "csv_filters.hpp"
+#include "../csv_filters.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -250,7 +250,7 @@ bool sdg::csv::FieldFilter::IsFieldCountValid(int32_t field_count_param)
 void sdg::csv::CSVOutput::execute(std::shared_ptr<SyntaxNode>& text, sdg::DataSet& data_store)
 {
     std::cout << "------------------" << std::endl;
-    text->Print();
+    // text->Print();
 
     //set of nodes to check
     vector<shared_ptr<SyntaxNode>> in;

@@ -6,8 +6,8 @@
 #include "private/SyntaxTreeSource.hpp"
 #include "private/DataSetTarget.hpp"
 #include "../intermediate/observer/Observer.hpp"
-
 #include "../intermediate/node.hpp"
+#include "../../utils/stopwatch.hpp"
 
 
 namespace sdg {
@@ -20,13 +20,15 @@ class SemanticAnalyzer : public pattern::Observer
     std::shared_ptr<SyntaxTreeSource> source_;
     std::shared_ptr<DataSetTarget> target_;
 
-    double time_taken_;
+    utils::Stopwatch stopwatch_;
 
     void analyze();
     bool ready()
     {
         return ( source_ && target_ );
     }
+
+    void check_nodes(std::shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target);
 
 public:
     SemanticAnalyzer() = default;
@@ -35,6 +37,7 @@ public:
     virtual void receive_event() override;
 
     double get_time() const;
+    double get_target_time() const;
 
     template<class T>
     void set_source( std::shared_ptr<SyntaxNode> syntax_tree )

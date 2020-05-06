@@ -232,7 +232,6 @@ TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same n
 }
 TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {   
-
     DataSet ds;
     int32_t return_code;
 

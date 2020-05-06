@@ -1,5 +1,5 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "../../abstract/Reads/ReadStrategy.hpp"
+#include "../../../abstract/Reads/ReadStrategy.hpp"
 
 
 

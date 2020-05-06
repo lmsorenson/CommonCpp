@@ -6,10 +6,11 @@
 #include <memory>
 #include "private/TokenSource.hpp"
 #include "private/SyntaxTreeTarget.hpp"
-#include "../intermediate/observer/Observer.hpp"
-
-#include "../intermediate/node.hpp"
 #include "private/TokenType.hpp"
+#include "../intermediate/observer/Observer.hpp"
+#include "../intermediate/node.hpp"
+#include "../../utils/stopwatch.hpp"
+
 
 namespace sdg {
 
@@ -24,7 +25,7 @@ class Parser : public pattern::Observer
     int32_t record_index_, field_index_;
     std::vector<std::shared_ptr<TokenType>> token_types_;
 
-    double time_taken_;
+    utils::Stopwatch stopwatch_;
 
     void parse();
     bool ready()

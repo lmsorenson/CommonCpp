@@ -1,11 +1,11 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "csv_factory.hpp"
+#include "../csv_factory.hpp"
 
 #include <iostream>
 
 #include <formats/csv_data_set.hpp>
-#include "csv_read.hpp"
-#include "csv_write.hpp"
+#include "../csv_read.hpp"
+#include "../csv_write.hpp"
 
 std::shared_ptr<sdg::ReadStrategy> sdg::csv::Factory::make_read()
 {

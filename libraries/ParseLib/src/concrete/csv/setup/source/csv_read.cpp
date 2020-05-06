@@ -1,10 +1,10 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
-#include "csv_read.hpp"
+#include "../csv_read.hpp"
 
 #include <iostream>
 
-#include "csv_filters.hpp"
-#include "csv_token_filters.hpp"
+#include "../../csv_filters.hpp"
+#include "../../csv_token_filters.hpp"
 
 
 
