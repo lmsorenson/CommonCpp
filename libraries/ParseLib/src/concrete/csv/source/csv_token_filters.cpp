@@ -26,7 +26,7 @@ HeaderTokenFilter::HeaderTokenFilter(Lexer * owner, std::string new_filter_id)
 : TokenFilter(owner, new_filter_id)
 {}
 
-bool HeaderTokenFilter::execute(char ch, int *error_code)
+bool HeaderTokenFilter::execute(char ch)
 {
     return false;
 }
@@ -44,7 +44,7 @@ RecordTokenFilter::RecordTokenFilter(Lexer * owner, std::string new_filter_id)
 : TokenFilter(owner, new_filter_id)
 {}
 
-bool RecordTokenFilter::execute(char ch, int *error_code)
+bool RecordTokenFilter::execute(char ch)
 {
     if(is_a_delimiter(ch))
     {
@@ -71,7 +71,7 @@ FieldTokenFilter::FieldTokenFilter(Lexer * owner, std::string new_filter_id, Tok
 : ChildTokenFilter(owner, new_filter_id, parent_filter)
 {}
 
-bool FieldTokenFilter::execute(char ch, int *error_code)
+bool FieldTokenFilter::execute(char ch)
 {
     if( is_a_delimiter(ch) )
     {

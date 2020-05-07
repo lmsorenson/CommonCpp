@@ -33,7 +33,7 @@ public:
     TokenFilter(Lexer * owner, std::string new_filter_id);
     ~TokenFilter()=default;
 
-    virtual bool execute(char ch, int *error_code=nullptr) = 0;
+    virtual bool execute(char ch) = 0;
     virtual bool is_a_delimiter(char ch)=0;
 
     enum : int32_t

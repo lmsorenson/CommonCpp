@@ -13,7 +13,7 @@ public:
     HeaderTokenFilter(Lexer *  owner, std::string a_filter_id);
     ~HeaderTokenFilter()=default;
 
-    virtual bool execute(char ch, int *error_code = nullptr) override;
+    virtual bool execute(char ch) override;
     virtual bool is_a_delimiter(char ch) override;
 };
 
@@ -25,7 +25,7 @@ public:
     RecordTokenFilter(Lexer * owner, std::string a_filter_id);
     ~RecordTokenFilter()=default;
 
-    virtual bool execute(char ch, int *error_code = nullptr) override;
+    virtual bool execute(char ch) override;
     virtual bool is_a_delimiter(char ch) override;
 };
 
@@ -37,7 +37,7 @@ public:
     FieldTokenFilter(Lexer * owner, std::string a_filter_id, TokenFilter * parent_filter);
     ~FieldTokenFilter()=default;
 
-    virtual bool execute(char ch, int *error_code = nullptr) override;
+    virtual bool execute(char ch) override;
     virtual bool is_a_delimiter(char ch) override;
 };
 

@@ -23,7 +23,7 @@ sdg::test::TestFilter::TestFilter(Lexer * owner, std::string new_filter_id)
 : TokenFilter(owner, new_filter_id)
 {}
 
-bool sdg::test::TestFilter::execute(char ch, int *error_code)
+bool sdg::test::TestFilter::execute(char ch)
 {
     if(is_a_delimiter(ch))
     {
