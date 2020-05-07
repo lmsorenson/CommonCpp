@@ -4,9 +4,16 @@
 #include <vector>
 
 
+#include "../../utils/stopwatch.hpp"
+
+
 using std::shared_ptr;
 using std::vector;
 using std::string;
+using std::cout;
+using std::endl;
+using std::fixed;
+using std::flush;
 using sdg::SyntaxNode;
 using sdg::ParserPipeline;
 
@@ -27,6 +34,9 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
 //execute will populate the DataSet
 int32_t ParserPipeline::execute(std::shared_ptr<SyntaxNode>& text, sdg::DataSet& data_store)
 {
+    utils::Stopwatch sw;
+    sw.start();
+
     int32_t result;
 
     vector<vector<shared_ptr<SyntaxNode>>> in_buffer;
@@ -45,6 +55,9 @@ int32_t ParserPipeline::execute(std::shared_ptr<SyntaxNode>& text, sdg::DataSet&
     in_buffer.clear();
     out_buffer.clear();
     
+    sw.stop();
+    cout << fixed << "ParserPipeline takes: " <<  sw.read_seconds() << "s" << endl;
+
     //message the output
     output->execute(text, data_store);
 

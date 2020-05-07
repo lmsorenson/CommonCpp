@@ -7,7 +7,8 @@
 #include "private/CharacterSource.hpp"
 #include "private/TokenFilter.hpp"
 #include "private/TokenTarget.hpp"
-#include "private/LexerError.hpp"
+#include "private/ErrorQueue.hpp"
+#include "../intermediate/Error.hpp"
 #include "../intermediate/observer/Observer.hpp"
 #include "../intermediate/Stream.hpp"
 #include "../../utils/stopwatch.hpp"
@@ -26,6 +27,7 @@ class Lexer : public pattern::Observer
     std::shared_ptr<CharacterSource> source_;
     std::vector<std::shared_ptr<TokenFilter>> filters_;
     std::shared_ptr<TokenTarget> target_;
+    std::shared_ptr<ErrorQueue> error_queue_;
 
     std::string buffer_;
     char previous_delimiter_;
@@ -37,7 +39,7 @@ class Lexer : public pattern::Observer
     void scan();
     bool ready()
     {
-        return (source_ && !filters_.empty() && target_);
+        return (source_ && !filters_.empty() && target_ && error_queue_);
     }
 
 public:
@@ -51,7 +53,7 @@ public:
     void produce_token(std::string);
     void produce_tagged_token(std::pair<std::string, std::string>);
 
-    void handle_error(LexerError error);
+    void handle_error(Error error);
     bool is_buffer_empty();
     char last_delimiter();
 
@@ -66,6 +68,9 @@ public:
 
     template<class T>
     void set_target(pipeline::Stream<std::string> *queue_ptr);
+
+    template<class T>
+    void set_error_queue(pipeline::Stream<Error> *error_queue_ptr);
 };
 
 
@@ -102,6 +107,14 @@ template<class T>
 void Lexer::set_target(pipeline::Stream<std::string> *queue_ptr)
 {
     target_=std::shared_ptr<T>( new T( queue_ptr ) );
+
+    this->scan();
+}
+
+template<class T>
+void Lexer::set_error_queue(pipeline::Stream<Error> *error_queue_ptr)
+{
+    error_queue_=std::shared_ptr<T>( new T( error_queue_ptr ) );
 
     this->scan();
 }

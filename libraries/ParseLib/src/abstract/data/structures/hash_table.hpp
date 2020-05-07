@@ -3,6 +3,7 @@
 #include <string>
 
 #include "../types/types.hpp"
+#include "../../../utils/stopwatch.hpp"
 
 
 
@@ -121,8 +122,9 @@ private:
     //a list of keys entered into this table.
     std::vector<hash::KeyInstance> hash_key_list;             
 
-
     bool key_value_exists(hash::KeyInstance a_key);
+
+    utils::Stopwatch stopwatch_;
 
 public:
     //Constructors

@@ -18,6 +18,8 @@ using std::string;
 using sdg::test::TestFilter;
 using sdg::TokenTarget;
 using sdg::CharacterSource;
+using sdg::Error;
+using sdg::ErrorQueue;
 
 class LexerComponentTests : public ::testing::Test
 {
@@ -51,11 +53,13 @@ TEST_F(LexerComponentTests, normal_filter_successful )
     
     Stream<char> source_stream;
     Stream<string> target_stream;
+    Stream<Error> error_stream;
 
     //configure
     lexer.set_source<CharacterSource>( &source_stream );
     lexer.add_filter<TestFilter>( "F" );
     lexer.set_target<TokenTarget>( &target_stream );
+    lexer.set_error_queue<ErrorQueue>( &error_stream );
 
     for(int i=0; i<5 ;++i)
     {
@@ -74,6 +78,7 @@ TEST_F(LexerComponentTests, add_content_with_no_components )
     
     Stream<char> source_stream;
     Stream<string> target_stream;
+    Stream<Error> error_stream;
 
     for(int i=0; i<5 ;++i)
     {
@@ -91,6 +96,7 @@ TEST_F(LexerComponentTests, configure_source_after_adding_content )
     
     Stream<char> source_stream;
     Stream<string> target_stream;
+    Stream<Error> error_stream;
 
     for(int i=0; i<5 ;++i)
     {
@@ -103,6 +109,7 @@ TEST_F(LexerComponentTests, configure_source_after_adding_content )
     lexer.set_source<CharacterSource>( &source_stream );
     lexer.add_filter<TestFilter>("F");
     lexer.set_target<TokenTarget>( &target_stream );
+    lexer.set_error_queue<ErrorQueue>( &error_stream );
 
     ASSERT_EQ( target_stream.get_element(), string("BBBBB") );
 }
@@ -113,6 +120,7 @@ TEST_F(LexerComponentTests, configure_source_and_target_after_filters )
     
     Stream<char> source_stream;
     Stream<string> target_stream;
+    Stream<Error> error_stream;
 
     for(int i=0; i<5 ;++i)
     {
@@ -125,6 +133,7 @@ TEST_F(LexerComponentTests, configure_source_and_target_after_filters )
     lexer.add_filter<TestFilter>("F");
     lexer.set_source<CharacterSource>( &source_stream );
     lexer.set_target<TokenTarget>( &target_stream );
+    lexer.set_error_queue<ErrorQueue>( &error_stream );
 
     ASSERT_EQ( target_stream.get_element(), string("BBBBB") );
 }

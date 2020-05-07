@@ -8,6 +8,8 @@ using std::make_shared;
 using std::vector;
 using std::endl;
 using std::cout;
+using std::fixed;
+using std::flush;
 using sdg::plHashTable;
 using sdg::plHashValue;
 using sdg::hash::KeyInstance;
@@ -55,6 +57,7 @@ bool plHashTable::key_value_exists(KeyInstance a_key)
 plHashValue plHashTable::insert(KeyInstance key, plHashValue value)
 {
     int32_t index = compute_index(key.as_string());
+
     shared_ptr<plHashElementIterator> e (table[index]);
 
     plHashValue replaced_key_value;
@@ -62,7 +65,12 @@ plHashValue plHashTable::insert(KeyInstance key, plHashValue value)
     //if the bucket is NOT null
     if (e!=nullptr)
     {
-        if(this->key_value_exists(key))
+        stopwatch_.start();
+        bool keyExists = this->key_value_exists(key);
+        stopwatch_.stop();
+        cout << fixed << "\rCheck key value exists: " << stopwatch_.read_seconds() << flush;
+
+        if(keyExists)
         {
             replaced_key_value = e->assign_value_to_existing_key(key.as_string(), value);
         }
@@ -119,6 +127,7 @@ std::vector<KeyInstance> plHashTable::GetMatchingKeys(KeyInstance a_key_subset) 
     vector<KeyInstance> return_list;
     vector<KeyInstance> local_hash_keys = hash_key_list;
     vector<KeyInstance> local_hash_key_buffer;
+
 
     std::string local_key_subset = a_key_subset.as_string();
 

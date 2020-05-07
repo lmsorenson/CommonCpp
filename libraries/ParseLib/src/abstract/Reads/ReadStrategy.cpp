@@ -8,6 +8,7 @@
 #include <time.h> 
 
 #include <formats/csv_data_set.hpp>
+#include "../../utils/stopwatch.hpp"
 
 using ::sdg::ReadStrategy;
 using ::sdg::ParserPipeline;
@@ -26,13 +27,11 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, vect
 {
     clock_t t; 
     double time_taken;
-    
-    
 
     configure(file_loader_, character_queue_);
-    configure_lexer( lexer_, token_queue_, character_queue_ );
-    configure_parser( parser_, syntax_tree_, token_queue_ );
-    configure_analyzer( semantic_analyzer_, &ds, syntax_tree_ );
+    configure_lexer( lexer_, token_queue_, character_queue_, dead_letter_queue_ );
+    configure_parser( parser_, syntax_tree_, token_queue_, dead_letter_queue_ );
+    configure_analyzer( semantic_analyzer_, &ds, syntax_tree_, dead_letter_queue_ );
 
     //set the read options before anything else
     this->set_read_options(read_options);
@@ -58,6 +57,22 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, vect
     t = clock() - t; 
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     cout<< fixed <<"time taken: "<<time_taken<<endl;
+
+    if (!dead_letter_queue_.is_empty())
+    {
+        auto err = dead_letter_queue_.get_element();
+
+        //if there is an error return an empty.
+        ds = sdg::DataSet(sdg::DataSet::DATA_SET_EMPTY);
+
+        switch(err.code)
+        {
+            case 1: return FILE_FORMAT_INVALID;
+            break;
+            default: return UNKNOWN_ERROR; 
+            break;
+        }
+    }
 
 
     t = clock(); 

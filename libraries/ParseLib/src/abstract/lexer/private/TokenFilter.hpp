@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "LexerError.hpp"
+#include "../../intermediate/Error.hpp"
 
 
 
@@ -23,7 +23,7 @@ protected:
 
     bool is_cache_empty();
     char last_delimiter();
-    void notify_error(LexerError error);
+    void notify_error(Error error);
     
     void stream_token();
     void stream_tagged_token();

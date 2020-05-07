@@ -46,9 +46,9 @@ void TokenFilter::stream_tagged_token()
     
 }
 
-void TokenFilter::notify_error(LexerError error)
+void TokenFilter::notify_error(Error error)
 {
-    cout << "Lexer Error(" << error.code << ")" << endl;
+    cout << "Error(" << error.code << ")" << endl;
 
     if(owner_)
         owner_->handle_error(error);

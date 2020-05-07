@@ -97,8 +97,9 @@ void Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
 }
 
 
-void Lexer::handle_error(LexerError error)
+void Lexer::handle_error(Error error)
 {
+    error_queue_->add_error(error);
 }
 
 bool Lexer::is_buffer_empty()

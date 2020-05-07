@@ -42,13 +42,12 @@ void Parser::parse()
         //removes a token from the token stream.
         string token=source_->pull_token();
 
-            //todo -- this should be applied on the first write to the syntax tree
+        //todo -- this should be applied on the first write to the syntax tree
         if(target_->is_empty())
             target_->add_to_root("R0", std::string());
 
         for ( shared_ptr<TokenType> type : this->token_types_ )
             type->handle_type( token );
-
     }
 
     stopwatch_.stop();

@@ -7,7 +7,6 @@
 #include "../../csv_token_filters.hpp"
 
 
-
 using ::std::shared_ptr;
 using ::std::vector;
 using ::std::string;
@@ -38,7 +37,7 @@ void Read::configure(FileLoader &file_loader, pipeline::Stream<char> &character_
 
 }
 
-void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream, pipeline::Stream<char> &character_stream) const
+void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream, pipeline::Stream<char> &character_stream, pipeline::Stream<Error> &error_queue_) const
 {
     //configures the lexer to listen for inputs on this character_stream.
     lexer.set_source<CharacterSource>( &character_stream );
@@ -49,9 +48,11 @@ void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream,
 
     //configures the lexer to send tokens to the following token stream.
     lexer.set_target<TokenTarget>( &token_stream );
+
+    lexer.set_error_queue<ErrorQueue>( &error_queue_ );
 }
 
-void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<string> &token_stream ) const
+void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<string> &token_stream, pipeline::Stream<Error> &error_queue_) const
 {
     //configures the parser to listen for inputs on this token_stream.
     parser.set_source<TokenSource>( &token_stream );
@@ -63,7 +64,7 @@ void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, 
     parser.set_target<SyntaxTreeTarget>( syntax_tree );
 }
 
-void Read::configure_analyzer(SemanticAnalyzer &semantic_analyzer, DataSet *data_set, std::shared_ptr<SyntaxNode> syntax_tree) const
+void Read::configure_analyzer(SemanticAnalyzer &semantic_analyzer, DataSet *data_set, std::shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<Error> &error_queue_) const
 {
     semantic_analyzer.set_source<SyntaxTreeSource>(syntax_tree);
 
