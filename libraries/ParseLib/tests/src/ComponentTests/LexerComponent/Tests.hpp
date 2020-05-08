@@ -69,7 +69,7 @@ TEST_F(LexerComponentTests, normal_filter_successful )
     source_stream.add('\r');
 
 
-    ASSERT_EQ( target_stream.get_element(), string("BBBBB") );
+    ASSERT_EQ( target_stream.get_element(), string("F(BBBBB)") );
 }
 
 TEST_F(LexerComponentTests, add_content_with_no_components )
@@ -111,7 +111,7 @@ TEST_F(LexerComponentTests, configure_source_after_adding_content )
     lexer.set_target<TokenTarget>( &target_stream );
     lexer.set_error_queue<ErrorQueue>( &error_stream );
 
-    ASSERT_EQ( target_stream.get_element(), string("BBBBB") );
+    ASSERT_EQ( target_stream.get_element(), string("F(BBBBB)") );
 }
 
 TEST_F(LexerComponentTests, configure_source_and_target_after_filters )
@@ -135,5 +135,5 @@ TEST_F(LexerComponentTests, configure_source_and_target_after_filters )
     lexer.set_target<TokenTarget>( &target_stream );
     lexer.set_error_queue<ErrorQueue>( &error_stream );
 
-    ASSERT_EQ( target_stream.get_element(), string("BBBBB") );
+    ASSERT_EQ( target_stream.get_element(), string("F(BBBBB)") );
 }

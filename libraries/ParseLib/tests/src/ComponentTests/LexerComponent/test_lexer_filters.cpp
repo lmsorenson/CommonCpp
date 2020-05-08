@@ -27,7 +27,7 @@ bool sdg::test::TestFilter::execute(char ch)
 {
     if(is_a_delimiter(ch))
     {
-        stream_token();
+        stream_tagged_token();
         return true;
     }
     else
