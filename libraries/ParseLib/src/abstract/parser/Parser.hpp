@@ -22,7 +22,6 @@ class Parser : public pattern::Observer
     std::shared_ptr<TokenSource> source_;
     std::shared_ptr<SyntaxTreeTarget> target_;
 
-    int32_t record_index_, field_index_;
     std::vector<std::shared_ptr<TokenType>> token_types_;
 
     utils::Stopwatch stopwatch_;
@@ -34,7 +33,7 @@ class Parser : public pattern::Observer
     }
 
 public:
-    Parser();
+    Parser() = default;
     ~Parser() = default;
 
     virtual void receive_event() override;

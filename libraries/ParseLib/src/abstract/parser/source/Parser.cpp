@@ -22,14 +22,6 @@ void Parser::receive_event()
 }
 
 
-Parser::Parser()
-: record_index_(0)
-, field_index_(0)
-{
-    // syntax_tree_->AddChild( SyntaxNode("R0", syntax_tree_ ) );
-}
-
-
 //This function is called every time there is a change made to the token stream.
 void Parser::parse()
 {
@@ -43,8 +35,8 @@ void Parser::parse()
         string token=source_->pull_token();
 
         //todo -- this should be applied on the first write to the syntax tree
-        if(target_->is_empty())
-            target_->add_to_root("R0", std::string());
+        // if(target_->is_empty())
+        //     target_->add_to_root("R0", std::string());
 
         for ( shared_ptr<TokenType> type : this->token_types_ )
             type->handle_type( token );

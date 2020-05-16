@@ -1,5 +1,5 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
-#include "../private/CharacterSource.hpp"
+#include "../CharacterSource.hpp"
 #include <iostream>
 #include <utility>
 

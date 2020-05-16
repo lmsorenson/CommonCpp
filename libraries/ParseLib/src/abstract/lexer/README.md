@@ -7,4 +7,5 @@
     1. If a Target is provided 
 
 ## References
-[Compiler Architecture - Layola Marymount University](https://cs.lmu.edu/~ray/notes/compilerarchitecture/)
+[Compiler Architecture - Layola Marymount University](https://cs.lmu.edu/~ray/notes/compilerarchitecture/)  
+[State Pattern](https://www.tutorialspoint.com/design_pattern/state_pattern.htm)

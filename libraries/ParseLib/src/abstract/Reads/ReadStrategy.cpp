@@ -45,7 +45,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, vect
         return FILE_NOT_FOUND;
     }
 
-    // syntax_tree_->Print();
+    syntax_tree_->Print();
     syntax_tree_->notify_observers();
 
 

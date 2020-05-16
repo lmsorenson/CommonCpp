@@ -4,6 +4,7 @@ project (parse)
 
 set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_FLAGS "-g")
+set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
 set( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR} )
@@ -27,6 +28,9 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/file_loader/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/lexer/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/lexer/queue/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/lexer/shape/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/lexer/shape/dependent_entity/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/semantic_analyzer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/intermediate/source/*.cpp

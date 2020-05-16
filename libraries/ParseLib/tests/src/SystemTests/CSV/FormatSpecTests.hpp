@@ -340,7 +340,7 @@ TEST_F(CSVFormatTests, TestR6_1)
         field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
-    ASSERT_EQ(field2.get(), "b\r\rbb");
+    ASSERT_EQ(field2.get(), "b\r\nbb");
     ASSERT_EQ(field3.get(), "ccc");
 }  
 TEST_F(CSVFormatTests, TestR6_1_WithHeader)

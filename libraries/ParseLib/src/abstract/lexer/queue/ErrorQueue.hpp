@@ -1,4 +1,4 @@
-// Copyright 2019, Lucas Sorenson, All rights reserved.
+// Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <string>
 #include "../../intermediate/Stream.hpp"
@@ -13,7 +13,6 @@ class ErrorQueue
 public:
     ErrorQueue(pipeline::Stream<Error> * stream)
     : error_stream_(stream){}
-    
     ~ErrorQueue() = default;
 
     virtual void add_error(Error);

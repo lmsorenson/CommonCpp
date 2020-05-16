@@ -3,6 +3,13 @@
 
 
 namespace sdg {
+    
+enum : int32_t
+{
+    SUCCESS = 0,
+    FILE_FORMAT_INVALID,
+    UNKNOWN_ERROR
+};
 
 struct Error
 {

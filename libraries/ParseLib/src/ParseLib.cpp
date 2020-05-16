@@ -9,9 +9,6 @@
 #include "abstract/Reads/ReadStrategy.hpp"
 #include "concrete/csv/setup/csv_factory.hpp"
 
-
-
-
 int32_t sdg::ParseLib::read_file(sdg::DataSet& data_store, const char * filepath, std::vector<sdg::option> read_options)
 {
 

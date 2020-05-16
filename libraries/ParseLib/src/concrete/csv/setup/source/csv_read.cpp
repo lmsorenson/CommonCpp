@@ -6,6 +6,7 @@
 #include "../../csv_filters.hpp"
 #include "../../csv_token_filters.hpp"
 
+#include "../../../../abstract/lexer/shape/dependent_entity/DependentEntity.hpp"
 
 using ::std::shared_ptr;
 using ::std::vector;
@@ -42,9 +43,7 @@ void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream,
     //configures the lexer to listen for inputs on this character_stream.
     lexer.set_source<CharacterSource>( &character_stream );
 
-    int32_t index = 
-    lexer.add_filter<csv::RecordTokenFilter>( "R" );
-    lexer.add_filter<csv::FieldTokenFilter>( "F", index );
+    lexer.add_shape<::sdg::DependentEntity>();
 
     //configures the lexer to send tokens to the following token stream.
     lexer.set_target<TokenTarget>( &token_stream );

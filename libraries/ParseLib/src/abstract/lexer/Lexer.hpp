@@ -3,11 +3,13 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <map>
 #include <memory>
-#include "private/CharacterSource.hpp"
-#include "private/TokenFilter.hpp"
-#include "private/TokenTarget.hpp"
-#include "private/ErrorQueue.hpp"
+#include <iostream>
+#include "shape/Shape.hpp"
+#include "queue/CharacterSource.hpp"
+#include "queue/TokenTarget.hpp"
+#include "queue/ErrorQueue.hpp"
 #include "../intermediate/Error.hpp"
 #include "../intermediate/observer/Observer.hpp"
 #include "../intermediate/Stream.hpp"
@@ -16,8 +18,6 @@
 namespace sdg {
 
 class CharacterSource;
-class TokenFilter;
-class ChildTokenFilter;
 class TokenTarget;
 
 //takes in a stream of characters
@@ -25,25 +25,25 @@ class TokenTarget;
 class Lexer : public pattern::Observer
 {
     std::shared_ptr<CharacterSource> source_;
-    std::vector<std::shared_ptr<TokenFilter>> filters_;
     std::shared_ptr<TokenTarget> target_;
     std::shared_ptr<ErrorQueue> error_queue_;
 
     std::string buffer_;
-    char previous_delimiter_;
-    std::string previous_token_;
 
-    bool bAllowDuplicates_;
+    std::shared_ptr<Shape> shape_;
+    std::map<std::string, std::shared_ptr<Shape>> shapes_;
+
     utils::Stopwatch stopwatch_;
 
     void scan();
     bool ready()
     {
-        return (source_ && !filters_.empty() && target_ && error_queue_);
+        return (shape_ && source_ && target_ && error_queue_);
     }
 
 public:
-    Lexer() : bAllowDuplicates_(false){}
+    Lexer()=default;
+    ~Lexer()=default;
 
     virtual void receive_event() override;
 
@@ -55,16 +55,15 @@ public:
 
     void handle_error(Error error);
     bool is_buffer_empty();
-    char last_delimiter();
+
+    template<class T>
+    void set_shape(char ch = '\0');
+
+    template<class T>
+    void add_shape();
 
     template<class T>
     void set_source(sdg::pipeline::Stream<char> *queue_ptr);
-
-    template<class T>
-    int32_t add_filter(std::string a_filter_id);
-
-    template<class T>
-    int32_t add_filter(std::string a_filter_id, int32_t parent_index);
 
     template<class T>
     void set_target(pipeline::Stream<std::string> *queue_ptr);
@@ -74,7 +73,22 @@ public:
 };
 
 
+template<class T>
+void Lexer::set_shape(char ch)
+{
+    std::string key = typeid(T).name();
+    shape_ = shapes_.at(key);
+}
 
+template<class T>
+void Lexer::add_shape()
+{
+    std::string key = typeid(T).name();
+    shapes_[key] = std::shared_ptr<T>(new T(this));
+
+    if(!shape_)
+        shape_ = shapes_.at(key);
+}
 
 template<class T>
 void Lexer::set_source(sdg::pipeline::Stream<char> *queue_ptr)
@@ -83,24 +97,6 @@ void Lexer::set_source(sdg::pipeline::Stream<char> *queue_ptr)
     source_=std::shared_ptr<T>( new T( queue_ptr ) );
 
     this->scan();
-}
-
-template<class T>
-int32_t Lexer::add_filter(std::string a_filter_id)
-{
-    filters_.push_back( std::shared_ptr<T>( new T(this, a_filter_id) ) );
-    
-    //return the index of the last pushed element.
-    return (filters_.size()-1);
-}
-
-template<class T>
-int32_t Lexer::add_filter(std::string a_filter_id, int32_t parent_index)
-{
-    filters_.push_back( std::shared_ptr<T>( new T(this, a_filter_id, filters_[parent_index].get()) ) );
-
-    //return the index of the last pushed element.
-    return (filters_.size()-1);
 }
 
 template<class T>
