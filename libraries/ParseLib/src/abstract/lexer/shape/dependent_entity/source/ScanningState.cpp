@@ -31,16 +31,10 @@ void Scanning::perform_scan(char ch)
         context_->set_state<ScanningEscaped>();
         break;
 
-    case ',': 
-        context_->set_state<FoundDependent>(',');
-        break;
-
+    case ',':
     case '\r':
-        context_->set_state<FoundDependent>('\r');
-        break;
-
     case '\n': 
-        context_->set_state<FoundDependent>('\n');
+        context_->set_state<FoundDependent>(ch);
         break;
 
     default: 

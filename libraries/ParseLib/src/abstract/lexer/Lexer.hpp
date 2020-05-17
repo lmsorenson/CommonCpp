@@ -60,7 +60,7 @@ public:
     void set_shape(char ch = '\0');
 
     template<class T>
-    void add_shape();
+    void add_shape(std::string entity_id);
 
     template<class T>
     void set_source(sdg::pipeline::Stream<char> *queue_ptr);
@@ -81,10 +81,10 @@ void Lexer::set_shape(char ch)
 }
 
 template<class T>
-void Lexer::add_shape()
+void Lexer::add_shape(std::string entity_id)
 {
     std::string key = typeid(T).name();
-    shapes_[key] = std::shared_ptr<T>(new T(this));
+    shapes_[key] = std::shared_ptr<T>(new T(this, entity_id));
 
     if(!shape_)
         shape_ = shapes_.at(key);

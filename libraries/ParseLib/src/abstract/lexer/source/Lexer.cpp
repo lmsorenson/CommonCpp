@@ -2,12 +2,10 @@
 #include "../Lexer.hpp"
 
 #include "../shape/LexerState.hpp"
-#include "../shape/dependent_entity/state/PendingState.hpp"
 #include <iostream>
 #include <time.h> 
 
 using ::sdg::Lexer;
-using ::sdg::PendingState;
 using ::std::cout;
 using ::std::endl;
 using ::std::shared_ptr;
@@ -27,19 +25,12 @@ void Lexer::scan()
 {
     stopwatch_.start();
 
-    while ( this->ready() && this->source_->characters_available() )
+    while ( this->ready() && this->source_->characters_available() && !shape_->is_complete() )
     {   
         bool should_buffer = false;
         char ch = source_->pull_char();
 
-        if(shape_)
-        {
-            shape_->run(should_buffer, ch);
-        }
-        else
-        {
-            cout << "error: no initial state.";
-        }
+        shape_->run(should_buffer, ch);
 
         if( should_buffer )
             buffer_.append( string(1, ch) );
@@ -56,7 +47,7 @@ double Lexer::get_time() const
 
 void Lexer::produce_token()
 {
-    if (!buffer_.empty() )
+    if ( !buffer_.empty() )
     {
         stopwatch_.stop();
         target_->send_token(buffer_);
@@ -91,8 +82,6 @@ void Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
         stopwatch_.stop();
         target_->send_token(token);
         stopwatch_.start();
-
-        
     }
 }
 
@@ -106,4 +95,3 @@ bool Lexer::is_buffer_empty()
 {
     return buffer_.empty();
 }
-

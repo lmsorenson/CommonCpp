@@ -43,7 +43,7 @@ void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream,
     //configures the lexer to listen for inputs on this character_stream.
     lexer.set_source<CharacterSource>( &character_stream );
 
-    lexer.add_shape<::sdg::DependentEntity>();
+    lexer.add_shape<DependentEntity>("R");
 
     //configures the lexer to send tokens to the following token stream.
     lexer.set_target<TokenTarget>( &token_stream );
@@ -59,6 +59,8 @@ void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, 
     int32_t index =
     parser.add_token_type<RecordToken>("R");
     parser.add_token_type<FieldToken>("F", index);
+
+    parser.set_error_queue<parser::ErrorQueue>( &error_queue_ );
 
     parser.set_target<SyntaxTreeTarget>( syntax_tree );
 }

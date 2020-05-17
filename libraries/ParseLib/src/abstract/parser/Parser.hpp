@@ -7,6 +7,8 @@
 #include "private/TokenSource.hpp"
 #include "private/SyntaxTreeTarget.hpp"
 #include "private/TokenType.hpp"
+#include "private/ErrorQueue.hpp"
+#include "../intermediate/Error.hpp"
 #include "../intermediate/observer/Observer.hpp"
 #include "../intermediate/node.hpp"
 #include "../../utils/stopwatch.hpp"
@@ -21,6 +23,7 @@ class Parser : public pattern::Observer
 {
     std::shared_ptr<TokenSource> source_;
     std::shared_ptr<SyntaxTreeTarget> target_;
+    std::shared_ptr<parser::ErrorQueue> error_queue_;
 
     std::vector<std::shared_ptr<TokenType>> token_types_;
 
@@ -29,7 +32,7 @@ class Parser : public pattern::Observer
     void parse();
     bool ready()
     {
-        return (source_ && target_);
+        return (source_ && target_ && error_queue_);
     }
 
 public:
@@ -41,7 +44,9 @@ public:
     double get_time() const;
 
     void produce_node(std::string, std::string);
-    void produce_child_node(std::vector<int>, std::string, std::string);
+    int32_t produce_child_node(std::vector<int>, std::string, std::string);
+    
+    void handle_error(Error error);
 
     template<class T>
     void set_source(sdg::pipeline::Stream<std::string> *queue_ptr)
@@ -92,7 +97,19 @@ public:
         //starts a parse process in case content exists before the target is assigned.
         this->parse();
     }
+
+
+    template<class T>
+    void set_error_queue(pipeline::Stream<Error> *error_queue_ptr);
 };
+
+template<class T>
+void Parser::set_error_queue(pipeline::Stream<Error> *error_queue_ptr)
+{
+    error_queue_=std::shared_ptr<T>( new T( error_queue_ptr ) );
+
+    this->parse();
+}
 
 
 }// namespace sdg

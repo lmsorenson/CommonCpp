@@ -34,10 +34,6 @@ void Parser::parse()
         //removes a token from the token stream.
         string token=source_->pull_token();
 
-        //todo -- this should be applied on the first write to the syntax tree
-        // if(target_->is_empty())
-        //     target_->add_to_root("R0", std::string());
-
         for ( shared_ptr<TokenType> type : this->token_types_ )
             type->handle_type( token );
     }
@@ -57,9 +53,25 @@ void Parser::produce_node(string key, string value)
     stopwatch_.start();
 }
 
-void Parser::produce_child_node(std::vector<int> path, std::string key, std::string value)
+int32_t Parser::produce_child_node(std::vector<int> path, std::string key, std::string value)
 {
     stopwatch_.stop();
-    target_->add_to_node(path, key, value);
+    
+    if(target_->add_to_node(path, key, value)==0)
+    {
+        return 0;
+    }
+    else
+    {
+        cout << "ERROR FOUND: could not assign token to node." << endl;
+        handle_error({UNKNOWN_ERROR});
+        return 1;
+    }
+    
     stopwatch_.start();
+}
+
+void Parser::handle_error(Error error)
+{
+    error_queue_->add_error(error);
 }

@@ -26,7 +26,7 @@ void FoundDependent::initialize(char ch)
 
     if (ch == '\n' || ch == '\r')
     {
-        context_->set_state<IndependentEntity>();
+        context_->set_state<EndIndependentEntity>();
     }
 }
 

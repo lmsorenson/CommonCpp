@@ -15,13 +15,16 @@ using ::std::endl;
 void Shape::init()
 {
     current_state_->initialize();
+    is_initialized_ = true;
 }
 
 void Shape::run(bool &should_buffer, char ch)
 {
-    if (this->ready() || !this->is_initialized_)
+    if (this->ready() && !this->is_initialized_)
+    {
         this->init();
-    
+    }
+        
 
     if( this->ready() )
     {
@@ -30,11 +33,12 @@ void Shape::run(bool &should_buffer, char ch)
     }
     else
     {
-        cout << "error: no initial state.";
+        cout << "shape error: shape is not properly configured to process characters." << endl;
+        context_->handle_error({UNKNOWN_ERROR});
     }
 }
 
-void Shape::generate_token(string token)
+void Shape::generate_token(string token) const
 {
     context_->produce_token(token);
 }

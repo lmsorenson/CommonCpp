@@ -20,7 +20,7 @@ void SyntaxTreeTarget::add_to_root(string id, string value)
     syntax_tree_->AddChild(n);
 }
 
-void SyntaxTreeTarget::add_to_node(vector<int> path, string id, string value)
+int32_t SyntaxTreeTarget::add_to_node(vector<int> path, string id, string value)
 {
     auto node_buffer = syntax_tree_;
 
@@ -29,9 +29,16 @@ void SyntaxTreeTarget::add_to_node(vector<int> path, string id, string value)
         node_buffer = node_buffer->get_child(path[i]);
     }
 
-    SyntaxNode n = SyntaxNode( value, node_buffer );
-    n.append_key(id);
-    node_buffer->AddChild(n);
+    if(node_buffer)
+    {
+        SyntaxNode n = SyntaxNode( value, node_buffer );
+        n.append_key(id);
+        node_buffer->AddChild(n);
+        
+        return 0;
+    }
+    
+    return 1;
 }
 
 bool SyntaxTreeTarget::is_empty()

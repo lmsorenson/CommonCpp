@@ -6,26 +6,25 @@
 #include "../state/PendingState.hpp"
 #include "../../../Lexer.hpp"
 
-using ::sdg::IndependentEntity;
+using ::sdg::EndIndependentEntity;
 using ::std::cout;
 using ::std::endl;
 using ::std::pair;
 
 
-void IndependentEntity::initialize(char ch)
+void EndIndependentEntity::initialize(char ch)
 {
-    cout << "NEW RECORD ";
-    context_->generate_token("R");
+    cout << "END RECORD ";
+    // static_cast<DependentEntity * const>(context_)->generate_link_token();
 
     context_->set_state<PendingState>();
 }
 
-void IndependentEntity::perform_scan(char ch)
+void EndIndependentEntity::perform_scan(char ch)
 {
 }
 
-
-void IndependentEntity::should_buffer(bool &should_buffer, char ch)
+void EndIndependentEntity::should_buffer(bool &should_buffer, char ch)
 {
     switch (ch)
     {

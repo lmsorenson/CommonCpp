@@ -15,7 +15,7 @@ public:
     : syntax_tree_(syntax_tree_) {}
 
     void add_to_root(std::string id, std::string value);
-    void add_to_node(std::vector<int> path, std::string id, std::string value);
+    int32_t add_to_node(std::vector<int> path, std::string id, std::string value);
 
     bool is_empty();
 };

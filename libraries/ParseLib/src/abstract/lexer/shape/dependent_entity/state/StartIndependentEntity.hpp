@@ -4,10 +4,10 @@
 
 namespace sdg {
 
-class EndIndependentEntity : public LexerState
+class StartIndependentEntity : public LexerState
 {
 public:
-    EndIndependentEntity(Shape *context) : LexerState(context){}
+    StartIndependentEntity(Shape *context) : LexerState(context){}
 
     virtual void initialize(char ch) override;
     virtual void perform_scan(char ch) override;

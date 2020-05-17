@@ -15,3 +15,8 @@ void LexerState::should_buffer(bool &should_buffer, char ch)
 {
     should_buffer = true;
 }
+
+int32_t LexerState::occurances() const
+{
+    return occurances_;
+}

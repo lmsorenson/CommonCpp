@@ -8,7 +8,8 @@ class Shape;
 
 class LexerState
 {
-    
+    int32_t occurances_;
+
 protected:
     Shape * const context_;
 
@@ -19,6 +20,20 @@ public:
     virtual void initialize(char ch = '\0');
     virtual void perform_scan(char ch) = 0;
     virtual void should_buffer(bool &should_buffer, char ch);
+
+    int32_t occurances() const;
+
+    LexerState& operator++()
+    {
+        occurances_++;
+        return *this;
+    }
+
+    LexerState& operator++(int)
+    {
+        occurances_++;
+        return *this;
+    }
 };
 
 }// namespace sdg

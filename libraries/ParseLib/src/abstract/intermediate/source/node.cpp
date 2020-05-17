@@ -60,7 +60,14 @@ void SyntaxNode::AddChild(SyntaxNode n)
     children_.push_back(make_shared<SyntaxNode>(n));
 }
 
-shared_ptr<SyntaxNode> SyntaxNode::get_child(int32_t index){return this->children_[index];}
+shared_ptr<SyntaxNode> SyntaxNode::get_child(int32_t index)
+{
+    if(this->children_.size() > index)
+        return this->children_[index];
+    else
+        return nullptr;
+}
+
 int32_t SyntaxNode::get_number_of_children(){return children_.size();}
 bool SyntaxNode::has_children(){return (children_.size()>0);}
 bool SyntaxNode::has_parent(){return ((bool)parent_);}
