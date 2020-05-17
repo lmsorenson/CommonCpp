@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include <deque>
-#include "../../intermediate/Stream.hpp"
+#include "../../../intermediate/Stream.hpp"
 
 
 namespace sdg {

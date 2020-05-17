@@ -27,10 +27,10 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/Reads/Streams/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/file_loader/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/lexer/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/lexer/queue/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/lexer/shape/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/lexer/shape/dependent_entity/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/lexer/private/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/lexer/private/queue/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/lexer/private/shape/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/lexer/private/shape/dependent_entity/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/semantic_analyzer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/intermediate/source/*.cpp

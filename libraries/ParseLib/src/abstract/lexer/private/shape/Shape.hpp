@@ -5,7 +5,7 @@
 #include <iostream>
 #include <map>
 #include "LexerState.hpp"
-#include "../../intermediate/Error.hpp"
+#include "../../../intermediate/Error.hpp"
 
 namespace sdg {
 
@@ -15,14 +15,14 @@ class Shape
 {    
     int32_t executions_;
 
-protected:
+public:
     enum Cardinality : int32_t
     {
         One,
         Many
     } cardinality_;
 
-
+protected:
     Lexer * const context_;
 
     std::shared_ptr<LexerState> current_state_;
@@ -36,10 +36,10 @@ protected:
     }
 
 public:
-    Shape(Lexer *context) 
+    Shape(Lexer *context, Cardinality cardinality = Cardinality::Many) 
     : is_initialized_(false)
     , executions_(0)
-    , cardinality_(Cardinality::Many)
+    , cardinality_(cardinality)
     , context_(context) {}
     virtual ~Shape() = default;
 
@@ -52,6 +52,7 @@ public:
     void handle_error(Error error);
 
     virtual bool is_complete() const = 0;
+    virtual int32_t transition() const = 0;
 
     template<class T>
     void set_state(char ch = '\0');

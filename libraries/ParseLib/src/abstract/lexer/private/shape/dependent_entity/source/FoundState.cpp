@@ -5,7 +5,7 @@
 #include "../state/IndependentEntity.hpp"
 #include "../state/ScanningState.hpp"
 #include "../state/EscapedState.hpp"
-#include "../../../Lexer.hpp"
+#include "../../../../Lexer.hpp"
 
 using ::sdg::dependent_entity::FoundDependent;
 using ::sdg::dependent_entity::Scanning;

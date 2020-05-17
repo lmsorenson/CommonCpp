@@ -2,7 +2,7 @@
 #include "../state/PendingState.hpp"
 #include "../state/StartIndependentEntity.hpp"
 
-#include "../../../Lexer.hpp"
+#include "../../../../Lexer.hpp"
 
 using ::sdg::PendingState;
 

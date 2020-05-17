@@ -3,10 +3,10 @@
 
 #include <iostream>
 
+#include "../../HeaderShape.hpp"
+#include "../../RecordShape.hpp"
 #include "../../csv_filters.hpp"
 #include "../../csv_token_filters.hpp"
-
-#include "../../../../abstract/lexer/shape/dependent_entity/DependentEntity.hpp"
 
 using ::std::shared_ptr;
 using ::std::vector;
@@ -41,14 +41,15 @@ void Read::configure(FileLoader &file_loader, pipeline::Stream<char> &character_
 void Read::configure_lexer(Lexer &lexer, pipeline::Stream<string> &token_stream, pipeline::Stream<char> &character_stream, pipeline::Stream<Error> &error_queue_) const
 {
     //configures the lexer to listen for inputs on this character_stream.
+    //and to send tokens to the following token stream.
     lexer.set_source<CharacterSource>( &character_stream );
-
-    lexer.add_shape<DependentEntity>("R");
-
-    //configures the lexer to send tokens to the following token stream.
     lexer.set_target<TokenTarget>( &token_stream );
-
     lexer.set_error_queue<ErrorQueue>( &error_queue_ );
+
+    if (b_use_header_line)
+        lexer.add_shape<HeaderShape>("H", Shape::Cardinality::One);
+
+    lexer.add_shape<RecordShape>("R");
 }
 
 void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<string> &token_stream, pipeline::Stream<Error> &error_queue_) const

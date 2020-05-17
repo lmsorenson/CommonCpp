@@ -1,5 +1,5 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
-#include "../DependentEntity.hpp"
+#include "../../../../public/DependentEntity.hpp"
 #include <iostream>
 
 #include "../state/StartIndependentEntity.hpp"
@@ -8,7 +8,7 @@
 #include "../state/ScanningState.hpp"
 #include "../state/EscapedState.hpp"
 #include "../state/FoundState.hpp"
-#include "../../../Lexer.hpp"
+#include "../../../../Lexer.hpp"
 
 using ::sdg::DependentEntity;
 using ::sdg::dependent_entity::FoundDependent;
@@ -20,11 +20,11 @@ using ::std::string;
 using ::std::pair;
 
 
-DependentEntity::DependentEntity(Lexer *context, std::string entity_id) 
-: Shape(context) 
+DependentEntity::DependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality, char entity_delimiter, std::string shape_delimiter) 
+: Shape(context, cardinality) 
 , entity_id_(entity_id)
-, dependent_entity_delimiter_('\0')
-, list_delimiter_(string())
+, entity_delimiter_(entity_delimiter)
+, shape_delimiter_(shape_delimiter)
 {
     this->add_state<StartIndependentEntity>();
     this->add_state<Scanning>();
@@ -39,19 +39,19 @@ void DependentEntity::generate_link_token() const
     generate_token(entity_id_);
 }
 
-char DependentEntity::get_dependent_entity_delimiter() const
-{
-    return dependent_entity_delimiter_;
-}
-
-std::string DependentEntity::get_list_delimiter() const
-{
-    return list_delimiter_;
-}
-
 std::string DependentEntity::get_entity_id() const
 {
     return entity_id_;
+}
+
+char DependentEntity::get_entity_delimiter() const
+{
+    return entity_delimiter_;
+}
+
+std::string DependentEntity::get_shape_delimiter() const
+{
+    return shape_delimiter_;
 }
 
 bool DependentEntity::is_complete() const
@@ -70,4 +70,9 @@ bool DependentEntity::is_complete() const
         return false;
         break;
     }
+}
+
+int32_t DependentEntity::transition() const
+{
+    return 0;
 }

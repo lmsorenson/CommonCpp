@@ -1,9 +1,11 @@
 // Copyright 2020 Lucas Sorenson, All rights reserved.
 #include "../Lexer.hpp"
 
-#include "../shape/LexerState.hpp"
+#include "shape/LexerState.hpp"
 #include <iostream>
 #include <time.h> 
+
+#include "../public/DependentEntity.hpp"
 
 using ::sdg::Lexer;
 using ::std::cout;
@@ -25,7 +27,7 @@ void Lexer::scan()
 {
     stopwatch_.start();
 
-    while ( this->ready() && this->source_->characters_available() && !shape_->is_complete() )
+    while (this->ready() && this->source_->characters_available() && !shape_->is_complete())
     {   
         bool should_buffer = false;
         char ch = source_->pull_char();
@@ -35,6 +37,9 @@ void Lexer::scan()
         if( should_buffer )
             buffer_.append( string(1, ch) );
     }
+
+    if (this->ready() && shape_->is_complete())
+        shape_->transition();
 
     stopwatch_.stop();
 }

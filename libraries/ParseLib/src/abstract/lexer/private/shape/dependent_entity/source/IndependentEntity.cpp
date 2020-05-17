@@ -2,9 +2,9 @@
 #include "../state/IndependentEntity.hpp"
 #include <iostream>
 
-#include "../DependentEntity.hpp"
+#include "../../../../public/DependentEntity.hpp"
 #include "../state/PendingState.hpp"
-#include "../../../Lexer.hpp"
+#include "../../../../Lexer.hpp"
 
 using ::sdg::EndIndependentEntity;
 using ::std::cout;

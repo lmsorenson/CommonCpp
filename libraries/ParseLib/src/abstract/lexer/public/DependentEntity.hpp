@@ -3,28 +3,28 @@
 #include <map>
 #include <vector>
 #include <memory>
-#include "../LexerState.hpp"
-#include "../Shape.hpp"
+#include "../private/shape/Shape.hpp"
 
 namespace sdg {
     
 class DependentEntity : public Shape
 {
-    char dependent_entity_delimiter_;
-    std::string list_delimiter_;
     std::string entity_id_;
+    char entity_delimiter_;
+    std::string shape_delimiter_;
 
-    char get_dependent_entity_delimiter() const;
-    std::string get_list_delimiter() const;
+    char get_entity_delimiter() const;
+    std::string get_shape_delimiter() const;
     std::string get_entity_id() const;
 
 public:
-    DependentEntity(Lexer *context, std::string foreign_key);
+    DependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality, char entity_delimiter, std::string shape_delimiter);
     ~DependentEntity() = default;
 
     void generate_link_token() const;
 
     bool is_complete() const override;
+    virtual int32_t transition() const override;
 };
 
 }// namespace sdg

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "../Shape.hpp"
-#include "../../Lexer.hpp"
+#include "../../../Lexer.hpp"
 
 using ::sdg::Shape;
 using ::std::pair;
@@ -21,10 +21,7 @@ void Shape::init()
 void Shape::run(bool &should_buffer, char ch)
 {
     if (this->ready() && !this->is_initialized_)
-    {
         this->init();
-    }
-        
 
     if( this->ready() )
     {

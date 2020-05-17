@@ -195,6 +195,7 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 } 
 TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 {
+    //todo - bad test, succeeds when it should fail
     DataSet ds;
     
     int32_t return_code;

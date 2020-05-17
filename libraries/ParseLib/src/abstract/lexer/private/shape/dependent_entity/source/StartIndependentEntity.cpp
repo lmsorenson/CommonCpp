@@ -2,10 +2,10 @@
 #include "../state/StartIndependentEntity.hpp"
 #include <iostream>
 
-#include "../DependentEntity.hpp"
+#include "../../../../public/DependentEntity.hpp"
 #include "../state/ScanningState.hpp"
 #include "../state/EscapedState.hpp"
-#include "../../../Lexer.hpp"
+#include "../../../../Lexer.hpp"
 
 using ::sdg::StartIndependentEntity;
 using ::std::cout;

@@ -28,14 +28,13 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, vect
     clock_t t; 
     double time_taken;
 
+    //set the read options before anything else
+    this->set_read_options(read_options);
+
     configure(file_loader_, character_queue_);
     configure_lexer( lexer_, token_queue_, character_queue_, dead_letter_queue_ );
     configure_parser( parser_, syntax_tree_, token_queue_, dead_letter_queue_ );
     configure_analyzer( semantic_analyzer_, &ds, syntax_tree_, dead_letter_queue_ );
-
-    //set the read options before anything else
-    this->set_read_options(read_options);
-    
 
     t = clock(); 
 

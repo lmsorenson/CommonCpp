@@ -1,7 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <string>
-#include "../../intermediate/Stream.hpp"
+#include "../../../intermediate/Stream.hpp"
 
 namespace sdg {
 

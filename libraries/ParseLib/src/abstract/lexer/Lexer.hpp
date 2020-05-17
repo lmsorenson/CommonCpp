@@ -6,10 +6,10 @@
 #include <map>
 #include <memory>
 #include <iostream>
-#include "shape/Shape.hpp"
-#include "queue/CharacterSource.hpp"
-#include "queue/TokenTarget.hpp"
-#include "queue/ErrorQueue.hpp"
+#include "private/shape/Shape.hpp"
+#include "private/queue/CharacterSource.hpp"
+#include "private/queue/TokenTarget.hpp"
+#include "private/queue/ErrorQueue.hpp"
 #include "../intermediate/Error.hpp"
 #include "../intermediate/observer/Observer.hpp"
 #include "../intermediate/Stream.hpp"
@@ -60,7 +60,7 @@ public:
     void set_shape(char ch = '\0');
 
     template<class T>
-    void add_shape(std::string entity_id);
+    void add_shape(std::string entity_id, Shape::Cardinality cardinality = Shape::Cardinality::Many);
 
     template<class T>
     void set_source(sdg::pipeline::Stream<char> *queue_ptr);
@@ -76,15 +76,15 @@ public:
 template<class T>
 void Lexer::set_shape(char ch)
 {
-    std::string key = typeid(T).name();
+    std::string key = std::string(typeid(T).name());
     shape_ = shapes_.at(key);
 }
 
 template<class T>
-void Lexer::add_shape(std::string entity_id)
+void Lexer::add_shape(std::string entity_id, Shape::Cardinality cardinality)
 {
-    std::string key = typeid(T).name();
-    shapes_[key] = std::shared_ptr<T>(new T(this, entity_id));
+    std::string key = std::string(typeid(T).name());
+    shapes_[key] = std::shared_ptr<T>(new T(this, entity_id, cardinality));
 
     if(!shape_)
         shape_ = shapes_.at(key);
