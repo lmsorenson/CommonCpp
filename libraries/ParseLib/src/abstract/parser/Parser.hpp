@@ -49,59 +49,70 @@ public:
     void handle_error(Error error);
 
     template<class T>
-    void set_source(sdg::pipeline::Stream<std::string> *queue_ptr)
-    {
-        this->set_subject( queue_ptr );
-        source_ = std::shared_ptr<T>( new T( queue_ptr ) );
-
-        this->parse();
-    }
+    void set_source(sdg::pipeline::Stream<std::string> *queue_ptr);
 
     template<class T>
-    int32_t add_token_type(std::string a_type_id)
-    {
-        token_types_.push_back( std::shared_ptr<T>( new T(this, a_type_id) ) );
-        
-        //return the index of the last pushed element.
-        return (token_types_.size()-1);
-    }
+    int32_t add_token_type(std::string a_type_id);
 
     template<class T>
-    int32_t add_token_type(std::string a_type_id, int32_t parent_index)
-    {
-        std::shared_ptr<CollectionToken> parent_ptr;
-        
-        if ( (parent_ptr = std::dynamic_pointer_cast<CollectionToken>(token_types_[parent_index])) )
-        {
-            auto child_ptr = std::shared_ptr<T>( new T(this, a_type_id, parent_ptr.get()) );
-
-            token_types_.push_back( child_ptr );
-            parent_ptr->add_child( child_ptr.get() );
-
-
-            //return the index of the last pushed element.
-            return (token_types_.size()-1);
-        }
-        else
-        {
-            //failed to add token type with parent.
-            return -1;
-        }
-    }
+    int32_t add_token_type(std::string a_type_id, int32_t parent_index);
 
     template<class T>
-    void set_target(std::shared_ptr<SyntaxNode> syntax_tree)
-    {
-        target_ = std::shared_ptr<T>( new T( syntax_tree ) );
-
-        //starts a parse process in case content exists before the target is assigned.
-        this->parse();
-    }
-
+    void set_target(std::shared_ptr<SyntaxNode> syntax_tree);
 
     template<class T>
     void set_error_queue(pipeline::Stream<Error> *error_queue_ptr);
 };
+
+template<class T>
+void Parser::set_source(sdg::pipeline::Stream<std::string> *queue_ptr)
+{
+    this->set_subject( queue_ptr );
+    source_ = std::shared_ptr<T>( new T( queue_ptr ) );
+
+    this->parse();
+}
+
+template<class T>
+int32_t Parser::add_token_type(std::string a_type_id)
+{
+    token_types_.push_back( std::shared_ptr<T>( new T(this, a_type_id) ) );
+    
+    //return the index of the last pushed element.
+    return (token_types_.size()-1);
+}
+
+template<class T>
+int32_t Parser::add_token_type(std::string a_type_id, int32_t parent_index)
+{
+    std::shared_ptr<CollectionToken> parent_ptr;
+    
+    if ( (parent_ptr = std::dynamic_pointer_cast<CollectionToken>(token_types_[parent_index])) )
+    {
+        auto child_ptr = std::shared_ptr<T>( new T(this, a_type_id, parent_ptr.get()) );
+
+        token_types_.push_back( child_ptr );
+        parent_ptr->add_child( child_ptr.get() );
+
+
+        //return the index of the last pushed element.
+        return (token_types_.size()-1);
+    }
+    else
+    {
+        //failed to add token type with parent.
+        return -1;
+    }
+}
+
+template<class T>
+void Parser::set_target(std::shared_ptr<SyntaxNode> syntax_tree)
+{
+    target_ = std::shared_ptr<T>( new T( syntax_tree ) );
+
+    //starts a parse process in case content exists before the target is assigned.
+    this->parse();
+}
 
 template<class T>
 void Parser::set_error_queue(pipeline::Stream<Error> *error_queue_ptr)

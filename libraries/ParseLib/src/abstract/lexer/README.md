@@ -1,4 +1,6 @@
 # Lexer Design
+The Lexical Analyzer(lexer) scans a character stream for tokens.  The order of tokens matters, therefor the meaning or interpretation of a token depends on its context (or which types of tokens came before and after).  This design uses a series of state systems to track the context of characters.
+
 ## Specifications
 1. The Lexer shall continuously process a stream of characters.
     1. When a target exists and new characters are added to the input stream, the Lexer should begin filtering the stream into tokens. 
