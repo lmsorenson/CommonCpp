@@ -4,4 +4,6 @@ install:
     - pwd
     - ls
     - sudo apt-get -y install cmake
-script: skip
+script: 
+    - ./build-scripts/
+    - pwd
