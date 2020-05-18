@@ -2,4 +2,4 @@
 
 cd libraries/ParseLib/tests/cmake
 
-cmake ..
+make
