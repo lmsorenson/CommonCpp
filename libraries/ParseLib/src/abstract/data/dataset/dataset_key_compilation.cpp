@@ -1,5 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <objects/data_set.hpp>
+#include <string.h>
+#include <stdio.h>
 
 #include "../types/types.hpp"
 
