@@ -6,4 +6,4 @@ install:
     - sudo apt-get -y install cmake
 script: 
     - ./build-scripts/generate-tests-makefile.sh
-    - pwd
+    - ./build-scripts/compile-tests.sh
