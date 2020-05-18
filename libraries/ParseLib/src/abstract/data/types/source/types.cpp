@@ -1,5 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <iostream>
+#include <string.h>
+#include <stdio.h>
 #include "../types.hpp"
 #include "../../meta/Descriptor.hpp"
 
