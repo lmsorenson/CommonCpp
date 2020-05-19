@@ -3,6 +3,8 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <string.h>
+#include <stdio.h>
 
 using std::string;
 using std::vector;
