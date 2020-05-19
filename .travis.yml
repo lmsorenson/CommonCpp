@@ -4,9 +4,9 @@ install:
     - pwd
     - ls
     - sudo apt-get -y install cmake
-# script: 
-#     - ./build-scripts/generate-tests-makefile.sh
-#     - ./build-scripts/compile-tests.sh
+script: 
+    - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build-scripts/generate-tests-makefile.sh ; fi
+    - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build-scripts/compile-tests.sh ; fi
 
 env:
     global:
@@ -24,7 +24,7 @@ env:
         description: "<Your project description here>"
         notification_email: lsorenson20@gmail.com
         build_command_prepend: 
-            - ./build-scripts/generate-tests-makefile.sh
         build_command: 
+            - ./build-scripts/generate-tests-makefile.sh
             - ./build-scripts/compile-tests.sh
         branch_pattern: create-parser-components
