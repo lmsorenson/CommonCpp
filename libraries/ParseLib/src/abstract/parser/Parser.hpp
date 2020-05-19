@@ -39,6 +39,10 @@ public:
     Parser() = default;
     ~Parser() = default;
 
+    std::string scope_ = "";
+    int record_count_ = 0;
+    int field_count_=0;
+
     virtual void receive_event() override;
 
     double get_time() const;

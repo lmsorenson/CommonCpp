@@ -34,8 +34,45 @@ void Parser::parse()
         //removes a token from the token stream.
         string token=source_->pull_token();
 
-        for ( shared_ptr<TokenType> type : this->token_types_ )
-            type->handle_type( token );
+        if (token.compare(string("R")) == 0)
+        {
+            char rec_buffer[10];
+            sprintf(rec_buffer, "R%d", record_count_); // important to increment before
+            cout << "<<< " << rec_buffer << " >>>" << endl;
+
+            produce_node(rec_buffer, string());
+
+            scope_ = rec_buffer;
+            record_count_++;
+            field_count_ = 0;
+        }
+
+        if (token.compare(string("H")) == 0)
+        {
+            char rec_buffer[10];
+            sprintf(rec_buffer, "H-R0"); // important to increment before
+            cout << "<<< " << rec_buffer << " >>>" << endl;
+
+            produce_node(rec_buffer, string());
+
+            scope_ = rec_buffer;
+            field_count_ = 0;
+        }
+
+        if (token.substr(0, 1).compare(string("F")) == 0 )
+        {
+            
+            char buffer[10];
+            sprintf(buffer, "%s-F%d", scope_.c_str(), field_count_);
+            cout << "<<< " << buffer << " >>>" << endl;
+
+            produce_child_node({record_count_-1}, buffer, token.substr(token.find("(") + 1, token.length() - (token.find("(") + 2)));
+
+            field_count_++;
+        }
+
+        // for ( shared_ptr<TokenType> type : this->token_types_ )
+        //     type->handle_type( token );
     }
 
     stopwatch_.stop();
