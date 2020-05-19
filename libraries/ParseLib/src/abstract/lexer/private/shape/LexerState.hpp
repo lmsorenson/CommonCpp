@@ -1,5 +1,6 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
+#include <stdint.h>
 #include <vector>
 
 namespace sdg {
