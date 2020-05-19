@@ -27,4 +27,4 @@ env:
             - ./build-scripts/generate-tests-makefile.sh
         build_command: 
             - ./build-scripts/compile-tests.sh
-        branch_pattern: coverity_scan
+        branch_pattern: create-parser-components
