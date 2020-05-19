@@ -1,8 +1,6 @@
 language: cpp
 compiler: clang
 install:
-    - pwd
-    - ls
     - sudo apt-get -y install cmake
 script: 
     - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build-scripts/generate-tests-makefile.sh ; fi
