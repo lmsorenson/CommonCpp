@@ -23,6 +23,8 @@ env:
         name: "lmsorenson/CommonCpp"
         description: "<Your project description here>"
         notification_email: lsorenson20@gmail.com
-        build_command_prepend: "<Your build preprocessing command here>"
-        build_command: "<Your build command here>"
+        build_command_prepend: 
+            - ./build-scripts/generate-tests-makefile.sh
+        build_command: 
+            - ./build-scripts/compile-tests.sh
         branch_pattern: coverity_scan

@@ -13,6 +13,7 @@ using ::sdg::dependent_entity::ScanningEscaped;
 using ::std::cout;
 using ::std::endl;
 using ::std::pair;
+using ::std::string;
 
 
 
@@ -22,7 +23,7 @@ void FoundDependent::initialize(char ch)
 {
     cout << "NEW FIELD ";
 
-    context_->generate_token( pair("F(",")") );
+    context_->generate_token( pair<string, string>("F(",")") );
 
     if (ch == '\n' || ch == '\r')
     {
