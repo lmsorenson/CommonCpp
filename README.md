@@ -2,8 +2,9 @@
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/21163/badge.svg?branch=create-parser-components"/>
 </a>
-<img alt="Travis CI Build Status" src="https://travis-ci.org/lmsorenson/CommonCpp.svg?branch=create-parser-components"/>
-
+<a href="https://travis-ci.org/github/lmsorenson/CommonCpp">
+  <img alt="Travis CI Build Status" src="https://travis-ci.org/lmsorenson/CommonCpp.svg?branch=create-parser-components"/>
+</a>
 
 
 # CommonCpp
