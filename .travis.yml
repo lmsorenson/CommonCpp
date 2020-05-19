@@ -4,9 +4,9 @@ install:
     - pwd
     - ls
     - sudo apt-get -y install cmake
-script: 
-    - ./build-scripts/generate-tests-makefile.sh
-    - ./build-scripts/compile-tests.sh
+# script: 
+#     - ./build-scripts/generate-tests-makefile.sh
+#     - ./build-scripts/compile-tests.sh
 
 env:
     global:
