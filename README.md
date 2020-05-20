@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c2d0837a40894b0b8965167d325bc722)](https://app.codacy.com/manual/lmsorenson/CommonCpp?utm_source=github.com&utm_medium=referral&utm_content=lmsorenson/CommonCpp&utm_campaign=Badge_Grade_Dashboard)
+
 <a href="https://scan.coverity.com/projects/lmsorenson-commoncpp">
   <img alt="Coverity Scan Build Status"
        src="https://scan.coverity.com/projects/21163/badge.svg?branch=create-parser-components"/>
@@ -6,8 +8,8 @@
   <img alt="Travis CI Build Status" src="https://travis-ci.org/lmsorenson/CommonCpp.svg?branch=create-parser-components"/>
 </a>
 
-
 # CommonCpp
+
 This repository is a set of common utility libraries.  Including:
 
 1. ParseLib
