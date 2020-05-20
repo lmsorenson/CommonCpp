@@ -1,11 +1,6 @@
-<a href="https://scan.coverity.com/projects/commoncpp">
-  <img alt="Coverity Scan Build Status"
-       src="https://scan.coverity.com/projects/21161/badge.svg"/>
-</a><br>
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c2d0837a40894b0b8965167d325bc722)](https://app.codacy.com/manual/lmsorenson/CommonCpp?utm_source=github.com&utm_medium=referral&utm_content=lmsorenson/CommonCpp&utm_campaign=Badge_Grade_Dashboard)
 
 # CommonCpp
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c2d0837a40894b0b8965167d325bc722)](https://app.codacy.com/manual/lmsorenson/CommonCpp?utm_source=github.com&utm_medium=referral&utm_content=lmsorenson/CommonCpp&utm_campaign=Badge_Grade_Dashboard)
 
 This repository is a set of common utility libraries.  Including:
 
