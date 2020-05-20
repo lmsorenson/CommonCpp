@@ -4,6 +4,9 @@
 </a><br>
 
 # CommonCpp
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c2d0837a40894b0b8965167d325bc722)](https://app.codacy.com/manual/lmsorenson/CommonCpp?utm_source=github.com&utm_medium=referral&utm_content=lmsorenson/CommonCpp&utm_campaign=Badge_Grade_Dashboard)
+
 This repository is a set of common utility libraries.  Including:
 
 1. ParseLib
