@@ -89,7 +89,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, vect
     
     //decrypt
     
-    //Configure pipeline
+    // Configure pipeline
     ParserPipeline pipeline;
     this->configure_pipeline(pipeline);
 

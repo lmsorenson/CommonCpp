@@ -1,5 +1,5 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
-#include "../private/TokenSource.hpp"
+#include "../TokenSource.hpp"
 
 
 using ::sdg::TokenSource;

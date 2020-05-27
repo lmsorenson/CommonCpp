@@ -6,7 +6,6 @@
 #include "../../HeaderShape.hpp"
 #include "../../RecordShape.hpp"
 #include "../../csv_filters.hpp"
-#include "../../csv_token_filters.hpp"
 
 using ::std::shared_ptr;
 using ::std::vector;
@@ -16,6 +15,7 @@ using ::sdg::option;
 using ::sdg::Lexer;
 using ::sdg::csv::Read;
 using ::sdg::SyntaxTreeTarget;
+using ::sdg::parse::TokenType;
 
 sdg::csv::Read::Read(){}
 sdg::csv::Read::~Read(){}
@@ -57,13 +57,13 @@ void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, 
     //configures the parser to listen for inputs on this token_stream.
     parser.set_source<TokenSource>( &token_stream );
 
-    int32_t index =
-    parser.add_token_type<RecordToken>("R");
-    parser.add_token_type<FieldToken>("F", index);
-
     parser.set_error_queue<parser::ErrorQueue>( &error_queue_ );
 
     parser.set_target<SyntaxTreeTarget>( syntax_tree );
+
+    parser.add_expected_token<TokenType>();
+    parser.add_expected_token<TokenType>();
+    parser.add_expected_token<TokenType>();
 }
 
 void Read::configure_analyzer(SemanticAnalyzer &semantic_analyzer, DataSet *data_set, std::shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<Error> &error_queue_) const

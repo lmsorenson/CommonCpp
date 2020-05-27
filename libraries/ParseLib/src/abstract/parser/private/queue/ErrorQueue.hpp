@@ -1,8 +1,8 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <string>
-#include "../../intermediate/Stream.hpp"
-#include "../../intermediate/Error.hpp"
+#include "../../../intermediate/Stream.hpp"
+#include "../../../intermediate/Error.hpp"
 
 namespace sdg {
 namespace parser {

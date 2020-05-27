@@ -4,10 +4,12 @@
 #include <vector>
 #include <queue>
 #include <memory>
-#include "private/TokenSource.hpp"
-#include "private/SyntaxTreeTarget.hpp"
+#include "private/queue/ErrorQueue.hpp"
+#include "private/queue/SyntaxTreeTarget.hpp"
+#include "private/queue/TokenSource.hpp"
+#include "private/queue/ErrorQueue.hpp"
 #include "private/TokenType.hpp"
-#include "private/ErrorQueue.hpp"
+#include "private/sequence/Sequence.hpp"
 #include "../intermediate/Error.hpp"
 #include "../intermediate/observer/Observer.hpp"
 #include "../intermediate/node.hpp"
@@ -25,7 +27,7 @@ class Parser : public pattern::Observer
     std::shared_ptr<SyntaxTreeTarget> target_;
     std::shared_ptr<parser::ErrorQueue> error_queue_;
 
-    std::vector<std::shared_ptr<TokenType>> token_types_;
+    std::shared_ptr<parse::Sequence> expected_token_sequence_;
 
     utils::Stopwatch stopwatch_;
 
@@ -52,20 +54,10 @@ public:
     
     void handle_error(Error error);
 
-    template<class T>
-    void set_source(sdg::pipeline::Stream<std::string> *queue_ptr);
-
-    template<class T>
-    int32_t add_token_type(std::string a_type_id);
-
-    template<class T>
-    int32_t add_token_type(std::string a_type_id, int32_t parent_index);
-
-    template<class T>
-    void set_target(std::shared_ptr<SyntaxNode> syntax_tree);
-
-    template<class T>
-    void set_error_queue(pipeline::Stream<Error> *error_queue_ptr);
+    template<class T> void set_source(sdg::pipeline::Stream<std::string> *queue_ptr);
+    template<class T> void add_expected_token();
+    template<class T> void set_target(std::shared_ptr<SyntaxNode> syntax_tree);
+    template<class T> void set_error_queue(pipeline::Stream<Error> *error_queue_ptr);
 };
 
 template<class T>
@@ -77,36 +69,14 @@ void Parser::set_source(sdg::pipeline::Stream<std::string> *queue_ptr)
     this->parse();
 }
 
+//adds a token to the sequence of expected tokens.
 template<class T>
-int32_t Parser::add_token_type(std::string a_type_id)
+void Parser::add_expected_token()
 {
-    token_types_.push_back( std::shared_ptr<T>( new T(this, a_type_id) ) );
-    
-    //return the index of the last pushed element.
-    return (token_types_.size()-1);
-}
+    if(!expected_token_sequence_)
+        expected_token_sequence_ = std::make_shared<parse::Sequence>(this);
 
-template<class T>
-int32_t Parser::add_token_type(std::string a_type_id, int32_t parent_index)
-{
-    std::shared_ptr<CollectionToken> parent_ptr;
-    
-    if ( (parent_ptr = std::dynamic_pointer_cast<CollectionToken>(token_types_[parent_index])) )
-    {
-        auto child_ptr = std::shared_ptr<T>( new T(this, a_type_id, parent_ptr.get()) );
-
-        token_types_.push_back( child_ptr );
-        parent_ptr->add_child( child_ptr.get() );
-
-
-        //return the index of the last pushed element.
-        return (token_types_.size()-1);
-    }
-    else
-    {
-        //failed to add token type with parent.
-        return -1;
-    }
+    expected_token_sequence_->add_type( T() );
 }
 
 template<class T>
