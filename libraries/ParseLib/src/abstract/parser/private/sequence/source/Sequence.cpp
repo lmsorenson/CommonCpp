@@ -47,23 +47,18 @@ void Sequence::evaluate_type(std::string a_token, int32_t &sequence_size, int32_
         }
         else if( (local_type = dynamic_pointer_cast<TokenType>(position.item())) )
         {
-            local_type->print();
-            
-            //if the token
-            local_type->classify(a_token);
-
-            //todo -- is this a candidate for a bridge?  Possibly a bridge/strategy thing?
-            //if the token matches expected
-            //-->if the token is one of many of that type, do not increment.
-            //-->if the token is a singleton, increment
-
-            //token does not match
-            //--> when token is one of many, check if it matches the next token in line.
-            //-->if it does not match the next in line this is a failure.
-
-            current_position_++;
-
-            //todo -- for recurring tokens reevaluate the token until the next token type in the sequence is found.
+            //if the token matches
+            if ( (local_type->classify(a_token) && !local_type->Multiplicity()) )
+            {
+                //move to the next item.
+                current_position_++;
+            }
+            //if the token does not match
+            else
+            {
+                cout << "Error: Sequence position has unexpected type." << endl;
+                context_->handle_error({UNKNOWN_ERROR});
+            }
         }
         else
         {

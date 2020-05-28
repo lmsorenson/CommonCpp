@@ -31,6 +31,8 @@ public:
 
     void assign_position(SequencePosition *position);
     virtual void print() const;
+    
+    bool Multiplicity();
 };
 
 
