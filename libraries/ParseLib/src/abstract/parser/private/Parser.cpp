@@ -33,7 +33,8 @@ void Parser::parse()
         //removes a token from the token stream.
         string token = source_->pull_token();
 
-        expected_token_sequence_->evaluate_type(token);
+        int32_t sequence_size, sequence_position;
+        expected_token_sequence_->evaluate_type(token, sequence_size, sequence_position);
     }
 
     stopwatch_.stop();

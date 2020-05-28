@@ -31,6 +31,7 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/lexer/private/queue/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/lexer/private/shape/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/lexer/private/shape/dependent_entity/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/parser/public/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/private/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/private/queue/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/private/sequence/source/*.cpp

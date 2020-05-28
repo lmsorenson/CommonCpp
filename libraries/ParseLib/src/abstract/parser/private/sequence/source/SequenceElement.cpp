@@ -15,5 +15,5 @@ void SequenceElement::assign_position(SequencePosition *position)
 
 void SequenceElement::print() const
 {
-    cout << "element" << endl;
+    cout << "sequence element found ..." << endl;
 }

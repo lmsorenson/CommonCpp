@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "sequence/SequenceElement.hpp"
+#include "../private/sequence/SequenceElement.hpp"
 
 
 namespace sdg {
@@ -12,9 +12,11 @@ namespace parse {
 class TokenType : public SequenceElement
 {
 public:
-    TokenType() : SequenceElement() {}
+    explicit TokenType(Cardinality cardinality = Cardinality::One) : SequenceElement(cardinality) {}
     ~TokenType() = default;
 
+    virtual void print() const override;
+    virtual bool classify(std::string token) const = 0;
 };
 
 }// namespace parser

@@ -6,18 +6,19 @@
 
 using std::cout;
 using std::endl;
+using std::shared_ptr;
 using sdg::parse::SequencePosition;
 using sdg::parse::SequenceElement;
 
 
-SequencePosition::SequencePosition(Sequence *context, SequenceElement a_element)
+SequencePosition::SequencePosition(Sequence *context, shared_ptr<SequenceElement> a_element)
 : sequence_(context)
 , element_(a_element)
 {
-    element_.assign_position(this);
+    element_->assign_position(this);
 }
 
-const SequenceElement * SequencePosition::item()
+shared_ptr<SequenceElement> SequencePosition::item()
 {
-    return &element_;
+    return element_;
 }

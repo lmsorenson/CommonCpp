@@ -14,13 +14,13 @@ class Sequence;
 class SequencePosition
 {
     Sequence *sequence_;
-    SequenceElement element_;
+    std::shared_ptr<SequenceElement> element_;
 
 public:
-    explicit SequencePosition(Sequence *context, SequenceElement a_element);
+    explicit SequencePosition(Sequence *context, std::shared_ptr<SequenceElement> a_element);
     ~SequencePosition() = default;
 
-    const SequenceElement * item();
+    std::shared_ptr<SequenceElement> item();
 };
 
 }// namespace parser
