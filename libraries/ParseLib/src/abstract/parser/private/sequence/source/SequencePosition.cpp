@@ -18,7 +18,7 @@ SequencePosition::SequencePosition(Sequence *context, shared_ptr<SequenceElement
     element_->assign_position(this);
 }
 
-shared_ptr<SequenceElement> SequencePosition::item()
+shared_ptr<SequenceElement> SequencePosition::item() const
 {
     return element_;
 }

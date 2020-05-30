@@ -67,9 +67,9 @@ void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, 
     parser.set_target<SyntaxTreeTarget>( syntax_tree );
 
     if (b_use_header_line)
-        parser.add_subsequence<HeaderToken, ValueToken>(err);
+        parser.add_subsequence<HeaderToken, ValueToken>(parse::SequenceElement::Cardinality::One, err);
         
-    parser.add_subsequence<RecordToken, ValueToken>(err);
+    parser.add_subsequence<RecordToken, ValueToken>(parse::SequenceElement::Cardinality::Many, err);
 }
 
 void Read::configure_analyzer(SemanticAnalyzer &semantic_analyzer, DataSet *data_set, std::shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<Error> &error_queue_) const

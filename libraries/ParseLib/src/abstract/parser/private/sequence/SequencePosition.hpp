@@ -20,7 +20,7 @@ public:
     explicit SequencePosition(Sequence *context, std::shared_ptr<SequenceElement> a_element);
     ~SequencePosition() = default;
 
-    std::shared_ptr<SequenceElement> item();
+    std::shared_ptr<SequenceElement> item() const;
 };
 
 }// namespace parser

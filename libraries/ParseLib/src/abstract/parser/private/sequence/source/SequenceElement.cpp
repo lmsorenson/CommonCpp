@@ -18,7 +18,7 @@ void SequenceElement::print() const
     cout << "sequence element found ..." << endl;
 }
 
-bool SequenceElement::Multiplicity()
+bool SequenceElement::Multiplicity() const
 {
     return (cardinality_==Cardinality::Many);
 }

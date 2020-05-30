@@ -31,8 +31,9 @@ public:
 
     void assign_position(SequencePosition *position);
     virtual void print() const;
-    
-    bool Multiplicity();
+    virtual bool evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error) = 0;
+
+    bool Multiplicity() const;
 };
 
 

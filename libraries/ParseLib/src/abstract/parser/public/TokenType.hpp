@@ -17,6 +17,7 @@ public:
 
     virtual void print() const override;
     virtual bool classify(std::string token) const = 0;
+    virtual bool evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error) override;
 };
 
 }// namespace parser
