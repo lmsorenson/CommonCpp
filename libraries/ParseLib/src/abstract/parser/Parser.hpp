@@ -57,7 +57,7 @@ public:
 
     template<class T> void set_source(sdg::pipeline::Stream<std::string> *queue_ptr);
     template<class T> void add_expected_token();
-    template<class ... Types> void add_subsequence(parse::SequenceElement::Cardinality cardinality, int32_t &err);
+    template<class ... Types> void add_subsequence(std::string name, parse::SequenceElement::Cardinality cardinality, int32_t &err);
     template<class T> void set_target(std::shared_ptr<SyntaxNode> syntax_tree);
     template<class T> void set_error_queue(pipeline::Stream<Error> *error_queue_ptr);
 };
@@ -76,19 +76,19 @@ template<class T>
 void Parser::add_expected_token()
 {
     if(!expected_token_sequence_)
-        expected_token_sequence_ = std::make_shared<parse::Sequence>(this);
+        expected_token_sequence_ = std::make_shared<parse::Sequence>(this, "root sequence");
 
     expected_token_sequence_->add_type( std::make_shared<T>() );
 }
 
 //adds a token to the sequence of expected tokens.
 template<class ... Types>
-void Parser::add_subsequence(parse::SequenceElement::Cardinality cardinality, int32_t &err)
+void Parser::add_subsequence(std::string name, parse::SequenceElement::Cardinality cardinality, int32_t &err)
 {
     if(!expected_token_sequence_)
-        expected_token_sequence_ = std::make_shared<parse::Sequence>(this);
-    
-    if(expected_token_sequence_->add_subsequence( cardinality, std::make_shared<Types>()... ) == 0)
+        expected_token_sequence_ = std::make_shared<parse::Sequence>(this, "root sequence");
+
+    if(expected_token_sequence_->add_subsequence( name, cardinality, std::make_shared<Types>()... ) == 0)
         err = 0;//return 0 code (success) if subsequence was added successfully.
 
     else

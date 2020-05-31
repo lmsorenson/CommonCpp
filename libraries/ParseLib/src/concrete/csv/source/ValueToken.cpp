@@ -10,6 +10,7 @@ using std::endl;
 
 void ValueToken::print() const
 {
+    cout << "value" << endl;
 }
 
 bool ValueToken::classify(std::string token) const

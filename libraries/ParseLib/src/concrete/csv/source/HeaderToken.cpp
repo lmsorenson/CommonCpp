@@ -10,6 +10,7 @@ using std::endl;
 
 void HeaderToken::print() const
 {
+    cout << "header" << endl;
 }
 
 bool HeaderToken::classify(std::string token) const

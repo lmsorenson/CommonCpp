@@ -11,6 +11,7 @@ using sdg::parse::SequencePosition;
 using sdg::parse::SequenceElement;
 
 
+
 SequencePosition::SequencePosition(Sequence *context, shared_ptr<SequenceElement> a_element)
 : sequence_(context)
 , element_(a_element)
@@ -21,4 +22,17 @@ SequencePosition::SequencePosition(Sequence *context, shared_ptr<SequenceElement
 shared_ptr<SequenceElement> SequencePosition::item() const
 {
     return element_;
+}
+
+shared_ptr<SequenceElement> SequencePosition::next_item() const
+{
+    if (sequence_)
+    {
+        return sequence_->next_expected_element();
+        
+    }
+    else
+    {
+        return nullptr;
+    }
 }

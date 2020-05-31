@@ -10,6 +10,7 @@ using std::endl;
 
 void RecordToken::print() const
 {
+    cout << "record" << endl;
 }
 
 bool RecordToken::classify(std::string token) const

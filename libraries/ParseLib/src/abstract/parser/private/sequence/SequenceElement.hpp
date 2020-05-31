@@ -13,7 +13,8 @@ class SequencePosition;
 
 class SequenceElement
 {
-    std::vector<SequencePosition*> position_;
+protected:
+    SequencePosition *element_position_;
     
 public:
     enum Cardinality : int32_t
@@ -26,14 +27,14 @@ private:
     Cardinality cardinality_;
 
 public:
-    explicit SequenceElement(Cardinality cardinality = Cardinality::One) : cardinality_(cardinality){}
+    explicit SequenceElement(Cardinality cardinality = Cardinality::One);
     ~SequenceElement() = default;
 
     void assign_position(SequencePosition *position);
     virtual void print() const;
     virtual bool evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error) = 0;
 
-    bool Multiplicity() const;
+    bool HasMultiplicity() const;
 };
 
 

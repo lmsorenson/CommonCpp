@@ -19,7 +19,8 @@ class SequencePosition
 public:
     explicit SequencePosition(Sequence *context, std::shared_ptr<SequenceElement> a_element);
     ~SequencePosition() = default;
-
+    
+    std::shared_ptr<SequenceElement> next_item() const;
     std::shared_ptr<SequenceElement> item() const;
 };
 

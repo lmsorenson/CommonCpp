@@ -8,17 +8,22 @@ using std::endl;
 using sdg::parse::SequenceElement;
 
 
+SequenceElement::SequenceElement(Cardinality cardinality) 
+: cardinality_(cardinality)
+{
+}
+
 void SequenceElement::assign_position(SequencePosition *position)
 {
-    position_.push_back(position);
+    element_position_ = position;
 }
 
 void SequenceElement::print() const
 {
-    cout << "sequence element found ..." << endl;
+    cout << "base_element" << endl;
 }
 
-bool SequenceElement::Multiplicity() const
+bool SequenceElement::HasMultiplicity() const
 {
     return (cardinality_==Cardinality::Many);
 }
