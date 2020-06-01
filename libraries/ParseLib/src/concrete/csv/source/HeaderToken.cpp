@@ -15,8 +15,6 @@ void HeaderToken::print() const
 
 bool HeaderToken::classify(std::string token) const
 {
-    cout << "classifing token expecting a header: " << token << endl;
-
     if(token.compare("H")==0)
     {
         return true;
@@ -25,4 +23,10 @@ bool HeaderToken::classify(std::string token) const
     {
         return false;
     }
+}
+
+void HeaderToken::create_node(string a_token) const
+{
+    cout << "token classified:" << a_token << " ";
+    print();
 }

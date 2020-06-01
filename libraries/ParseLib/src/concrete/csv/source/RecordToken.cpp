@@ -15,7 +15,6 @@ void RecordToken::print() const
 
 bool RecordToken::classify(std::string token) const
 {
-    cout << "classifing token expecting a record: " << token << endl;
     if(token.compare("R")==0)
     {
         return true;
@@ -25,4 +24,10 @@ bool RecordToken::classify(std::string token) const
         return false;
     }
     
+}
+
+void RecordToken::create_node(string a_token) const 
+{
+    cout << "token classified:" << a_token << " ";
+    print();
 }

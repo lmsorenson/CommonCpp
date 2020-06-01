@@ -12,7 +12,8 @@ public:
     ~ValueToken() = default;
 
     virtual void print() const override;
-    virtual bool classify(std::string token) const override;
+    virtual bool classify(std::string a_token) const override;
+    virtual void create_node(std::string a_token) const override;
 };
 
 }// namespace sdg

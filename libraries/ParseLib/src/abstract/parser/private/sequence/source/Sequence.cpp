@@ -48,7 +48,7 @@ bool Sequence::evaluate(string a_token, function<void()> next_element, function<
 {
     int32_t subsequence_size, subsequence_position;
 
-    evaluate_type(a_token, subsequence_size, subsequence_position);
+    match_token(a_token, subsequence_size, subsequence_position);
 
     //move on to the next element when in the sequence
     //after the subsequence has completed
@@ -138,7 +138,9 @@ void Sequence::handle_error(int32_t error_code, string message) const
     context_->handle_error({error_code});
 };
 
-void Sequence::evaluate_type(string a_token, int32_t &sequence_size, int32_t &sequence_position)
+//matches the current token with the current expected token.  If the current expected token is repeatable
+//and does not match the current token found, then also evaluate against the next expected token.
+void Sequence::match_token(string a_token, int32_t &sequence_size, int32_t &sequence_position)
 {
     shared_ptr<SequenceElement> current_element = expected_element();
     if(!current_element)
@@ -152,8 +154,6 @@ void Sequence::evaluate_type(string a_token, int32_t &sequence_size, int32_t &se
         //evaluate the token against the next expected type. 
         //This token still may be valid if it matches the next in sequence.
         shared_ptr<SequenceElement> next_element = next_expected_element();
-        if(!next_element)
-            handle_error(UNKNOWN_ERROR, "Error: Unexpected token found: ");
         
         if (next_element) 
         {
@@ -166,6 +166,11 @@ void Sequence::evaluate_type(string a_token, int32_t &sequence_size, int32_t &se
             }, 
             [&](int32_t type, string message){handle_error(type, message);});
         }
+        else
+        {
+            handle_error(UNKNOWN_ERROR, "Error: Unexpected token found: ");
+        }
+        
     }
 
     //set output variables

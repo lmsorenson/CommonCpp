@@ -34,7 +34,7 @@ void Parser::parse()
         string token = source_->pull_token();
 
         int32_t sequence_size, sequence_position;
-        expected_token_sequence_->evaluate_type(token, sequence_size, sequence_position);
+        expected_token_sequence_->match_token(token, sequence_size, sequence_position);
     }
 
     stopwatch_.stop();

@@ -22,6 +22,8 @@ bool TokenType::evaluate(string a_token, function<void()> next_element, function
 
     if ( token_valid )
     {
+        create_node(a_token);
+
         if(!token_repeating)
             next_element();
     }

@@ -38,7 +38,7 @@ public:
     void set_positions(std::vector<std::shared_ptr<SequencePosition>> position_vector);
 
     template<class ... Types> int32_t add_subsequence(std::string name, Cardinality cardinality, std::shared_ptr<Types>... a_token_types);
-    void evaluate_type(std::string a_token, int32_t &sequence_size, int32_t &sequence_position);
+    void match_token(std::string a_token, int32_t &sequence_size, int32_t &sequence_position);
 
     virtual void print() const override;
 };
