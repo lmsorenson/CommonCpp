@@ -78,7 +78,7 @@ void Parser::add_expected_token()
     if(!expected_token_sequence_)
         expected_token_sequence_ = std::make_shared<parse::Sequence>(this, "root sequence");
 
-    expected_token_sequence_->add_type( std::make_shared<T>() );
+    expected_token_sequence_->add_element( std::make_shared<T>() );
 }
 
 //adds a token to the sequence of expected tokens.

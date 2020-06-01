@@ -4,6 +4,8 @@
 #include "../../../intermediate/Error.hpp"
 
 using sdg::parse::TokenType;
+using sdg::parse::MatchStatus;
+using std::shared_ptr;
 using std::function;
 using std::cout;
 using std::endl;
@@ -14,7 +16,7 @@ void TokenType::print() const
     cout << "token type found . . ." << endl;
 }
 
-bool TokenType::evaluate(string a_token, function<void()> next_element, function<void(int32_t type, std::string message)> handle_error)
+shared_ptr<TokenType> TokenType::evaluate(string a_token, function<void()> next_element, function<void(int32_t type, std::string message)> handle_error, MatchStatus &status)
 {
     bool 
         token_valid = classify(a_token),
@@ -22,7 +24,7 @@ bool TokenType::evaluate(string a_token, function<void()> next_element, function
 
     if ( token_valid )
     {
-        create_node(a_token);
+        status = MatchStatus::PositiveMatch;
 
         if(!token_repeating)
             next_element();
@@ -30,13 +32,15 @@ bool TokenType::evaluate(string a_token, function<void()> next_element, function
     //if the inverse is true, check the next token
     else if( !token_valid && token_repeating )
     {
-        return false;
+        status = MatchStatus::NextElementViable;
     }
     //if the token does not match
     else
     {
         handle_error(UNKNOWN_ERROR, "Error: Sequence position has unexpected type.");
+        status = MatchStatus::NegativeMatch;
     }
 
-    return true;
+    //whatever called this function already has a pointer to this.
+    return nullptr;
 }

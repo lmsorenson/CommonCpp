@@ -30,11 +30,15 @@ void Parser::parse()
     //only when the parser is sufficiently configured.
     while ( this->ready() && this->source_->tokens_available() )
     {   
+        int32_t sequence_size, sequence_position;
+
         //removes a token from the token stream.
         string token = source_->pull_token();
 
-        int32_t sequence_size, sequence_position;
-        expected_token_sequence_->match_token(token, sequence_size, sequence_position);
+        auto token_type = expected_token_sequence_->match_token(token, sequence_size, sequence_position);
+
+        if (token_type)
+            token_type->create_node(token);
     }
 
     stopwatch_.stop();

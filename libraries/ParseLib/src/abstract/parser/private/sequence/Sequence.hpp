@@ -14,6 +14,8 @@ class Parser;
 
 namespace parse {
 
+class TokenType;
+
 class Sequence : public SequenceElement
 {
     std::string name_;
@@ -32,15 +34,13 @@ public:
 
     std::shared_ptr<SequenceElement> next_expected_element() const;
 
-    virtual bool evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error) override;
-
-    void add_type(std::shared_ptr<SequenceElement> a_new_type);
-    void set_positions(std::vector<std::shared_ptr<SequencePosition>> position_vector);
-
-    template<class ... Types> int32_t add_subsequence(std::string name, Cardinality cardinality, std::shared_ptr<Types>... a_token_types);
-    void match_token(std::string a_token, int32_t &sequence_size, int32_t &sequence_position);
-
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error, MatchStatus &status) override;
+    std::shared_ptr<TokenType> match_token(std::string a_token, int32_t &sequence_size, int32_t &sequence_position);
     virtual void print() const override;
+
+    void add_element(std::shared_ptr<SequenceElement> a_new_type);
+    void set_positions(std::vector<std::shared_ptr<SequencePosition>> position_vector);
+    template<class ... Types> int32_t add_subsequence(std::string name, Cardinality cardinality, std::shared_ptr<Types>... a_token_types);
 };
 
 template<class ... Types>
@@ -55,7 +55,7 @@ int32_t Sequence::add_subsequence(std::string name, Cardinality cardinality, std
 
     subsequence->set_positions(position_vector); 
 
-    this->add_type(subsequence);
+    this->add_element(subsequence);
 
     return 0;
 }

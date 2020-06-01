@@ -10,7 +10,15 @@ namespace sdg {
 namespace parse {
 
 class SequencePosition;
+class TokenType;
 
+enum MatchStatus : int32_t
+    {
+        PositiveMatch,
+        NegativeMatch,
+        NextElementViable,
+        Unknown
+    };
 class SequenceElement
 {
 protected:
@@ -32,7 +40,7 @@ public:
 
     void assign_position(SequencePosition *position);
     virtual void print() const;
-    virtual bool evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error) = 0;
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error, MatchStatus &status) = 0;
 
     bool HasMultiplicity() const;
 };

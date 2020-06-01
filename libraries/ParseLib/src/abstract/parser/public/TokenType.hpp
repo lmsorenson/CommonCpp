@@ -19,7 +19,7 @@ public:
     virtual bool classify(std::string token) const = 0;
     virtual void create_node(std::string a_token) const = 0;
 
-    bool evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error) override;
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error, MatchStatus &status) override;
 };
 
 }// namespace parser
