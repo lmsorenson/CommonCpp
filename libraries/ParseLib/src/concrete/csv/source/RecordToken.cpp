@@ -4,7 +4,9 @@
 #include <string>
 
 using sdg::RecordToken;
+using sdg::SyntaxNode;
 using std::string;
+using std::to_string;
 using std::cout;
 using std::endl;
 
@@ -26,8 +28,15 @@ bool RecordToken::classify(std::string token) const
     
 }
 
-void RecordToken::create_node(string a_token) const 
+SyntaxNode RecordToken::create_node(string a_token) 
 {
-    cout << "token classified:" << a_token << " ";
-    print();
+    //updates the count for the new node
+    new_node();
+
+    return SyntaxNode(this->get_id(), nullptr);
+}
+
+string RecordToken::get_id() const
+{
+    return string("R" + to_string(shape_occurances_-1));
 }

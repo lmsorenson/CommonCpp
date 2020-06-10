@@ -35,10 +35,18 @@ void Parser::parse()
         //removes a token from the token stream.
         string token = source_->pull_token();
 
+        //gets the expected token type
         auto token_type = expected_token_sequence_->match_token(token, sequence_size, sequence_position);
 
         if (token_type)
+        {
             token_type->create_node(token);
+        }
+        else
+        {
+            cout << "Error: The token ( " << token << " ) was not expected in this scope." << endl;
+            handle_error({UNKNOWN_ERROR});
+        }
     }
 
     stopwatch_.stop();
@@ -60,7 +68,7 @@ int32_t Parser::produce_child_node(std::vector<int> path, std::string key, std::
 {
     stopwatch_.stop();
     
-    if(target_->add_to_node(path, key, value)==0)
+    if (target_->add_to_node(path, key, value)==0)
     {
         return 0;
     }

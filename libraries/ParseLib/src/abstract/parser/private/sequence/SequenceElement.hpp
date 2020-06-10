@@ -40,7 +40,7 @@ public:
 
     void assign_position(SequencePosition *position);
     virtual void print() const;
-    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error, MatchStatus &status) = 0;
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, MatchStatus &status) = 0;
 
     bool HasMultiplicity() const;
 };

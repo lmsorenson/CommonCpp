@@ -16,7 +16,7 @@ void TokenType::print() const
     cout << "token type found . . ." << endl;
 }
 
-shared_ptr<TokenType> TokenType::evaluate(string a_token, function<void()> next_element, function<void(int32_t type, std::string message)> handle_error, MatchStatus &status)
+shared_ptr<TokenType> TokenType::evaluate(string a_token, function<void()> next_element, MatchStatus &status)
 {
     bool 
         token_valid = classify(a_token),
@@ -37,7 +37,6 @@ shared_ptr<TokenType> TokenType::evaluate(string a_token, function<void()> next_
     //if the token does not match
     else
     {
-        handle_error(UNKNOWN_ERROR, "Error: Sequence position has unexpected type.");
         status = MatchStatus::NegativeMatch;
     }
 

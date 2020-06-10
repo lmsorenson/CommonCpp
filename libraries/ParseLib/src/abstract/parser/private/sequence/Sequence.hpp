@@ -7,6 +7,7 @@
 #include <iostream>
 #include "SequenceElement.hpp"
 #include "SequencePosition.hpp"
+#include "../../public/DependentEntity.hpp"
 
 namespace sdg {
 
@@ -34,7 +35,7 @@ public:
 
     std::shared_ptr<SequenceElement> next_expected_element() const;
 
-    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, std::function<void(int32_t type, std::string message)> handle_error, MatchStatus &status) override;
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, MatchStatus &status) override;
     std::shared_ptr<TokenType> match_token(std::string a_token, int32_t &sequence_size, int32_t &sequence_position);
     virtual void print() const override;
 
@@ -52,6 +53,17 @@ int32_t Sequence::add_subsequence(std::string name, Cardinality cardinality, std
      
     //create a vector of sequence positions from the passed in elements
     std::vector<std::shared_ptr<SequencePosition>> position_vector = { std::make_shared<SequencePosition>(subsequence.get(), a_token_type_pack)... };
+
+    for (int i=0; i<position_vector.size(); i++)
+    {
+        std::shared_ptr dependent = std::dynamic_pointer_cast<DependentEntity>(position_vector[i]->item());
+        if (dependent && (i-1)>=0)
+        {
+            std::shared_ptr object = std::dynamic_pointer_cast<TokenType>(position_vector[i-1]->item());
+            if(object)
+                dependent->dependent_on(object);
+        }
+    }
 
     subsequence->set_positions(position_vector); 
 

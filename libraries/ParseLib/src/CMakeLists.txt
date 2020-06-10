@@ -35,6 +35,7 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/parser/private/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/private/queue/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/parser/private/sequence/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/abstract/parser/private/shape/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/semantic_analyzer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/intermediate/source/*.cpp
     ${PROJECT_SOURCE_DIR}/concrete/csv/source/*.cpp

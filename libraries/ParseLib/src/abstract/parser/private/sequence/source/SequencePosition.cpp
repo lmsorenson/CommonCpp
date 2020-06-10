@@ -29,7 +29,6 @@ shared_ptr<SequenceElement> SequencePosition::next_item() const
     if (sequence_)
     {
         return sequence_->next_expected_element();
-        
     }
     else
     {

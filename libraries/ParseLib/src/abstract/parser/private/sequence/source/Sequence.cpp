@@ -45,7 +45,7 @@ void Sequence::set_positions(vector<shared_ptr<SequencePosition>> position_vecto
     position_ = position_vector;
 }
 
-shared_ptr<TokenType> Sequence::evaluate(string a_token, function<void()> next_element, function<void(int32_t type, std::string message)> handle_error, MatchStatus &status)
+shared_ptr<TokenType> Sequence::evaluate(string a_token, function<void()> next_element, MatchStatus &status)
 {
     int32_t subsequence_size, subsequence_position;
 
@@ -56,7 +56,7 @@ shared_ptr<TokenType> Sequence::evaluate(string a_token, function<void()> next_e
     if ( subsequence_size == subsequence_position )
         next_element();
 
-    if(token_type)
+    if ( token_type )
     {
         status = MatchStatus::PositiveMatch;
         return token_type;
@@ -154,15 +154,12 @@ shared_ptr<TokenType> Sequence::match_token(string a_token, int32_t &sequence_si
 {
     shared_ptr<SequenceElement> current_element = expected_element();
     if(!current_element)
-    {
-        handle_error(UNKNOWN_ERROR, "Error: Unexpected token found: ");
         return nullptr;
-    }
 
     //determines wether or not the current expected token type matches or does not.
-    //returns false if the evaluation is not complete.
+    //returns NextElementViable if the evaluation is not complete.
     MatchStatus match_status;
-    auto token_type = current_element->evaluate(a_token, [&](){set_position();}, [&](int32_t type, string message){handle_error(type, message);}, match_status);
+    auto token_type = current_element->evaluate(a_token, [&](){set_position();}, match_status);
     if ( match_status == MatchStatus::PositiveMatch )
     {
         if(token_type)
@@ -179,7 +176,7 @@ shared_ptr<TokenType> Sequence::match_token(string a_token, int32_t &sequence_si
         if (next_element) 
         {
             MatchStatus next_element_match_status;
-            next_element->evaluate(a_token, [&](){set_position(); set_position();}, [&](int32_t type, string message){handle_error(type, message);}, next_element_match_status);
+            next_element->evaluate(a_token, [&](){set_position(); set_position();}, next_element_match_status);
             if (next_element_match_status == MatchStatus::PositiveMatch)
                 return dynamic_pointer_cast<TokenType>(next_element);
 
@@ -188,7 +185,6 @@ shared_ptr<TokenType> Sequence::match_token(string a_token, int32_t &sequence_si
         }
         else
         {
-            handle_error(UNKNOWN_ERROR, "Error: Unexpected token found: ");
             return nullptr;
         }
     }
