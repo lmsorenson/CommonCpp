@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include <memory>
+#include <map>
 #include "private/queue/ErrorQueue.hpp"
 #include "private/queue/SyntaxTreeTarget.hpp"
 #include "private/queue/TokenSource.hpp"
@@ -28,6 +29,7 @@ class Parser : public pattern::Observer
     std::shared_ptr<parser::ErrorQueue> error_queue_;
 
     std::shared_ptr<parse::Sequence> expected_token_sequence_;
+    std::map<std::string, std::shared_ptr<SyntaxNode>> scope_;
 
 
     utils::Stopwatch stopwatch_;
@@ -42,16 +44,12 @@ public:
     Parser() = default;
     ~Parser() = default;
 
-    std::string scope_ = "";
-    int record_count_ = 0;
-    int field_count_=0;
-
     virtual void receive_event() override;
 
     double get_time() const;
 
-    void produce_node(std::string, std::string);
-    int32_t produce_child_node(std::vector<int>, std::string, std::string);
+    std::shared_ptr<SyntaxNode> produce_node(std::string, std::string);
+    std::shared_ptr<SyntaxNode> produce_child_node(std::shared_ptr<SyntaxNode> node, std::string, std::string);
     
     void handle_error(Error error);
 

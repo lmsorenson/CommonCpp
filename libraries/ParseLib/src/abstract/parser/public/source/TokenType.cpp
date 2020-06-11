@@ -43,3 +43,8 @@ shared_ptr<TokenType> TokenType::evaluate(string a_token, function<void()> next_
     //whatever called this function already has a pointer to this.
     return nullptr;
 }
+
+string TokenType::get_typeid() const
+{
+    return id_;
+}

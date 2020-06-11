@@ -10,14 +10,14 @@ class ValueToken : public parse::TokenType, public parse::DependentEntity
 {
 public:
     ValueToken() 
-    : TokenType(Cardinality::Many)
+    : TokenType("F", Cardinality::Many)
     , parse::DependentEntity()
     {}
     ~ValueToken() = default;
 
     virtual void print() const override;
     virtual bool classify(std::string a_token) const override;
-    virtual SyntaxNode create_node(std::string a_token) override;
+    virtual std::pair<std::string, std::string> create_node(std::string a_token) override;
     virtual std::string get_id() const override;
 };
 

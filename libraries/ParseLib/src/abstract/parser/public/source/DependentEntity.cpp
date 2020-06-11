@@ -36,3 +36,8 @@ void DependentEntity::new_node()
     }
     count_up();
 }
+
+string DependentEntity::dependent_on_typeid() const
+{
+    return owner_->get_typeid();
+}

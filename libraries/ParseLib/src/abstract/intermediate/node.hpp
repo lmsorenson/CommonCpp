@@ -33,7 +33,7 @@ public:
     bool has_parent();
 
     //Add Children
-    void AddChild(SyntaxNode n);
+    std::shared_ptr<SyntaxNode> AddChild(SyntaxNode n);
 
     //Printing
     void Print();

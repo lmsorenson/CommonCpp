@@ -21,6 +21,7 @@ public:
 
     virtual std::string get_id() const override;
     void new_node() override;
+    std::string dependent_on_typeid() const;
 };
 
 }// namespace parse

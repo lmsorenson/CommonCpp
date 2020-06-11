@@ -4,9 +4,11 @@
 #include <time.h>
 
 using ::sdg::Parser;
+using ::sdg::parse::Shape;
 using ::std::cout;
 using ::std::endl;
 using ::std::shared_ptr;
+using ::std::dynamic_pointer_cast;
 using ::std::make_shared;
 using ::std::string;
 
@@ -40,7 +42,18 @@ void Parser::parse()
 
         if (token_type)
         {
-            token_type->create_node(token);
+            auto node = token_type->create_node(token);
+            auto key = token_type->get_typeid();
+
+            shared_ptr<parse::DependentEntity> dependent;
+            if((dependent = dynamic_pointer_cast<parse::DependentEntity>(token_type)))
+            {
+                scope_[key] = produce_child_node(scope_[dependent->dependent_on_typeid()], node.first, node.second);
+            }
+            else
+            {
+                scope_[key] = produce_node(node.first, node.second);
+            }
         }
         else
         {
@@ -57,28 +70,28 @@ double Parser::get_time() const
     return stopwatch_.read_seconds();
 }
 
-void Parser::produce_node(string key, string value)
+shared_ptr<SyntaxNode> Parser::produce_node(string key, string value)
 {
     stopwatch_.stop();
-    target_->add_to_root(key, value);
+    auto node = target_->add_to_root(key, value);
     stopwatch_.start();
+
+    return node;
 }
 
-int32_t Parser::produce_child_node(std::vector<int> path, std::string key, std::string value)
+shared_ptr<SyntaxNode> Parser::produce_child_node(shared_ptr<SyntaxNode> node, string key, string value)
 {
     stopwatch_.stop();
     
-    if (target_->add_to_node(path, key, value)==0)
-    {
-        return 0;
-    }
-    else
+    auto new_node = target_->add_to_node(node, key, value);
+    if (!new_node)
     {
         cout << "ERROR FOUND: could not assign token to node." << endl;
         handle_error({UNKNOWN_ERROR});
-        return 1;
     }
     
+    return new_node;
+
     stopwatch_.start();
 }
 

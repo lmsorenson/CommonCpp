@@ -7,38 +7,31 @@ using ::std::string;
 using ::std::vector;
 using ::sdg::SyntaxTreeTarget;
 using ::sdg::SyntaxNode;
+using ::std::shared_ptr;
 using ::std::cout;
 using ::std::endl;
 
 
 
-void SyntaxTreeTarget::add_to_root(string id, string value)
+std::shared_ptr<SyntaxNode> SyntaxTreeTarget::add_to_root(string id, string value)
 {
     SyntaxNode n = SyntaxNode(value, syntax_tree_);
     n.append_key(id);
 
-    syntax_tree_->AddChild(n);
+    return syntax_tree_->AddChild(n);
 }
 
-int32_t SyntaxTreeTarget::add_to_node(vector<int> path, string id, string value)
+std::shared_ptr<SyntaxNode> SyntaxTreeTarget::add_to_node(shared_ptr<SyntaxNode> node, string id, string value)
 {
-    auto node_buffer = syntax_tree_;
-
-    for(int i=0; i<path.size(); ++i)
+    if(node)
     {
-        node_buffer = node_buffer->get_child(path[i]);
-    }
-
-    if(node_buffer)
-    {
-        SyntaxNode n = SyntaxNode( value, node_buffer );
+        SyntaxNode n = SyntaxNode( value, node );
         n.append_key(id);
-        node_buffer->AddChild(n);
         
-        return 0;
+        return node->AddChild(n);
     }
     
-    return 1;
+    return nullptr;
 }
 
 bool SyntaxTreeTarget::is_empty()

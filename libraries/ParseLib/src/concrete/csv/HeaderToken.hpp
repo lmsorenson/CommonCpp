@@ -9,12 +9,12 @@ namespace sdg {
 class HeaderToken : public parse::TokenType, public parse::IndependentEntity
 {
 public:
-    HeaderToken() : TokenType(), parse::IndependentEntity() {}
+    HeaderToken() : TokenType("H"), parse::IndependentEntity() {}
     ~HeaderToken() = default;
 
     virtual void print() const override;
     virtual bool classify(std::string a_token) const override;
-    virtual SyntaxNode create_node(std::string a_token) override;
+    virtual std::pair<std::string, std::string> create_node(std::string a_token) override;
     virtual std::string get_id() const override;
 };
 

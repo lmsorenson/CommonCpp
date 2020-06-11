@@ -55,9 +55,11 @@ string SyntaxNode::get_path()
     return path;
 }
 
-void SyntaxNode::AddChild(SyntaxNode n)
+shared_ptr<SyntaxNode> SyntaxNode::AddChild(SyntaxNode n)
 {
-    children_.push_back(make_shared<SyntaxNode>(n));
+    auto node = make_shared<SyntaxNode>(n);
+    children_.push_back(node);
+    return node;
 }
 
 shared_ptr<SyntaxNode> SyntaxNode::get_child(int32_t index)
