@@ -6,7 +6,6 @@
 using sdg::parse::TokenType;
 using sdg::parse::MatchStatus;
 using std::shared_ptr;
-using std::function;
 using std::cout;
 using std::endl;
 using std::string;

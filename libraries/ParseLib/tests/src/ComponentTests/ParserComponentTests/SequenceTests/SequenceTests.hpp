@@ -51,7 +51,6 @@ TEST_F(ParserComponentTests, sequence_with_unexpected_token )
 TEST_F(ParserComponentTests, sequence_norepeat_subsequence_with_two_norepeat_tokens )
 {
     sdg::Parser context;
-    int32_t err;
     std::shared_ptr<Sequence> test_sequence = std::make_shared<Sequence>(&context, "root sequence");
     auto TokenTypeA = std::make_shared<TestTokenA>();
     auto TokenTypeB = std::make_shared<TestTokenB>();
@@ -68,7 +67,6 @@ TEST_F(ParserComponentTests, sequence_norepeat_subsequence_with_two_norepeat_tok
 TEST_F(ParserComponentTests, sequence_norepeat_subsequence_with_unxpected_token )
 {
     sdg::Parser context;
-    int32_t err;
     std::shared_ptr<Sequence> test_sequence = std::make_shared<Sequence>(&context, "root sequence");
     auto TokenTypeA = std::make_shared<TestTokenA>();
     auto TokenTypeB = std::make_shared<TestTokenB>();

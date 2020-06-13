@@ -3,10 +3,11 @@ cmake_minimum_required (VERSION 2.6)
 project (tests)
 
 set (CMAKE_CXX_STANDARD 17)
-set (CMAKE_CXX_FLAGS "-g")
+set (CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
+set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 set (CMAKE_C_FLAGS "-g")
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
-# set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
+
 
 
 include_directories(${PROJECT_SOURCE_DIR}/../include/)

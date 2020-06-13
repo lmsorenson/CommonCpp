@@ -12,7 +12,6 @@ using std::string;
 using std::shared_ptr;
 using std::make_shared;
 using std::vector;
-using std::function;
 using std::dynamic_pointer_cast;
 using sdg::parse::Sequence;
 using sdg::parse::SequenceElement;

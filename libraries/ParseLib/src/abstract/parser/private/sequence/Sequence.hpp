@@ -57,7 +57,7 @@ int32_t Sequence::add_subsequence(std::string name, Cardinality cardinality, std
     //create a vector of sequence positions from the passed in elements
     std::vector<std::shared_ptr<SequencePosition>> position_vector = { std::make_shared<SequencePosition>(subsequence.get(), a_token_type_pack)... };
 
-    for (int i=0; i<position_vector.size(); i++)
+    for (long unsigned int i=0; i<position_vector.size(); i++)
     {
         std::shared_ptr dependent = std::dynamic_pointer_cast<DependentEntity>(position_vector[i]->item());
         if (dependent && (i-1)>=0)
