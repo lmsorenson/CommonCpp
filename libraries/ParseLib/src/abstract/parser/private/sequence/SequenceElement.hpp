@@ -21,9 +21,6 @@ enum MatchStatus : int32_t
     };
 class SequenceElement
 {
-protected:
-    SequencePosition *element_position_;
-    
 public:
     enum Cardinality : int32_t
     {
@@ -31,18 +28,24 @@ public:
         Many
     };
 
-private:
-    Cardinality cardinality_;
-
-public:
     explicit SequenceElement(Cardinality cardinality = Cardinality::One);
     ~SequenceElement() = default;
 
-    void assign_position(SequencePosition *position);
     virtual void print() const;
-    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, MatchStatus &status) = 0;
+
+    void assign_position(SequencePosition *position);
+
+    //evaluate a passed in token.  when the token matches the current type return a status
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, MatchStatus &status) = 0;
 
     bool HasMultiplicity() const;
+
+protected:
+    SequencePosition *element_position_;
+
+private:
+    
+    Cardinality cardinality_;
 };
 
 

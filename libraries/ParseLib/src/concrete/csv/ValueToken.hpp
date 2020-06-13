@@ -14,8 +14,7 @@ public:
     , parse::DependentEntity()
     {}
     ~ValueToken() = default;
-
-    virtual void print() const override;
+    
     virtual bool classify(std::string a_token) const override;
     virtual std::pair<std::string, std::string> create_node(std::string a_token) override;
     virtual std::string get_id() const override;

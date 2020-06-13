@@ -15,7 +15,6 @@ using ::std::pair;
 
 void StartIndependentEntity::initialize(char ch)
 {
-    cout << "NEW RECORD ";
     static_cast<DependentEntity * const>(context_)->generate_link_token();
 }
 

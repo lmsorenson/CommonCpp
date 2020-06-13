@@ -21,8 +21,6 @@ using ::std::string;
 
 void FoundDependent::initialize(char ch)
 {
-    cout << "NEW FIELD ";
-
     context_->generate_token( pair<string, string>("F(",")") );
 
     if (ch == '\n' || ch == '\r')

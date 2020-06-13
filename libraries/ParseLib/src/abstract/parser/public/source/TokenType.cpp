@@ -13,10 +13,10 @@ using std::string;
 
 void TokenType::print() const
 {
-    cout << "token type found . . ." << endl;
+    cout << endl <<"Expecting token " << id_ << endl;
 }
 
-shared_ptr<TokenType> TokenType::evaluate(string a_token, function<void()> next_element, MatchStatus &status)
+shared_ptr<TokenType> TokenType::evaluate(string a_token, MatchStatus &status)
 {
     bool 
         token_valid = classify(a_token),
@@ -25,9 +25,6 @@ shared_ptr<TokenType> TokenType::evaluate(string a_token, function<void()> next_
     if ( token_valid )
     {
         status = MatchStatus::PositiveMatch;
-
-        if(!token_repeating)
-            next_element();
     }
     //if the inverse is true, check the next token
     else if( !token_valid && token_repeating )

@@ -19,6 +19,8 @@ string DependentEntity::get_id() const
 
 void DependentEntity::dependent_on(shared_ptr<TokenType> token)
 { 
+    cout << " --- dependent_on ---> ";
+    token->print();
     owner_=token;
 }
 

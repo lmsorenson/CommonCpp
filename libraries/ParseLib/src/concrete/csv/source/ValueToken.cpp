@@ -15,11 +15,6 @@ using std::to_string;
 using std::cout;
 using std::endl;
 
-void ValueToken::print() const
-{
-    cout << "value" << endl;
-}
-
 bool ValueToken::classify(std::string token) const
 {
     if(token[0] == 'F')
@@ -36,11 +31,15 @@ std::pair<std::string, std::string> ValueToken::create_node(string a_token)
 
     shared_ptr<Shape> shape = dynamic_pointer_cast<Shape>(owner_);
     if( shape )
-        cout << "CREATE_NODE " << shape->get_id();
+    {
+        cout << "Parser generating a node at " << shape->get_id(); 
+    }
     else
         return pair<string, string>(string(), string());
     
-    cout << "-" << this->get_id() << endl;
+    cout << "-" << this->get_id();
+    cout << " owned by ";
+    owner_->print();
 
     return pair<string, string>(shape->get_id() + "-" + this->get_id(), a_token.substr(2, a_token.size()-3));
 }

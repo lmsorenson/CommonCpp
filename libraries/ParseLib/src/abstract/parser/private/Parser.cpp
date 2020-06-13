@@ -32,17 +32,16 @@ void Parser::parse()
     //only when the parser is sufficiently configured.
     while ( this->ready() && this->source_->tokens_available() )
     {   
-        int32_t sequence_size, sequence_position;
-
         //removes a token from the token stream.
         string token = source_->pull_token();
 
         //gets the expected token type
-        auto token_type = expected_token_sequence_->match_token(token, sequence_size, sequence_position);
+        auto token_type = expected_token_sequence_->match_token(token);
 
         if (token_type)
         {
             auto node = token_type->create_node(token);
+            cout << "parser generating node of type: " << token_type->get_typeid() << endl;
             auto key = token_type->get_typeid();
 
             shared_ptr<parse::DependentEntity> dependent;
@@ -57,7 +56,7 @@ void Parser::parse()
         }
         else
         {
-            cout << "Error: The token ( " << token << " ) was not expected in this scope." << endl;
+            cout << "Error: The token ( " << token << " ) was not expected in this scope. " << endl;
             handle_error({UNKNOWN_ERROR});
         }
     }

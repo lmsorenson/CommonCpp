@@ -22,7 +22,7 @@ public:
     virtual bool classify(std::string token) const = 0;
     virtual std::pair<std::string, std::string> create_node(std::string a_token) = 0;
 
-    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, MatchStatus &status) override;
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, MatchStatus &status) override;
     std::string get_typeid() const;
 };
 

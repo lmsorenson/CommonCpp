@@ -34,10 +34,13 @@ public:
     ~Sequence() = default;
 
     std::shared_ptr<SequenceElement> next_expected_element() const;
+    void go_to_next_item();
 
-    virtual std::shared_ptr<TokenType> evaluate(std::string token, std::function<void()> next_element, MatchStatus &status) override;
-    std::shared_ptr<TokenType> match_token(std::string a_token, int32_t &sequence_size, int32_t &sequence_position);
     virtual void print() const override;
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, MatchStatus &status) override;
+    
+    //evaluate the current sequence position.  
+    std::shared_ptr<TokenType> match_token(std::string a_token);
 
     void add_element(std::shared_ptr<SequenceElement> a_new_type);
     void set_positions(std::vector<std::shared_ptr<SequencePosition>> position_vector);
@@ -61,7 +64,16 @@ int32_t Sequence::add_subsequence(std::string name, Cardinality cardinality, std
         {
             std::shared_ptr object = std::dynamic_pointer_cast<TokenType>(position_vector[i-1]->item());
             if(object)
+            {
+                std::shared_ptr dependentTT = std::dynamic_pointer_cast<TokenType>(position_vector[i]->item());
+                
+                if(dependentTT)
+                {
+                    std::cout << "assigning_ ";
+                    dependentTT->print();
+                }
                 dependent->dependent_on(object);
+            }
         }
     }
 

@@ -20,7 +20,7 @@ void SequenceElement::assign_position(SequencePosition *position)
 
 void SequenceElement::print() const
 {
-    cout << "base_element" << endl;
+    cout << endl << "base_element" << endl << endl;
 }
 
 bool SequenceElement::HasMultiplicity() const

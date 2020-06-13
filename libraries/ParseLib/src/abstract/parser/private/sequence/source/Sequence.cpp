@@ -26,9 +26,14 @@ Sequence::Sequence(Parser *parser, string name, Cardinality cardinality)
 , current_position_(0)
 {}
 
+void Sequence::set_positions(vector<shared_ptr<SequencePosition>> position_vector)
+{
+    position_ = position_vector;
+}
+
 void Sequence::print() const
 {
-    cout << "Sequence: " << name_ << endl;
+    cout << "Sequence: " << name_ << " position: " << current_position_ << endl;
 }
 
 void Sequence::add_element(shared_ptr<SequenceElement> a_new_type)
@@ -40,31 +45,30 @@ void Sequence::add_element(shared_ptr<SequenceElement> a_new_type)
     position_.push_back(new_position);
 }
 
-void Sequence::set_positions(vector<shared_ptr<SequencePosition>> position_vector)
+void Sequence::handle_error(int32_t error_code, string message) const
 {
-    position_ = position_vector;
-}
+    cout << message << endl;
+    context_->handle_error({error_code});
+};
 
-shared_ptr<TokenType> Sequence::evaluate(string a_token, function<void()> next_element, MatchStatus &status)
+void Sequence::go_to_next_item()
 {
-    int32_t subsequence_size, subsequence_position;
+    auto current_position = position_[current_position_];
+    auto sequence = current_position->get_sequence();
 
-    auto token_type = match_token(a_token, subsequence_size, subsequence_position);
 
-    //move on to the next element when in the sequence
-    //after the subsequence has completed
-    if ( subsequence_size == subsequence_position )
-        next_element();
-
-    if ( token_type )
+    if(sequence)
     {
-        status = MatchStatus::PositiveMatch;
-        return token_type;
+        //if the current item is a sequence and it is complete
+        //or if it is a token.
+        if (current_position->complete() || current_position->get_token())
+            this->set_position();
+        else
+            sequence->set_position();
     }
     else
     {
-        status = MatchStatus::Unknown;
-        return nullptr;
+        cout << "Warning: no next item found" << endl;
     }
 }
 
@@ -142,30 +146,35 @@ void Sequence::set_position()
     }
 };
 
-void Sequence::handle_error(int32_t error_code, string message) const
-{
-    cout << message << endl;
-    context_->handle_error({error_code});
-};
+
 
 //matches the current token with the current expected token.  If the current expected token is repeatable
 //and does not match the current token found, then also evaluate against the next expected token.
-shared_ptr<TokenType> Sequence::match_token(string a_token, int32_t &sequence_size, int32_t &sequence_position)
+shared_ptr<TokenType> Sequence::match_token(string a_token)
 {
     shared_ptr<SequenceElement> current_element = expected_element();
     if(!current_element)
         return nullptr;
 
+
+    current_element->print();
+
     //determines wether or not the current expected token type matches or does not.
     //returns NextElementViable if the evaluation is not complete.
     MatchStatus match_status;
-    auto token_type = current_element->evaluate(a_token, [&](){set_position();}, match_status);
+    auto token_type = current_element->evaluate(a_token, match_status);
     if ( match_status == MatchStatus::PositiveMatch )
     {
         if(token_type)
             return token_type;
+
         else
+        {
+            if(!current_element->HasMultiplicity())
+                set_position();
+
             return dynamic_pointer_cast<TokenType>(current_element);
+        }
     }
     else if ( match_status == MatchStatus::NextElementViable )
     {
@@ -176,12 +185,34 @@ shared_ptr<TokenType> Sequence::match_token(string a_token, int32_t &sequence_si
         if (next_element) 
         {
             MatchStatus next_element_match_status;
-            next_element->evaluate(a_token, [&](){set_position(); set_position();}, next_element_match_status);
-            if (next_element_match_status == MatchStatus::PositiveMatch)
-                return dynamic_pointer_cast<TokenType>(next_element);
+            auto returned_element = next_element->evaluate(a_token, next_element_match_status);
 
+            if (next_element_match_status == MatchStatus::PositiveMatch)
+            {
+                //if the next element is viable and has a positive match
+                //move the cursor to the next element
+                if ((current_position_+1) == position_.size() && !HasMultiplicity())
+                    element_position_->notify_completion();
+                    
+                else
+                    set_position();
+
+                //if the next element is a positive match and does not recur
+                //move two places forward.
+                if(!next_element->HasMultiplicity())
+                    element_position_->go_to_next_element();
+
+                auto obj = dynamic_pointer_cast<TokenType>(next_element);
+
+                if(!obj)
+                    obj = dynamic_pointer_cast<TokenType>(returned_element);
+
+                return obj;
+            }
             else
+            {
                 return nullptr;
+            }
         }
         else
         {
@@ -190,8 +221,20 @@ shared_ptr<TokenType> Sequence::match_token(string a_token, int32_t &sequence_si
     }
     else
         return nullptr;
+}
 
-    //give the calling context a progress report.
-    sequence_size = position_.size();
-    sequence_position = current_position_;
+shared_ptr<TokenType> Sequence::evaluate(string a_token, MatchStatus &status)
+{
+    auto token_type = match_token(a_token);
+
+    if ( token_type )
+    {
+        status = MatchStatus::PositiveMatch;
+        return token_type;
+    }
+    else
+    {
+        status = MatchStatus::Unknown;
+        return nullptr;
+    }
 }

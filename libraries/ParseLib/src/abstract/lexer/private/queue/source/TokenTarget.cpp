@@ -11,6 +11,6 @@ using ::std::endl;
 
 void TokenTarget::send_token( string a_new_token )
 {
-    cout << "Token: " << a_new_token << endl;
+    cout << "Lexer produced token: " << a_new_token << endl;
     token_stream_->add( a_new_token );
 }

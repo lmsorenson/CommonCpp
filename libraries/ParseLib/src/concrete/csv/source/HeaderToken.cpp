@@ -13,11 +13,6 @@ using std::to_string;
 using std::cout;
 using std::endl;
 
-void HeaderToken::print() const
-{
-    cout << "header" << endl;
-}
-
 bool HeaderToken::classify(std::string token) const
 {
     if(token.compare("H")==0)
