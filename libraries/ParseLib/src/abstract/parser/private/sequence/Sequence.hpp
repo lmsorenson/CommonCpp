@@ -19,8 +19,27 @@ class TokenType;
 
 class Sequence : public SequenceElement
 {
-    std::string name_;
+public:
+    explicit Sequence(Parser *parser, std::string name = "Unknown sequence", Cardinality cardinality = Cardinality::One);
+    virtual ~Sequence() = default;
+
+    virtual void print() const override;
+
+    //evaluate the current sequence position.  
+    std::shared_ptr<TokenType> match_token(std::string a_token);
+    virtual std::shared_ptr<TokenType> evaluate(std::string token, MatchStatus &status) override;
+
+    std::shared_ptr<SequenceElement> next_expected_element() const;
+    void go_to_next_item();
+
+    //setup and construction methods
+    void add_element(std::shared_ptr<SequenceElement> a_new_type);
+    void set_positions(std::vector<std::shared_ptr<SequencePosition>> position_vector);
+    template<class ... Types> int32_t add_subsequence(std::string name, Cardinality cardinality, std::shared_ptr<Types>... a_token_types);
+
+private:
     Parser *context_;
+    std::string name_;
     std::vector<std::shared_ptr<SequencePosition>> position_;
     int32_t current_position_;
 
@@ -28,24 +47,10 @@ class Sequence : public SequenceElement
     int32_t next_element_position() const;
     void handle_error(int32_t error_code, std::string message) const;
     void set_position();
-
-public:
-    explicit Sequence(Parser *parser, std::string name = "Unknown sequence", Cardinality cardinality = Cardinality::One);
-    ~Sequence() = default;
-
-    std::shared_ptr<SequenceElement> next_expected_element() const;
-    void go_to_next_item();
-
-    virtual void print() const override;
-    virtual std::shared_ptr<TokenType> evaluate(std::string token, MatchStatus &status) override;
-    
-    //evaluate the current sequence position.  
-    std::shared_ptr<TokenType> match_token(std::string a_token);
-
-    void add_element(std::shared_ptr<SequenceElement> a_new_type);
-    void set_positions(std::vector<std::shared_ptr<SequencePosition>> position_vector);
-    template<class ... Types> int32_t add_subsequence(std::string name, Cardinality cardinality, std::shared_ptr<Types>... a_token_types);
 };
+
+
+
 
 template<class ... Types>
 int32_t Sequence::add_subsequence(std::string name, Cardinality cardinality, std::shared_ptr<Types>... a_token_type_pack )

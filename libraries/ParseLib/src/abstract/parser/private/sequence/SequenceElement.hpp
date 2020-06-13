@@ -13,12 +13,13 @@ class SequencePosition;
 class TokenType;
 
 enum MatchStatus : int32_t
-    {
-        PositiveMatch,
-        NegativeMatch,
-        NextElementViable,
-        Unknown
-    };
+{
+    PositiveMatch,
+    NegativeMatch,
+    NextElementViable,
+    Unknown
+};
+
 class SequenceElement
 {
 public:

@@ -15,34 +15,19 @@ class Lexer;
 
 class Shape
 {    
-    int32_t executions_;
-
 public:
     enum Cardinality : int32_t
     {
         One,
         Many
-    } cardinality_;
+    };
 
-protected:
-    Lexer * const context_;
-
-    std::shared_ptr<LexerState> current_state_;
-    std::map<std::string, std::shared_ptr<LexerState>> states_;
-
-    bool is_initialized_;
-
-    bool ready()
-    {
-        return (bool)(current_state_);
-    }
-
-public:
     Shape(Lexer *context, Cardinality cardinality = Cardinality::Many) 
-    : is_initialized_(false)
+    : context_(context)
+    , cardinality_(cardinality) 
+    , is_initialized_(false)
     , executions_(0)
-    , cardinality_(cardinality)
-    , context_(context) {}
+    {}
     virtual ~Shape() = default;
 
     void init();
@@ -64,6 +49,23 @@ public:
 
     template<class T>
     void add_state();
+
+protected:
+    Lexer * const context_;
+    Cardinality cardinality_;
+
+    std::shared_ptr<LexerState> current_state_;
+    std::map<std::string, std::shared_ptr<LexerState>> states_;
+
+    bool is_initialized_;
+
+    bool ready()
+    {
+        return (bool)(current_state_);
+    }
+
+private:
+    int32_t executions_;
 };
 
 template<class T>

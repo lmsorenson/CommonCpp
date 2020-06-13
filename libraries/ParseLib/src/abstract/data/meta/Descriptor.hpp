@@ -19,7 +19,11 @@ class Identifier;
 
 class Degree
 {
-    int32_t datum;
+public:
+    Degree():datum_(0){}
+
+private:
+    int32_t datum_;
 };
 
 class Descriptor : public Thing

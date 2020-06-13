@@ -10,7 +10,7 @@ public:
     : TokenType("A", Cardinality::One)
     , sdg::parse::IndependentEntity()
     {}
-    ~TestTokenA() = default;
+    virtual ~TestTokenA() = default;
     
     virtual bool classify(std::string a_token) const override
     {
@@ -38,7 +38,7 @@ public:
     : TokenType("B", Cardinality::One)
     , sdg::parse::IndependentEntity()
     {}
-    ~TestTokenB() = default;
+    virtual ~TestTokenB() = default;
     
     virtual bool classify(std::string a_token) const override
     {

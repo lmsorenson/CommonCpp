@@ -15,7 +15,7 @@ public:
     CharacterSource(pipeline::Stream<char> * stream)
     : character_stream_(stream){}
 
-    ~CharacterSource() = default;
+    virtual ~CharacterSource() = default;
 
     virtual bool characters_available() const;
     virtual char pull_char();
