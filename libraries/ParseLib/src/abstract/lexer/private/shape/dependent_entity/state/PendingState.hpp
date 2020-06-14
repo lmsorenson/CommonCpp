@@ -8,6 +8,7 @@ class PendingState : public LexerState
 {
 public:
     PendingState(Shape *context) : LexerState(context){}
+    virtual ~PendingState() = default;
 
     virtual void initialize(char ch) override;
     virtual void perform_scan(char ch) override;

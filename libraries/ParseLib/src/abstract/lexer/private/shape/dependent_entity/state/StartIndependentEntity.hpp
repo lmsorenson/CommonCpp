@@ -8,6 +8,7 @@ class StartIndependentEntity : public LexerState
 {
 public:
     StartIndependentEntity(Shape *context) : LexerState(context){}
+    virtual ~StartIndependentEntity() = default;
 
     virtual void initialize(char ch) override;
     virtual void perform_scan(char ch) override;

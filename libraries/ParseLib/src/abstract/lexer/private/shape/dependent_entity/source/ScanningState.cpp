@@ -21,6 +21,9 @@ void Scanning::initialize(char ch)
     if (ch == '\0')
         return;
 
+    if (ch == ',' || ch == '\r' || ch == '\n')
+        context_->set_state<FoundDependent>(ch);
+
 }
 
 void Scanning::perform_scan(char ch)

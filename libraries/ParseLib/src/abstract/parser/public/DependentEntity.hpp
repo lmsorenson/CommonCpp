@@ -15,7 +15,7 @@ protected:
     
 public:
     DependentEntity() : owner_(nullptr), scope_(0) {}
-    ~DependentEntity() = default;
+    virtual ~DependentEntity() = default;
 
     void dependent_on(std::shared_ptr<TokenType> token);
 

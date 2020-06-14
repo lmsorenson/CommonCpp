@@ -7,6 +7,7 @@
 #include "../state/PendingState.hpp"
 #include "../state/ScanningState.hpp"
 #include "../state/EscapedState.hpp"
+#include "../state/AllowEscapeCharacter.hpp"
 #include "../state/FoundState.hpp"
 #include "../../../../Lexer.hpp"
 
@@ -14,6 +15,7 @@ using ::sdg::DependentEntity;
 using ::sdg::dependent_entity::FoundDependent;
 using ::sdg::dependent_entity::Scanning;
 using ::sdg::dependent_entity::ScanningEscaped;
+using ::sdg::dependent_entity::AllowEscapeCharacter;
 using ::std::cout;
 using ::std::endl;
 using ::std::string;
@@ -29,6 +31,7 @@ DependentEntity::DependentEntity(Lexer *context, std::string entity_id, Shape::C
     this->add_state<StartIndependentEntity>();
     this->add_state<Scanning>();
     this->add_state<ScanningEscaped>();
+    this->add_state<AllowEscapeCharacter>();
     this->add_state<FoundDependent>();
     this->add_state<EndIndependentEntity>();
     this->add_state<PendingState>();

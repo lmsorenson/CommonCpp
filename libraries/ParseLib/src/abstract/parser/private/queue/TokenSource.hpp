@@ -13,7 +13,7 @@ public:
     TokenSource(pipeline::Stream<std::string> * stream)
     : token_stream_(stream){}
     
-    ~TokenSource() = default;
+    virtual ~TokenSource() = default;
 
     virtual bool tokens_available() const;
     virtual std::string pull_token();

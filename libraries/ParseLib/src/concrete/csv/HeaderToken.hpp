@@ -10,7 +10,7 @@ class HeaderToken : public parse::TokenType, public parse::IndependentEntity
 {
 public:
     HeaderToken() : TokenType("H"), parse::IndependentEntity() {}
-    ~HeaderToken() = default;
+    virtual ~HeaderToken() = default;
 
     virtual bool classify(std::string a_token) const override;
     virtual std::pair<std::string, std::string> create_node(std::string a_token) override;

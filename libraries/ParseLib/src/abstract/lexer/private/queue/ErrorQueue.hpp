@@ -13,7 +13,7 @@ class ErrorQueue
 public:
     ErrorQueue(pipeline::Stream<Error> * stream)
     : error_stream_(stream){}
-    ~ErrorQueue() = default;
+    virtual ~ErrorQueue() = default;
 
     virtual void add_error(Error);
 };

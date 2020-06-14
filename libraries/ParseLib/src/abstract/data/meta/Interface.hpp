@@ -19,7 +19,7 @@ class Thing
 public:
     Thing(std::string a_name);
     Thing(std::string a_name, std::string a_label);
-    ~Thing()=default;
+    virtual ~Thing()=default;
 
     virtual void print();
     std::string get_id() const;

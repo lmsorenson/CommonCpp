@@ -14,6 +14,9 @@ class WriteStrategy
     virtual std::vector<std::vector<std::string>> get_dataset_contents(sdg::DataSet dataset)=0;
 
 public:
+    WriteStrategy() = default;
+    virtual ~WriteStrategy() = default;
+
     int32_t execute_write(sdg::DataSet dataset, std::string path);
 
     enum : int32_t

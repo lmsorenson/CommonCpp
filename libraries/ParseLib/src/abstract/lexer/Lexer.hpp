@@ -43,7 +43,7 @@ class Lexer : public pattern::Observer
 
 public:
     Lexer()=default;
-    ~Lexer()=default;
+    virtual ~Lexer()=default;
 
     virtual void receive_event() override;
 

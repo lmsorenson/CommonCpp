@@ -14,7 +14,7 @@ class Observer
 
 public:
     Observer() : subject_(nullptr) {}
-    ~Observer() = default;
+    virtual ~Observer() = default;
 
     // sets the subject 
     void set_subject( Subject *new_subject );

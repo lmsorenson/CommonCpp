@@ -12,7 +12,7 @@ protected:
 
 public:
     Shape() = default;
-    ~Shape() = default;
+    virtual ~Shape() = default;
 
     virtual std::string get_id() const = 0;
     virtual void new_node() = 0;

@@ -11,7 +11,7 @@ public:
     RecordShape(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
     : DependentEntity(context, entity_id, cardinality, ',', "\r\n")
     {}
-    ~RecordShape() = default;
+    virtual ~RecordShape() = default;
 
     virtual int32_t transition() const;
 };

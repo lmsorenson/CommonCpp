@@ -9,7 +9,7 @@ class IndependentEntity : public Shape
 {
 public:
     IndependentEntity() = default;
-    ~IndependentEntity() = default;
+    virtual ~IndependentEntity() = default;
 
     virtual std::string get_id() const override;
     void new_node() override;

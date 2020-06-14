@@ -42,6 +42,7 @@ void StartIndependentEntity::should_buffer(bool &should_buffer, char ch)
 {
     switch (ch)
     {
+    case '\"':
     case ',':
     case '\r':
     case '\n': 

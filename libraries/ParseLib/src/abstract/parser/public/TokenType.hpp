@@ -16,7 +16,7 @@ class TokenType : public SequenceElement
 
 public:
     explicit TokenType(std::string token_id, Cardinality cardinality = Cardinality::One) : SequenceElement(cardinality), id_(token_id) {}
-    ~TokenType() = default;
+    virtual ~TokenType() = default;
 
     virtual void print() const override;
     virtual bool classify(std::string token) const = 0;

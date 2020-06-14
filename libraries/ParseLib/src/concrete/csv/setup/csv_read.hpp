@@ -23,7 +23,7 @@ class Read : public ::sdg::ReadStrategy
 
 public:
     Read();
-    ~Read();
+    virtual ~Read();
 };
 
 }// namespace csv

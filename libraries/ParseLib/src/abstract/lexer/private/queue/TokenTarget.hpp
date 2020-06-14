@@ -12,7 +12,6 @@ class TokenTarget
 public:
     TokenTarget(pipeline::Stream<std::string> * stream)
     : token_stream_(stream){}
-    
     virtual ~TokenTarget() = default;
 
     virtual void send_token(std::string);

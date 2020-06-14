@@ -130,7 +130,7 @@ public:
     //Constructors
     plHashTable();
     plHashTable(int32_t table_size_arg);
-    ~plHashTable();
+    virtual ~plHashTable();
 
 
 

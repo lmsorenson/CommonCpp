@@ -8,6 +8,7 @@ class ErrorState : public LexerState
 {
 public:
     ErrorState(Lexer *context) : ErrorState(context){}
+    virtual ~ErrorState();
 
     virtual void performScan(char ch) override;
 };

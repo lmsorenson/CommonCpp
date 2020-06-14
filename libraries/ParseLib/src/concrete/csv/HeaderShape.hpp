@@ -11,7 +11,7 @@ public:
     HeaderShape(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
     : DependentEntity(context, entity_id, cardinality, ',', "\r\n")
     {}
-    ~HeaderShape() = default;
+    virtual ~HeaderShape() = default;
 
     virtual int32_t transition() const;
 };

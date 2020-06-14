@@ -13,7 +13,7 @@ public:
     CharacterTarget(pipeline::Stream<char> * stream)
     : token_stream_(stream){}
     
-    ~CharacterTarget() = default;
+    virtual ~CharacterTarget() = default;
 
     virtual void send_char(char ch);
 };

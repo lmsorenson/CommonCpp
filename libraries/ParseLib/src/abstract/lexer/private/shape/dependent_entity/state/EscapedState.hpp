@@ -12,6 +12,7 @@ class ScanningEscaped : public LexerState
 {
 public:
     ScanningEscaped(Shape *context) : LexerState(context){}
+    virtual ~ScanningEscaped() = default;
 
     virtual void initialize(char ch) override;
     virtual void perform_scan(char ch) override;

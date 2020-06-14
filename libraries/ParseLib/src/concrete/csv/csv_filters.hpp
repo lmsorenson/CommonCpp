@@ -11,7 +11,7 @@ class HeaderFilter : public ::sdg::ParserFilter
 {
 public:
     HeaderFilter(std::string new_filter_id);
-    ~HeaderFilter()=default;
+    virtual ~HeaderFilter()=default;
 
     virtual int32_t execute(std::string text, std::vector<sdg::SyntaxNode>& output) override;
     virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;
@@ -22,7 +22,7 @@ class RecordFilter : public ::sdg::ParserFilter
 {
 public:
     RecordFilter(std::string new_filter_id);
-    ~RecordFilter()=default;
+    virtual ~RecordFilter()=default;
 
     virtual int32_t execute(std::string text, std::vector<sdg::SyntaxNode>& output) override;
     virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;
@@ -36,7 +36,7 @@ class FieldFilter : public ::sdg::ParserFilter
 
 public:
     FieldFilter(std::string new_filter_id);
-    ~FieldFilter()=default;
+    virtual ~FieldFilter()=default;
 
     virtual int32_t execute(std::string text, std::vector<sdg::SyntaxNode>& output) override;
     virtual int32_t inverse(std::vector<std::string> string_set, std::string &compiled_string) override;

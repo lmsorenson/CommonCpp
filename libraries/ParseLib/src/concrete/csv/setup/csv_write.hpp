@@ -24,7 +24,7 @@ class Write : public ::sdg::WriteStrategy
 
 public:
     Write()=default;
-    ~Write()=default;
+    virtual ~Write()=default;
 };
 
 }// namespace csv

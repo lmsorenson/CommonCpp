@@ -42,7 +42,7 @@ class Parser : public pattern::Observer
 
 public:
     Parser() = default;
-    ~Parser() = default;
+    virtual ~Parser() = default;
 
     virtual void receive_event() override;
 

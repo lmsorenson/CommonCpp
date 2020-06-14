@@ -70,13 +70,6 @@ int32_t Sequence::add_subsequence(std::string name, Cardinality cardinality, std
             std::shared_ptr object = std::dynamic_pointer_cast<TokenType>(position_vector[i-1]->item());
             if(object)
             {
-                std::shared_ptr dependentTT = std::dynamic_pointer_cast<TokenType>(position_vector[i]->item());
-                
-                if(dependentTT)
-                {
-                    std::cout << "assigning_ ";
-                    dependentTT->print();
-                }
                 dependent->dependent_on(object);
             }
         }

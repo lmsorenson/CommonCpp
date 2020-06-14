@@ -12,6 +12,7 @@ class Scanning : public LexerState
 {
 public:
     Scanning(Shape *context) : LexerState(context){}
+    virtual ~Scanning() = default;
 
     virtual void initialize(char ch) override;
     virtual void perform_scan(char ch) override;

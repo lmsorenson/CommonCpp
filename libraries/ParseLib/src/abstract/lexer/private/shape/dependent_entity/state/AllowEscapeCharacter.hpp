@@ -1,18 +1,23 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
+#include <map>
+#include <memory>
 #include "../../LexerState.hpp"
+#include "../../Shape.hpp"
 
 namespace sdg {
+namespace dependent_entity {
 
-class EndIndependentEntity : public LexerState
+class AllowEscapeCharacter : public LexerState
 {
 public:
-    EndIndependentEntity(Shape *context) : LexerState(context){}
-    virtual ~EndIndependentEntity() = default;
+    AllowEscapeCharacter(Shape *context) : LexerState(context){}
+    virtual ~AllowEscapeCharacter() = default;
 
     virtual void initialize(char ch) override;
     virtual void perform_scan(char ch) override;
     virtual void should_buffer(bool &should_buffer, char ch) override;
 };
 
+}// namespace dependent_entity
 }// namespace sdg

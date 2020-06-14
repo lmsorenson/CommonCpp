@@ -30,7 +30,7 @@ public:
     };
 
     explicit SequenceElement(Cardinality cardinality = Cardinality::One);
-    ~SequenceElement() = default;
+    virtual ~SequenceElement() = default;
 
     virtual void print() const;
 

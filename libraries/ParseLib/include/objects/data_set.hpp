@@ -46,7 +46,7 @@ public:
     DataSet();
     DataSet(State a_state);
     DataSet(int32_t a_hash_table_size);
-    ~DataSet();
+    virtual ~DataSet();
 
 
     Instance operator[](std::string i);

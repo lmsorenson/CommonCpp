@@ -12,6 +12,7 @@ class FoundDependent : public LexerState
 {
 public:
     FoundDependent(Shape *context) : LexerState(context){}
+    virtual ~FoundDependent() = default;
 
     virtual void initialize(char ch) override;
     virtual void perform_scan(char ch) override;

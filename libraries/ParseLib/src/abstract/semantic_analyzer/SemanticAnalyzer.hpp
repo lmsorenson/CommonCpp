@@ -32,7 +32,7 @@ class SemanticAnalyzer : public pattern::Observer
 
 public:
     SemanticAnalyzer() = default;
-    ~SemanticAnalyzer() = default;
+    virtual ~SemanticAnalyzer() = default;
 
     virtual void receive_event() override;
 

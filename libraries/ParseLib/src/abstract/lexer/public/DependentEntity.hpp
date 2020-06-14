@@ -19,7 +19,7 @@ class DependentEntity : public Shape
 
 public:
     DependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality, char entity_delimiter, std::string shape_delimiter);
-    ~DependentEntity() = default;
+    virtual ~DependentEntity() = default;
 
     void generate_link_token() const;
 
