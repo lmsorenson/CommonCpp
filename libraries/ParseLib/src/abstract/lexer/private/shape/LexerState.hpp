@@ -9,11 +9,6 @@ class Shape;
 
 class LexerState
 {
-    int32_t occurances_;
-
-protected:
-    Shape * const context_;
-
 public:
     LexerState(Shape *context) : context_(context) {}
     virtual ~LexerState() = default;
@@ -35,6 +30,12 @@ public:
         occurances_++;
         return *this;
     }
+
+protected:
+    Shape * const context_;
+
+private:
+    int32_t occurances_;
 };
 
 }// namespace sdg

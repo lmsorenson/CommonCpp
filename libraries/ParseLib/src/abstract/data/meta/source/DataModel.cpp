@@ -83,7 +83,7 @@ void Model::found_descriptor(sdg::hash::DescriptorInstance a_descriptor)
 {
     std::shared_ptr<Entity> e = get_entity(hash::EntityID(a_descriptor.get_descriptor_id()));
 
-    if(a_descriptor.get_descriptor_value() + 1 > e->get_count())
+    if(e && a_descriptor.get_descriptor_value() + 1 > e->get_count())
     {
         e->set_counter(a_descriptor.get_descriptor_value() + 1);
     }

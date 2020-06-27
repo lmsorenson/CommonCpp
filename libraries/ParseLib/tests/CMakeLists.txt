@@ -20,12 +20,12 @@ add_subdirectory(
 include_directories(
 	tests
 	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include/concrete
+	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googlemock/include
 )
 
 
 add_subdirectory(
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest 
+	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/ 
 	lib/
 )
 
@@ -114,23 +114,27 @@ target_include_directories(
 target_link_libraries(
 	TestAll
 	gtest
+	gmock
 	parse
 )
 
 target_link_libraries(
 	TestComponents
 	gtest
+	gmock
 	parse
 )
 
 target_link_libraries(
 	TestIntegration
 	gtest
+	gmock
 	parse
 )
 
 target_link_libraries(
 	TestSystem
 	gtest
+	gmock
 	parse
 )

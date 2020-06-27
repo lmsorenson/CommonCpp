@@ -25,27 +25,43 @@ void Shape::run(bool &should_buffer, char ch)
 
     if( this->ready() )
     {
-        current_state_->perform_scan(ch);
-        current_state_->should_buffer(should_buffer, ch);
+        // do
+        // {
+        //     //check transitions
+            current_state_->perform_scan(ch);//<-- should return a transition
+
+        //     //make transition.
+        //     //this->set_state<>();
+            
+        // } while (/* transition found */);
+
+        // //check if buffering the current character is allowed
+        // //in this state.
+        // current_state_->should_buffer(should_buffer, ch);
     }
     else
     {
-        cout << "shape error: shape is not properly configured to process characters." << endl;
-        context_->handle_error({UNKNOWN_ERROR});
+        cout << "shape error: the shape is not properly configured to process characters." << endl;
+        this->handle_error({UNKNOWN_ERROR});
     }
 }
 
 void Shape::generate_token(string token) const
 {
-    context_->produce_token(token);
+    if (context_)
+        context_->produce_token(token);
 }
 
 void Shape::generate_token(std::pair<std::string, std::string> bracket)
 {
-    context_->produce_tagged_token( pair(bracket.first, bracket.second) );
+    if (context_)
+        context_->produce_tagged_token( pair(bracket.first, bracket.second) );
 }
 
 void Shape::handle_error(Error error)
 {
-    context_->handle_error(error);
+    if (context_)
+    {
+        context_->handle_error(error);
+    }
 }

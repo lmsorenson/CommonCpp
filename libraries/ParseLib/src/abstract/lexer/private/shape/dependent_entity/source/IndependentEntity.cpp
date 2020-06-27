@@ -14,9 +14,6 @@ using ::std::pair;
 
 void EndIndependentEntity::initialize(char ch)
 {
-    cout << "END RECORD ";
-    // static_cast<DependentEntity * const>(context_)->generate_link_token();
-
     context_->set_state<PendingState>();
 }
 

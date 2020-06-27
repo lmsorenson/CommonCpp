@@ -15,6 +15,8 @@ using ::std::pair;
 
 void StartIndependentEntity::initialize(char ch)
 {
+    //generates a token that indicates the indepenent entity that dependent entities will be 
+    //dependent on.
     static_cast<DependentEntity * const>(context_)->generate_link_token();
 }
 
