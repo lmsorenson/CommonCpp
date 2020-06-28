@@ -25,19 +25,26 @@ void Shape::run(bool &should_buffer, char ch)
 
     if( this->ready() )
     {
-        // do
-        // {
-        //     //check transitions
-            current_state_->perform_scan(ch);//<-- should return a transition
+        int32_t transition_code = 0;
 
-        //     //make transition.
-        //     //this->set_state<>();
-            
-        // } while (/* transition found */);
+        do
+        {
+            //check transitions
+            int32_t new_transition_code = current_state_->perform_scan(ch);//<-- should return a transition
 
-        // //check if buffering the current character is allowed
-        // //in this state.
-        // current_state_->should_buffer(should_buffer, ch);
+            if (new_transition_code != transition_code)
+                transition_code = new_transition_code;
+            else
+                transition_code = 0;
+
+            //make transition.
+            this->apply_transition(transition_code);
+
+        } while (transition_code != 0);
+
+        // check if buffering the current character is allowed
+        // in this state.
+        current_state_->should_buffer(should_buffer, ch);
     }
     else
     {

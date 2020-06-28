@@ -17,8 +17,9 @@ void EndIndependentEntity::initialize(char ch)
     context_->set_state<PendingState>();
 }
 
-void EndIndependentEntity::perform_scan(char ch)
+int32_t EndIndependentEntity::perform_scan(char ch)
 {
+    return 0;
 }
 
 void EndIndependentEntity::should_buffer(bool &should_buffer, char ch)

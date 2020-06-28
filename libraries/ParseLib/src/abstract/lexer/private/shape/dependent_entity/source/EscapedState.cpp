@@ -19,7 +19,7 @@ void ScanningEscaped::initialize(char ch)
 
 }
 
-void ScanningEscaped::perform_scan(char ch)
+int32_t ScanningEscaped::perform_scan(char ch)
 {
     if (ch=='\"')
         context_->set_state<AllowEscapeCharacter>('\"');
@@ -29,6 +29,8 @@ void ScanningEscaped::perform_scan(char ch)
 
     else
         context_->set_state<ScanningEscaped>();
+
+    return 0;
 }
 
 void ScanningEscaped::should_buffer(bool &should_buffer, char ch)

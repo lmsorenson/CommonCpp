@@ -11,9 +11,11 @@ void PendingState::initialize(char ch)
     
 }
 
-void PendingState::perform_scan(char ch)
+int32_t PendingState::perform_scan(char ch)
 {
     context_->set_state<StartIndependentEntity>();
+
+    return 0;
 }
 
 void PendingState::should_buffer(bool &should_buffer, char ch)

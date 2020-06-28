@@ -10,6 +10,17 @@ namespace sdg {
 class DependentEntity : public Shape
 {
 public:
+    enum StateTransition : int32_t {
+        None = 0,
+        SetIndependentEntityBegin,
+        SetScanningCharacters,
+        SetScanningCharactersEscaped,
+        SetBufferingEscapeCharacters,
+        SetDependentEntityFound,
+        SetIndependentEntityFound,
+        SetPending
+    };
+
     DependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality, char entity_delimiter, std::string shape_delimiter);
     virtual ~DependentEntity() = default;
 
@@ -26,6 +37,10 @@ private:
     char get_entity_delimiter() const;
     std::string get_shape_delimiter() const;
     std::string get_entity_id() const;
+
+    virtual void apply_transition(int32_t enum_value) override;
 };
+
+
 
 }// namespace sdg

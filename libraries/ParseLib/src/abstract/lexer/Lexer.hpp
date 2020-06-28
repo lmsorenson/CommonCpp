@@ -24,6 +24,7 @@ class TokenTarget;
 //creates a stream of tokens
 class Lexer : public pattern::Observer
 {
+protected:
     std::shared_ptr<CharacterSource> source_;
     std::shared_ptr<TokenTarget> target_;
     std::shared_ptr<ErrorQueue> error_queue_;

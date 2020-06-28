@@ -65,6 +65,8 @@ protected:
     }
 
 private:
+    virtual void apply_transition(int32_t enum_value) = 0;
+
     int32_t executions_;
 };
 

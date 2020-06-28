@@ -8,6 +8,7 @@
 #include "../../../../Lexer.hpp"
 
 using ::sdg::StartIndependentEntity;
+using ::sdg::DependentEntity;
 using ::std::cout;
 using ::std::endl;
 using ::std::pair;
@@ -17,10 +18,11 @@ void StartIndependentEntity::initialize(char ch)
 {
     //generates a token that indicates the indepenent entity that dependent entities will be 
     //dependent on.
-    static_cast<DependentEntity * const>(context_)->generate_link_token();
+    if(context_)
+        static_cast<DependentEntity * const>(context_)->generate_link_token();
 }
 
-void StartIndependentEntity::perform_scan(char ch)
+int32_t StartIndependentEntity::perform_scan(char ch)
 {
     switch (ch)
     {
@@ -29,14 +31,14 @@ void StartIndependentEntity::perform_scan(char ch)
         break;
 
     case '\"':
-        context_->set_state<dependent_entity::ScanningEscaped>();
+        return DependentEntity::StateTransition::SetScanningCharactersEscaped;
         break;
 
     default: 
-        context_->set_state<dependent_entity::Scanning>();
+        return DependentEntity::StateTransition::SetScanningCharacters;
         break;
     }
-    
+    return 0;
 }
 
 

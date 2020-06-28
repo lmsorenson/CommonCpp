@@ -11,7 +11,7 @@ public:
     virtual ~EndIndependentEntity() = default;
 
     virtual void initialize(char ch) override;
-    virtual void perform_scan(char ch) override;
+    virtual int32_t perform_scan(char ch) override;
     virtual void should_buffer(bool &should_buffer, char ch) override;
 };
 

@@ -19,7 +19,7 @@ void AllowEscapeCharacter::initialize(char ch)
 
 }
 
-void AllowEscapeCharacter::perform_scan(char ch)
+int32_t AllowEscapeCharacter::perform_scan(char ch)
 {
     switch (ch)
     {
@@ -31,6 +31,8 @@ void AllowEscapeCharacter::perform_scan(char ch)
         context_->set_state<Scanning>(ch);
         break;
     }
+    
+    return 0;
 }
 
 void AllowEscapeCharacter::should_buffer(bool &should_buffer, char ch)

@@ -2,6 +2,7 @@
 #include "../state/ScanningState.hpp"
 #include <iostream>
 
+#include "../../../../public/DependentEntity.hpp"
 #include "../state/FoundState.hpp"
 #include "../state/EscapedState.hpp"
 #include "../../../../Lexer.hpp"
@@ -9,6 +10,7 @@
 using ::sdg::dependent_entity::Scanning;
 using ::sdg::dependent_entity::FoundDependent;
 using ::sdg::dependent_entity::ScanningEscaped;
+using ::sdg::DependentEntity;
 using ::std::cout;
 using ::std::endl;
 using ::std::pair;
@@ -21,27 +23,27 @@ void Scanning::initialize(char ch)
     if (ch == '\0')
         return;
 
-    if (ch == ',' || ch == '\r' || ch == '\n')
-        context_->set_state<FoundDependent>(ch);
+    // if (ch == ',' || ch == '\r' || ch == '\n')
+    //     context_->set_state<FoundDependent>(ch);
 
 }
 
-void Scanning::perform_scan(char ch)
+int32_t Scanning::perform_scan(char ch)
 {
     switch (ch)
     {
     case '\"':
-        context_->set_state<ScanningEscaped>();
+        return DependentEntity::StateTransition::SetScanningCharactersEscaped;
         break;
 
     case ',':
     case '\r':
     case '\n': 
-        context_->set_state<FoundDependent>(ch);
+        return DependentEntity::StateTransition::SetDependentEntityFound;
         break;
 
     default: 
-        context_->set_state<Scanning>();
+        return DependentEntity::StateTransition::None;
         break;
     }
 }

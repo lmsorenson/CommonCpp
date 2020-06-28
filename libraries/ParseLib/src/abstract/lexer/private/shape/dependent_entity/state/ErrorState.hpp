@@ -10,7 +10,7 @@ public:
     ErrorState(Lexer *context) : ErrorState(context){}
     virtual ~ErrorState();
 
-    virtual void performScan(char ch) override;
+    virtual int32_t performScan(char ch) override;
 };
 
 }// namespace sdg

@@ -2,26 +2,13 @@
 #include "../../../../../src/abstract/lexer/private/shape/Shape.hpp"
 #include <gmock/gmock.h>
 
-class StateA : public ::sdg::LexerState
+
+enum StateTransition : int32_t
 {
-public:
-    StateA(::sdg::Shape *context) : LexerState(context){}
-    virtual ~StateA() = default;
-
-    virtual void initialize(char ch) override
-    {
-
-    }
-
-    virtual void perform_scan(char ch) override
-    {
-
-    }
-
-    virtual void should_buffer(bool &should_buffer, char ch) override
-    {
-
-    }
+    None = 0,
+    SetStateA,
+    SetStateB,
+    SetStateC
 };
 
 class MockStateA : public ::sdg::LexerState
@@ -31,57 +18,28 @@ public:
     virtual ~MockStateA() = default;
 
     MOCK_METHOD(void, initialize, (char ch), (override));
-    MOCK_METHOD(void, perform_scan, (char ch), (override));
+    MOCK_METHOD(int32_t, perform_scan, (char ch), (override));
     MOCK_METHOD(void, should_buffer, (bool &should_buffer, char ch), (override));
 };
 
-
-
-class StateB : public ::sdg::LexerState
+class MockStateB : public ::sdg::LexerState
 {
 public:
-    StateB(::sdg::Shape *context) : LexerState(context){}
-    virtual ~StateB() = default;
+    MockStateB(sdg::Shape *context) : LexerState(context){}
+    virtual ~MockStateB() = default;
 
-    virtual void initialize(char ch) override
-    {
-
-    }
-
-    virtual void perform_scan(char ch) override
-    {
-
-    }
-
-    virtual void should_buffer(bool &should_buffer, char ch) override
-    {
-
-    }
+    MOCK_METHOD(void, initialize, (char ch), (override));
+    MOCK_METHOD(int32_t, perform_scan, (char ch), (override));
+    MOCK_METHOD(void, should_buffer, (bool &should_buffer, char ch), (override));
 };
 
-
-
-
-
-class StateC : public ::sdg::LexerState
+class MockStateC : public sdg::LexerState
 {
 public:
-    StateC(::sdg::Shape *context) : LexerState(context){}
-    virtual ~StateC() = default;
+    MockStateC(sdg::Shape *context) : LexerState(context){}
+    virtual ~MockStateC() = default;
 
-    virtual void initialize(char ch) override
-    {
-
-    }
-
-    virtual void perform_scan(char ch) override
-    {
-
-    }
-
-    virtual void should_buffer(bool &should_buffer, char ch) override
-    {
-
-    }
+    MOCK_METHOD(void, initialize, (char ch), (override));
+    MOCK_METHOD(int32_t, perform_scan, (char ch), (override));
+    MOCK_METHOD(void, should_buffer, (bool &should_buffer, char ch), (override));
 };
-

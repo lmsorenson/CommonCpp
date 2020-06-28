@@ -38,7 +38,7 @@ void Lexer::scan()
             buffer_.append( string(1, ch) );
     }
 
-    if (this->ready() && shape_->is_complete())
+    if (this->ready() && shape_ && shape_->is_complete())
         shape_->transition();
 
     stopwatch_.stop();
@@ -66,7 +66,8 @@ void Lexer::produce_token()
 void Lexer::produce_token(std::string token_content)
 {
     stopwatch_.stop();
-    target_->send_token(token_content);
+    if (target_)
+        target_->send_token(token_content);
     stopwatch_.start();
 }
 

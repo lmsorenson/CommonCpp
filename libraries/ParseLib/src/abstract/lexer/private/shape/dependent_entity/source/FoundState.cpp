@@ -29,7 +29,7 @@ void FoundDependent::initialize(char ch)
     }
 }
 
-void FoundDependent::perform_scan(char ch)
+int32_t FoundDependent::perform_scan(char ch)
 {
     switch (ch)
     {
@@ -46,6 +46,8 @@ void FoundDependent::perform_scan(char ch)
         context_->set_state<Scanning>();
         break;
     }
+
+    return 0;
 }
 
 
