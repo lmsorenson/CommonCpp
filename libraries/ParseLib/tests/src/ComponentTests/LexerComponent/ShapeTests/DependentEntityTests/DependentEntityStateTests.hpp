@@ -34,3 +34,51 @@ TEST_F(LexerComponentTests, dependent_state_test_1 )
     dependent_run_helper('b', mock_dependent, lexer);
     dependent_run_helper('b', mock_dependent, lexer);
 }
+
+
+TEST_F(LexerComponentTests, dependent_state_test_2 )
+{
+    MockLexer lexer = MockLexer();
+    MockDependentEntity mock_dependent(&lexer, "D", MockDependentEntity::Cardinality::One);
+
+    auto mock_target = lexer.get_mock_target();
+
+    EXPECT_CALL(*mock_target, send_token("D")).Times(::testing::Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(aa)")).Times(::testing::Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(bb)")).Times(::testing::Exactly(1));
+
+    dependent_run_helper('a', mock_dependent, lexer);
+    dependent_run_helper('a', mock_dependent, lexer);
+    dependent_run_helper(',', mock_dependent, lexer);
+    dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('\r', mock_dependent, lexer);
+    dependent_run_helper('\n', mock_dependent, lexer);
+}
+
+
+TEST_F(LexerComponentTests, dependent_state_test_3 )
+{
+    MockLexer lexer = MockLexer();
+    MockDependentEntity mock_dependent(&lexer, "D", MockDependentEntity::Cardinality::One);
+
+    auto mock_target = lexer.get_mock_target();
+
+    EXPECT_CALL(*mock_target, send_token("D")).Times(::testing::Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(aa)")).Times(::testing::Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(bb)")).Times(::testing::Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(cc)")).Times(::testing::Exactly(1));
+
+    dependent_run_helper('a', mock_dependent, lexer);
+    dependent_run_helper('a', mock_dependent, lexer);
+    dependent_run_helper(',', mock_dependent, lexer);
+    dependent_run_helper('"', mock_dependent, lexer);
+    dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('"', mock_dependent, lexer);
+    dependent_run_helper(',', mock_dependent, lexer);
+    dependent_run_helper('c', mock_dependent, lexer);
+    dependent_run_helper('c', mock_dependent, lexer);
+    dependent_run_helper('\r', mock_dependent, lexer);
+    dependent_run_helper('\n', mock_dependent, lexer);
+}

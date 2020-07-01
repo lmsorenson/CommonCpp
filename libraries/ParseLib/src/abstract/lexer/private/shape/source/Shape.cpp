@@ -6,9 +6,31 @@
 
 using ::sdg::Shape;
 using ::std::pair;
+using ::std::map;
 using ::std::string;
 using ::std::cout;
 using ::std::endl;
+
+typedef pair<int32_t, int32_t> TransitionID;
+class Transition
+{
+public:
+    Transition() : num_occurances_(0) {}
+    ~Transition() = default;
+
+    void increment()
+    {
+        num_occurances_++;
+    }
+
+    bool has_not_occured()
+    {
+        return num_occurances_ == 0;
+    }
+
+private:
+    int32_t num_occurances_;
+};
 
 
 
@@ -26,25 +48,44 @@ void Shape::run(bool &should_buffer, char ch)
     if( this->ready() )
     {
         int32_t transition_code = 0;
+        auto original_state = current_state_;
+
+        //remember history so no state loops are created
+        map<TransitionID, Transition> history;
 
         do
         {
-            //check transitions
-            int32_t new_transition_code = current_state_->perform_scan(ch);//<-- should return a transition
+            int32_t from_code = current_state_->to_state_code();
+            int32_t to_code  = current_state_->perform_scan(ch);
 
-            if (new_transition_code != transition_code)
-                transition_code = new_transition_code;
+            auto current_transition = pair(from_code,to_code);
+            auto inverse_transition = pair(to_code,from_code);
+
+            if (history[current_transition].has_not_occured() && 
+                history[inverse_transition].has_not_occured() && 
+                to_code != transition_code)
+            {
+                transition_code = to_code;
+            }
             else
+            {
                 transition_code = 0;
+            }
 
             //make transition.
-            this->apply_transition(transition_code);
+            if ( this->apply_transition(transition_code) )
+            {
+                history[current_transition].increment();
+            }
 
         } while (transition_code != 0);
 
         // check if buffering the current character is allowed
         // in this state.
         current_state_->should_buffer(should_buffer, ch);
+
+        original_state->update();
+        current_state_->update();
     }
     else
     {

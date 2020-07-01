@@ -15,9 +15,9 @@ TEST_F(LexerComponentTests, shape_run_character_satisfies_a_chain_of_transitions
 {
     Lexer lexer = Lexer();
     ShapeA shape(&lexer, ShapeA::Cardinality::One);
-    shape.add_state<MockStateA>();
-    shape.add_state<MockStateB>();
-    shape.add_state<MockStateC>();
+    shape.add_state<MockStateA>(1);
+    shape.add_state<MockStateB>(2);
+    shape.add_state<MockStateC>(3);
     auto mock_state_a = std::dynamic_pointer_cast<MockStateA>(shape.get_state<MockStateA>()).get();
     auto mock_state_b = std::dynamic_pointer_cast<MockStateB>(shape.get_state<MockStateB>()).get();
     auto mock_state_c = std::dynamic_pointer_cast<MockStateC>(shape.get_state<MockStateC>()).get();

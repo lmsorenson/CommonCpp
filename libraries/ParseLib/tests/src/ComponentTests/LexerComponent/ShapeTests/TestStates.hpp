@@ -14,7 +14,7 @@ enum StateTransition : int32_t
 class MockStateA : public ::sdg::LexerState
 {
 public:
-    MockStateA(sdg::Shape *context) : LexerState(context){}
+    MockStateA(sdg::Shape *context, int32_t state_code) : LexerState(context, state_code){}
     virtual ~MockStateA() = default;
 
     MOCK_METHOD(void, initialize, (char ch), (override));
@@ -25,7 +25,7 @@ public:
 class MockStateB : public ::sdg::LexerState
 {
 public:
-    MockStateB(sdg::Shape *context) : LexerState(context){}
+    MockStateB(sdg::Shape *context, int32_t state_code) : LexerState(context, state_code){}
     virtual ~MockStateB() = default;
 
     MOCK_METHOD(void, initialize, (char ch), (override));
@@ -36,7 +36,7 @@ public:
 class MockStateC : public sdg::LexerState
 {
 public:
-    MockStateC(sdg::Shape *context) : LexerState(context){}
+    MockStateC(sdg::Shape *context, int32_t state_code) : LexerState(context, state_code){}
     virtual ~MockStateC() = default;
 
     MOCK_METHOD(void, initialize, (char ch), (override));

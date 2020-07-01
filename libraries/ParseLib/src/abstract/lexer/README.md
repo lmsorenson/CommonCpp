@@ -9,5 +9,6 @@ The Lexical Analyzer(lexer) scans a character stream for tokens.  The order of t
     1. If a Target is provided 
 
 ## References
-[Compiler Architecture - Layola Marymount University](https://cs.lmu.edu/~ray/notes/compilerarchitecture/)  
-[State Pattern](https://www.tutorialspoint.com/design_pattern/state_pattern.htm)
+[Compiler Architecture - Layola Marymount University](https://cs.lmu.edu/~ray/notes/compilerarchitecture/)  <br/>
+[State Pattern](https://www.tutorialspoint.com/design_pattern/state_pattern.htm)  <br/>
+[Reducers & Transducers](https://medium.com/async-la/a-short-and-sour-guide-to-reducers-b5b54d3bb018)

@@ -38,7 +38,7 @@ private:
     std::string get_shape_delimiter() const;
     std::string get_entity_id() const;
 
-    virtual void apply_transition(int32_t enum_value) override;
+    virtual int32_t apply_transition(int32_t enum_value) override;
 };
 
 

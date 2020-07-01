@@ -16,7 +16,7 @@ public:
 
     }
 
-    virtual void apply_transition(int32_t enum_value) override
+    virtual int32_t apply_transition(int32_t enum_value) override
     {
         switch ( enum_value )
         {

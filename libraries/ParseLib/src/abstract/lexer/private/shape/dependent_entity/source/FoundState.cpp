@@ -32,11 +32,7 @@ void FoundDependent::initialize(char ch)
 int32_t FoundDependent::perform_scan(char ch)
 {
     switch (ch)
-    {
-    case '\"':
-        context_->set_state<ScanningEscaped>();
-        break;
-        
+    {   
     case '\r':
     case '\n': 
         context_->handle_error({FILE_FORMAT_INVALID});

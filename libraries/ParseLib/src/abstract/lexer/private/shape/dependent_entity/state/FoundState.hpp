@@ -11,7 +11,7 @@ namespace dependent_entity {
 class FoundDependent : public LexerState
 {
 public:
-    FoundDependent(Shape *context) : LexerState(context){}
+    FoundDependent(Shape *context, int32_t state_code) : LexerState(context, state_code){}
     virtual ~FoundDependent() = default;
 
     virtual void initialize(char ch) override;

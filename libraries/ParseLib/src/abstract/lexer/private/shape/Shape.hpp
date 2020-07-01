@@ -48,7 +48,7 @@ public:
     bool state_equals();
 
     template<class T>
-    void add_state();
+    void add_state(int32_t state_code);
 
 protected:
     Lexer * const context_;
@@ -65,7 +65,7 @@ protected:
     }
 
 private:
-    virtual void apply_transition(int32_t enum_value) = 0;
+    virtual int32_t apply_transition(int32_t enum_value) = 0;
 
     int32_t executions_;
 };
@@ -73,6 +73,8 @@ private:
 template<class T>
 void Shape::set_state(char ch)
 {
+    current_state_->on_transition();
+
     std::string key = typeid(T).name();
     auto candidate = states_.at(key);
     ++(*candidate);
@@ -92,10 +94,10 @@ bool Shape::state_equals()
 }
 
 template<class T>
-void Shape::add_state()
+void Shape::add_state(int32_t state_code)
 {
     std::string key = typeid(T).name();
-    states_[key] = std::shared_ptr<T>(new T(this));
+    states_[key] = std::shared_ptr<T>(new T(this, state_code));
 
     if(!current_state_)
         current_state_ = states_.at(key);

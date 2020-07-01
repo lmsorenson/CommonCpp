@@ -11,7 +11,7 @@ namespace dependent_entity {
 class Scanning : public LexerState
 {
 public:
-    Scanning(Shape *context) : LexerState(context){}
+    Scanning(Shape *context, int32_t state_code) : LexerState(context, state_code){}
     virtual ~Scanning() = default;
 
     virtual void initialize(char ch) override;

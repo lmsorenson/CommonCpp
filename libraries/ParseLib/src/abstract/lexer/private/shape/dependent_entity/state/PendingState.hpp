@@ -7,7 +7,7 @@ namespace sdg {
 class PendingState : public LexerState
 {
 public:
-    PendingState(Shape *context) : LexerState(context){}
+    PendingState(Shape *context, int32_t state_code) : LexerState(context, state_code){}
     virtual ~PendingState() = default;
 
     virtual void initialize(char ch) override;

@@ -10,13 +10,17 @@ class Shape;
 class LexerState
 {
 public:
-    LexerState(Shape *context) : context_(context) {}
+    LexerState(Shape *context, int32_t state_code) : context_(context), code_(state_code) {}
     virtual ~LexerState() = default;
 
     virtual void initialize(char ch = '\0');
+    virtual void on_transition();
+    virtual void update();
+
     virtual int32_t perform_scan(char ch) = 0;
     virtual void should_buffer(bool &should_buffer, char ch);
-
+    
+    int32_t to_state_code() const;
     int32_t occurances() const;
 
     LexerState& operator++()
@@ -36,6 +40,7 @@ protected:
 
 private:
     int32_t occurances_;
+    int32_t code_;
 };
 
 }// namespace sdg

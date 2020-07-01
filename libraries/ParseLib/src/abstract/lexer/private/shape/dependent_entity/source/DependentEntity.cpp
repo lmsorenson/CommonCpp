@@ -28,16 +28,16 @@ DependentEntity::DependentEntity(Lexer *context, std::string entity_id, Shape::C
 , entity_delimiter_(entity_delimiter)
 , shape_delimiter_(shape_delimiter)
 {
-    this->add_state<StartIndependentEntity>();
-    this->add_state<Scanning>();
-    this->add_state<ScanningEscaped>();
-    this->add_state<AllowEscapeCharacter>();
-    this->add_state<FoundDependent>();
-    this->add_state<EndIndependentEntity>();
-    this->add_state<PendingState>();
+    this->add_state<StartIndependentEntity>(SetIndependentEntityBegin);
+    this->add_state<Scanning>(SetScanningCharacters);
+    this->add_state<ScanningEscaped>(SetScanningCharactersEscaped);
+    this->add_state<AllowEscapeCharacter>(SetBufferingEscapeCharacters);
+    this->add_state<FoundDependent>(SetDependentEntityFound);
+    this->add_state<EndIndependentEntity>(SetIndependentEntityFound);
+    this->add_state<PendingState>(SetPending);
 }
 
-void DependentEntity::apply_transition(int32_t enum_value)
+int32_t DependentEntity::apply_transition(int32_t enum_value)
 {
     switch (enum_value)
     {
@@ -70,8 +70,11 @@ void DependentEntity::apply_transition(int32_t enum_value)
         break;
 
     default:
+        return 0;
         break;
     }
+
+    return 1;
 }
 
 void DependentEntity::generate_link_token() const

@@ -11,7 +11,7 @@ namespace dependent_entity {
 class AllowEscapeCharacter : public LexerState
 {
 public:
-    AllowEscapeCharacter(Shape *context) : LexerState(context){}
+    AllowEscapeCharacter(Shape *context, int32_t state_code) : LexerState(context, state_code){}
     virtual ~AllowEscapeCharacter() = default;
 
     virtual void initialize(char ch) override;

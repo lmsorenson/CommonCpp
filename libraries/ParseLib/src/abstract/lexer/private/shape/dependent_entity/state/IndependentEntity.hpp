@@ -7,7 +7,7 @@ namespace sdg {
 class EndIndependentEntity : public LexerState
 {
 public:
-    EndIndependentEntity(Shape *context) : LexerState(context){}
+    EndIndependentEntity(Shape *context, int32_t state_code) : LexerState(context, state_code){}
     virtual ~EndIndependentEntity() = default;
 
     virtual void initialize(char ch) override;
