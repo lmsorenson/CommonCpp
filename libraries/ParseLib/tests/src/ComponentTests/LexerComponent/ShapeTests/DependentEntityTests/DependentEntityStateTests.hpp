@@ -104,7 +104,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_escap
 
     //---- assert --------------------------------
     ASSERT_EQ(expected_should_buffer, should_buffer);
-    ASSERT_TRUE(dependent_entity.state_equals<AllowEscapeCharacter>());
+    ASSERT_TRUE(dependent_entity.state_equals<ScanningEscaped>());
 }
 
 TEST_F(LexerComponentTests, dependent_entity_run_scanning_state_buffers_character )
@@ -137,7 +137,6 @@ TEST_F(LexerComponentTests, dependent_entity_run_scanning_state_buffers_characte
 TEST_F(LexerComponentTests, dependent_entity_run_escaped_to_allow_buffer_of_delimiters )
 {
     //---- input ---------------------------------
-    string character_buffer = "aa";
     string parent_entity_id = "D";
     MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
     char character = '"';
@@ -149,11 +148,12 @@ TEST_F(LexerComponentTests, dependent_entity_run_escaped_to_allow_buffer_of_deli
     MockLexer mock_lexer = MockLexer();
     MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
     auto mock_target = mock_lexer.get_mock_target();
-    create_buffer(mock_lexer, character_buffer);
-    dependent_entity.set_state<ScanningEscaped>();
+    dependent_entity.set_state<Scanning>();
 
     //---- run -----------------------------------
     bool should_buffer;
+    dependent_entity.run(should_buffer, '\"');
+    dependent_entity.run(should_buffer, 'a');
     dependent_entity.run(should_buffer, character);
 
     //---- assert --------------------------------
@@ -232,7 +232,7 @@ TEST_F(LexerComponentTests, dependent_entity_run )
 
     EXPECT_CALL(*mock_target, send_token("D")).Times(Exactly(1));
     EXPECT_CALL(*mock_target, send_token("F(aa)")).Times(Exactly(1));
-    EXPECT_CALL(*mock_target, send_token("F(bb)")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(bb\r)")).Times(Exactly(1));
     EXPECT_CALL(*mock_target, send_token("F(cc)")).Times(Exactly(1));
 
     dependent_run_helper('a', mock_dependent, lexer);
@@ -241,6 +241,7 @@ TEST_F(LexerComponentTests, dependent_entity_run )
     dependent_run_helper('"', mock_dependent, lexer);
     dependent_run_helper('b', mock_dependent, lexer);
     dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('\r', mock_dependent, lexer);
     dependent_run_helper('"', mock_dependent, lexer);
     dependent_run_helper(',', mock_dependent, lexer);
     dependent_run_helper('c', mock_dependent, lexer);
