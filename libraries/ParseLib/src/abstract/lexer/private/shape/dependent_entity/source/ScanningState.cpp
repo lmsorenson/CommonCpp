@@ -22,10 +22,6 @@ void Scanning::initialize(char ch)
 {
     if (ch == '\0')
         return;
-
-    // if (ch == ',' || ch == '\r' || ch == '\n')
-    //     context_->set_state<FoundDependent>(ch);
-
 }
 
 int32_t Scanning::perform_scan(char ch)

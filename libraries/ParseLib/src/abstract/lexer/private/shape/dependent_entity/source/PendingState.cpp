@@ -1,6 +1,7 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #include "../state/PendingState.hpp"
 #include "../state/StartIndependentEntity.hpp"
+#include "../../../../public/DependentEntity.hpp"
 
 #include "../../../../Lexer.hpp"
 
@@ -13,9 +14,18 @@ void PendingState::initialize(char ch)
 
 int32_t PendingState::perform_scan(char ch)
 {
-    context_->set_state<StartIndependentEntity>();
+    switch (ch)
+    {   
+    case '\r':
+    case '\n': 
+        return DependentEntity::StateTransition::None;
+        break;
 
-    return 0;
+    default: 
+        return DependentEntity::StateTransition::SetIndependentEntityBegin;
+        break;
+    }
+    
 }
 
 void PendingState::should_buffer(bool &should_buffer, char ch)

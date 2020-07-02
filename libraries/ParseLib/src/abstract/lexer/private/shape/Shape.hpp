@@ -87,10 +87,9 @@ void Shape::set_state(char ch)
 template<class T>
 bool Shape::state_equals()
 {
-    std::string current_state_key = typeid(current_state_).name();
-    std::string comparator_key = typeid(T).name();
+    auto ptr = std::dynamic_pointer_cast<T>(current_state_);
 
-    return (current_state_key.compare(comparator_key) == 0);
+    return (ptr != nullptr);
 }
 
 template<class T>

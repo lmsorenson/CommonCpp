@@ -7,12 +7,20 @@
 #include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/StartIndependentEntity.hpp"
 #include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/IndependentEntity.hpp"
 #include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/ScanningState.hpp"
+#include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/EscapedState.hpp"
+#include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/FoundState.hpp"
+#include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/PendingState.hpp"
+#include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/AllowEscapeCharacter.hpp"
 #include "MockDependentEntity.hpp"
 
 #include <gtest/gtest.h>
 
 using sdg::parse::Sequence;
 using sdg::dependent_entity::Scanning;
+using sdg::dependent_entity::ScanningEscaped;
+using sdg::dependent_entity::FoundDependent;
+using sdg::PendingState;
+using sdg::dependent_entity::AllowEscapeCharacter;
 using sdg::StartIndependentEntity;
 using std::string;
 using ::testing::Exactly;
@@ -66,6 +74,37 @@ TEST_F(LexerComponentTests, dependent_entity_run_initial_state_buffers_character
 
     //---- assert --------------------------------
     ASSERT_EQ(expected_should_buffer, should_buffer);
+    ASSERT_TRUE(dependent_entity.state_equals<Scanning>());
+}
+
+TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_escaped_state )
+{
+    //---- input ---------------------------------
+    string character_buffer = "";
+    string parent_entity_id = "D";
+    MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
+    char character = '\"';
+
+    //---- output --------------------------------
+    bool expected_should_buffer = false;
+
+    //---- setup ---------------------------------
+    MockLexer mock_lexer = MockLexer();
+    MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
+    auto mock_target = mock_lexer.get_mock_target();
+    create_buffer(mock_lexer, character_buffer);
+    dependent_entity.set_state<StartIndependentEntity>();
+
+    //---- assert --------------------------------
+    EXPECT_CALL(*mock_target, send_token(parent_entity_id)).Times(Exactly(1));
+
+    //---- run -----------------------------------
+    bool should_buffer;
+    dependent_entity.run(should_buffer, character);
+
+    //---- assert --------------------------------
+    ASSERT_EQ(expected_should_buffer, should_buffer);
+    ASSERT_TRUE(dependent_entity.state_equals<AllowEscapeCharacter>());
 }
 
 TEST_F(LexerComponentTests, dependent_entity_run_scanning_state_buffers_character )
@@ -92,6 +131,34 @@ TEST_F(LexerComponentTests, dependent_entity_run_scanning_state_buffers_characte
 
     //---- assert --------------------------------
     ASSERT_EQ(expected_should_buffer, should_buffer);
+    ASSERT_TRUE(dependent_entity.state_equals<Scanning>());
+}
+
+TEST_F(LexerComponentTests, dependent_entity_run_escaped_to_allow_buffer_of_delimiters )
+{
+    //---- input ---------------------------------
+    string character_buffer = "aa";
+    string parent_entity_id = "D";
+    MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
+    char character = '"';
+
+    //---- output --------------------------------
+    bool expected_should_buffer = false;
+
+    //---- setup ---------------------------------
+    MockLexer mock_lexer = MockLexer();
+    MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
+    auto mock_target = mock_lexer.get_mock_target();
+    create_buffer(mock_lexer, character_buffer);
+    dependent_entity.set_state<ScanningEscaped>();
+
+    //---- run -----------------------------------
+    bool should_buffer;
+    dependent_entity.run(should_buffer, character);
+
+    //---- assert --------------------------------
+    ASSERT_EQ(expected_should_buffer, should_buffer);
+    ASSERT_TRUE(dependent_entity.state_equals<AllowEscapeCharacter>());
 }
 
 TEST_F(LexerComponentTests, dependent_entity_run_item_delimiter_produces_token )
@@ -163,10 +230,10 @@ TEST_F(LexerComponentTests, dependent_entity_run )
 
     auto mock_target = lexer.get_mock_target();
 
-    EXPECT_CALL(*mock_target, send_token("D")).Times(::testing::Exactly(1));
-    EXPECT_CALL(*mock_target, send_token("F(aa)")).Times(::testing::Exactly(1));
-    EXPECT_CALL(*mock_target, send_token("F(bb)")).Times(::testing::Exactly(1));
-    EXPECT_CALL(*mock_target, send_token("F(cc)")).Times(::testing::Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("D")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(aa)")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(bb)")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(cc)")).Times(Exactly(1));
 
     dependent_run_helper('a', mock_dependent, lexer);
     dependent_run_helper('a', mock_dependent, lexer);

@@ -6,10 +6,12 @@
 #include "../state/ScanningState.hpp"
 #include "../state/EscapedState.hpp"
 #include "../../../../Lexer.hpp"
+#include "../../../../public/DependentEntity.hpp"
 
 using ::sdg::dependent_entity::FoundDependent;
 using ::sdg::dependent_entity::Scanning;
 using ::sdg::dependent_entity::ScanningEscaped;
+using ::sdg::EndIndependentEntity;
 using ::std::cout;
 using ::std::endl;
 using ::std::pair;
@@ -23,10 +25,10 @@ void FoundDependent::initialize(char ch)
 {
     context_->generate_token( pair<string, string>("F(",")") );
 
-    if (ch == '\n' || ch == '\r')
-    {
-        context_->set_state<EndIndependentEntity>();
-    }
+    // if (ch == '\n' || ch == '\r')
+    // {
+    //     context_->set_state<EndIndependentEntity>();
+    // }
 }
 
 int32_t FoundDependent::perform_scan(char ch)
@@ -35,15 +37,14 @@ int32_t FoundDependent::perform_scan(char ch)
     {   
     case '\r':
     case '\n': 
+        return DependentEntity::StateTransition::SetIndependentEntityFound;
         context_->handle_error({FILE_FORMAT_INVALID});
         break;
 
     default: 
-        context_->set_state<Scanning>();
+        return DependentEntity::StateTransition::SetScanningCharacters;
         break;
     }
-
-    return 0;
 }
 
 

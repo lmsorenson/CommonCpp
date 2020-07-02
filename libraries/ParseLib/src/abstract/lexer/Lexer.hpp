@@ -97,7 +97,7 @@ void Lexer::set_source(sdg::pipeline::Stream<char> *queue_ptr)
     this->set_subject(queue_ptr);
     source_=std::shared_ptr<T>( new T( queue_ptr ) );
 
-    this->scan();
+    // this->scan();
 }
 
 template<class T>
@@ -105,7 +105,7 @@ void Lexer::set_target(pipeline::Stream<std::string> *queue_ptr)
 {
     target_=std::shared_ptr<T>( new T( queue_ptr ) );
 
-    this->scan();
+    // this->scan();
 }
 
 template<class T>
@@ -113,7 +113,7 @@ void Lexer::set_error_queue(pipeline::Stream<Error> *error_queue_ptr)
 {
     error_queue_=std::shared_ptr<T>( new T( error_queue_ptr ) );
 
-    this->scan();
+    // this->scan();
 }
 
 

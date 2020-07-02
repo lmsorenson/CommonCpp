@@ -2,6 +2,7 @@
 #include "../state/AllowEscapeCharacter.hpp"
 #include "../state/ScanningState.hpp"
 #include "../state/EscapedState.hpp"
+#include "../../../../public/DependentEntity.hpp"
 #include <iostream>
 
 using ::sdg::dependent_entity::Scanning;
@@ -24,15 +25,13 @@ int32_t AllowEscapeCharacter::perform_scan(char ch)
     switch (ch)
     {
     case '\"': 
-        context_->set_state<ScanningEscaped>('\"');
+        return DependentEntity::StateTransition::SetScanningCharactersEscaped;
         break;
 
     default: 
-        context_->set_state<Scanning>(ch);
+        return DependentEntity::StateTransition::SetScanningCharacters;
         break;
     }
-    
-    return 0;
 }
 
 void AllowEscapeCharacter::should_buffer(bool &should_buffer, char ch)
