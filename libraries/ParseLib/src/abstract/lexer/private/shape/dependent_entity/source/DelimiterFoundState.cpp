@@ -23,6 +23,7 @@ void DelimiterFound::initialize(char ch)
 
 void DelimiterFound::update()
 {
+    char_count_++;
 }
 
 int32_t DelimiterFound::perform_scan(char ch)
@@ -38,7 +39,6 @@ int32_t DelimiterFound::perform_scan(char ch)
     }
     else
     {
-        char_count_++;
         result_transition = DependentEntity::StateTransition::None;
     }
 

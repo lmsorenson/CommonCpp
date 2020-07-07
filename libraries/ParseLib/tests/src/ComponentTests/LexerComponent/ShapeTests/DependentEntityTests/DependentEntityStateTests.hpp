@@ -109,7 +109,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_escap
     ASSERT_TRUE(dependent_entity.state_equals<ScanningEscaped>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_to_allow_buffer_of_delimiters_state )
+TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_to_delimiter_found )
 {
     //---- input ---------------------------------
     string parent_entity_id = "D";
@@ -133,7 +133,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_to_allow_buffer_o
 
     //---- assert --------------------------------
     ASSERT_EQ(expected_should_buffer, should_buffer);
-    ASSERT_TRUE(dependent_entity.state_equals<AllowEscapeCharacter>());
+    ASSERT_TRUE(dependent_entity.state_equals<DelimiterFound>());
 }
 
 TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_through_delimiter_found_to_scanning_state )
@@ -328,6 +328,35 @@ TEST_F(LexerComponentTests, dependent_entity_run )
     dependent_run_helper(',', mock_dependent, lexer);
     dependent_run_helper('"', mock_dependent, lexer);
     dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('\r', mock_dependent, lexer);
+    dependent_run_helper('"', mock_dependent, lexer);
+    dependent_run_helper(',', mock_dependent, lexer);
+    dependent_run_helper('c', mock_dependent, lexer);
+    dependent_run_helper('c', mock_dependent, lexer);
+    dependent_run_helper('\r', mock_dependent, lexer);
+    dependent_run_helper('\n', mock_dependent, lexer);
+}
+
+TEST_F(LexerComponentTests, dependent_entity_run_with_quote_in_field )
+{
+    MockLexer lexer = MockLexer();
+    MockDependentEntity mock_dependent(&lexer, "D", MockDependentEntity::Cardinality::One);
+
+    auto mock_target = lexer.get_mock_target();
+
+    EXPECT_CALL(*mock_target, send_token("D")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(aa)")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(b\"b\r)")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(cc)")).Times(Exactly(1));
+
+    dependent_run_helper('a', mock_dependent, lexer);
+    dependent_run_helper('a', mock_dependent, lexer);
+    dependent_run_helper(',', mock_dependent, lexer);
+    dependent_run_helper('"', mock_dependent, lexer);
+    dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('"', mock_dependent, lexer);
+    dependent_run_helper('"', mock_dependent, lexer);
     dependent_run_helper('b', mock_dependent, lexer);
     dependent_run_helper('\r', mock_dependent, lexer);
     dependent_run_helper('"', mock_dependent, lexer);
