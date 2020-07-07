@@ -14,6 +14,7 @@ public:
         None = 0,
         SetIndependentEntityBegin,
         SetScanningCharacters,
+        SetDelimiterFound,
         SetScanningCharactersEscaped,
         SetBufferingEscapeCharacters,
         SetDependentEntityFound,
@@ -40,7 +41,5 @@ private:
 
     virtual int32_t apply_transition(int32_t enum_value) override;
 };
-
-
 
 }// namespace sdg

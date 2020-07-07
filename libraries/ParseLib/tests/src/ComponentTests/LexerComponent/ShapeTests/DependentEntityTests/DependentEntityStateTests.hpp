@@ -11,6 +11,7 @@
 #include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/FoundState.hpp"
 #include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/PendingState.hpp"
 #include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/AllowEscapeCharacter.hpp"
+#include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/DelimiterFoundState.hpp"
 #include "MockDependentEntity.hpp"
 
 #include <gtest/gtest.h>
@@ -19,12 +20,14 @@ using sdg::parse::Sequence;
 using sdg::dependent_entity::Scanning;
 using sdg::dependent_entity::ScanningEscaped;
 using sdg::dependent_entity::FoundDependent;
+using sdg::dependent_entity::DelimiterFound;
 using sdg::PendingState;
 using sdg::dependent_entity::AllowEscapeCharacter;
 using sdg::StartIndependentEntity;
 using std::string;
 using ::testing::Exactly;
 
+//------------ Helpers -----------------
 void create_buffer(MockLexer &lexer, string buffer)
 {
     for(auto itr = buffer.begin(); itr != buffer.end(); itr++)
@@ -33,7 +36,6 @@ void create_buffer(MockLexer &lexer, string buffer)
     }
     
 }
-
 void dependent_run_helper(char ch, ::sdg::DependentEntity &mock_dependent, MockLexer &lexer)
 {
     bool should_buffer;
@@ -50,7 +52,7 @@ void dependent_run_helper(char ch, ::sdg::DependentEntity &mock_dependent, MockL
 //cardinality
 //character
 
-TEST_F(LexerComponentTests, dependent_entity_run_initial_state_buffers_character )
+TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_state )
 {
     //---- input ---------------------------------
     string character_buffer = "";
@@ -107,34 +109,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_escap
     ASSERT_TRUE(dependent_entity.state_equals<ScanningEscaped>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_scanning_state_buffers_character )
-{
-    //---- input ---------------------------------
-    string character_buffer = "";
-    string parent_entity_id = "D";
-    MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
-    char character = 'z';
-
-    //---- output --------------------------------
-    bool expected_should_buffer = true;
-
-    //---- setup ---------------------------------
-    MockLexer mock_lexer = MockLexer();
-    MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
-    auto mock_target = mock_lexer.get_mock_target();
-    create_buffer(mock_lexer, character_buffer);
-    dependent_entity.set_state<Scanning>();
-
-    //---- run -----------------------------------
-    bool should_buffer;
-    dependent_entity.run(should_buffer, character);
-
-    //---- assert --------------------------------
-    ASSERT_EQ(expected_should_buffer, should_buffer);
-    ASSERT_TRUE(dependent_entity.state_equals<Scanning>());
-}
-
-TEST_F(LexerComponentTests, dependent_entity_run_escaped_to_allow_buffer_of_delimiters )
+TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_to_allow_buffer_of_delimiters_state )
 {
     //---- input ---------------------------------
     string parent_entity_id = "D";
@@ -159,6 +134,121 @@ TEST_F(LexerComponentTests, dependent_entity_run_escaped_to_allow_buffer_of_deli
     //---- assert --------------------------------
     ASSERT_EQ(expected_should_buffer, should_buffer);
     ASSERT_TRUE(dependent_entity.state_equals<AllowEscapeCharacter>());
+}
+
+TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_through_delimiter_found_to_scanning_state )
+{
+    //---- input ---------------------------------
+    string character_buffer = "bbb";
+    string parent_entity_id = "D";
+    MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
+
+    //---- output --------------------------------
+    bool expected_should_buffer = false;
+
+    //---- setup ---------------------------------
+    MockLexer mock_lexer = MockLexer();
+    MockDependentEntity dependent_entity(&mock_lexer, parent_entity_id, cardinality);
+    auto mock_target = mock_lexer.get_mock_target();
+    create_buffer(mock_lexer, character_buffer);
+    dependent_entity.set_state<Scanning>();
+
+    //---- run -----------------------------------
+    bool actual_should_buffer;
+    dependent_entity.run(actual_should_buffer, '\"');
+    dependent_entity.run(actual_should_buffer, 'a');
+    dependent_entity.run(actual_should_buffer, '\"');
+    ASSERT_EQ(expected_should_buffer, actual_should_buffer);
+
+    dependent_entity.run(actual_should_buffer, 'a');//transition goes through AllowEscapeCharacter state
+    
+    //---- assert --------------------------------
+    ASSERT_EQ(true, actual_should_buffer);
+    ASSERT_TRUE(dependent_entity.state_equals<Scanning>());
+}
+
+TEST_F(LexerComponentTests, dependent_entity_run_allow_escape_characters_buffers_escape_character )
+{
+    //---- input ---------------------------------
+    string character_buffer = "bbb";
+    string parent_entity_id = "D";
+    MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
+
+    //---- setup ---------------------------------
+    MockLexer mock_lexer = MockLexer();
+    MockDependentEntity dependent_entity(&mock_lexer, parent_entity_id, cardinality);
+    auto mock_target = mock_lexer.get_mock_target();
+    create_buffer(mock_lexer, character_buffer);
+    dependent_entity.set_state<Scanning>();
+
+    //---- run -----------------------------------
+    bool should_buffer;
+    dependent_entity.run(should_buffer, '\"');
+    dependent_entity.run(should_buffer, 'a');
+    dependent_entity.run(should_buffer, '\"');
+    ASSERT_EQ(false, should_buffer);
+
+    dependent_entity.run(should_buffer, '\"');
+    ASSERT_EQ(true, should_buffer);
+    dependent_entity.run(should_buffer, 'a');
+    
+    //---- assert --------------------------------
+    ASSERT_EQ(true, should_buffer);
+    ASSERT_TRUE(dependent_entity.state_equals<ScanningEscaped>());
+}
+
+TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_no_transition_buffers_character )
+{
+    //---- input ---------------------------------
+    string character_buffer = "";
+    string parent_entity_id = "D";
+    MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
+    char character = '\r';
+
+    //---- output --------------------------------
+    bool expected_should_buffer = true;
+
+    //---- setup ---------------------------------
+    MockLexer mock_lexer = MockLexer();
+    MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
+    auto mock_target = mock_lexer.get_mock_target();
+    create_buffer(mock_lexer, character_buffer);
+    dependent_entity.set_state<ScanningEscaped>();
+
+    //---- run -----------------------------------
+    bool should_buffer;
+    dependent_entity.run(should_buffer, character);
+
+    //---- assert --------------------------------
+    ASSERT_EQ(expected_should_buffer, should_buffer);
+    ASSERT_TRUE(dependent_entity.state_equals<ScanningEscaped>());
+}
+
+TEST_F(LexerComponentTests, dependent_entity_run_scanning_state_no_transition_buffers_character )
+{
+    //---- input ---------------------------------
+    string character_buffer = "";
+    string parent_entity_id = "D";
+    MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
+    char character = 'z';
+
+    //---- output --------------------------------
+    bool expected_should_buffer = true;
+
+    //---- setup ---------------------------------
+    MockLexer mock_lexer = MockLexer();
+    MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
+    auto mock_target = mock_lexer.get_mock_target();
+    create_buffer(mock_lexer, character_buffer);
+    dependent_entity.set_state<Scanning>();
+
+    //---- run -----------------------------------
+    bool should_buffer;
+    dependent_entity.run(should_buffer, character);
+
+    //---- assert --------------------------------
+    ASSERT_EQ(expected_should_buffer, should_buffer);
+    ASSERT_TRUE(dependent_entity.state_equals<Scanning>());
 }
 
 TEST_F(LexerComponentTests, dependent_entity_run_item_delimiter_produces_token )
@@ -191,7 +281,6 @@ TEST_F(LexerComponentTests, dependent_entity_run_item_delimiter_produces_token )
     ASSERT_EQ(expected_should_buffer, should_buffer);
 }
 
-
 TEST_F(LexerComponentTests, dependent_entity_run_list_delimiter_produces_token )
 {
     //---- input ---------------------------------
@@ -221,7 +310,6 @@ TEST_F(LexerComponentTests, dependent_entity_run_list_delimiter_produces_token )
     //---- assert --------------------------------
     ASSERT_EQ(expected_should_buffer, should_buffer);
 }
-
 
 TEST_F(LexerComponentTests, dependent_entity_run )
 {

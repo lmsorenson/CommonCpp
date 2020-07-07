@@ -24,7 +24,7 @@ void ScanningEscaped::initialize(char ch)
 int32_t ScanningEscaped::perform_scan(char ch)
 {
     if (ch=='\"'  && num_delimiters>=1)
-        return DependentEntity::StateTransition::SetBufferingEscapeCharacters;
+        return DependentEntity::StateTransition::SetDelimiterFound;
 
     if (ch=='\"' && num_delimiters>=1) 
         return DependentEntity::StateTransition::SetScanningCharacters;

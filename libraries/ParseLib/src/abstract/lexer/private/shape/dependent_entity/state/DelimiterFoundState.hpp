@@ -8,16 +8,15 @@
 namespace sdg {
 namespace dependent_entity {
 
-class AllowEscapeCharacter : public LexerState
+class DelimiterFound : public LexerState
 {
     int32_t char_count_;
-
 public:
-    AllowEscapeCharacter(Shape *context, int32_t state_code) 
+    DelimiterFound(Shape *context, int32_t state_code) 
     : LexerState(context, state_code)
-    , char_count_(0) 
+    , char_count_(0)
     {}
-    virtual ~AllowEscapeCharacter() = default;
+    virtual ~DelimiterFound() = default;
 
     virtual void initialize(char ch) override;
     virtual int32_t perform_scan(char ch) override;

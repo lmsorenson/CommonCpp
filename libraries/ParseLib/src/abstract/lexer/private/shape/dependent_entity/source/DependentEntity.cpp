@@ -8,6 +8,7 @@
 #include "../state/ScanningState.hpp"
 #include "../state/EscapedState.hpp"
 #include "../state/AllowEscapeCharacter.hpp"
+#include "../state/DelimiterFoundState.hpp"
 #include "../state/FoundState.hpp"
 #include "../../../../Lexer.hpp"
 
@@ -16,6 +17,7 @@ using ::sdg::dependent_entity::FoundDependent;
 using ::sdg::dependent_entity::Scanning;
 using ::sdg::dependent_entity::ScanningEscaped;
 using ::sdg::dependent_entity::AllowEscapeCharacter;
+using ::sdg::dependent_entity::DelimiterFound;
 using ::std::cout;
 using ::std::endl;
 using ::std::string;
@@ -30,6 +32,7 @@ DependentEntity::DependentEntity(Lexer *context, std::string entity_id, Shape::C
 {
     this->add_state<StartIndependentEntity>(SetIndependentEntityBegin);
     this->add_state<Scanning>(SetScanningCharacters);
+    this->add_state<DelimiterFound>(SetDelimiterFound);
     this->add_state<ScanningEscaped>(SetScanningCharactersEscaped);
     this->add_state<AllowEscapeCharacter>(SetBufferingEscapeCharacters);
     this->add_state<FoundDependent>(SetDependentEntityFound);
@@ -67,6 +70,10 @@ int32_t DependentEntity::apply_transition(int32_t enum_value)
 
     case DependentEntity::StateTransition::SetPending:
         this->set_state<PendingState>();
+        break;
+
+    case DependentEntity::StateTransition::SetDelimiterFound:
+        this->set_state<DelimiterFound>();
         break;
 
     default:
