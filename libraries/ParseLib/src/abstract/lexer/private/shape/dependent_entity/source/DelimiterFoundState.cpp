@@ -30,10 +30,12 @@ int32_t DelimiterFound::perform_scan(char ch)
 {
     DependentEntity::StateTransition result_transition;
     auto ctx = dynamic_cast<DependentEntity*>(context_);
+    if (!ctx)
+        return -1;
 
     if ( char_count_ > 0 )
     {
-        if(ch == '\"')
+        if( ctx->matches_escape_sequence_close(ch) )
             result_transition = DependentEntity::StateTransition::SetBufferingEscapeCharacters;
         else
             result_transition = DependentEntity::StateTransition::SetScanningCharacters;
