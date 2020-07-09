@@ -9,7 +9,7 @@ class RecordShape : public DependentEntity
 {
 public:
     RecordShape(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
-    : DependentEntity(context, entity_id, cardinality, ',', "\r\n")
+    : DependentEntity(context, entity_id, cardinality, ',', "\r\n", {'\"', '\"'}, '\"')
     {}
     virtual ~RecordShape() = default;
 

@@ -29,6 +29,7 @@ void DelimiterFound::update()
 int32_t DelimiterFound::perform_scan(char ch)
 {
     DependentEntity::StateTransition result_transition;
+    auto ctx = dynamic_cast<DependentEntity*>(context_);
 
     if ( char_count_ > 0 )
     {

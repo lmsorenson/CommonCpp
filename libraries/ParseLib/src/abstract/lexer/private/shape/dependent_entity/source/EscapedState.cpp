@@ -23,6 +23,8 @@ void ScanningEscaped::initialize(char ch)
 
 int32_t ScanningEscaped::perform_scan(char ch)
 {
+    auto ctx = dynamic_cast<DependentEntity*>(context_);
+
     if (ch=='\"'  && num_delimiters>=1)
         return DependentEntity::StateTransition::SetDelimiterFound;
 

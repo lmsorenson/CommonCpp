@@ -18,7 +18,7 @@ public:
 
     virtual int32_t perform_scan(char ch) override
     {
-
+        return 0;
     }
 private:
 };

@@ -9,7 +9,7 @@ class MockDependentEntity : public ::sdg::DependentEntity
 {
 public:
     MockDependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
-    : DependentEntity(context, entity_id, cardinality, ',', "\r\n")
+    : DependentEntity(context, entity_id, cardinality, ',', "\r\n", {'\"', '\"'}, '\"')
     {}
     virtual ~MockDependentEntity() = default;
 

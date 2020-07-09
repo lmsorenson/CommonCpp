@@ -24,20 +24,29 @@ using ::std::string;
 using ::std::pair;
 
 
-DependentEntity::DependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality, char entity_delimiter, std::string shape_delimiter) 
+DependentEntity::DependentEntity(
+    Lexer *context, 
+    std::string entity_id, 
+    Shape::Cardinality cardinality, 
+    char entity_delimiter, 
+    std::string shape_delimiter, 
+    std::pair<char, char> escape_sequence_delimiters, 
+    char escape_char_delimiter) 
 : Shape(context, cardinality) 
 , entity_id_(entity_id)
 , entity_delimiter_(entity_delimiter)
 , shape_delimiter_(shape_delimiter)
+, escape_sequence_delimiters_(escape_sequence_delimiters)
+, escape_char_delimiter_(escape_char_delimiter)
 {
-    this->add_state<StartIndependentEntity>(SetIndependentEntityBegin);
-    this->add_state<Scanning>(SetScanningCharacters);
-    this->add_state<DelimiterFound>(SetDelimiterFound);
-    this->add_state<ScanningEscaped>(SetScanningCharactersEscaped);
-    this->add_state<AllowEscapeCharacter>(SetBufferingEscapeCharacters);
-    this->add_state<FoundDependent>(SetDependentEntityFound);
-    this->add_state<EndIndependentEntity>(SetIndependentEntityFound);
-    this->add_state<PendingState>(SetPending);
+    this->add_state<StartIndependentEntity>( SetIndependentEntityBegin );
+    this->add_state<Scanning>( SetScanningCharacters );
+    this->add_state<DelimiterFound>( SetDelimiterFound );
+    this->add_state<ScanningEscaped>( SetScanningCharactersEscaped );
+    this->add_state<AllowEscapeCharacter>( SetBufferingEscapeCharacters );
+    this->add_state<FoundDependent>( SetDependentEntityFound );
+    this->add_state<EndIndependentEntity>( SetIndependentEntityFound );
+    this->add_state<PendingState>( SetPending );
 }
 
 int32_t DependentEntity::apply_transition(int32_t enum_value)
@@ -84,7 +93,38 @@ int32_t DependentEntity::apply_transition(int32_t enum_value)
     return 1;
 }
 
-void DependentEntity::generate_link_token() const
+bool DependentEntity::matches_shape_delimiter(char ch) const
+{
+    for(auto itr = shape_delimiter_.begin(); itr != shape_delimiter_.end(); ++itr)
+    {
+        if (*itr == ch)
+            return true;
+    }
+
+    return false;
+}
+
+bool DependentEntity::matches_entity_delimiter(char ch) const
+{
+    return (ch == entity_delimiter_);
+}
+
+bool DependentEntity::matches_escape_sequence_open(char ch) const
+{
+    return (ch == escape_sequence_delimiters_.first);
+}
+
+bool DependentEntity::matches_escape_sequence_close(char ch) const
+{
+    return (ch == escape_sequence_delimiters_.second);
+}
+
+bool DependentEntity::matches_escape_char_delimiter(char ch) const
+{
+    return (ch == entity_delimiter_);
+}
+
+void DependentEntity::DependentEntity::generate_link_token() const
 {
     generate_token(entity_id_);
 }

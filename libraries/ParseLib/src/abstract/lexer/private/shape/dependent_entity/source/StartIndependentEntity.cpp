@@ -24,37 +24,40 @@ void StartIndependentEntity::initialize(char ch)
 
 int32_t StartIndependentEntity::perform_scan(char ch)
 {
-    switch (ch)
+    auto ctx = dynamic_cast<DependentEntity*>(context_);
+    if (!ctx)
+        return -1;
+
+    if ( ctx->matches_shape_delimiter(ch) )
     {
-    case '\r':
-    case '\n':
-        break;
-
-    case '\"':
-        return DependentEntity::StateTransition::SetScanningCharactersEscaped;
-        break;
-
-    default: 
-        return DependentEntity::StateTransition::SetScanningCharacters;
-        break;
+        
     }
-    return 0;
+    else if( ctx->matches_escape_sequence_open(ch) )
+    {
+        return DependentEntity::StateTransition::SetScanningCharactersEscaped;
+    }
+    else
+    {
+        return DependentEntity::StateTransition::SetScanningCharacters;
+    }
 }
 
 
 void StartIndependentEntity::should_buffer(bool &should_buffer, char ch)
 {
-    switch (ch)
-    {
-    case '\"':
-    case ',':
-    case '\r':
-    case '\n': 
-        should_buffer = false;
-        break;
+    auto ctx = dynamic_cast<DependentEntity*>(context_);
+    if (!ctx)
+        return;
 
-    default: 
+    if ( ctx->matches_shape_delimiter(ch) || 
+        ctx->matches_entity_delimiter(ch) || 
+        ctx->matches_escape_sequence_open(ch) ||
+        ctx->matches_escape_sequence_close(ch) )
+    {
+        should_buffer = false;
+    }
+    else
+    {
         should_buffer = true;
-        break;
     }
 }

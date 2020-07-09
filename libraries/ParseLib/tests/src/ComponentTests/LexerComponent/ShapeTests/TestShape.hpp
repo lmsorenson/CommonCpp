@@ -35,6 +35,8 @@ public:
         default:
         case StateTransition::None: break;
         }
+
+        return 1;
     }
 
     bool is_complete() const override

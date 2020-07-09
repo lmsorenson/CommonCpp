@@ -23,8 +23,9 @@ void AllowEscapeCharacter::initialize(char ch)
 int32_t AllowEscapeCharacter::perform_scan(char ch)
 {
     DependentEntity::StateTransition result_transition;
+    auto ctx = dynamic_cast<DependentEntity*>(context_);
 
-    if (char_count_<1)
+    if (char_count_ < 1)
     {
         if (ch == '\"')
             result_transition = DependentEntity::StateTransition::None;
