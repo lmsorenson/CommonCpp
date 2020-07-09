@@ -10,7 +10,11 @@ class Shape;
 class LexerState
 {
 public:
-    LexerState(Shape *context, int32_t state_code) : context_(context), code_(state_code) {}
+    LexerState(Shape *context, int32_t state_code) 
+    : context_(context), 
+    code_(state_code),
+    occurances_(0)
+    {}
     virtual ~LexerState() = default;
 
     virtual void initialize(char ch = '\0');

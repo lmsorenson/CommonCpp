@@ -16,7 +16,6 @@
 
 #include <gtest/gtest.h>
 
-using sdg::parse::Sequence;
 using sdg::dependent_entity::Scanning;
 using sdg::dependent_entity::ScanningEscaped;
 using sdg::dependent_entity::FoundDependent;

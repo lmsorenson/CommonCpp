@@ -9,8 +9,6 @@
 #include "TestStates.hpp"
 #include "TestShape.hpp"
 
-using sdg::parse::Sequence;
-
 TEST_F(LexerComponentTests, shape_run_character_satisfies_a_chain_of_transitions )
 {
     Lexer lexer = Lexer();
