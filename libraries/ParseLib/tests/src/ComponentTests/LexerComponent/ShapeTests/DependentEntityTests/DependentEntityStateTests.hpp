@@ -337,6 +337,30 @@ TEST_F(LexerComponentTests, dependent_entity_run )
     dependent_run_helper('\n', mock_dependent, lexer);
 }
 
+TEST_F(LexerComponentTests, dependent_entity_run_alternate )
+{
+    MockLexer lexer = MockLexer();
+    MockDependentEntityB mock_dependent(&lexer, "D", MockDependentEntity::Cardinality::One);
+
+    auto mock_target = lexer.get_mock_target();
+
+    EXPECT_CALL(*mock_target, send_token("D")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(aa)")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(bb)")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(cc)")).Times(Exactly(1));
+
+
+    dependent_run_helper('a', mock_dependent, lexer);
+    dependent_run_helper('a', mock_dependent, lexer);
+    dependent_run_helper('|', mock_dependent, lexer);
+    dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('|', mock_dependent, lexer);
+    dependent_run_helper('c', mock_dependent, lexer);
+    dependent_run_helper('c', mock_dependent, lexer);
+    dependent_run_helper('}', mock_dependent, lexer);
+}
+
 TEST_F(LexerComponentTests, dependent_entity_run_with_quote_in_field )
 {
     MockLexer lexer = MockLexer();

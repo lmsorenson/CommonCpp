@@ -17,6 +17,18 @@ public:
     MOCK_METHOD(int32_t, generate_link_token, (), (const));
 };
 
+class MockDependentEntityB : public ::sdg::DependentEntity
+{
+public:
+    MockDependentEntityB(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
+    : DependentEntity(context, entity_id, cardinality, '|', "}", {'(', ')'}, '\\')
+    {}
+    virtual ~MockDependentEntityB() = default;
+
+    MOCK_METHOD(int32_t, generate_token, (std::string token), (const override));
+    MOCK_METHOD(int32_t, generate_link_token, (), (const));
+};
+
 class MockTarget : public ::sdg::TokenTarget
 {
 public:
