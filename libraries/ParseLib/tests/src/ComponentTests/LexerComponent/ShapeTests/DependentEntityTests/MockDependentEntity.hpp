@@ -2,6 +2,8 @@
 #include <gmock/gmock.h>
 #include "../../../../../../src/abstract/lexer/public/DependentEntity.hpp"
 #include "../../../../../../src/abstract/lexer/private/queue/TokenTarget.hpp"
+#include "../../../../../../src/abstract/lexer/private/queue/ErrorQueue.hpp"
+#include "../../../../../../src/abstract/intermediate/Error.hpp"
 
 
 
@@ -38,11 +40,21 @@ public:
     MOCK_METHOD(void, send_token, (std::string token), ());
 };
 
+class MockErrorQueue : public ::sdg::ErrorQueue
+{
+public:
+    MockErrorQueue(::sdg::pipeline::Stream<sdg::Error> * stream) : ErrorQueue(stream) {}
+    virtual ~MockErrorQueue() = default;
+
+    MOCK_METHOD(void, add_error, (const ::sdg::Error err), ());
+};
+
 class MockLexer : public ::sdg::Lexer
 {
 public:
     MockLexer() : Lexer() {
         this->set_target<MockTarget>(nullptr);
+        this->set_error_queue<MockErrorQueue>(nullptr);
     }
     virtual ~MockLexer() = default;
 
@@ -52,8 +64,14 @@ public:
     {
         buffer_.append(std::string(1, ch));
     }
+
     std::shared_ptr<MockTarget> get_mock_target()
     {
         return std::dynamic_pointer_cast<MockTarget>(target_);
+    }
+
+    std::shared_ptr<MockErrorQueue> get_mock_error_queue()
+    {
+        return std::dynamic_pointer_cast<MockErrorQueue>(error_queue_);
     }
 };

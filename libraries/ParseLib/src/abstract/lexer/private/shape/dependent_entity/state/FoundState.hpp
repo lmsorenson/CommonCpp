@@ -11,12 +11,15 @@ namespace dependent_entity {
 class FoundDependent : public LexerState
 {
 public:
-    FoundDependent(Shape *context, int32_t state_code) : LexerState(context, state_code){}
+    FoundDependent(Shape *context, int32_t state_code) : LexerState(context, state_code), token_size_(-1) {}
     virtual ~FoundDependent() = default;
 
     virtual void initialize(char ch) override;
     virtual int32_t perform_scan(char ch) override;
     virtual void should_buffer(bool &should_buffer, char ch) override;
+
+private:
+    int32_t token_size_;
 };
 
 }// namespace dependent_entity

@@ -23,12 +23,7 @@ using ::std::string;
 
 void FoundDependent::initialize(char ch)
 {
-    context_->generate_token( pair<string, string>("F(",")") );
-
-    // if (ch == '\n' || ch == '\r')
-    // {
-    //     context_->set_state<EndIndependentEntity>();
-    // }
+    token_size_ = context_->generate_token( pair<string, string>("F(",")") );
 }
 
 int32_t FoundDependent::perform_scan(char ch)
@@ -37,10 +32,14 @@ int32_t FoundDependent::perform_scan(char ch)
     if (!ctx)
         return -1;
 
-    if ( ctx->matches_shape_delimiter(ch) )
+    if( ctx->matches_shape_delimiter(ch) && token_size_ <= 0 )
+    {
+        context_->handle_error({FILE_FORMAT_INVALID});
+        return DependentEntity::StateTransition::None;
+    }
+    else if ( ctx->matches_shape_delimiter(ch) )
     {
         return DependentEntity::StateTransition::SetIndependentEntityFound;
-        context_->handle_error({FILE_FORMAT_INVALID});
     }
     else
     {

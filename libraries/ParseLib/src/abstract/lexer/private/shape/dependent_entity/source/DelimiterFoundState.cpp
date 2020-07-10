@@ -18,34 +18,33 @@ using ::std::endl;
 
 void DelimiterFound::initialize(char ch)
 {
-    char_count_=0;
+    LexerState::initialize(ch);
 }
 
 void DelimiterFound::update()
 {
-    char_count_++;
+    LexerState::update();
 }
 
 int32_t DelimiterFound::perform_scan(char ch)
 {
-    DependentEntity::StateTransition result_transition;
+    int32_t result_transition_code;
     auto ctx = dynamic_cast<DependentEntity*>(context_);
     if (!ctx)
         return -1;
 
-    if ( char_count_ > 0 )
-    {
-        if( ctx->matches_escape_sequence_close(ch) )
-            result_transition = DependentEntity::StateTransition::SetBufferingEscapeCharacters;
-        else
-            result_transition = DependentEntity::StateTransition::SetScanningCharacters;
-    }
-    else
-    {
-        result_transition = DependentEntity::StateTransition::None;
-    }
+    //delay the transition because the transition depends on the following character.
+    result_transition_code = delayed( Delay::OneCharacter,
+        [=](){
+            if( ctx->matches_escape_sequence_close(ch) )
+                return DependentEntity::StateTransition::SetBufferingEscapeCharacters;
+            else
+                return DependentEntity::StateTransition::SetScanningCharacters;
+        });
 
-    return result_transition;
+    return (result_transition_code != -1) 
+    ? result_transition_code
+    : DependentEntity::StateTransition::None;
 }
 
 void DelimiterFound::should_buffer(bool &should_buffer, char ch)

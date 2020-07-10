@@ -19,7 +19,7 @@ void EndIndependentEntity::initialize(char ch)
 
 int32_t EndIndependentEntity::perform_scan(char ch)
 {
-    return 0;
+    return DependentEntity::StateTransition::None;
 }
 
 void EndIndependentEntity::should_buffer(bool &should_buffer, char ch)

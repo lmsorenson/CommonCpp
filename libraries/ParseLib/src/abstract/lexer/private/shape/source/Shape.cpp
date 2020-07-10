@@ -94,16 +94,30 @@ void Shape::run(bool &should_buffer, char ch)
     }
 }
 
-void Shape::generate_token(string token) const
+int32_t Shape::generate_token(string token) const
 {
     if (context_)
+    {
         context_->produce_token(token);
+        return token.size();
+    }
+    else
+    {
+        return -4;
+    }
 }
 
-void Shape::generate_token(std::pair<std::string, std::string> bracket)
+int32_t Shape::generate_token(std::pair<std::string, std::string> bracket)
 {
     if (context_)
-        context_->produce_tagged_token( pair(bracket.first, bracket.second) );
+    {
+        auto token_size = context_->produce_tagged_token( pair(bracket.first, bracket.second) );
+        return token_size;
+    }
+    else
+    {
+        return -4;
+    }
 }
 
 void Shape::handle_error(Error error)

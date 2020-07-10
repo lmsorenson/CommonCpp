@@ -13,6 +13,7 @@
 #include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/AllowEscapeCharacter.hpp"
 #include "../../../../../../src/abstract/lexer/private/shape/dependent_entity/state/DelimiterFoundState.hpp"
 #include "MockDependentEntity.hpp"
+#include "../../../../../../src/abstract/intermediate/Error.hpp"
 
 #include <gtest/gtest.h>
 
@@ -25,6 +26,7 @@ using sdg::dependent_entity::AllowEscapeCharacter;
 using sdg::StartIndependentEntity;
 using std::string;
 using ::testing::Exactly;
+using ::testing::_;
 
 //------------ Helpers -----------------
 void create_buffer(MockLexer &lexer, string buffer)
@@ -271,6 +273,35 @@ TEST_F(LexerComponentTests, dependent_entity_run_item_delimiter_produces_token )
 
     //---- assert --------------------------------
     EXPECT_CALL(*mock_target, send_token(expected_token)).Times(Exactly(1));
+
+    //---- run -----------------------------------
+    bool should_buffer;
+    dependent_entity.run(should_buffer, character);
+
+    //---- assert --------------------------------
+    ASSERT_EQ(expected_should_buffer, should_buffer);
+}
+
+TEST_F(LexerComponentTests, dependent_entity_run_empty_token_sends_error )
+{
+    //---- input ---------------------------------
+    string character_buffer = "";
+    string parent_entity_id = "D";
+    MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
+    char character = '\r';
+
+    //---- output --------------------------------
+    bool expected_should_buffer = false;
+
+    //---- setup ---------------------------------
+    MockLexer mock_lexer = MockLexer();
+    MockDependentEntity dependent_entity(&mock_lexer, parent_entity_id, cardinality);
+    auto mock_error_queue = mock_lexer.get_mock_error_queue();
+    create_buffer(mock_lexer, character_buffer);
+    dependent_entity.set_state<FoundDependent>();
+
+    //---- assert --------------------------------
+    EXPECT_CALL(*mock_error_queue, add_error(_)).Times(Exactly(1));
 
     //---- run -----------------------------------
     bool should_buffer;

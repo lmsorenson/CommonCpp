@@ -11,9 +11,10 @@ class LexerState
 {
 public:
     LexerState(Shape *context, int32_t state_code) 
-    : context_(context), 
-    code_(state_code),
-    occurances_(0)
+    : context_(context),
+    occurances_(0),
+    char_num_(0),
+    code_(state_code)
     {}
     virtual ~LexerState() = default;
 
@@ -39,11 +40,20 @@ public:
         return *this;
     }
 
+    enum Delay : int32_t
+    {
+        NoDelay = 0,
+        OneCharacter
+    };
+
 protected:
     Shape * const context_;
+    int32_t delayed(Delay delay, std::function<int32_t()> delayed_function);
 
 private:
-    int32_t occurances_;
+    
+    int32_t occurances_;        //occurances refer to the number of times this state is used.
+    int32_t char_num_;          //char_num_ refers to the number of characters scanned in the current session of this state.
     int32_t code_;
 };
 

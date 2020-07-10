@@ -72,8 +72,10 @@ void Lexer::produce_token(std::string token_content)
 }
 
 
-void Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
+int32_t Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
 {
+    int32_t buffer_size = buffer_.size();
+
     if(!buffer_.empty())
     {
         std::string token;
@@ -89,6 +91,8 @@ void Lexer::produce_tagged_token(std::pair<std::string, std::string> tag)
         target_->send_token(token);
         stopwatch_.start();
     }
+    
+    return buffer_size;
 }
 
 

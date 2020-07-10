@@ -17,35 +17,33 @@ using ::std::endl;
 
 void AllowEscapeCharacter::initialize(char ch)
 {
-    char_count_ = 0;
-}
-
-int32_t AllowEscapeCharacter::perform_scan(char ch)
-{
-    DependentEntity::StateTransition result_transition;
-    auto ctx = dynamic_cast<DependentEntity*>(context_);
-    if (!ctx)
-        return -1;
-
-    if (char_count_ < 1)
-    {
-        if ( ctx->matches_escape_sequence_close(ch) )
-            result_transition = DependentEntity::StateTransition::None;
-
-        else
-            result_transition = DependentEntity::StateTransition::SetScanningCharacters;
-    }
-    else
-    {
-        result_transition = DependentEntity::StateTransition::SetScanningCharactersEscaped;
-    }
-
-    return result_transition;
+    LexerState::initialize(ch);
 }
 
 void AllowEscapeCharacter::update()
 {
-    char_count_++;
+    LexerState::update();
+}
+
+int32_t AllowEscapeCharacter::perform_scan(char ch)
+{
+    int32_t result_transition_code;
+    auto ctx = dynamic_cast<DependentEntity*>(context_);
+    if (!ctx)
+        return -1;
+
+    //delay the transition to give the lexer time to buffer the character.
+    result_transition_code = delayed( Delay::NoDelay,
+        [=](){
+            if( ctx->matches_escape_sequence_close(ch) )
+                return DependentEntity::StateTransition::None;
+            else
+                return DependentEntity::StateTransition::SetScanningCharacters;
+        });
+
+    return (result_transition_code != -1) 
+    ? result_transition_code
+    : DependentEntity::StateTransition::SetScanningCharactersEscaped;
 }
 
 void AllowEscapeCharacter::should_buffer(bool &should_buffer, char ch)

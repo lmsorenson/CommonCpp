@@ -5,10 +5,22 @@
 using ::sdg::LexerState;
 
 
-
+int32_t LexerState::delayed(Delay delay, std::function<int32_t()> delayed_function)
+{
+    if (char_num_ == (int32_t)delay)
+    {
+        return delayed_function();
+    }
+    else
+    {
+        return -1;
+    }
+}
 
 void LexerState::initialize(char ch)
 {
+    //reset this count when a new session begins.
+    char_num_ = 0;
 }
 
 void LexerState::should_buffer(bool &should_buffer, char ch)
@@ -28,7 +40,7 @@ int32_t LexerState::occurances() const
 
 void LexerState::update()
 {
-
+    char_num_++;
 }
 
 void LexerState::on_transition()

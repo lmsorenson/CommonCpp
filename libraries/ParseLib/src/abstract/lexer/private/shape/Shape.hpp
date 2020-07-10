@@ -33,8 +33,8 @@ public:
     void init();
     void run(bool &should_buffer, char ch='\0');
 
-    void generate_token(std::string token) const;
-    void generate_token(std::pair<std::string, std::string> bracket);
+    int32_t generate_token(std::string token) const;
+    int32_t generate_token(std::pair<std::string, std::string> bracket);
 
     void handle_error(Error error);
 
@@ -77,9 +77,12 @@ void Shape::set_state(char ch)
 
     std::string key = typeid(T).name();
     auto candidate = states_.at(key);
-    ++(*candidate);
+    
 
     current_state_ = candidate;
+
+    //mark the occurance
+    ++(*candidate);
 
     current_state_->initialize(ch);
 }
