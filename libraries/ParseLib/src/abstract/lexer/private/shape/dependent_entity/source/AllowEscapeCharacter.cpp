@@ -48,14 +48,5 @@ int32_t AllowEscapeCharacter::perform_scan(char ch)
 
 void AllowEscapeCharacter::should_buffer(bool &should_buffer, char ch)
 {
-    switch (ch)
-    {
-    case '\"':
-        should_buffer = true;
-        break;
-
-    default: 
-        should_buffer = true;
-        break;
-    }
+    should_buffer = true;
 }

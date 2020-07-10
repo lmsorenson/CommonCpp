@@ -377,7 +377,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_alternate )
 
     EXPECT_CALL(*mock_target, send_token("D")).Times(Exactly(1));
     EXPECT_CALL(*mock_target, send_token("F(aa)")).Times(Exactly(1));
-    EXPECT_CALL(*mock_target, send_token("F(bb)")).Times(Exactly(1));
+    EXPECT_CALL(*mock_target, send_token("F(b|b)")).Times(Exactly(1));
     EXPECT_CALL(*mock_target, send_token("F(cc)")).Times(Exactly(1));
 
 
@@ -385,6 +385,9 @@ TEST_F(LexerComponentTests, dependent_entity_run_alternate )
     dependent_run_helper('a', mock_dependent, lexer);
     dependent_run_helper('|', mock_dependent, lexer);
     dependent_run_helper('b', mock_dependent, lexer);
+    dependent_run_helper('(', mock_dependent, lexer);
+    dependent_run_helper('|', mock_dependent, lexer);
+    dependent_run_helper(')', mock_dependent, lexer);
     dependent_run_helper('b', mock_dependent, lexer);
     dependent_run_helper('|', mock_dependent, lexer);
     dependent_run_helper('c', mock_dependent, lexer);

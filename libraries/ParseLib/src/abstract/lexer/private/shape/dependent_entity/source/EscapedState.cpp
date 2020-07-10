@@ -24,11 +24,13 @@ void ScanningEscaped::initialize(char ch)
 int32_t ScanningEscaped::perform_scan(char ch)
 {
     auto ctx = dynamic_cast<DependentEntity*>(context_);
+    if (!ctx)
+        return -1;
 
-    if (ch=='\"'  && num_delimiters>=1)
+    if (ctx->matches_escape_char_delimiter(ch)  && num_delimiters>=1)
         return DependentEntity::StateTransition::SetDelimiterFound;
 
-    if (ch=='\"' && num_delimiters>=1) 
+    if (ctx->matches_escape_sequence_close(ch) && num_delimiters>=1) 
         return DependentEntity::StateTransition::SetScanningCharacters;
 
     else
@@ -37,15 +39,17 @@ int32_t ScanningEscaped::perform_scan(char ch)
 
 void ScanningEscaped::should_buffer(bool &should_buffer, char ch)
 {
-    switch (ch)
-    {
-    case '\"':
-        should_buffer = false;
-        break;
+    auto ctx = dynamic_cast<DependentEntity*>(context_);
+    if (!ctx)
+        return;
 
-    default: 
+    if ( ctx->matches_escape_sequence_open(ch) || ctx->matches_escape_sequence_close(ch) )
+    {
+        should_buffer = false;
+    }
+    else
+    {
         should_buffer = true;
-        break;
     }
 }
 

@@ -18,6 +18,8 @@ public:
     virtual int32_t perform_scan(char ch) override;
     virtual void should_buffer(bool &should_buffer, char ch) override;
 
+    virtual void update() override;
+
 private:
     int32_t token_size_;
 };

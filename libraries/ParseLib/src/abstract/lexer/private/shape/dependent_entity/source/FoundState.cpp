@@ -20,10 +20,18 @@ using ::std::string;
 
 
 
-
+//called every time the state is set.
 void FoundDependent::initialize(char ch)
 {
+    LexerState::initialize();
     token_size_ = context_->generate_token( pair<string, string>("F(",")") );
+}
+
+//called after the character has been fully processed.
+void FoundDependent::update()
+{
+    LexerState::update();
+    token_size_ = -1;
 }
 
 int32_t FoundDependent::perform_scan(char ch)

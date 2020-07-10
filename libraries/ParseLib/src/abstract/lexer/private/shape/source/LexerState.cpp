@@ -23,6 +23,10 @@ void LexerState::initialize(char ch)
     char_num_ = 0;
 }
 
+void LexerState::reset()
+{
+}
+
 void LexerState::should_buffer(bool &should_buffer, char ch)
 {
     should_buffer = true;

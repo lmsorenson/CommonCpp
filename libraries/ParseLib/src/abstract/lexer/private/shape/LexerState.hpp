@@ -19,6 +19,7 @@ public:
     virtual ~LexerState() = default;
 
     virtual void initialize(char ch = '\0');
+    virtual void reset();
     virtual void on_transition();
     virtual void update();
 

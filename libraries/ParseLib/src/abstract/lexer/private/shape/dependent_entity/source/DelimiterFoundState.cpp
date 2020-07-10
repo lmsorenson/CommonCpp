@@ -49,14 +49,16 @@ int32_t DelimiterFound::perform_scan(char ch)
 
 void DelimiterFound::should_buffer(bool &should_buffer, char ch)
 {
-    switch (ch)
-    {
-    case '\"':
-        should_buffer = false;
-        break;
+    auto ctx = dynamic_cast<DependentEntity*>(context_);
+    if (!ctx)
+        return;
 
-    default: 
+    if ( ctx->matches_escape_sequence_close(ch) || ctx->matches_escape_char_delimiter(ch) )
+    {
+        should_buffer = false;
+    }
+    else
+    {
         should_buffer = true;
-        break;
     }
 }

@@ -77,13 +77,14 @@ void Shape::set_state(char ch)
 
     std::string key = typeid(T).name();
     auto candidate = states_.at(key);
+    auto previous_state = current_state_;
     
-
     current_state_ = candidate;
 
     //mark the occurance
     ++(*candidate);
 
+    previous_state->reset();
     current_state_->initialize(ch);
 }
 

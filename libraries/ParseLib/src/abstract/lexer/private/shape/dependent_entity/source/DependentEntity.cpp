@@ -26,11 +26,11 @@ using ::std::pair;
 
 DependentEntity::DependentEntity(
     Lexer *context, 
-    std::string entity_id, 
+    string entity_id, 
     Shape::Cardinality cardinality, 
     char entity_delimiter, 
-    std::string shape_delimiter, 
-    std::pair<char, char> escape_sequence_delimiters, 
+    string shape_delimiter, 
+    pair<char, char> escape_sequence_delimiters, 
     char escape_char_delimiter) 
 : Shape(context, cardinality) 
 , entity_id_(entity_id)
@@ -121,7 +121,7 @@ bool DependentEntity::matches_escape_sequence_close(char ch) const
 
 bool DependentEntity::matches_escape_char_delimiter(char ch) const
 {
-    return (ch == entity_delimiter_);
+    return (ch == escape_char_delimiter_);
 }
 
 void DependentEntity::DependentEntity::generate_link_token() const
@@ -129,7 +129,7 @@ void DependentEntity::DependentEntity::generate_link_token() const
     generate_token(entity_id_);
 }
 
-std::string DependentEntity::get_entity_id() const
+string DependentEntity::get_entity_id() const
 {
     return entity_id_;
 }
@@ -139,7 +139,7 @@ char DependentEntity::get_entity_delimiter() const
     return entity_delimiter_;
 }
 
-std::string DependentEntity::get_shape_delimiter() const
+string DependentEntity::get_shape_delimiter() const
 {
     return shape_delimiter_;
 }
