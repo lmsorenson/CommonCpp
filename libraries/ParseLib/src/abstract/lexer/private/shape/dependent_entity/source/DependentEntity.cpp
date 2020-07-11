@@ -23,22 +23,19 @@ using ::std::endl;
 using ::std::string;
 using ::std::pair;
 
+pair<string, string> map_delimiter_pair(const pair<char, char> from) 
+{ 
+    pair<string, string> to;
 
-DependentEntity::DependentEntity(
-    Lexer *context, 
-    string entity_id, 
-    Shape::Cardinality cardinality, 
-    char entity_delimiter, 
-    string shape_delimiter, 
-    pair<char, char> escape_sequence_delimiters, 
-    char escape_char_delimiter) 
-: Shape(context, cardinality) 
-, entity_id_(entity_id)
-, entity_delimiter_(entity_delimiter)
-, shape_delimiter_(shape_delimiter)
-, escape_sequence_delimiters_(escape_sequence_delimiters)
-, escape_char_delimiter_(escape_char_delimiter)
+    to.first.append(string(1, from.first));
+    to.second.append(string(1, from.second));
+
+    return to;
+}
+
+inline void DependentEntity::construct_states()
 {
+    //the first state added is the first scanned.
     this->add_state<StartIndependentEntity>( SetIndependentEntityBegin );
     this->add_state<Scanning>( SetScanningCharacters );
     this->add_state<DelimiterFound>( SetDelimiterFound );
@@ -48,6 +45,44 @@ DependentEntity::DependentEntity(
     this->add_state<EndIndependentEntity>( SetIndependentEntityFound );
     this->add_state<PendingState>( SetPending );
 }
+
+DependentEntity::DependentEntity(
+        Lexer *context, 
+        string entity_id, 
+        Shape::Cardinality cardinality, 
+        char entity_delimiter, 
+        string shape_delimiter_list, 
+        pair<char, char> escape_sequence_delimiters, 
+        char escape_char_delimiter) 
+: Shape(context, cardinality) 
+, entity_id_(entity_id)
+, entity_delimiter_(entity_delimiter)
+, shape_delimiters_(pair("", shape_delimiter_list))
+, escape_sequence_delimiters_(escape_sequence_delimiters)
+, escape_char_delimiter_(escape_char_delimiter)
+{
+    this->construct_states();
+}
+
+DependentEntity::DependentEntity(
+        Lexer *context, 
+        std::string entity_id, 
+        Shape::Cardinality cardinality, 
+        char entity_delimiter, 
+        std::pair<char, char> shape_delimiters, 
+        std::pair<char, char> escape_sequence_delimiters,
+        char escape_char_delimiter)
+: Shape(context, cardinality) 
+, entity_id_(entity_id)
+, entity_delimiter_(entity_delimiter)
+, shape_delimiters_(map_delimiter_pair(shape_delimiters))
+, escape_sequence_delimiters_(escape_sequence_delimiters)
+, escape_char_delimiter_(escape_char_delimiter)
+{
+    this->construct_states();
+}
+
+
 
 int32_t DependentEntity::apply_transition(int32_t enum_value)
 {
@@ -95,7 +130,7 @@ int32_t DependentEntity::apply_transition(int32_t enum_value)
 
 bool DependentEntity::matches_shape_delimiter(char ch) const
 {
-    for(auto itr = shape_delimiter_.begin(); itr != shape_delimiter_.end(); ++itr)
+    for(auto itr = shape_delimiters_.second.begin(); itr != shape_delimiters_.second.end(); ++itr)
     {
         if (*itr == ch)
             return true;
@@ -132,16 +167,6 @@ void DependentEntity::DependentEntity::generate_link_token() const
 string DependentEntity::get_entity_id() const
 {
     return entity_id_;
-}
-
-char DependentEntity::get_entity_delimiter() const
-{
-    return entity_delimiter_;
-}
-
-string DependentEntity::get_shape_delimiter() const
-{
-    return shape_delimiter_;
 }
 
 bool DependentEntity::is_complete() const

@@ -10,8 +10,8 @@
 class MockDependentEntity : public ::sdg::DependentEntity
 {
 public:
-    MockDependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
-    : DependentEntity(context, entity_id, cardinality, ',', "\r\n", {'\"', '\"'}, '\"')
+    explicit MockDependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
+    : DependentEntity(context, entity_id, cardinality, ',', "\r\n", std::pair('\"', '\"'), '\"')
     {}
     virtual ~MockDependentEntity() = default;
 
@@ -22,8 +22,8 @@ public:
 class MockDependentEntityB : public ::sdg::DependentEntity
 {
 public:
-    MockDependentEntityB(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
-    : DependentEntity(context, entity_id, cardinality, '|', "}", {'(', ')'}, '\\')
+    explicit MockDependentEntityB(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
+    : DependentEntity(context, entity_id, cardinality, '|', std::pair('{','}'), std::pair('(', ')'), '\\')
     {}
     virtual ~MockDependentEntityB() = default;
 

@@ -22,7 +22,7 @@ public:
         SetPending
     };
 
-    DependentEntity(
+    explicit DependentEntity(
         Lexer *context, 
         std::string entity_id, 
         Shape::Cardinality cardinality, 
@@ -30,6 +30,16 @@ public:
         std::string shape_delimiter, 
         std::pair<char, char> escape_sequence_delimiters,
         char escape_char_delimiter);
+
+    explicit DependentEntity(
+        Lexer *context, 
+        std::string entity_id, 
+        Shape::Cardinality cardinality, 
+        char entity_delimiter, 
+        std::pair<char, char> shape_delimiters, 
+        std::pair<char, char> escape_sequence_delimiters,
+        char escape_char_delimiter);
+
     virtual ~DependentEntity() = default;
 
     void generate_link_token() const;
@@ -46,15 +56,14 @@ public:
 private:
     std::string entity_id_;
     char entity_delimiter_;
-    std::string shape_delimiter_;
+    std::pair<std::string, std::string> shape_delimiters_;
     std::pair<char, char> escape_sequence_delimiters_;
     char escape_char_delimiter_;
-
-    char get_entity_delimiter() const;
-    std::string get_shape_delimiter() const;
+    
     std::string get_entity_id() const;
 
     virtual int32_t apply_transition(int32_t enum_value) override;
+    inline void construct_states();
 };
 
 }// namespace sdg

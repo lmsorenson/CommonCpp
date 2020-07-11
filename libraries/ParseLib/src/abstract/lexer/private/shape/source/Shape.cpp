@@ -48,18 +48,18 @@ void Shape::run(bool &should_buffer, char ch)
     if( this->ready() )
     {
         int32_t transition_code = 0;
-        auto original_state = current_state_;
+        const auto original_state = current_state_;
 
         //remember history so no state loops are created
         map<TransitionID, Transition> history;
 
         do
         {
-            int32_t from_code = current_state_->to_state_code();
-            int32_t to_code  = current_state_->perform_scan(ch);
+            const int32_t from_code = current_state_->to_state_code();
+            const int32_t to_code  = current_state_->perform_scan(ch);
 
-            auto current_transition = pair(from_code,to_code);
-            auto inverse_transition = pair(to_code,from_code);
+            const auto current_transition = pair(from_code,to_code);
+            const auto inverse_transition = pair(to_code,from_code);
 
             if (history[current_transition].has_not_occured() && 
                 history[inverse_transition].has_not_occured() && 
