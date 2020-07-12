@@ -10,7 +10,7 @@
 
 using sdg::parse::Sequence;
 
-TEST_F(ParserComponentTests, sequence_two_norepeat_tokens )
+TEST_F(ParserComponentTests, parser_sequence_two_norepeat_tokens )
 {
     sdg::Parser context;
     std::shared_ptr<Sequence> test_sequence = std::make_shared<Sequence>(&context, "root sequence");
@@ -27,7 +27,7 @@ TEST_F(ParserComponentTests, sequence_two_norepeat_tokens )
     ASSERT_FALSE(std::dynamic_pointer_cast<TestTokenB>(ResultB) == nullptr);
 }
 
-TEST_F(ParserComponentTests, sequence_with_unexpected_token )
+TEST_F(ParserComponentTests, parser_sequence_with_unexpected_token )
 {
     sdg::Parser context;
     std::shared_ptr<Sequence> test_sequence = std::make_shared<Sequence>(&context, "root sequence");
@@ -48,7 +48,7 @@ TEST_F(ParserComponentTests, sequence_with_unexpected_token )
     ASSERT_TRUE( ResultUnexpected == nullptr );
 }
 
-TEST_F(ParserComponentTests, sequence_norepeat_subsequence_with_two_norepeat_tokens )
+TEST_F(ParserComponentTests, parser_sequence_norepeat_subsequence_with_two_norepeat_tokens )
 {
     sdg::Parser context;
     std::shared_ptr<Sequence> test_sequence = std::make_shared<Sequence>(&context, "root sequence");
@@ -64,7 +64,7 @@ TEST_F(ParserComponentTests, sequence_norepeat_subsequence_with_two_norepeat_tok
     ASSERT_FALSE(std::dynamic_pointer_cast<TestTokenB>(ResultB) == nullptr);
 }
 
-TEST_F(ParserComponentTests, sequence_norepeat_subsequence_with_unxpected_token )
+TEST_F(ParserComponentTests, parser_sequence_norepeat_subsequence_with_unxpected_token )
 {
     sdg::Parser context;
     std::shared_ptr<Sequence> test_sequence = std::make_shared<Sequence>(&context, "root sequence");

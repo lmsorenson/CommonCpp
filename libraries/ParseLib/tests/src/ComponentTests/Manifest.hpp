@@ -6,3 +6,5 @@
 #include "LexerComponent/ShapeTests/DependentEntityTests/DependentEntityStateTests.hpp"
 #include "ParserComponentTests/Tests.hpp"
 #include "ParserComponentTests/SequenceTests/SequenceTests.hpp"
+#include "SemanticAnalyzerComponentTests/Tests.hpp"
+#include "SemanticAnalyzerComponentTests/directory/DirectoryTests.hpp"

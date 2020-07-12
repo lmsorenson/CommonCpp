@@ -53,7 +53,7 @@ void dependent_run_helper(char ch, ::sdg::DependentEntity &mock_dependent, MockL
 //cardinality
 //character
 
-TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_state )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_initial_state_to_scanning_state )
 {
     //---- input ---------------------------------
     string character_buffer = "";
@@ -80,7 +80,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_state
     ASSERT_TRUE(dependent_entity.state_equals<Scanning>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_escaped_state )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_initial_state_to_scanning_escaped_state )
 {
     //---- input ---------------------------------
     string character_buffer = "";
@@ -110,7 +110,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_initial_state_to_scanning_escap
     ASSERT_TRUE(dependent_entity.state_equals<ScanningEscaped>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_to_delimiter_found )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_to_delimiter_found )
 {
     //---- input ---------------------------------
     string parent_entity_id = "D";
@@ -137,7 +137,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_to_delimiter_foun
     ASSERT_TRUE(dependent_entity.state_equals<DelimiterFound>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_through_delimiter_found_to_scanning_state )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_through_delimiter_found_to_scanning_state )
 {
     //---- input ---------------------------------
     string character_buffer = "bbb";
@@ -168,7 +168,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_through_delimiter
     ASSERT_TRUE(dependent_entity.state_equals<Scanning>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_allow_escape_characters_buffers_escape_character )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_allow_escape_characters_buffers_escape_character )
 {
     //---- input ---------------------------------
     string character_buffer = "bbb";
@@ -198,7 +198,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_allow_escape_characters_buffers
     ASSERT_TRUE(dependent_entity.state_equals<ScanningEscaped>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_no_transition_buffers_character )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_no_transition_buffers_character )
 {
     //---- input ---------------------------------
     string character_buffer = "";
@@ -225,7 +225,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_escaped_state_no_transition_buf
     ASSERT_TRUE(dependent_entity.state_equals<ScanningEscaped>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_scanning_state_no_transition_buffers_character )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_scanning_state_no_transition_buffers_character )
 {
     //---- input ---------------------------------
     string character_buffer = "";
@@ -252,7 +252,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_scanning_state_no_transition_bu
     ASSERT_TRUE(dependent_entity.state_equals<Scanning>());
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_item_delimiter_produces_token )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_item_delimiter_produces_token )
 {
     //---- input ---------------------------------
     string character_buffer = "aa";
@@ -282,7 +282,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_item_delimiter_produces_token )
     ASSERT_EQ(expected_should_buffer, should_buffer);
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_empty_token_sends_error )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_empty_token_sends_error )
 {
     //---- input ---------------------------------
     string character_buffer = "";
@@ -311,7 +311,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_empty_token_sends_error )
     ASSERT_EQ(expected_should_buffer, should_buffer);
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_list_delimiter_produces_token )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_list_delimiter_produces_token )
 {
     //---- input ---------------------------------
     string character_buffer = "bb";
@@ -341,7 +341,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_list_delimiter_produces_token )
     ASSERT_EQ(expected_should_buffer, should_buffer);
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run )
 {
     MockLexer lexer = MockLexer();
     MockDependentEntity mock_dependent(&lexer, "D", MockDependentEntity::Cardinality::One);
@@ -368,7 +368,7 @@ TEST_F(LexerComponentTests, dependent_entity_run )
     dependent_run_helper('\n', mock_dependent, lexer);
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_alternate )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_alternate )
 {
     MockLexer lexer = MockLexer();
     MockDependentEntityB mock_dependent(&lexer, "D", MockDependentEntity::Cardinality::One);
@@ -395,7 +395,7 @@ TEST_F(LexerComponentTests, dependent_entity_run_alternate )
     dependent_run_helper('}', mock_dependent, lexer);
 }
 
-TEST_F(LexerComponentTests, dependent_entity_run_with_quote_in_field )
+TEST_F(LexerComponentTests, lexer_dependent_entity_run_with_quote_in_field )
 {
     MockLexer lexer = MockLexer();
     MockDependentEntity mock_dependent(&lexer, "D", MockDependentEntity::Cardinality::One);

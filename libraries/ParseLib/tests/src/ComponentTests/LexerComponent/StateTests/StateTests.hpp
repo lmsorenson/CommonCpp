@@ -8,7 +8,7 @@
 #include <gtest/gtest.h>
 
 
-TEST_F(LexerComponentTests, state_to_state_code )
+TEST_F(LexerComponentTests, lexer_state_to_state_code )
 {
      int32_t expected_code = 1;
 
@@ -19,7 +19,7 @@ TEST_F(LexerComponentTests, state_to_state_code )
     ASSERT_EQ(expected_code, actual_code);
 }
 
-TEST_F(LexerComponentTests, state_occurances_prefix_increment )
+TEST_F(LexerComponentTests, lexer_state_occurances_prefix_increment )
 {
     int32_t 
         expected_occurances_1 = 0,
@@ -38,7 +38,7 @@ TEST_F(LexerComponentTests, state_occurances_prefix_increment )
     ASSERT_EQ(expected_occurances_2, actual_occurances);
 }
 
-TEST_F(LexerComponentTests, state_occurances_postfix_increment )
+TEST_F(LexerComponentTests, lexer_state_occurances_postfix_increment )
 {
     int32_t 
         expected_occurances_1 = 0,
