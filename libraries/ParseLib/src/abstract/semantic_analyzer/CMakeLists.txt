@@ -4,7 +4,8 @@ project(SemanticAnalyzerComponent)
 
 file( 
     GLOB Mods
-    ${PROJECT_SOURCE_DIR}/private/source/*.cpp
+    ${PROJECT_SOURCE_DIR}/private/*.cpp
+    ${PROJECT_SOURCE_DIR}/private/queue/source/*.cpp
     )
 
 add_library(analyzer ${Mods})

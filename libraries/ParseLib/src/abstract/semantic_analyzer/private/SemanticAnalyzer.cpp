@@ -1,5 +1,5 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
-#include "../../SemanticAnalyzer.hpp"
+#include "../SemanticAnalyzer.hpp"
 #include <iostream>
 #include <time.h>
 

@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "private/SyntaxTreeSource.hpp"
-#include "private/DataSetTarget.hpp"
+#include "private/queue/SyntaxTreeSource.hpp"
+#include "private/queue/DataSetTarget.hpp"
 #include "../intermediate/observer/Observer.hpp"
 #include "../intermediate/node.hpp"
 #include "../../utils/stopwatch.hpp"

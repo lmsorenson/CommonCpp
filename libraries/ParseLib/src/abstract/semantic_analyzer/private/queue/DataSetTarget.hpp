@@ -3,8 +3,8 @@
 #include <string>
 #include <memory>
 #include <objects/data_set.hpp>
-#include "../../intermediate/node.hpp"
-#include "../../../utils/stopwatch.hpp"
+#include "../../../intermediate/node.hpp"
+#include "../../../../utils/stopwatch.hpp"
 
 namespace sdg {
 

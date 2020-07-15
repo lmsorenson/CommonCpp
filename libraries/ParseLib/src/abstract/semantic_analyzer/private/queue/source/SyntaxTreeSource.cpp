@@ -1,5 +1,5 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
-#include "../../private/SyntaxTreeSource.hpp"
+#include "../SyntaxTreeSource.hpp"
 #include <iostream>
 #include <vector>
 
