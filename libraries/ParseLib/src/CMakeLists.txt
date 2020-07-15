@@ -13,6 +13,11 @@ set( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR} )
 
 option(ENABLE_DEBUG "Set to ON to enable ParseLib debug features" ON)
 
+add_subdirectory(
+    ${PROJECT_SOURCE_DIR}/abstract/
+    ${PROJECT_BINARY_DIR}
+)
+
 #create a lib
 #--------------------------
 file( 
@@ -29,16 +34,6 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/Reads/Streams/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Writes/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/file_loader/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/lexer/private/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/lexer/private/queue/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/lexer/private/shape/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/lexer/private/shape/dependent_entity/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/parser/public/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/parser/private/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/parser/private/queue/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/parser/private/sequence/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/parser/private/shape/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/semantic_analyzer/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/intermediate/source/*.cpp
     ${PROJECT_SOURCE_DIR}/concrete/csv/source/*.cpp
     ${PROJECT_SOURCE_DIR}/concrete/csv/setup/source/*.cpp
@@ -47,6 +42,12 @@ file(
     )
 
 add_library(parse ${Mods})
+
+target_link_libraries(parse 
+    lexer
+    parser
+    analyzer
+    )
 
 if(ENABLE_DEBUG)
 

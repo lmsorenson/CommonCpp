@@ -1,5 +1,5 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
-#include "../private/DataSetTarget.hpp"
+#include "../../private/DataSetTarget.hpp"
 #include <iostream>
 #include <vector>
 
