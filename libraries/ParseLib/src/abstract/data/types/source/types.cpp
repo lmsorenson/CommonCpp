@@ -6,16 +6,20 @@
 #include "../../meta/Descriptor.hpp"
 
 
+using ::sdg::hash::KeyInstance;
+using ::sdg::hash::DescriptorID;
+using ::sdg::hash::DescriptorInstance;
+using ::sdg::hash::EntityID;
+using ::std::string;
 
 
-
-sdg::hash::KeyInstance::KeyInstance(std::string a_value, bool a_is_partial_key)
+KeyInstance::KeyInstance(const string& a_value, bool a_is_partial_key)
 : value_(a_value)
 , is_partial_key_(a_is_partial_key)
 {}
 
 
-sdg::hash::KeyInstance::KeyInstance(std::vector<DescriptorInstance> descriptors, bool a_is_partial_key)
+KeyInstance::KeyInstance(std::vector<DescriptorInstance> descriptors, bool a_is_partial_key)
 : is_partial_key_(a_is_partial_key)
 {
     for(int i=0; i<descriptors.size(); i++)
@@ -29,25 +33,25 @@ sdg::hash::KeyInstance::KeyInstance(std::vector<DescriptorInstance> descriptors,
 }
 
 
-bool sdg::hash::KeyInstance::is_partial_key() const
+bool KeyInstance::is_partial_key() const
 {
     return is_partial_key_;
 }
 
 
-std::string sdg::hash::KeyInstance::as_string() const
+string KeyInstance::as_string() const
 {
     return value_;
 }
 
-void sdg::hash::KeyInstance::for_each_descriptor(std::function<void(const std::string)> callback)
+void KeyInstance::for_each_descriptor(std::function<void(const string&)> callback)
 {
     char * token = strtok((char*)value_.c_str(),"-");
 
     //iterates through all tokens(descriptors)
     while(token!=NULL)
     {
-        callback(std::string(token));
+        callback(string(token));
 
         token = strtok(NULL,"-");
     }
@@ -56,24 +60,24 @@ void sdg::hash::KeyInstance::for_each_descriptor(std::function<void(const std::s
 }
 
 
-sdg::hash::DescriptorID::DescriptorID(std::string a_id)
+DescriptorID::DescriptorID(const string& a_id)
 : id_(a_id)
 {}
 
-std::string sdg::hash::DescriptorID::as_string() const
+string DescriptorID::as_string() const
 {
     return id_;
 }
 
 
-sdg::hash::DescriptorInstance::DescriptorInstance()
+DescriptorInstance::DescriptorInstance()
 : id_("")
 , value_(-1)
 , attribute_scale_(Attribute::Scale::Unknown)
 , b_is_found_(false)
 {}
 
-sdg::hash::DescriptorInstance::DescriptorInstance(std::string a_descriptor_id, Attribute::Scale a_attr_scale)
+DescriptorInstance::DescriptorInstance( const string& a_descriptor_id, Attribute::Scale a_attr_scale)
 : id_(a_descriptor_id)
 , value_(-1)
 , attribute_scale_(a_attr_scale)
@@ -81,7 +85,7 @@ sdg::hash::DescriptorInstance::DescriptorInstance(std::string a_descriptor_id, A
 {}
 
 
-sdg::hash::DescriptorInstance& sdg::hash::DescriptorInstance::operator++( int n )
+DescriptorInstance& DescriptorInstance::operator++( int n )
 {
     if( n != 0 )
         value_ += n;
@@ -92,55 +96,55 @@ sdg::hash::DescriptorInstance& sdg::hash::DescriptorInstance::operator++( int n 
 }
 
 
-int32_t sdg::hash::DescriptorInstance::get_descriptor_value() const
+int32_t DescriptorInstance::get_descriptor_value() const
 {
     return value_;
 }
 
 
-std::string sdg::hash::DescriptorInstance::get_descriptor_id() const
+string DescriptorInstance::get_descriptor_id() const
 {
     return id_;
 }
 
 
-std::string sdg::hash::DescriptorInstance::as_string() const
+string DescriptorInstance::as_string() const
 {
-    std::string return_variable;
+    string return_variable;
     return return_variable.append(id_).append(std::to_string(value_));
 }
 
 
-sdg::Attribute::Scale sdg::hash::DescriptorInstance::get_scale() const
+sdg::Attribute::Scale DescriptorInstance::get_scale() const
 {
     return attribute_scale_;
 }
 
 
-bool sdg::hash::DescriptorInstance::is_found() const
+bool DescriptorInstance::is_found() const
 {
     return b_is_found_;
 }
 
 
-void sdg::hash::DescriptorInstance::set_value(int32_t a_value)
+void DescriptorInstance::set_value(int32_t a_value)
 {
     value_=a_value;
 }
 
 
-void sdg::hash::DescriptorInstance::set_found()
+void DescriptorInstance::set_found()
 {
     b_is_found_=true;
 }
 
-sdg::hash::EntityID::EntityID(std::string a_id)
+EntityID::EntityID(const string& a_id)
 : id_(a_id)
 {
 
 }
 
-std::string sdg::hash::EntityID::as_string() const
+string EntityID::as_string() const
 {
     return id_;
 }

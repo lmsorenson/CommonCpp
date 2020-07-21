@@ -15,13 +15,13 @@ class KeyInstance
 {
 public:
     explicit KeyInstance()=default;
-    explicit KeyInstance(std::string a_value, bool a_is_partial_key=false);
+    explicit KeyInstance(const std::string& a_value, bool a_is_partial_key=false);
     KeyInstance(std::vector<DescriptorInstance> descriptor, bool a_is_partial_key=false);
 
     bool is_partial_key() const;
     std::string as_string() const;
 
-    void for_each_descriptor(std::function<void(const std::string)> callback);
+    void for_each_descriptor(std::function<void(const std::string&)> callback);
 
 private:
     std::string value_;
@@ -33,7 +33,7 @@ class DescriptorID
 {
 public:
     explicit DescriptorID()=default;
-    explicit DescriptorID(std::string a_id);
+    explicit DescriptorID(const std::string& a_id);
     ~DescriptorID()=default;
 
     std::string as_string() const;
@@ -49,7 +49,7 @@ class DescriptorInstance
 {
 public:
     explicit DescriptorInstance();
-    explicit DescriptorInstance(std::string a_descriptor_id, Attribute::Scale a_attr_scale);
+    explicit DescriptorInstance(const std::string& a_descriptor_id, Attribute::Scale a_attr_scale);
 
     int32_t get_descriptor_value() const;
     std::string get_descriptor_id() const;
@@ -69,7 +69,7 @@ public:
         return (buffer.compare(std::string(str))==0);
     }
 
-    bool operator== (const std::string &str)
+    bool operator== (const std::string& str)
     {
         std::string buffer;
         buffer.append(id_).append(std::to_string(value_));
@@ -90,7 +90,7 @@ class EntityID
 {
 public:
     explicit EntityID()=default;
-    explicit EntityID(std::string a_id);
+    explicit EntityID(const std::string& a_id);
     ~EntityID()=default;
 
     std::string as_string() const;
