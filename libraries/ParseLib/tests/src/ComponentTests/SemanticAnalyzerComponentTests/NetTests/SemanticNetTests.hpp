@@ -6,10 +6,11 @@
 
 #include <gtest/gtest.h>
 
-TEST_F(SemanticAnalyzerComponentTests, test1 )
+TEST_F(SemanticAnalyzerComponentTests, net_test1 )
 {
-    ::sdg::SemanticAnalyzer sa = ::sdg::SemanticAnalyzer();
-    sa.get_time();
+    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    
+    net.add_item("token", ::sdg::Properties());
 
     ASSERT_EQ(1,2);
 }

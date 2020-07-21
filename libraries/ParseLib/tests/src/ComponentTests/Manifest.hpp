@@ -7,4 +7,5 @@
 #include "ParserComponentTests/Tests.hpp"
 #include "ParserComponentTests/SequenceTests/SequenceTests.hpp"
 #include "SemanticAnalyzerComponentTests/Tests.hpp"
-#include "SemanticAnalyzerComponentTests/directory/DirectoryTests.hpp"
+#include "SemanticAnalyzerComponentTests/AnalyzerTests/AnalyzerTests.hpp"
+#include "SemanticAnalyzerComponentTests/NetTests/SemanticNetTests.hpp"

@@ -35,9 +35,11 @@ double SemanticAnalyzer::get_target_time() const
 
 void SemanticAnalyzer::check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target)
 {
+    net_->add_item("token", Properties());
+
     if (node->has_children())
     {
-        for(int i=0; i<node->get_number_of_children();++i)
+        for(int i=0; i < node->get_number_of_children(); ++i)
         {
             check_nodes(node->get_child(i), target);
         }

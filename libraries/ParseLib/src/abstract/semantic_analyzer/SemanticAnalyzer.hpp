@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "public/SemanticNet.hpp"
 #include "private/queue/SyntaxTreeSource.hpp"
 #include "private/queue/DataSetTarget.hpp"
 #include "../intermediate/observer/Observer.hpp"
@@ -19,6 +20,7 @@ class SemanticAnalyzer : public pattern::Observer
 {
     std::shared_ptr<SyntaxTreeSource> source_;
     std::shared_ptr<DataSetTarget> target_;
+    std::shared_ptr<SemanticNet> net_;
 
     utils::Stopwatch stopwatch_;
 

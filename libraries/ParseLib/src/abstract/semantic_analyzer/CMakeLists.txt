@@ -5,6 +5,7 @@ project(SemanticAnalyzerComponent)
 file( 
     GLOB Mods
     ${PROJECT_SOURCE_DIR}/private/*.cpp
+    ${PROJECT_SOURCE_DIR}/private/net/source/*.cpp
     ${PROJECT_SOURCE_DIR}/private/queue/source/*.cpp
     )
 

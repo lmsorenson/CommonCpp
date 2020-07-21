@@ -6,6 +6,12 @@ Given an abstract syntax tree a dataset needs to be constructed in a way that is
 ## Solution
 A blackboard architecture could potentially do well to solve this problem.  A Semantic Net can be created incrementally by strategically placing lexical items from the abstract syntax tree onto a graph and noting conceptual dependencies as they are placed.
 
+1. Lexical Item
+    1. Entity
+    1. Concept
+    1. Relation
+    1. Predicate
+
 1. Lexical Semantics  
     1. Classification.  
     1. Decomposition.  
@@ -22,3 +28,4 @@ Conceptual Graphs
 ## Citations
 [Compiler Architecture - Layola Marymount University](https://cs.lmu.edu/~ray/notes/compilerarchitecture/)<br/>
 [Semantic Analysis](https://www.tutorialspoint.com/natural_language_processing/natural_language_processing_semantic_analysis.htm)<br/>
+[Time Complexity - Carnegie Melon University](https://www.cs.cmu.edu/~adamchik/15-121/lectures/Algorithmic%20Complexity/complexity.html)
