@@ -43,7 +43,7 @@ T SemanticNet::classify( ::std::string token, PropertySetBase *properties ) cons
     {
         return ItemType::Header;
     }
-    else if (true)
+    else if (props->token_has_value())
     {
         return ItemType::Value;
     }

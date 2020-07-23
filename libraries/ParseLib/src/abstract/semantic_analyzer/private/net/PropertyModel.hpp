@@ -10,7 +10,7 @@ public:
     PropertySetBase() = default;
     virtual ~PropertySetBase() = default;
 
-    virtual void get_value()
+    virtual bool token_has_value()
     {
 
     }
@@ -28,7 +28,7 @@ public:
 
     bool child_of_root_node()
     {
-        
+
     }
     std::string get_label()
     {
