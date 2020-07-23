@@ -6,11 +6,14 @@
 
 #include <gtest/gtest.h>
 
+
 TEST_F(SemanticAnalyzerComponentTests, net_test1 )
 {
     ::sdg::SemanticNet net = ::sdg::SemanticNet();
     
-    net.add_item("token", ::sdg::Properties());
+    //pass in certain node properties.
+    net.add_item("token", ::sdg::NodeProperties());
 
+    //assert that it produces a valid item of the correct type.
     ASSERT_EQ(1,2);
 }
