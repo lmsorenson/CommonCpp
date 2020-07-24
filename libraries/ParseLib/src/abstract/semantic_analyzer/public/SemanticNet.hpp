@@ -35,11 +35,11 @@ T SemanticNet::classify( ::std::string token, PropertySetBase *properties ) cons
     if ((props != dynamic_cast<NodeProperties*>(properties)))
         return ItemType::Undefined;
 
-    if (props->child_of_root_node() && props->get_label().compare("R")==0)
+    if (props->child_of_root_node() && props->compare_token_label("R"))
     {
         return ItemType::Record;
     }
-    else if (props->child_of_root_node() && props->get_label().compare("H")==0)
+    else if (props->child_of_root_node() && props->compare_token_label("H"))
     {
         return ItemType::Header;
     }

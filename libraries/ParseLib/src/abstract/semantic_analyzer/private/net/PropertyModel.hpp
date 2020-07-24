@@ -1,6 +1,7 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
 #include <string>
+#include <regex>
 
 namespace sdg {
 
@@ -12,10 +13,12 @@ public:
 
     virtual bool token_has_value()
     {
-
+        char regex_expression[5];
+        sprintf(regex_expression, "(\w*)(\(\w*\))");
+        return ( std::regex_match<char>(value_.c_str(), std::regex(regex_expression)) );
     }
 
-private:
+protected:
 
     std::string value_;// the value on the node.
 };
@@ -28,11 +31,14 @@ public:
 
     bool child_of_root_node()
     {
-
+        return (parent_value_.compare("root") == 0);
     }
-    std::string get_label()
-    {
 
+    bool compare_token_label( std::string str )
+    {
+        char regex_expression[5];
+        sprintf(regex_expression, "(%s)(\d*)");
+        return ( std::regex_match<char>(value_.c_str(), std::regex(regex_expression)) );
     }
 
 private:

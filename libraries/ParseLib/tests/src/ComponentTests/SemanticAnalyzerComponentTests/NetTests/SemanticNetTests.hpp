@@ -7,7 +7,7 @@
 #include <gtest/gtest.h>
 
 
-TEST_F(SemanticAnalyzerComponentTests, net_test1 )
+TEST_F(SemanticAnalyzerComponentTests, add_item )
 {
     ::sdg::SemanticNet net = ::sdg::SemanticNet();
     
