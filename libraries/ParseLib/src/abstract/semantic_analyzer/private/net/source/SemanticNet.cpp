@@ -100,8 +100,6 @@ int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> 
     if ( (actual = std::dynamic_pointer_cast<const RecordProperties>(item->properties())) == nullptr )
         return FAILURE;
 
-
-
     // if this lexical item type has no precedent, set the precedent.
     if ( (expected = std::dynamic_pointer_cast<const RecordProperties>(precedent_[item->type()])) == nullptr )
     {

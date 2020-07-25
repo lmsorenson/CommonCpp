@@ -33,7 +33,7 @@ class SemanticAnalyzer : public pattern::Observer
     void check_nodes(std::shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target);
 
 public:
-    SemanticAnalyzer() = default;
+    SemanticAnalyzer();
     virtual ~SemanticAnalyzer() = default;
 
     virtual void receive_event() override;

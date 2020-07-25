@@ -16,6 +16,11 @@ using ::sdg::hash::KeyInstance;
 
 
 
+SemanticAnalyzer::SemanticAnalyzer()
+: net_(make_shared<SemanticNet>())
+{
+}
+
 void SemanticAnalyzer::receive_event()
 {
     this->analyze();
@@ -35,7 +40,7 @@ double SemanticAnalyzer::get_target_time() const
 
 void SemanticAnalyzer::check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target)
 {
-//    net_->add_item("token", NodeProperties("R", "root", 5));
+    net_->add_item("token", NodeProperties("R", "root", 5));
 
     if (node->has_children())
     {
