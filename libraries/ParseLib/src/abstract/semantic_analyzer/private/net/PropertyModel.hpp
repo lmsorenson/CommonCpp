@@ -15,9 +15,15 @@ public:
 
     virtual bool token_has_value() const
     {
-        char regex_expression[5];
-        sprintf(regex_expression, "(\w*)(\(\w*\)){1}");
-        return ( std::regex_match<char>(value_.c_str(), std::regex(regex_expression)) );
+        //if the value_ is empty the expression is false.
+        if (value_.empty())
+            return false;
+
+        char regex_expression[64];
+        sprintf(regex_expression, "([A-Za-z0-9]*)(\\([A-Za-z0-9]*\\)){1}");
+
+        auto is_match = std::regex_match<char>(value_.c_str(), std::regex(regex_expression));
+        return is_match;
     }
 
     std::string get_token_value() const
@@ -47,6 +53,10 @@ public:
 
     bool compare_token_label( std::string str ) const
     {
+        //if the value_ is empty the expression is false.
+        if (value_.empty())
+            return false;
+
         char regex_expression[5];
         sprintf(regex_expression, "(%s)(\d*)", str.c_str());
         return ( std::regex_match<char>(value_.c_str(), std::regex(regex_expression)) );

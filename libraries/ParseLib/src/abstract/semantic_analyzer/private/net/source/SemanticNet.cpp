@@ -30,6 +30,10 @@ shared_ptr<LexicalItem> MakeLexicalItem(string token, ItemType type, shared_ptr<
             return make_shared<LexicalItem>(token, type, make_shared<const ::sdg::RecordProperties>(*props));
             break;
 
+        case ItemType::Value:
+            return make_shared<LexicalItem>(token, type, make_shared<const ::sdg::RecordProperties>(*props));
+            break;
+
         default:
         case ItemType::Undefined:
             return nullptr;
@@ -41,9 +45,9 @@ const std::shared_ptr<const LexicalItem> SemanticNet::add_item(string token, Nod
 {
     shared_ptr<PropertySetBase> props = make_shared<NodeProperties>(properties);
 
-    auto type = classify<ItemType>(token, props);
+    auto type = classify(token, props);
 
-    auto item = MakeLexicalItem(token, type, dynamic_pointer_cast<NodeProperties>(props));
+    auto item = MakeLexicalItem(token, static_cast<ItemType>(type), dynamic_pointer_cast<NodeProperties>(props));
 
     //currently does nothing
     decompose(item);
@@ -55,6 +59,30 @@ const std::shared_ptr<const LexicalItem> SemanticNet::add_item(string token, Nod
     return item;
 }
 
+int16_t SemanticNet::classify( ::std::string token, std::shared_ptr<const PropertySetBase> properties ) const
+{
+    std::shared_ptr<const NodeProperties> props;
+    if ( (props = std::dynamic_pointer_cast<const NodeProperties>(properties))==nullptr )
+        return ItemType::Undefined;
+
+    if (props->child_of_root_node() && props->compare_token_label("R"))
+    {
+        return ItemType::Record;
+    }
+    else if (props->child_of_root_node() && props->compare_token_label("H"))
+    {
+        return ItemType::Header;
+    }
+    else if (props->token_has_value())
+    {
+        return ItemType::Value;
+    }
+    else
+    {
+        return ItemType::Undefined;
+    }
+}
+
 void SemanticNet::decompose( std::shared_ptr<LexicalItem> token )
 {
 
@@ -64,13 +92,15 @@ int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> 
 {
     std::shared_ptr<const RecordProperties> actual, expected;
 
+    //There should be no precedent for undefined items.
+    if ( !item || item->type() == ItemType::Undefined )
+        return FAILURE;
+
     //if the argument is null, then it will not match the precedent.
     if ( (actual = std::dynamic_pointer_cast<const RecordProperties>(item->properties())) == nullptr )
         return FAILURE;
 
-    //There should be no precedent for undefined items.
-    if ( item->type() == ItemType::Undefined )
-        return FAILURE;
+
 
     // if this lexical item type has no precedent, set the precedent.
     if ( (expected = std::dynamic_pointer_cast<const RecordProperties>(precedent_[item->type()])) == nullptr )
