@@ -1,5 +1,6 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
-
+#pragma once
+#include <unordered_map>
 
 namespace sdg {
 
@@ -15,50 +16,27 @@ enum ItemType : int16_t
 class LexicalItem
 {
 public:
-    LexicalItem() = default;
+    LexicalItem(std::string item_value, ItemType type, std::shared_ptr<const PropertySetBase> props)
+    : value_(item_value)
+    , type_(type)
+    , props_(props)
+    {}
     ~LexicalItem() = default;
     
-private:
-};
+    ItemType type() const
+    {
+        return type_;
+    }
 
-class LHeaderItem : public LexicalItem
-{
-public:
-    LHeaderItem() = default;
-    ~LHeaderItem() = default;
-    
-private:
-    
-};
+    std::shared_ptr<const PropertySetBase> properties() const
+    {
+        return props_;
+    }
 
-class LRecordItem : public LexicalItem
-{
-public:
-    LRecordItem() = default;
-    ~LRecordItem() = default;
-    
 private:
-    
-};
-
-class LValueItem : public LexicalItem
-{
-public:
-    LValueItem() = default;
-    ~LValueItem() = default;
-    
-private:
-    
-};
-
-class LFieldItem : public LexicalItem
-{
-public:
-    LFieldItem() = default;
-    ~LFieldItem() = default;
-    
-private:
-    
+    ItemType type_;
+    std::string value_;
+    std::shared_ptr<const PropertySetBase> props_;
 };
 
 }// namespace sdg

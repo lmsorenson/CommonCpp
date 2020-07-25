@@ -8,53 +8,88 @@ namespace sdg {
 class PropertySetBase
 {
 public:
-    PropertySetBase() = default;
+    PropertySetBase(std::string value)
+    : value_(value)
+    {}
     virtual ~PropertySetBase() = default;
 
-    virtual bool token_has_value()
+    virtual bool token_has_value() const
     {
         char regex_expression[5];
-        sprintf(regex_expression, "(\w*)(\(\w*\))");
+        sprintf(regex_expression, "(\w*)(\(\w*\)){1}");
         return ( std::regex_match<char>(value_.c_str(), std::regex(regex_expression)) );
+    }
+
+    std::string get_token_value() const
+    {
+        return value_;
     }
 
 protected:
 
-    std::string value_;// the value on the node.
+    const std::string value_;// the value on the node.
 };
 
 class NodeProperties : public PropertySetBase
 {
 public:
-    NodeProperties() = default;
+    NodeProperties(std::string value, std::string parent_value, int32_t child_num)
+    : PropertySetBase(value)
+    , parent_value_(parent_value)
+    , child_num_(child_num)
+    {}
     virtual ~NodeProperties() = default;
 
-    bool child_of_root_node()
+    bool child_of_root_node() const
     {
         return (parent_value_.compare("root") == 0);
     }
 
-    bool compare_token_label( std::string str )
+    bool compare_token_label( std::string str ) const
     {
         char regex_expression[5];
-        sprintf(regex_expression, "(%s)(\d*)");
+        sprintf(regex_expression, "(%s)(\d*)", str.c_str());
         return ( std::regex_match<char>(value_.c_str(), std::regex(regex_expression)) );
     }
 
+    int32_t number_of_children() const
+    {
+        return child_num_;
+    }
+
+
 private:
-    std::string parent_value_;// the value on the parent.
-    std::string child_num_;// the number of children on the node.
+    const std::string parent_value_;// the value on the parent.
+    const int32_t child_num_;// the number of children on the node.
 };
 
 class RecordProperties : public PropertySetBase
 {
 public:
-    RecordProperties() = default;
+    RecordProperties(NodeProperties old)
+    : PropertySetBase(old.get_token_value())
+    , set_position_(-1)
+    , value_num_(old.number_of_children())
+    {
+
+    }
+
+    RecordProperties(const RecordProperties &properties)
+    : PropertySetBase(properties.value_)
+    , set_position_(properties.set_position_)
+    , value_num_(properties.value_num_)
+    {}
+
     virtual ~RecordProperties() = default;
 
+    int32_t number_of_values() const
+    {
+        return value_num_;
+    }
+
 private:
-    int32_t set_position_;
-    int32_t value_num_;
+    const int32_t set_position_;// in other words the record number
+    const int32_t value_num_;// number of values in the record 
 };
 
 }// namespace sdg

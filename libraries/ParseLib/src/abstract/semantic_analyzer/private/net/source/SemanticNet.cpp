@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 
+#define SUCCESS (0)
+#define FAILURE (-1)
+
 using ::sdg::SemanticNet;
 using ::sdg::LexicalItem;
 using ::sdg::PropertySetBase;
@@ -17,39 +20,72 @@ using ::std::cout;
 using ::std::endl;
 
 
-template<class T>
-shared_ptr<LexicalItem> ConstructLexicalItem(T type, PropertySetBase *properties)
+shared_ptr<LexicalItem> MakeLexicalItem(string token, ItemType type, shared_ptr<const NodeProperties> props)
 {
-    if (type == ItemType::Header)
-        return make_shared<::sdg::LHeaderItem>();
-
-    else if (type == ItemType::Record)
-        return make_shared<::sdg::LRecordItem>();
-
-    else if (type == ItemType::Value)
-        return make_shared<::sdg::LValueItem>();
-
-    else 
+    if (props == nullptr)
         return nullptr;
+
+    switch (type) {
+        case ItemType::Record:
+            return make_shared<LexicalItem>(token, type, make_shared<const ::sdg::RecordProperties>(*props));
+            break;
+
+        default:
+        case ItemType::Undefined:
+            return nullptr;
+            break;
+    }
 }
 
-void SemanticNet::add_item(string token, NodeProperties properties)
+const std::shared_ptr<const LexicalItem> SemanticNet::add_item(string token, NodeProperties properties)
 {
-    auto type = classify<ItemType>(token, &properties);
+    shared_ptr<PropertySetBase> props = make_shared<NodeProperties>(properties);
 
-    auto item = ConstructLexicalItem(type, &properties);
+    auto type = classify<ItemType>(token, props);
 
-    // decompose();
+    auto item = MakeLexicalItem(token, type, dynamic_pointer_cast<NodeProperties>(props));
 
-    // compare();
+    //currently does nothing
+    decompose(item);
+
+    //validate 
+    if ( compare_semantics(item) == -1 )
+        return nullptr;
+
+    return item;
 }
 
-void SemanticNet::decompose( LexicalItem token, PropertySetBase properties )
+void SemanticNet::decompose( std::shared_ptr<LexicalItem> token )
 {
 
 }
 
-void SemanticNet::compare( vector<LexicalItem> lexical_item )
+int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> item )
 {
+    std::shared_ptr<const RecordProperties> actual, expected;
 
+    //if the argument is null, then it will not match the precedent.
+    if ( (actual = std::dynamic_pointer_cast<const RecordProperties>(item->properties())) == nullptr )
+        return FAILURE;
+
+    //There should be no precedent for undefined items.
+    if ( item->type() == ItemType::Undefined )
+        return FAILURE;
+
+    // if this lexical item type has no precedent, set the precedent.
+    if ( (expected = std::dynamic_pointer_cast<const RecordProperties>(precedent_[item->type()])) == nullptr )
+    {
+        precedent_[item->type()] = item->properties();
+        return SUCCESS;
+    }
+
+    if ( actual->number_of_values() != expected->number_of_values() )
+        return FAILURE;
+
+    else
+        return SUCCESS;
 }
+
+
+#undef FAILURE
+#undef SUCCESS
