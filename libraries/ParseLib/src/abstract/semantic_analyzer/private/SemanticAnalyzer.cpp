@@ -40,17 +40,19 @@ double SemanticAnalyzer::get_target_time() const
 
 void SemanticAnalyzer::check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target)
 {
-
-
     if (node->has_children())
     {
         for(int i=0; i < node->get_number_of_children(); ++i)
         {
             auto child = node->get_child(i);
-            auto item = net_->add_item(child->get_item_value(), NodeProperties(child->get_item_key(), node->get_item_value(), child->get_number_of_children()));
+            auto props = NodeProperties(child->get_item_key(), node->get_item_value(), child->get_number_of_children());
+
+            auto item = net_->add_item(child->get_item_value(), props);
 
             if (item)
                 item->print_line();
+            else
+                cout << "No valid item. " << endl;
 
             check_nodes(child, target);
         }
