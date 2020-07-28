@@ -39,7 +39,7 @@ public:
         return path_;
     }
 
-    bool is_empty()
+    bool is_empty() const
     {
         return key_.empty() && value_.empty() && path_.empty();
     }
@@ -68,6 +68,11 @@ public:
     ItemType type() const
     {
         return type_;
+    }
+
+    bool has_payload() const
+    {
+        return !payload_.is_empty();
     }
 
     std::shared_ptr<const PropertySetBase> properties() const
