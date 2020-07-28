@@ -2,6 +2,7 @@
 #pragma once
 #include <string>
 #include <regex>
+#include <iostream>
 
 namespace sdg {
 
@@ -12,6 +13,8 @@ public:
     : value_(value)
     {}
     virtual ~PropertySetBase() = default;
+
+    virtual void print() const = 0;
 
     virtual bool token_has_value() const
     {
@@ -46,6 +49,11 @@ public:
     {}
     virtual ~NodeProperties() = default;
 
+    virtual void print() const override
+    {
+        std::cout << "value: " << value_ << " parent value: " << parent_value_ << " child num: " << child_num_;
+    }
+
     bool child_of_root_node() const
     {
         return (parent_value_.compare("root") == 0);
@@ -67,7 +75,6 @@ public:
         return child_num_;
     }
 
-
 private:
     const std::string parent_value_;// the value on the parent.
     const int32_t child_num_;// the number of children on the node.
@@ -76,19 +83,28 @@ private:
 class RecordProperties : public PropertySetBase
 {
 public:
+    RecordProperties(std::string value, int32_t position, int32_t value_num)
+    : PropertySetBase(value)
+    , set_position_(position)
+    , value_num_(value_num)
+    {}
+
     RecordProperties(NodeProperties old)
     : PropertySetBase(old.get_token_value())
     , set_position_(-1)
     , value_num_(old.number_of_children())
-    {
-
-    }
+    {}
 
     RecordProperties(const RecordProperties &properties)
     : PropertySetBase(properties.value_)
     , set_position_(properties.set_position_)
     , value_num_(properties.value_num_)
     {}
+
+    virtual void print() const override
+    {
+        std::cout << "value: " << value_ << " set position: " << set_position_ << " value num: " << value_num_;
+    }
 
     virtual ~RecordProperties() = default;
 
@@ -100,6 +116,74 @@ public:
 private:
     const int32_t set_position_;// in other words the record number
     const int32_t value_num_;// number of values in the record 
+};
+
+class HeaderProperties : public PropertySetBase
+{
+public:
+    HeaderProperties(std::string value, int32_t position, int32_t value_num)
+        : PropertySetBase(value)
+        , set_position_(position)
+        , value_num_(value_num)
+    {}
+
+    HeaderProperties(NodeProperties old)
+        : PropertySetBase(old.get_token_value())
+        , set_position_(-1)
+        , value_num_(old.number_of_children())
+    {}
+
+    HeaderProperties(const HeaderProperties &properties)
+        : PropertySetBase(properties.value_)
+        , set_position_(properties.set_position_)
+        , value_num_(properties.value_num_)
+    {}
+
+    virtual ~HeaderProperties() = default;
+
+    int32_t number_of_values() const
+    {
+        return value_num_;
+    }
+
+    virtual void print() const override
+    {
+        std::cout << "value: " << value_ << " set position value: " << set_position_ << " value num: " << value_num_;
+    }
+
+private:
+    const int32_t set_position_;// in other words the record number
+    const int32_t value_num_;// number of values in the record
+};
+
+
+class ValueProperties : public PropertySetBase
+{
+public:
+    ValueProperties(std::string value, int32_t position, int32_t value_num)
+            : PropertySetBase(value)
+            , set_position_(position)
+    {}
+
+    ValueProperties(NodeProperties old)
+            : PropertySetBase(old.get_token_value())
+            , set_position_(-1)
+    {}
+
+    ValueProperties(const ValueProperties &properties)
+            : PropertySetBase(properties.value_)
+            , set_position_(properties.set_position_)
+    {}
+
+    virtual ~ValueProperties() = default;
+
+    virtual void print()
+    {
+        std::cout << "value: " << value_ << " set position value: " << set_position_;
+    }
+
+private:
+    const int32_t set_position_;// in other words the record number
 };
 
 }// namespace sdg

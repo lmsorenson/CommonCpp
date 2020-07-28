@@ -26,6 +26,10 @@ shared_ptr<LexicalItem> MakeLexicalItem(string token, ItemType type, shared_ptr<
         return nullptr;
 
     switch (type) {
+        case ItemType::Header:
+            return make_shared<LexicalItem>(token, type, make_shared<const ::sdg::HeaderProperties>(*props));
+            break;
+
         case ItemType::Record:
             return make_shared<LexicalItem>(token, type, make_shared<const ::sdg::RecordProperties>(*props));
             break;
@@ -53,7 +57,7 @@ const std::shared_ptr<const LexicalItem> SemanticNet::add_item(string token, Nod
     decompose(item);
 
     //validate 
-    if ( compare_semantics(item) == -1 )
+    if ( compare_semantics(item) == FAILURE )
         return nullptr;
 
     return item;
@@ -90,28 +94,43 @@ void SemanticNet::decompose( std::shared_ptr<LexicalItem> token )
 
 int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> item )
 {
-    std::shared_ptr<const RecordProperties> actual, expected;
-
     //There should be no precedent for undefined items.
     if ( !item || item->type() == ItemType::Undefined )
         return FAILURE;
 
-    //if the argument is null, then it will not match the precedent.
-    if ( (actual = std::dynamic_pointer_cast<const RecordProperties>(item->properties())) == nullptr )
-        return FAILURE;
+    auto header_props = std::dynamic_pointer_cast<const HeaderProperties>(item->properties());
+    auto record_props = std::dynamic_pointer_cast<const RecordProperties>(item->properties());
+    auto value_props = std::dynamic_pointer_cast<const ValueProperties>(item->properties());
 
-    // if this lexical item type has no precedent, set the precedent.
-    if ( (expected = std::dynamic_pointer_cast<const RecordProperties>(precedent_[item->type()])) == nullptr )
+    if ((header_props = std::dynamic_pointer_cast<const HeaderProperties>(item->properties())) != nullptr)
     {
-        precedent_[item->type()] = item->properties();
         return SUCCESS;
     }
+    else if ((record_props = std::dynamic_pointer_cast<const RecordProperties>(item->properties())) != nullptr)
+    {
+        std::shared_ptr<const RecordProperties> expected;
 
-    if ( actual->number_of_values() != expected->number_of_values() )
-        return FAILURE;
+        // if this lexical item type has no precedent, set the precedent.
+        if ( (expected = std::dynamic_pointer_cast<const RecordProperties>(precedent_[item->type()])) == nullptr )
+        {
+            precedent_[item->type()] = item->properties();
+            return SUCCESS;
+        }
 
-    else
+        if ( record_props && record_props->number_of_values() != expected->number_of_values() )
+            return FAILURE;
+
+        else
+            return SUCCESS;
+    }
+    else if ((value_props = std::dynamic_pointer_cast<const ValueProperties>(item->properties())) != nullptr)
+    {
         return SUCCESS;
+    }
+    else
+    {
+        return FAILURE;
+    }
 }
 
 
