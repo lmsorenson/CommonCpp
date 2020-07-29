@@ -41,7 +41,7 @@ std::pair<std::string, std::string> ValueToken::create_node(string a_token)
     cout << " owned by ";
     owner_->print();
 
-    return pair<string, string>(shape->get_id() + "-" + this->get_id(), a_token.substr(2, a_token.size()-3));
+    return pair<string, string>(shape->get_id() + "-" + this->get_id(), a_token);
 }
 
 string ValueToken::get_id() const

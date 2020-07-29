@@ -9,6 +9,7 @@
 
 using ::sdg::SemanticNet;
 using ::sdg::LexicalItem;
+using ::sdg::ItemPayload;
 using ::sdg::PropertySetBase;
 using ::sdg::NodeProperties;
 using ::sdg::ItemType;
@@ -20,22 +21,22 @@ using ::std::cout;
 using ::std::endl;
 
 
-shared_ptr<LexicalItem> MakeLexicalItem(string token, ItemType type, shared_ptr<const NodeProperties> props)
+shared_ptr<LexicalItem> MakeLexicalItem(ItemType type, shared_ptr<const NodeProperties> props)
 {
     if (props == nullptr)
         return nullptr;
 
     switch (type) {
         case ItemType::Header:
-            return make_shared<LexicalItem>(token, type, make_shared<const ::sdg::HeaderProperties>(*props));
+            return make_shared<LexicalItem>(props->get_token_value(), type, make_shared<const ::sdg::HeaderProperties>(*props));
             break;
 
         case ItemType::Record:
-            return make_shared<LexicalItem>(token, type, make_shared<const ::sdg::RecordProperties>(*props));
+            return make_shared<LexicalItem>(props->get_token_value(), type, make_shared<const ::sdg::RecordProperties>(*props));
             break;
 
         case ItemType::Value:
-            return make_shared<LexicalItem>(token, type, make_shared<const ::sdg::RecordProperties>(*props));
+            return make_shared<LexicalItem>(props->get_token_value(), type, make_shared<const ::sdg::RecordProperties>(*props));
             break;
 
         default:
@@ -45,16 +46,18 @@ shared_ptr<LexicalItem> MakeLexicalItem(string token, ItemType type, shared_ptr<
     }
 }
 
-const std::shared_ptr<const LexicalItem> SemanticNet::add_item(string token, NodeProperties properties)
+const std::shared_ptr<const LexicalItem> SemanticNet::add_item(NodeProperties properties)
 {
     shared_ptr<PropertySetBase> props = make_shared<NodeProperties>(properties);
 
-    auto type = classify(token, props);
+    auto type = classify( props );
 
-    auto item = MakeLexicalItem(token, static_cast<ItemType>(type), dynamic_pointer_cast<NodeProperties>(props));
+    auto item = MakeLexicalItem(static_cast<ItemType>(type), dynamic_pointer_cast<NodeProperties>(props));
 
-    //currently does nothing
-    decompose(item);
+    auto payload = decompose(item);
+
+    if (item)
+        item->set_payload(payload);
 
     //validate 
     if ( compare_semantics(item) == FAILURE )
@@ -63,7 +66,7 @@ const std::shared_ptr<const LexicalItem> SemanticNet::add_item(string token, Nod
     return item;
 }
 
-int16_t SemanticNet::classify( ::std::string token, std::shared_ptr<const PropertySetBase> properties ) const
+int16_t SemanticNet::classify( std::shared_ptr<const PropertySetBase> properties ) const
 {
     std::shared_ptr<const NodeProperties> props;
     if ( (props = std::dynamic_pointer_cast<const NodeProperties>(properties))==nullptr )
@@ -87,9 +90,25 @@ int16_t SemanticNet::classify( ::std::string token, std::shared_ptr<const Proper
     }
 }
 
-void SemanticNet::decompose( std::shared_ptr<LexicalItem> token )
+ItemPayload SemanticNet::decompose( shared_ptr<LexicalItem> token )
 {
+    if (token != nullptr && token->type() == ItemType::Value)
+    {
+        auto value = token->value();
 
+        int32_t
+            value_begin_pos = value.find("("),
+            value_length = value.length() - (value_begin_pos+2);
+
+        if (value_begin_pos != string::npos)
+            return ItemPayload("", value.substr(value_begin_pos, value_length), "");
+        else
+            return ItemPayload("", "", "");
+    }
+    else
+    {
+        return ItemPayload("", "", "");
+    }
 }
 
 int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> item )

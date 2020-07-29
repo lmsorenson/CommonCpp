@@ -75,16 +75,26 @@ public:
         return !payload_.is_empty();
     }
 
+    const std::string value() const
+    {
+        return value_;
+    }
+
+    void set_payload(ItemPayload payload)
+    {
+        payload_ = payload;
+    }
+
     std::shared_ptr<const PropertySetBase> properties() const
     {
         return props_;
     }
 
 private:
-    ItemType type_;
+    const ItemType type_;
     ItemPayload payload_;
-    std::string value_;
-    std::shared_ptr<const PropertySetBase> props_;
+    const std::string value_;
+    const std::shared_ptr<const PropertySetBase> props_;
 };
 
 }// namespace sdg

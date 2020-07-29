@@ -68,7 +68,6 @@ plHashValue plHashTable::insert(KeyInstance key, plHashValue value)
         stopwatch_.start();
         bool keyExists = this->key_value_exists(key);
         stopwatch_.stop();
-        cout << fixed << "\rCheck key value exists: " << stopwatch_.read_seconds() << flush;
 
         if(keyExists)
         {

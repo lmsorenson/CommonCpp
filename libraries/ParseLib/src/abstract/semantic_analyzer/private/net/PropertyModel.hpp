@@ -66,7 +66,7 @@ public:
             return false;
 
         char regex_expression[5];
-        sprintf(regex_expression, "(%s)(\d*)", str.c_str());
+        sprintf(regex_expression, "(%s)(\\d*)", str.c_str());
         return ( std::regex_match<char>(value_.c_str(), std::regex(regex_expression)) );
     }
 
