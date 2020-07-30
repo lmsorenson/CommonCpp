@@ -23,7 +23,7 @@ public:
             return false;
 
         char regex_expression[64];
-        sprintf(regex_expression, "([A-Za-z0-9]*)(\\([A-Za-z0-9]*\\)){1}");
+        sprintf(regex_expression, "([A-Za-z0-9]*)(\\([A-Za-z0-9\r\n\",]*\\)){1}");
 
         auto is_match = std::regex_match<char>(value_.c_str(), std::regex(regex_expression));
         return is_match;
