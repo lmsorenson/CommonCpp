@@ -6,9 +6,9 @@
 
 #include <gtest/gtest.h>
 
-TEST_F(SemanticAnalyzerComponentTests, analyzer_test1 )
-{
-    ::sdg::SemanticAnalyzer analyzer = ::sdg::SemanticAnalyzer();
-
-    ASSERT_EQ(1,2);
-}
+//TEST_F(SemanticAnalyzerComponentTests, analyzer_test1 )
+//{
+//    ::sdg::SemanticAnalyzer analyzer = ::sdg::SemanticAnalyzer();
+//
+//    ASSERT_EQ(1,2);
+//}
