@@ -21,7 +21,7 @@ using ::std::cout;
 using ::std::endl;
 
 
-shared_ptr<LexicalItem> MakeLexicalItem(ItemType type, shared_ptr<const NodeProperties> props)
+shared_ptr<LexicalItem> MakeLexicalItem(ItemType type, shared_ptr<const NodeProperties> props, vector<string> &error)
 {
     if (props == nullptr)
         return nullptr;
@@ -41,18 +41,19 @@ shared_ptr<LexicalItem> MakeLexicalItem(ItemType type, shared_ptr<const NodeProp
 
         default:
         case ItemType::Undefined:
+            error.push_back("unknown type");
             return nullptr;
             break;
     }
 }
 
-const std::shared_ptr<const LexicalItem> SemanticNet::add_item(NodeProperties properties)
+const std::shared_ptr<const LexicalItem> SemanticNet::add_item(NodeProperties properties, vector<string> &err)
 {
     shared_ptr<PropertySetBase> props = make_shared<NodeProperties>(properties);
 
     auto type = classify( props );
 
-    auto item = MakeLexicalItem(static_cast<ItemType>(type), dynamic_pointer_cast<NodeProperties>(props));
+    auto item = MakeLexicalItem(static_cast<ItemType>(type), dynamic_pointer_cast<NodeProperties>(props),err);
 
     auto payload = decompose(item);
 
@@ -60,7 +61,7 @@ const std::shared_ptr<const LexicalItem> SemanticNet::add_item(NodeProperties pr
         item->set_payload(payload);
 
     //validate 
-    if ( compare_semantics(item) == FAILURE )
+    if ( compare_semantics(item, err) == FAILURE )
         return nullptr;
 
     return item;
@@ -111,7 +112,7 @@ ItemPayload SemanticNet::decompose( shared_ptr<LexicalItem> token )
     }
 }
 
-int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> item )
+int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> item, vector<string> &err )
 {
     //There should be no precedent for undefined items.
     if ( !item || item->type() == ItemType::Undefined )
@@ -137,7 +138,11 @@ int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> 
         }
 
         if ( record_props && record_props->number_of_values() != expected->number_of_values() )
+        {
+            err.push_back("Record field count incorrect.");
             return FAILURE;
+        }
+
 
         else
             return SUCCESS;

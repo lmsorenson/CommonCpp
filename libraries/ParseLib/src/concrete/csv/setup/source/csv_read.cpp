@@ -77,6 +77,8 @@ void Read::configure_analyzer(SemanticAnalyzer &semantic_analyzer, DataSet *data
     semantic_analyzer.set_source<SyntaxTreeSource>(syntax_tree);
 
     semantic_analyzer.set_target<DataSetTarget>(data_set);
+
+    semantic_analyzer.set_error_queue<analyzer::ErrorQueue>( &error_queue_ );
 }
 
 int32_t sdg::csv::Read::set_read_options(vector<option> read_options)

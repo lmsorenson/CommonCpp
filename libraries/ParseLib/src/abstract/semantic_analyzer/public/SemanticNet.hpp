@@ -13,12 +13,12 @@ namespace sdg {
 class SemanticNet
 {
 public:
-    const std::shared_ptr<const LexicalItem> add_item( NodeProperties properties );
+    const std::shared_ptr<const LexicalItem> add_item( NodeProperties properties, std::vector<std::string> &err );
 
 private:
     int16_t classify( std::shared_ptr<const PropertySetBase> properties ) const;
     ItemPayload decompose( ::std::shared_ptr<LexicalItem> item );
-    int8_t compare_semantics( const std::shared_ptr<const LexicalItem> item );
+    int8_t compare_semantics( const std::shared_ptr<const LexicalItem> item, std::vector<std::string> &err );
 
     ::std::unordered_map<::std::string, std::shared_ptr<LexicalItem>> item_;
     ::std::unordered_map<ItemType, std::shared_ptr<const PropertySetBase>> precedent_;

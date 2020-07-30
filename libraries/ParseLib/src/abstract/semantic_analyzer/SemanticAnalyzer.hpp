@@ -6,6 +6,8 @@
 #include "public/SemanticNet.hpp"
 #include "private/queue/SyntaxTreeSource.hpp"
 #include "private/queue/DataSetTarget.hpp"
+#include "private/queue/ErrorQueue.hpp"
+#include "../intermediate/Error.hpp"
 #include "../intermediate/observer/Observer.hpp"
 #include "../intermediate/node.hpp"
 #include "../../utils/stopwatch.hpp"
@@ -21,6 +23,7 @@ class SemanticAnalyzer : public pattern::Observer
     std::shared_ptr<SyntaxTreeSource> source_;
     std::shared_ptr<DataSetTarget> target_;
     std::shared_ptr<SemanticNet> net_;
+    std::shared_ptr<analyzer::ErrorQueue> error_queue_;
 
     utils::Stopwatch stopwatch_;
 
@@ -41,6 +44,8 @@ public:
     double get_time() const;
     double get_target_time() const;
 
+    void handle_error(Error error);
+
     template<class T>
     void set_source( std::shared_ptr<SyntaxNode> syntax_tree )
     {
@@ -52,6 +57,12 @@ public:
     void set_target(DataSet *data_set)
     {
         target_ = std::shared_ptr<T>( new T( data_set ) );
+    }
+
+    template<class T>
+    void set_error_queue(pipeline::Stream<Error> *error_queue_ptr)
+    {
+        error_queue_=std::shared_ptr<T>( new T( error_queue_ptr ) );
     }
 };
 

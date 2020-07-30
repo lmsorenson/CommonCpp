@@ -2,6 +2,7 @@
 #include "../SemanticAnalyzer.hpp"
 #include <iostream>
 #include <time.h>
+#include <vector>
 
 using ::sdg::SemanticAnalyzer;
 using ::std::cout;
@@ -9,6 +10,7 @@ using ::std::endl;
 using ::std::shared_ptr;
 using ::std::make_shared;
 using ::std::string;
+using ::std::vector;
 using ::sdg::SyntaxNode;
 using ::sdg::DataSetTarget;
 using ::sdg::hash::KeyInstance;
@@ -44,10 +46,11 @@ void SemanticAnalyzer::check_nodes(const shared_ptr<const SyntaxNode> node, std:
     {
         for(int i=0; i < node->get_number_of_children(); ++i)
         {
+            vector<string> err;
             const auto child = node->get_child(i);
             auto props = NodeProperties( child->get_item_value(), node->get_item_value(), child->get_number_of_children());
 
-            auto item = net_->add_item(props);
+            auto item = net_->add_item(props, err);
 
             if (item && item->has_payload())
             {
@@ -59,6 +62,11 @@ void SemanticAnalyzer::check_nodes(const shared_ptr<const SyntaxNode> node, std:
             else
             {
                 cout << "Token cannot produce valid item. " << endl;
+
+                if(err.size() > 0)
+                {
+                    this->handle_error({FILE_FORMAT_INVALID});
+                }
             }
 
             check_nodes(child, target);
@@ -81,4 +89,9 @@ void SemanticAnalyzer::analyze()
     }
 
     stopwatch_.stop();
+}
+
+void SemanticAnalyzer::handle_error(Error error)
+{
+    error_queue_->add_error(error);
 }
