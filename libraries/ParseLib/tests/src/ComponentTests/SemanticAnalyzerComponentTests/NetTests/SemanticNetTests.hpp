@@ -69,6 +69,7 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_matches_precedent_empty_payload 
 
 TEST_F(SemanticAnalyzerComponentTests, add_item_value_no_precedent )
 {
+    ::std::vector<std::string> err;
     ::sdg::SemanticNet net = ::sdg::SemanticNet();
 
     //pass in certain node properties.
