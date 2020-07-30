@@ -30,7 +30,7 @@ class SemanticAnalyzer : public pattern::Observer
         return ( source_ && target_ );
     }
 
-    void check_nodes(std::shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target);
+    void check_nodes(const std::shared_ptr<const SyntaxNode> node, std::shared_ptr<DataSetTarget> target);
 
 public:
     SemanticAnalyzer();

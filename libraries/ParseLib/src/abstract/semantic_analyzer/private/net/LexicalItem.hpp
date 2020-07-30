@@ -24,17 +24,22 @@ public:
     {}
     ~ItemPayload() = default;
 
-    std::string key() const
+    void print() const
+    {
+        std::cout << "Payload {" << key() << "," << value() << "," << path() << "," << "} ";
+    }
+
+    const std::string key() const
     {
         return key_;
     }
 
-    std::string value() const
+    const std::string value() const
     {
         return value_;
     }
 
-    std::string path() const
+    const std::string path() const
     {
         return path_;
     }
@@ -60,7 +65,8 @@ public:
 
     void print_line() const
     {
-        std::cout << "Item Value: " << value_ << " ";
+        std::cout << "Lexical Item: ";
+        payload_.print();
         props_->print();
         std::cout << std::endl;
     };
@@ -83,6 +89,11 @@ public:
     void set_payload(ItemPayload payload)
     {
         payload_ = payload;
+    }
+
+    const ItemPayload get_payload() const
+    {
+        return payload_;
     }
 
     std::shared_ptr<const PropertySetBase> properties() const

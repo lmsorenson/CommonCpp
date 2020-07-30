@@ -38,21 +38,23 @@ double SemanticAnalyzer::get_target_time() const
 }
 
 
-void SemanticAnalyzer::check_nodes(shared_ptr<SyntaxNode> node, std::shared_ptr<DataSetTarget> target)
+void SemanticAnalyzer::check_nodes(const shared_ptr<const SyntaxNode> node, std::shared_ptr<DataSetTarget> target)
 {
     if (node->has_children())
     {
         for(int i=0; i < node->get_number_of_children(); ++i)
         {
-            auto child = node->get_child(i);
+            const auto child = node->get_child(i);
             auto props = NodeProperties( child->get_item_value(), node->get_item_value(), child->get_number_of_children());
 
             auto item = net_->add_item(props);
 
-            if (item)
+            if (item && item->has_payload())
             {
                 item->print_line();
-                target->add( node->get_item_key(), node->get_item_value(), node->get_path() );
+                auto payload = item->get_payload();
+
+                target->add( child->get_item_key(), payload.value(), child->get_path() );
             }
             else
             {

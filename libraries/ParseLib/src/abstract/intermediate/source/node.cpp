@@ -25,14 +25,14 @@ SyntaxNode::SyntaxNode(const SyntaxNode &a_syntax_node)
 
 SyntaxNode::~SyntaxNode(){}
 
-string SyntaxNode::get_item_value(){return value_;}
+string SyntaxNode::get_item_value() const {return value_;}
 void SyntaxNode::set_value(const char * text){value_ = text;}
-string SyntaxNode::get_item_key(){return id_;}
+string SyntaxNode::get_item_key() const {return id_;}
 
 SyntaxNode SyntaxNode::append_key(string a_new_id){id_.append(a_new_id); return *this;}
 bool SyntaxNode::is_empty_key(){return (id_.empty());};
 
-string SyntaxNode::get_path()
+string SyntaxNode::get_path() const
 {
     string path;
 
@@ -62,7 +62,7 @@ shared_ptr<SyntaxNode> SyntaxNode::AddChild(SyntaxNode n)
     return node;
 }
 
-shared_ptr<SyntaxNode> SyntaxNode::get_child(int32_t index)
+shared_ptr<SyntaxNode> SyntaxNode::get_child(int32_t index) const
 {
     if(this->children_.size() > index)
         return this->children_[index];
@@ -70,9 +70,9 @@ shared_ptr<SyntaxNode> SyntaxNode::get_child(int32_t index)
         return nullptr;
 }
 
-int32_t SyntaxNode::get_number_of_children(){return children_.size();}
-bool SyntaxNode::has_children(){return (children_.size()>0);}
-bool SyntaxNode::has_parent(){return ((bool)parent_);}
+int32_t SyntaxNode::get_number_of_children() const {return children_.size();}
+bool SyntaxNode::has_children() const {return (children_.size()>0);}
+bool SyntaxNode::has_parent() const {return ((bool)parent_);}
 
 void SyntaxNode::Print()
 {

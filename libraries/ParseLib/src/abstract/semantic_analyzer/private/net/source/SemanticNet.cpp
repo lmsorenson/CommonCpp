@@ -101,7 +101,7 @@ ItemPayload SemanticNet::decompose( shared_ptr<LexicalItem> token )
             value_length = value.length() - (value_begin_pos+2);
 
         if (value_begin_pos != string::npos)
-            return ItemPayload("", value.substr(value_begin_pos, value_length), "");
+            return ItemPayload("", value.substr(value_begin_pos + 1, value_length), "");
         else
             return ItemPayload("", "", "");
     }

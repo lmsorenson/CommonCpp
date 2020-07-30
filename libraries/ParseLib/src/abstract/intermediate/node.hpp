@@ -19,18 +19,18 @@ public:
     ~SyntaxNode();
 
     //Get and set the value on the SyntaxNode.
-    std::string get_item_value();
+    std::string get_item_value() const;
     void set_value(const char * text);
-    std::string get_item_key();
+    std::string get_item_key() const;
     SyntaxNode append_key(std::string a_new_id);
     bool is_empty_key();
-    std::string get_path();
+    std::string get_path() const;
     
     //Get Children
-    std::shared_ptr<SyntaxNode> get_child(int32_t index);
-    int32_t get_number_of_children();
-    bool has_children();
-    bool has_parent();
+    std::shared_ptr<SyntaxNode> get_child(int32_t index) const;
+    int32_t get_number_of_children() const;
+    bool has_children() const;
+    bool has_parent() const;
 
     //Add Children
     std::shared_ptr<SyntaxNode> AddChild(SyntaxNode n);
