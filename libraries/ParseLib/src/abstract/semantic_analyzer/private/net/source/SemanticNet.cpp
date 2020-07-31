@@ -122,11 +122,11 @@ int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> 
     auto record_props = std::dynamic_pointer_cast<const RecordProperties>(item->properties());
     auto value_props = std::dynamic_pointer_cast<const ValueProperties>(item->properties());
 
-    if ((header_props = std::dynamic_pointer_cast<const HeaderProperties>(item->properties())) != nullptr)
+    if (header_props != nullptr)
     {
         return SUCCESS;
     }
-    else if ((record_props = std::dynamic_pointer_cast<const RecordProperties>(item->properties())) != nullptr)
+    else if (record_props != nullptr)
     {
         std::shared_ptr<const RecordProperties> expected;
 
@@ -137,17 +137,16 @@ int8_t SemanticNet::compare_semantics( const std::shared_ptr<const LexicalItem> 
             return SUCCESS;
         }
 
-        if ( record_props && record_props->number_of_values() != expected->number_of_values() )
+        if ( record_props->number_of_values() != expected->number_of_values() )
         {
             err.push_back("Record field count incorrect.");
             return FAILURE;
         }
 
-
         else
             return SUCCESS;
     }
-    else if ((value_props = std::dynamic_pointer_cast<const ValueProperties>(item->properties())) != nullptr)
+    else if (value_props != nullptr)
     {
         return SUCCESS;
     }

@@ -10,7 +10,7 @@ namespace csv {
 class HeaderFilter : public ::sdg::ParserFilter
 {
 public:
-    HeaderFilter(const std::string &new_filter_id);
+    explicit HeaderFilter(const std::string &new_filter_id);
     virtual ~HeaderFilter()=default;
 
     virtual int32_t execute(const std::string &text, std::vector<sdg::SyntaxNode>& output) override;
@@ -21,7 +21,7 @@ public:
 class RecordFilter : public ::sdg::ParserFilter
 {
 public:
-    RecordFilter(const std::string &new_filter_id);
+    explicit RecordFilter(const std::string &new_filter_id);
     virtual ~RecordFilter()=default;
 
     virtual int32_t execute(const std::string &text, std::vector<sdg::SyntaxNode>& output) override;
@@ -35,7 +35,7 @@ class FieldFilter : public ::sdg::ParserFilter
     int32_t field_count;
 
 public:
-    FieldFilter(const std::string &new_filter_id);
+    explicit FieldFilter(const std::string &new_filter_id);
     virtual ~FieldFilter()=default;
 
     virtual int32_t execute(const std::string &ext, std::vector<sdg::SyntaxNode>& output) override;

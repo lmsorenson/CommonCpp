@@ -11,7 +11,7 @@ class SyntaxTreeSource
     std::shared_ptr<sdg::SyntaxNode> syntax_tree_;
 
 public:
-    SyntaxTreeSource(std::shared_ptr<sdg::SyntaxNode> syntax_tree_)
+    explicit SyntaxTreeSource(std::shared_ptr<sdg::SyntaxNode> syntax_tree_)
     : syntax_tree_(syntax_tree_) {}
 
     std::shared_ptr<SyntaxNode> get_syntax_tree();

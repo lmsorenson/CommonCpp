@@ -20,7 +20,9 @@ using ::sdg::csv::Read;
 using ::sdg::SyntaxTreeTarget;
 using ::sdg::parse::TokenType;
 
-sdg::csv::Read::Read(){}
+sdg::csv::Read::Read()
+: b_use_header_line(false)
+{}
 sdg::csv::Read::~Read(){}
 
 

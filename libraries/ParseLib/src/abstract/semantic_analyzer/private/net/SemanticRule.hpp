@@ -12,7 +12,7 @@ public:
         Equal
     };
 
-    SemanticRule(Type type)
+    explicit SemanticRule(Type type)
     : type_( type )
     {}
     ~SemanticRule() = default;

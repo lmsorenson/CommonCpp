@@ -15,8 +15,10 @@ class DataSetTarget
     utils::Stopwatch stopwatch_;
 
 public:
-    DataSetTarget(sdg::DataSet *data_set_)
-    : data_set_(data_set_) {}
+    explicit DataSetTarget(sdg::DataSet *data_set_)
+    : data_set_(data_set_)
+    , stopwatch_(utils::Stopwatch())
+    {}
 
     void add(std::string key, std::string value, std::string path);
 

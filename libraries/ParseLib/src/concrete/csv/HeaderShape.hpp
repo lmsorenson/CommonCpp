@@ -8,7 +8,7 @@ namespace sdg {
 class HeaderShape : public DependentEntity
 {
 public:
-    HeaderShape(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
+    HeaderShape(Lexer *context, const std::string &entity_id, Shape::Cardinality cardinality)
     : DependentEntity(context, entity_id, cardinality, ',', "\r\n", {'\"', '\"'}, '\"')
     {}
     virtual ~HeaderShape() = default;
