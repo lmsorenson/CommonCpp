@@ -4,6 +4,10 @@
 using ::sdg::utils::Stopwatch;
 
 
+Stopwatch::Stopwatch()
+: t_(0)
+, time_taken_(0)
+{}
 
 void Stopwatch::start()
 {

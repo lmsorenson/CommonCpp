@@ -11,6 +11,9 @@ class Stopwatch
     double time_taken_;
 
 public:
+    Stopwatch();
+    ~Stopwatch() = default;
+
     void start();
     void stop();
     void reset();

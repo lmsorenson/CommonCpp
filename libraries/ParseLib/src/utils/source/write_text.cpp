@@ -20,7 +20,7 @@ string sdg::utils::writeText(string filepath, string contents)
     ofstream file (filepath.c_str());
     if (file.is_open())
     {
-        file.write(contents.c_str(), strlen(contents.c_str()));
+        file.write(contents.c_str(), contents.size());
 
         file.close();
     }
