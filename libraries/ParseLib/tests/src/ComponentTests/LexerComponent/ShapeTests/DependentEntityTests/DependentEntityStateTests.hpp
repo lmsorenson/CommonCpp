@@ -57,7 +57,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_initial_state_to_scanning
 {
     //---- input ---------------------------------
     string character_buffer = "";
-    string parent_entity_id = "D";
     MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
     char character = 'z';
 
@@ -67,7 +66,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_initial_state_to_scanning
     //---- setup ---------------------------------
     MockLexer mock_lexer = MockLexer();
     MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
-    auto mock_target = mock_lexer.get_mock_target();
     create_buffer(mock_lexer, character_buffer);
     dependent_entity.set_state<StartIndependentEntity>();
 

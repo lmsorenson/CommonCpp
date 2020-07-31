@@ -52,7 +52,7 @@ TEST_F(LexerComponentTests, lexer_state_occurances_postfix_increment )
     actual_occurances = state.occurances();
     ASSERT_EQ(expected_occurances_1, actual_occurances);
     
-    state++;
+    ++state;
     actual_occurances = state.occurances();
     ASSERT_EQ(expected_occurances_2, actual_occurances);
 }

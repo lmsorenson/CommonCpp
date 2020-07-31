@@ -10,7 +10,7 @@
 class MockDependentEntity : public ::sdg::DependentEntity
 {
 public:
-    explicit MockDependentEntity(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
+    explicit MockDependentEntity(Lexer *context, const std::string &entity_id, Shape::Cardinality cardinality)
     : DependentEntity(context, entity_id, cardinality, ',', "\r\n", std::pair('\"', '\"'), '\"')
     {}
     virtual ~MockDependentEntity() = default;
@@ -22,7 +22,7 @@ public:
 class MockDependentEntityB : public ::sdg::DependentEntity
 {
 public:
-    explicit MockDependentEntityB(Lexer *context, std::string entity_id, Shape::Cardinality cardinality)
+    explicit MockDependentEntityB(Lexer *context, const std::string &entity_id, Shape::Cardinality cardinality)
     : DependentEntity(context, entity_id, cardinality, '|', std::pair('{','}'), std::pair('(', ')'), '\\')
     {}
     virtual ~MockDependentEntityB() = default;
@@ -34,7 +34,7 @@ public:
 class MockTarget : public ::sdg::TokenTarget
 {
 public:
-    MockTarget(::sdg::pipeline::Stream<std::string> * stream) : TokenTarget(stream) {}
+    explicit MockTarget(::sdg::pipeline::Stream<std::string> * stream) : TokenTarget(stream) {}
     virtual ~MockTarget() = default;
 
     MOCK_METHOD(void, send_token, (std::string token), ());
@@ -43,7 +43,7 @@ public:
 class MockErrorQueue : public ::sdg::ErrorQueue
 {
 public:
-    MockErrorQueue(::sdg::pipeline::Stream<sdg::Error> * stream) : ErrorQueue(stream) {}
+    explicit MockErrorQueue(::sdg::pipeline::Stream<sdg::Error> * stream) : ErrorQueue(stream) {}
     virtual ~MockErrorQueue() = default;
 
     MOCK_METHOD(void, add_error, (const ::sdg::Error err), ());
