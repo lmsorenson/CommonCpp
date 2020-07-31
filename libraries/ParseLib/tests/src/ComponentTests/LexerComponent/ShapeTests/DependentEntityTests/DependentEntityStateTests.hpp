@@ -111,7 +111,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_initial_state_to_scanning
 TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_to_delimiter_found )
 {
     //---- input ---------------------------------
-    string parent_entity_id = "D";
     MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
     char character = '"';
 
@@ -121,7 +120,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_to_delimite
     //---- setup ---------------------------------
     MockLexer mock_lexer = MockLexer();
     MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
-    auto mock_target = mock_lexer.get_mock_target();
     dependent_entity.set_state<Scanning>();
 
     //---- run -----------------------------------
