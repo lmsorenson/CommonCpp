@@ -19,11 +19,11 @@ using sdg::ParserFilter;
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-sdg::csv::HeaderFilter::HeaderFilter(std::string new_filter_id) 
+sdg::csv::HeaderFilter::HeaderFilter(const string &new_filter_id)
 : ParserFilter(new_filter_id)
 {}
 
-int32_t sdg::csv::HeaderFilter::execute(string text, vector<SyntaxNode>& output)
+int32_t sdg::csv::HeaderFilter::execute(const string &text, vector<SyntaxNode>& output)
 {
     istringstream file(text);
     string line, r_buffer;
@@ -65,11 +65,11 @@ string sdg::csv::HeaderFilter::name()
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-sdg::csv::RecordFilter::RecordFilter(std::string new_filter_id) 
+sdg::csv::RecordFilter::RecordFilter(const string &new_filter_id)
 : ParserFilter(new_filter_id)
 {}
 
-int32_t sdg::csv::RecordFilter::execute(string text, vector<SyntaxNode>& output)
+int32_t sdg::csv::RecordFilter::execute(const string &text, vector<SyntaxNode>& output)
 {
     istringstream file(text);
     string line, rBuffer;
@@ -146,12 +146,12 @@ string sdg::csv::RecordFilter::name()
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
 //---------------------------------------------------------------------------//
-sdg::csv::FieldFilter::FieldFilter(std::string new_filter_id) 
+sdg::csv::FieldFilter::FieldFilter(const string &new_filter_id)
 : ParserFilter(new_filter_id)
 , field_count(-1)
 {}
 
-int32_t sdg::csv::FieldFilter::execute(string text, vector<SyntaxNode>& output)
+int32_t sdg::csv::FieldFilter::execute(const string &text, vector<SyntaxNode>& output)
 {
     if (text.back()==',')
         return FILTER_FORMAT_ERROR;

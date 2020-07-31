@@ -14,10 +14,10 @@ class ParserFilter
     std::string label;
 
 public:
-    ParserFilter(std::string new_filter_id);
+    ParserFilter(const std::string &new_filter_id);
     virtual ~ParserFilter();
 
-    virtual int32_t execute(std::string text, std::vector<sdg::SyntaxNode> & output) = 0;
+    virtual int32_t execute(const std::string &text, std::vector<sdg::SyntaxNode> & output) = 0;
     virtual int32_t inverse(std::vector<std::string> vector, std::string &compiled_string) = 0;
     virtual std::string name();
 

@@ -7,7 +7,7 @@ using ::std::string;
 using ::std::to_string;
 using ::sdg::ParserFilter;
 
-ParserFilter::ParserFilter(string new_filter_id)
+ParserFilter::ParserFilter(const string &new_filter_id)
 {
     label = new_filter_id;
 }
