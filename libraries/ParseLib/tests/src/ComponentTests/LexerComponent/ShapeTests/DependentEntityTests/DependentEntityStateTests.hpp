@@ -146,7 +146,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_through_del
     //---- setup ---------------------------------
     MockLexer mock_lexer = MockLexer();
     MockDependentEntity dependent_entity(&mock_lexer, parent_entity_id, cardinality);
-    auto mock_target = mock_lexer.get_mock_target();
     create_buffer(mock_lexer, character_buffer);
     dependent_entity.set_state<Scanning>();
 
@@ -174,7 +173,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_allow_escape_characters_b
     //---- setup ---------------------------------
     MockLexer mock_lexer = MockLexer();
     MockDependentEntity dependent_entity(&mock_lexer, parent_entity_id, cardinality);
-    auto mock_target = mock_lexer.get_mock_target();
     create_buffer(mock_lexer, character_buffer);
     dependent_entity.set_state<Scanning>();
 
@@ -198,7 +196,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_no_transiti
 {
     //---- input ---------------------------------
     string character_buffer = "";
-    string parent_entity_id = "D";
     MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
     char character = '\r';
 
@@ -208,7 +205,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_no_transiti
     //---- setup ---------------------------------
     MockLexer mock_lexer = MockLexer();
     MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
-    auto mock_target = mock_lexer.get_mock_target();
     create_buffer(mock_lexer, character_buffer);
     dependent_entity.set_state<ScanningEscaped>();
 
@@ -225,7 +221,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_scanning_state_no_transit
 {
     //---- input ---------------------------------
     string character_buffer = "";
-    string parent_entity_id = "D";
     MockDependentEntity::Cardinality cardinality = MockDependentEntity::Cardinality::One;
     char character = 'z';
 
@@ -235,7 +230,6 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_scanning_state_no_transit
     //---- setup ---------------------------------
     MockLexer mock_lexer = MockLexer();
     MockDependentEntity dependent_entity(&mock_lexer, "D", cardinality);
-    auto mock_target = mock_lexer.get_mock_target();
     create_buffer(mock_lexer, character_buffer);
     dependent_entity.set_state<Scanning>();
 
