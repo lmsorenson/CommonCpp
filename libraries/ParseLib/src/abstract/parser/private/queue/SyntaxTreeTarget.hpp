@@ -11,7 +11,7 @@ class SyntaxTreeTarget
     std::shared_ptr<sdg::SyntaxNode> syntax_tree_;
 
 public:
-    SyntaxTreeTarget(std::shared_ptr<sdg::SyntaxNode> syntax_tree_)
+    explicit SyntaxTreeTarget(std::shared_ptr<sdg::SyntaxNode> syntax_tree_)
     : syntax_tree_(syntax_tree_) {}
 
     std::shared_ptr<SyntaxNode> add_to_root(std::string id, std::string value);

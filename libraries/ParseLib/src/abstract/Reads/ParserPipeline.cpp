@@ -155,11 +155,13 @@ int32_t ParserPipeline::ProcessIndividual(sdg::DataSet &data_set, SyntaxNodeSet 
 
 int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, SyntaxNodeBuffer &out_buffer, SyntaxNodeSet &in_buffer, std::shared_ptr<ParserFilter> filter)
 {
-    int32_t result;
+
 
     // Apply filters to all nodes in the SyntaxNode set.
     for (int k=0; k < in_buffer.size(); ++k)
     {
+        int32_t result;
+
         //assign the results of the filter to the children vector.
         string str = in_buffer[k]->get_item_value();
 

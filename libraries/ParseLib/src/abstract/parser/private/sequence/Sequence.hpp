@@ -27,7 +27,7 @@ public:
 
     //evaluate the current sequence position.  
     std::shared_ptr<TokenType> match_token(std::string a_token);
-    virtual std::shared_ptr<TokenType> evaluate(std::string token, MatchStatus &status) override;
+    virtual std::shared_ptr<TokenType> evaluate(const std::string &token, MatchStatus &status) override;
 
     std::shared_ptr<SequenceElement> next_expected_element() const;
     void go_to_next_item();

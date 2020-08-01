@@ -15,7 +15,7 @@ using std::to_string;
 using std::cout;
 using std::endl;
 
-bool ValueToken::classify(std::string token) const
+bool ValueToken::classify(const std::string &token) const
 {
     if(token[0] == 'F')
         return true;
@@ -24,7 +24,7 @@ bool ValueToken::classify(std::string token) const
         return false;
 }
 
-std::pair<std::string, std::string> ValueToken::create_node(string a_token) 
+std::pair<std::string, std::string> ValueToken::create_node(const string &a_token)
 {
     //updates the count for the new node
     new_node();

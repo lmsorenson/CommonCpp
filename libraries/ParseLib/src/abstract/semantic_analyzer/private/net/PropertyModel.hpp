@@ -42,7 +42,7 @@ protected:
 class NodeProperties : public PropertySetBase
 {
 public:
-    NodeProperties(const std::string &value, std::string parent_value, int32_t child_num)
+    NodeProperties(const std::string &value, const std::string &parent_value, int32_t child_num)
     : PropertySetBase(value)
     , parent_value_(parent_value)
     , child_num_(child_num)
@@ -89,7 +89,7 @@ public:
     , value_num_(value_num)
     {}
 
-    RecordProperties(NodeProperties old)
+    explicit RecordProperties(const NodeProperties &old)
     : PropertySetBase(old.get_token_value())
     , set_position_(-1)
     , value_num_(old.number_of_children())
@@ -127,7 +127,7 @@ public:
         , value_num_(value_num)
     {}
 
-    HeaderProperties(NodeProperties old)
+    explicit HeaderProperties(const NodeProperties &old)
         : PropertySetBase(old.get_token_value())
         , set_position_(-1)
         , value_num_(old.number_of_children())
@@ -165,7 +165,7 @@ public:
             , set_position_(position)
     {}
 
-    ValueProperties(NodeProperties old)
+    explicit ValueProperties(const NodeProperties &old)
             : PropertySetBase(old.get_token_value())
             , set_position_(-1)
     {}

@@ -37,7 +37,7 @@ public:
     void assign_position(SequencePosition *position);
 
     //evaluate a passed in token.  when the token matches the current type return a status
-    virtual std::shared_ptr<TokenType> evaluate(std::string token, MatchStatus &status) = 0;
+    virtual std::shared_ptr<TokenType> evaluate(const std::string &token, MatchStatus &status) = 0;
 
     bool HasMultiplicity() const;
 

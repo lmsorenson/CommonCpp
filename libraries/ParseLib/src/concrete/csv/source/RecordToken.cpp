@@ -13,7 +13,7 @@ using std::make_shared;
 using std::cout;
 using std::endl;
 
-bool RecordToken::classify(string token) const
+bool RecordToken::classify(const string &token) const
 {
     if(token.compare("R")==0)
     {
@@ -26,7 +26,7 @@ bool RecordToken::classify(string token) const
     
 }
 
-pair<string, string> RecordToken::create_node(string a_token) 
+pair<string, string> RecordToken::create_node(const string &a_token)
 {
     //updates the count for the new node
     new_node();

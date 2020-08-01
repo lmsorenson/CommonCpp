@@ -10,7 +10,7 @@ class TokenTarget
     pipeline::Stream<std::string> * token_stream_;
 
 public:
-    TokenTarget(pipeline::Stream<std::string> * stream)
+    explicit TokenTarget(pipeline::Stream<std::string> * stream)
     : token_stream_(stream){}
     virtual ~TokenTarget() = default;
 

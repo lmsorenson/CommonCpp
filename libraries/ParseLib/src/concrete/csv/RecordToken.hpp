@@ -12,8 +12,8 @@ public:
     RecordToken() : TokenType("R"), parse::IndependentEntity() {}
     virtual ~RecordToken() = default;
 
-    virtual bool classify(std::string a_token) const override;
-    virtual std::pair<std::string, std::string> create_node(std::string token) override;
+    virtual bool classify(const std::string &a_token) const override;
+    virtual std::pair<std::string, std::string> create_node(const std::string &token) override;
     virtual std::string get_id() const override;
 };
 

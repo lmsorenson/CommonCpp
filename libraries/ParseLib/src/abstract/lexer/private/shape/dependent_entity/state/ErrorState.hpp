@@ -7,7 +7,7 @@ namespace sdg {
 class ErrorState : public LexerState
 {
 public:
-    ErrorState(Lexer *context) : ErrorState(context){}
+    explicit ErrorState(Lexer *context) : ErrorState(context){}
     virtual ~ErrorState();
 
     virtual int32_t performScan(char ch) override;

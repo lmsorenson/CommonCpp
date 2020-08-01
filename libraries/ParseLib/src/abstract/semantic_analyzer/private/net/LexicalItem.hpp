@@ -17,7 +17,7 @@ class ItemPayload
 {
 public:
     ItemPayload() = default;
-    ItemPayload(std::string key, std::string value, std::string path)
+    ItemPayload(const std::string &key, const std::string &value, const std::string &path)
     : key_(key)
     , value_(value)
     , path_(path)
@@ -56,7 +56,7 @@ private:
 class LexicalItem
 {
 public:
-    LexicalItem(std::string item_value, ItemType type, std::shared_ptr<const PropertySetBase> props)
+    LexicalItem(const std::string &item_value, const ItemType &type, std::shared_ptr<const PropertySetBase> props)
     : value_(item_value)
     , type_(type)
     , props_(props)
@@ -86,7 +86,7 @@ public:
         return value_;
     }
 
-    void set_payload(ItemPayload payload)
+    void set_payload(const ItemPayload &payload)
     {
         payload_ = payload;
     }

@@ -12,7 +12,7 @@ public:
     {}
     virtual ~TestTokenA() = default;
     
-    virtual bool classify(std::string a_token) const override
+    virtual bool classify(const std::string &a_token) const override
     {
         if (a_token.compare("A") == 0)
             return true;
@@ -20,7 +20,7 @@ public:
             return false;
     }
 
-    virtual std::pair<std::string, std::string> create_node(std::string a_token) override
+    virtual std::pair<std::string, std::string> create_node(const std::string &a_token) override
     {
         return std::pair<std::string, std::string>("A", "A");
     }
@@ -40,7 +40,7 @@ public:
     {}
     virtual ~TestTokenB() = default;
     
-    virtual bool classify(std::string a_token) const override
+    virtual bool classify(const std::string &a_token) const override
     {
         if (a_token.compare("B") == 0)
             return true;
@@ -48,7 +48,7 @@ public:
             return false;
     }
 
-    virtual std::pair<std::string, std::string> create_node(std::string a_token) override
+    virtual std::pair<std::string, std::string> create_node(const std::string &a_token) override
     {
         return std::pair<std::string, std::string>("A", "A");
     }

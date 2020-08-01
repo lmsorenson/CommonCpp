@@ -15,7 +15,7 @@ void TokenType::print() const
     cout << endl <<"Expecting token " << id_ << endl;
 }
 
-shared_ptr<TokenType> TokenType::evaluate(string a_token, MatchStatus &status)
+shared_ptr<TokenType> TokenType::evaluate(const string &a_token, MatchStatus &status)
 {
     bool 
         token_valid = classify(a_token),
@@ -26,7 +26,7 @@ shared_ptr<TokenType> TokenType::evaluate(string a_token, MatchStatus &status)
         status = MatchStatus::PositiveMatch;
     }
     //if the inverse is true, check the next token
-    else if( !token_valid && token_repeating )
+    else if( token_repeating )
     {
         status = MatchStatus::NextElementViable;
     }

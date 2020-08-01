@@ -222,7 +222,7 @@ shared_ptr<TokenType> Sequence::match_token(string a_token)
         return nullptr;
 }
 
-shared_ptr<TokenType> Sequence::evaluate(string a_token, MatchStatus &status)
+shared_ptr<TokenType> Sequence::evaluate(const string &a_token, MatchStatus &status)
 {
     auto token_type = match_token(a_token);
 

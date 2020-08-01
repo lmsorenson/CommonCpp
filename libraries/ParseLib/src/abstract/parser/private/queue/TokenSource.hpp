@@ -10,7 +10,7 @@ class TokenSource
     pipeline::Stream<std::string> * token_stream_;
 
 public:
-    TokenSource(pipeline::Stream<std::string> * stream)
+    explicit TokenSource(pipeline::Stream<std::string> * stream)
     : token_stream_(stream){}
     
     virtual ~TokenSource() = default;

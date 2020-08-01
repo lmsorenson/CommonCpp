@@ -13,7 +13,7 @@ using std::to_string;
 using std::cout;
 using std::endl;
 
-bool HeaderToken::classify(std::string token) const
+bool HeaderToken::classify(const std::string &token) const
 {
     if(token.compare("H")==0)
     {
@@ -25,7 +25,7 @@ bool HeaderToken::classify(std::string token) const
     }
 }
 
-std::pair<std::string, std::string> HeaderToken::create_node(string a_token)
+std::pair<std::string, std::string> HeaderToken::create_node(const string &a_token)
 {
     //updates the count for the new node
     new_node();
