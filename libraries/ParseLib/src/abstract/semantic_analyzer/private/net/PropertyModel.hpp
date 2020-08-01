@@ -9,7 +9,7 @@ namespace sdg {
 class PropertySetBase
 {
 public:
-    PropertySetBase(std::string value)
+    PropertySetBase(const std::string &value)
     : value_(value)
     {}
     virtual ~PropertySetBase() = default;
@@ -42,7 +42,7 @@ protected:
 class NodeProperties : public PropertySetBase
 {
 public:
-    NodeProperties(std::string value, std::string parent_value, int32_t child_num)
+    NodeProperties(const std::string &value, std::string parent_value, int32_t child_num)
     : PropertySetBase(value)
     , parent_value_(parent_value)
     , child_num_(child_num)
@@ -59,13 +59,13 @@ public:
         return (parent_value_.compare("root") == 0);
     }
 
-    bool compare_token_label( std::string str ) const
+    bool compare_token_label( const std::string &str ) const
     {
         //if the value_ is empty the expression is false.
         if (value_.empty())
             return false;
 
-        char regex_expression[5];
+        char regex_expression[16];
         sprintf(regex_expression, "(%s)(\\d*)", str.c_str());
         return ( std::regex_match<char>(value_.c_str(), std::regex(regex_expression)) );
     }
@@ -83,7 +83,7 @@ private:
 class RecordProperties : public PropertySetBase
 {
 public:
-    RecordProperties(std::string value, int32_t position, int32_t value_num)
+    RecordProperties(const std::string &value, int32_t position, int32_t value_num)
     : PropertySetBase(value)
     , set_position_(position)
     , value_num_(value_num)
@@ -121,7 +121,7 @@ private:
 class HeaderProperties : public PropertySetBase
 {
 public:
-    HeaderProperties(std::string value, int32_t position, int32_t value_num)
+    HeaderProperties(const std::string &value, int32_t position, int32_t value_num)
         : PropertySetBase(value)
         , set_position_(position)
         , value_num_(value_num)
@@ -160,7 +160,7 @@ private:
 class ValueProperties : public PropertySetBase
 {
 public:
-    ValueProperties(std::string value, int32_t position, int32_t value_num)
+    ValueProperties(const std::string &value, int32_t position, int32_t value_num)
             : PropertySetBase(value)
             , set_position_(position)
     {}
