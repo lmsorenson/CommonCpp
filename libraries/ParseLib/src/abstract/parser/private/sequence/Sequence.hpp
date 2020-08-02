@@ -20,13 +20,13 @@ class TokenType;
 class Sequence : public SequenceElement
 {
 public:
-    explicit Sequence(Parser *parser, std::string name = "Unknown sequence", Cardinality cardinality = Cardinality::One);
+    explicit Sequence(Parser *parser, const std::string &name = "Unknown sequence", Cardinality cardinality = Cardinality::One);
     virtual ~Sequence() = default;
 
     virtual void print() const override;
 
     //evaluate the current sequence position.  
-    std::shared_ptr<TokenType> match_token(std::string a_token);
+    std::shared_ptr<TokenType> match_token(const std::string &a_token);
     virtual std::shared_ptr<TokenType> evaluate(const std::string &token, MatchStatus &status) override;
 
     std::shared_ptr<SequenceElement> next_expected_element() const;
@@ -34,8 +34,8 @@ public:
 
     //setup and construction methods
     void add_element(std::shared_ptr<SequenceElement> a_new_type);
-    void set_positions(std::vector<std::shared_ptr<SequencePosition>> position_vector);
-    template<class ... Types> int32_t add_subsequence(std::string name, Cardinality cardinality, std::shared_ptr<Types>... a_token_types);
+    void set_positions(const std::vector<std::shared_ptr<SequencePosition>> &position_vector);
+    template<class ... Types> int32_t add_subsequence(const std::string &name, Cardinality cardinality, std::shared_ptr<Types>... a_token_types);
 
 private:
     Parser *context_;
@@ -45,7 +45,7 @@ private:
 
     std::shared_ptr<SequenceElement> expected_element() const;
     int32_t next_element_position() const;
-    void handle_error(int32_t error_code, std::string message) const;
+    void handle_error(int32_t error_code, const std::string &message) const;
     void set_position();
 };
 

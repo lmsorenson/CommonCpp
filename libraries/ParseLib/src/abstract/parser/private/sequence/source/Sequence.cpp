@@ -18,14 +18,14 @@ using sdg::parse::SequenceElement;
 using sdg::parse::TokenType;
 using sdg::parse::MatchStatus;
 
-Sequence::Sequence(Parser *parser, string name, Cardinality cardinality)
+Sequence::Sequence(Parser *parser, const string &name, Cardinality cardinality)
 : SequenceElement(cardinality)
 , name_(name)
 , context_(parser)
 , current_position_(0)
 {}
 
-void Sequence::set_positions(vector<shared_ptr<SequencePosition>> position_vector)
+void Sequence::set_positions(const vector<shared_ptr<SequencePosition>> &position_vector)
 {
     position_ = position_vector;
 }
@@ -44,7 +44,7 @@ void Sequence::add_element(shared_ptr<SequenceElement> a_new_type)
     position_.push_back(new_position);
 }
 
-void Sequence::handle_error(int32_t error_code, string message) const
+void Sequence::handle_error(int32_t error_code, const string &message) const
 {
     cout << message << endl;
     context_->handle_error({error_code});
@@ -149,7 +149,7 @@ void Sequence::set_position()
 
 //matches the current token with the current expected token.  If the current expected token is repeatable
 //and does not match the current token found, then also evaluate against the next expected token.
-shared_ptr<TokenType> Sequence::match_token(string a_token)
+shared_ptr<TokenType> Sequence::match_token(const string &a_token)
 {
     shared_ptr<SequenceElement> current_element = expected_element();
     if(!current_element)
