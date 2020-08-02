@@ -53,7 +53,7 @@ private:
 
 
 template<class ... Types>
-int32_t Sequence::add_subsequence(std::string name, Cardinality cardinality, std::shared_ptr<Types>... a_token_type_pack )
+int32_t Sequence::add_subsequence(const std::string &name, Cardinality cardinality, std::shared_ptr<Types>... a_token_type_pack )
 {
     if(!context_) return 1;
 
