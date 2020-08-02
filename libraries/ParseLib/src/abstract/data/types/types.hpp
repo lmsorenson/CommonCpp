@@ -16,7 +16,7 @@ class KeyInstance
 public:
     explicit KeyInstance()=default;
     explicit KeyInstance(const std::string& a_value, bool a_is_partial_key=false);
-    KeyInstance(std::vector<DescriptorInstance> descriptor, bool a_is_partial_key=false);
+    explicit KeyInstance(std::vector<DescriptorInstance> descriptor, bool a_is_partial_key=false);
 
     bool is_partial_key() const;
     std::string as_string() const;

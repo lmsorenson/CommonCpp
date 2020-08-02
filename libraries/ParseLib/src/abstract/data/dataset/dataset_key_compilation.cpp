@@ -190,7 +190,7 @@ void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, hash::
     }
 }
 
-sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const
+sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::DescriptorInstance> &expected_descriptors) const
 {
 
     std::string compiled_key;

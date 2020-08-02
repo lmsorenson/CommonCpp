@@ -13,22 +13,23 @@ using sdg::Entity;
 using sdg::Descriptor;
 using sdg::Attribute;
 using sdg::Link;
+using std::string;
 
 
 
 
-Descriptor::Descriptor(std::string a_name)
+Descriptor::Descriptor(const string &a_name)
 : Thing(a_name)
 {
 }
 
-Descriptor::Descriptor(std::string a_name, std::string a_id)
+Descriptor::Descriptor(const string &a_name, const string &a_id)
 : Thing(a_name, a_id)
 {
 }
 
 
-Link::Link(std::string a_name, std::shared_ptr<Entity> a_entity, std::string a_link_label)
+Link::Link(const std::string &a_name, std::shared_ptr<Entity> a_entity, const string &a_link_label)
 : Descriptor(a_name)
 , link_subject(a_entity)
 , link_label(a_link_label)
@@ -63,7 +64,7 @@ std::vector<std::shared_ptr<Descriptor>> Link::get_descriptors()
 }
 
 
-Attribute::Attribute(std::string a_name, std::string a_label, Attribute::Scale a_scale)
+Attribute::Attribute(const string &a_name, const string &a_label, Attribute::Scale a_scale)
 : Descriptor(a_name, a_label)
 , attribute_label(a_label)
 , attr_scale(a_scale)

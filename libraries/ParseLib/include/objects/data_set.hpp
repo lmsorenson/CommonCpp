@@ -122,7 +122,7 @@ protected:
 
     //takes a list of descriptors, compiles existing descriptors in the key format.
     //ignores booleans, returns a KeyInstance.  If assigns it as a partial key if there are descriptor values missing.
-    hash::KeyInstance compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const;
+    hash::KeyInstance compile_hash_key(const std::vector<hash::DescriptorInstance> &expected_descriptors) const;
 
     //gets a list of descriptors from a list of descriptor ids
     std::vector<hash::DescriptorInstance> get_descriptors_from_descriptor_id_set(hash::KeyInstance key_buffer, std::vector<std::shared_ptr<Descriptor>> expected_descriptor_buffer) const;

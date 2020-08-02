@@ -8,7 +8,7 @@ using std::shared_ptr;
 using sdg::plHashElementIterator;
 using sdg::plHashValue;
 
-plHashElementIterator::plHashElementIterator(string aKey, plHashValue aValue) 
+plHashElementIterator::plHashElementIterator(const string &aKey, plHashValue aValue)
 : key(aKey)
 , value( plHashValue(aValue) )
 {}
@@ -30,7 +30,7 @@ shared_ptr<plHashElementIterator> plHashElementIterator::previous()
     return 0;
 }
 
-plHashValue plHashElementIterator::assign_value_to_existing_key(std::string a_key, plHashValue a_value)
+plHashValue plHashElementIterator::assign_value_to_existing_key(const string &a_key, plHashValue a_value)
 {
     plHashElementIterator * e = this;
 
@@ -96,7 +96,7 @@ string plHashElementIterator::find(string a_key) const
     return "NULL";
 }
 
-plHashValue plHashElementIterator::find_hash_value(string a_key) const
+plHashValue plHashElementIterator::find_hash_value(const string &a_key) const
 {
     const plHashElementIterator * e = this;
 
@@ -127,7 +127,7 @@ string plHashElementIterator::get_value() const
     return value.get_value();
 }
 
-void plHashElementIterator::remove_value(string a_key)
+void plHashElementIterator::remove_value(const string &a_key)
 {
     plHashElementIterator * e = this;
 

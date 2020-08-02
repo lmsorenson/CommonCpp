@@ -67,7 +67,7 @@ private:
 
 public:
     plHashElementIterator() = default;                            
-    plHashElementIterator(std::string key, plHashValue aValue);   
+    plHashElementIterator(const std::string &key, plHashValue aValue);
     ~plHashElementIterator();                                     
 
     //returns a const pointer to the next element in the linked list.
@@ -86,9 +86,9 @@ public:
 
     //this method finds a specific element in the linked list by its key and returns 
     //the whole hash value along with it's metadata.
-    plHashValue find_hash_value(std::string a_key) const;
+    plHashValue find_hash_value(const std::string &a_key) const;
 
-    plHashValue assign_value_to_existing_key(std::string a_key, plHashValue a_value);
+    plHashValue assign_value_to_existing_key(const std::string &a_key, plHashValue a_value);
 
     //returns the value of the key.
     std::string get_key() const;
@@ -97,7 +97,7 @@ public:
     std::string get_value() const;
 
     //deletes the value.
-    void remove_value(std::string a_key);
+    void remove_value(const std::string &a_key);
 };
  
 
@@ -122,14 +122,14 @@ private:
     //a list of keys entered into this table.
     std::vector<hash::KeyInstance> hash_key_list;             
 
-    bool key_value_exists(hash::KeyInstance a_key);
+    bool key_value_exists(const hash::KeyInstance &a_key);
 
     utils::Stopwatch stopwatch_;
 
 public:
     //Constructors
     plHashTable();
-    plHashTable(int32_t table_size_arg);
+    explicit plHashTable(int32_t table_size_arg);
     virtual ~plHashTable();
 
 
@@ -137,23 +137,23 @@ public:
     /*      Mutators        */
 
     //inserts a key and value into the hash table.
-    plHashValue insert(hash::KeyInstance key, plHashValue aValue);
+    plHashValue insert(const hash::KeyInstance &key, plHashValue aValue);
 
     //moves a hash value from one key to another.
-    plHashValue move(hash::KeyInstance old_key, hash::KeyInstance new_key);
+    plHashValue move(const hash::KeyInstance &old_key, const hash::KeyInstance &new_key);
 
     //deletes a hash key and hash value from the hash table.
-    void delete_value(hash::KeyInstance a_key);
+    void delete_value(const hash::KeyInstance &a_key);
 
 
 
     /*      Accessors     */
 
     //returns the string value of a key in the hash table.
-    std::string get(hash::KeyInstance a_key) const;
+    std::string get(const hash::KeyInstance &a_key) const;
 
     //returns a plHashValue value from by a key from the hash_table.
-    plHashValue get_hash_value(hash::KeyInstance a_key) const;
+    plHashValue get_hash_value(const hash::KeyInstance &a_key) const;
 
     //returns a list of keys that matches the passed in descriptors.(hyphen delimited)
     std::vector<hash::KeyInstance> GetMatchingKeys(hash::KeyInstance a_key_subset) const;

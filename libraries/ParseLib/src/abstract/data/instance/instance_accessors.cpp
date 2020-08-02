@@ -143,8 +143,11 @@ Instance Instance::GetNextInstance(hash::EntityID a_entity_id) const
         pos++;
     }
 
+    auto cur = itr;
+    auto next = itr++;
+
     //check that this and the next item both exist before continuing
-    if((itr!=owner.value_.cend()) && (++itr!=owner.value_.cend()))
+    if((cur != owner.value_.cend()) && (next != owner.value_.cend()))
     {
         vector<string> 
         missing_desc = kOwner_->get_missing_descriptors(hash::KeyInstance(a_entity_id.as_string()));

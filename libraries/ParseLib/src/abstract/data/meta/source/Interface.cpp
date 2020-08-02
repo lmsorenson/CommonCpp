@@ -8,17 +8,17 @@
 
 
 using sdg::Thing;
+using std::string;
 
 
 
-
-Thing::Thing(std::string a_name)
+Thing::Thing(const string &a_name)
 : name(a_name)
 , counter(0)
 {
 }
 
-Thing::Thing(std::string a_name, std::string a_label)
+Thing::Thing(const string &a_name, const string &a_label)
 : name(a_name)
 , thing_id(a_label)
 , counter(0)

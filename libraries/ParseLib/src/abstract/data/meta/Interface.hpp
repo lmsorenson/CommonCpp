@@ -17,8 +17,8 @@ class Thing
 {
 
 public:
-    Thing(std::string a_name);
-    Thing(std::string a_name, std::string a_label);
+    Thing(const std::string &a_name);
+    Thing(const std::string &a_name, const std::string &a_label);
     virtual ~Thing()=default;
 
     virtual void print();
