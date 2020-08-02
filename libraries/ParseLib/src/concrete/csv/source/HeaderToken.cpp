@@ -13,9 +13,14 @@ using std::to_string;
 using std::cout;
 using std::endl;
 
+HeaderToken::HeaderToken()
+: TokenType("H")
+, parse::IndependentEntity()
+{}
+
 bool HeaderToken::classify(const std::string &token) const
 {
-    if(token.compare("H")==0)
+    if(token.compare("H") == 0)
     {
         return true;
     }

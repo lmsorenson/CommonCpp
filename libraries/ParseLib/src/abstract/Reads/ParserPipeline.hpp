@@ -55,7 +55,7 @@ public:
     int32_t add_filter(std::shared_ptr<ParserFilter> filter);
     int32_t add_output(std::shared_ptr<ParserOutput> output);
     int32_t execute(std::shared_ptr<sdg::SyntaxNode>& text, sdg::DataSet& data_store);
-    int32_t inverse(std::vector<std::vector<std::string>> vector_vector, std::string &text);
+    int32_t inverse(const std::vector<std::vector<std::string>> &vector_vector, std::string &text);
 
     enum : int32_t
     {

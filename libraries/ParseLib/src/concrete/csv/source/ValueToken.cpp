@@ -15,6 +15,12 @@ using std::to_string;
 using std::cout;
 using std::endl;
 
+
+ValueToken::ValueToken()
+: TokenType("F", Cardinality::Many)
+, parse::DependentEntity()
+{}
+
 bool ValueToken::classify(const std::string &token) const
 {
     if(token[0] == 'F')

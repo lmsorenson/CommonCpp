@@ -64,7 +64,7 @@ int32_t ParserPipeline::execute(std::shared_ptr<SyntaxNode>& text, sdg::DataSet&
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::inverse(std::vector<std::vector<std::string>> vector_vector, std::string &text)
+int32_t ParserPipeline::inverse(const std::vector<std::vector<std::string>> &vector_vector, std::string &text)
 {
     std::string compiled_buffer;
     std::vector<std::vector<std::string>> vector_in_buffer;
@@ -155,13 +155,9 @@ int32_t ParserPipeline::ProcessIndividual(sdg::DataSet &data_set, SyntaxNodeSet 
 
 int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, SyntaxNodeBuffer &out_buffer, SyntaxNodeSet &in_buffer, std::shared_ptr<ParserFilter> filter)
 {
-
-
     // Apply filters to all nodes in the SyntaxNode set.
     for (int k=0; k < in_buffer.size(); ++k)
     {
-        int32_t result;
-
         //assign the results of the filter to the children vector.
         string str = in_buffer[k]->get_item_value();
 
@@ -178,6 +174,7 @@ int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, SyntaxNodeBuffer &o
             }
         }
 
+        int32_t result;
         if ((result=this->ProcessIndividual(data_set, filter_result_set, vn, in_buffer[k], filter))!=PIPELINE_SUCCESS)
         {
             return result;
