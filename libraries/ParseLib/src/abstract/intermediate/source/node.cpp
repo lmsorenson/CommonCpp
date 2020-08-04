@@ -9,18 +9,18 @@ using sdg::SyntaxNode;
 using std::cout;
 using std::endl;
 
-SyntaxNode::SyntaxNode(string a_value, std::shared_ptr<SyntaxNode> a_parent)
+SyntaxNode::SyntaxNode(const string &a_value, std::shared_ptr<SyntaxNode> a_parent)
 : value_(a_value)
 , parent_(a_parent)
 {
 }
 
 SyntaxNode::SyntaxNode(const SyntaxNode &a_syntax_node)
+: id_(a_syntax_node.id_)
+, value_(a_syntax_node.value_)
+, children_(a_syntax_node.children_)
+, parent_(a_syntax_node.parent_)
 {
-    id_ = a_syntax_node.id_;
-    value_ = a_syntax_node.value_;
-    children_ = a_syntax_node.children_;
-    parent_ = a_syntax_node.parent_;
 }
 
 SyntaxNode::~SyntaxNode(){}
@@ -38,7 +38,7 @@ string SyntaxNode::get_path() const
 
     shared_ptr<SyntaxNode> current_node;
     
-    if (!current_node && this->has_parent())
+    if (this->has_parent())
     {
         current_node = this->parent_;
     }

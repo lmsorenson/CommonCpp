@@ -14,7 +14,7 @@ namespace sdg
 class SyntaxNode : public sdg::pattern::Subject
 {
 public:
-    SyntaxNode(std::string a_value, std::shared_ptr<SyntaxNode> a_parent);
+    SyntaxNode(const std::string &a_value, std::shared_ptr<SyntaxNode> a_parent);
     SyntaxNode(const SyntaxNode &SyntaxNode);
     ~SyntaxNode();
 

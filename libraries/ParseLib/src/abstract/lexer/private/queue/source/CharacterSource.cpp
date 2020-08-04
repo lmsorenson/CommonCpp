@@ -4,8 +4,12 @@
 #include <utility>
 
 using ::sdg::CharacterSource;
+using ::sdg::pipeline::Stream;
 using ::std::string;
 
+CharacterSource::CharacterSource(Stream<char> * stream)
+: character_stream_(stream)
+{}
 
 bool CharacterSource::characters_available() const
 {

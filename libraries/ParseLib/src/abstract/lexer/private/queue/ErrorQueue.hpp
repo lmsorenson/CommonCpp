@@ -11,8 +11,7 @@ class ErrorQueue
     pipeline::Stream<Error> * error_stream_;
 
 public:
-    ErrorQueue(pipeline::Stream<Error> * stream)
-    : error_stream_(stream){}
+    explicit ErrorQueue(pipeline::Stream<Error> * stream);
     virtual ~ErrorQueue() = default;
 
     virtual void add_error(Error);

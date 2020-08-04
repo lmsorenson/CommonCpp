@@ -121,7 +121,7 @@ void sdg::DataSet::reposition_instance(hash::DescriptorInstance a_descriptor, in
 void sdg::DataSet::update_descriptor_counts(hash::KeyInstance a_key)
 {
     //defines the procedure to run on every descriptor in the key.
-    auto function = [&](const std::string callback_token)
+    auto function = [&](const std::string &callback_token)
     {
         char scanned_descriptor_id[1];
         int32_t scanned_descriptor_value;

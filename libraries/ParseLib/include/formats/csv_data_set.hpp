@@ -19,7 +19,7 @@ class CSV : public sdg::DataSet
 
 public:
     CSV();
-    CSV(int32_t hash_table_size);
+    explicit CSV(int32_t hash_table_size);
     virtual ~CSV();
 
     virtual void assign();

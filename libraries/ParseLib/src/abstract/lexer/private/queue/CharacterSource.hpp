@@ -12,8 +12,7 @@ class CharacterSource
     pipeline::Stream<char> * character_stream_;
 
 public:
-    CharacterSource(pipeline::Stream<char> * stream)
-    : character_stream_(stream){}
+    explicit CharacterSource(pipeline::Stream<char> * stream);
 
     virtual ~CharacterSource() = default;
 

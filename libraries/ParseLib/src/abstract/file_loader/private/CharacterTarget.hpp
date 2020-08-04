@@ -10,8 +10,7 @@ class CharacterTarget
     pipeline::Stream<char> * token_stream_;
 
 public:
-    CharacterTarget(pipeline::Stream<char> * stream)
-    : token_stream_(stream){}
+    explicit CharacterTarget(pipeline::Stream<char> * stream);
     
     virtual ~CharacterTarget() = default;
 

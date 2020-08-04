@@ -189,11 +189,10 @@ int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, SyntaxNodeBuffer &o
 
 int32_t ParserPipeline::ProcessNodeSets(sdg::DataSet &data_set, SyntaxNodeBuffer &out_buffer, SyntaxNodeBuffer &in_buffer, shared_ptr<ParserFilter> filter)
 {
-    int32_t result;
-
     // Apply filters to all SyntaxNode sets.
     for(int j=0; j < in_buffer.size(); ++j)
     {
+        int32_t result;
         if ((result=ProcessNodes(data_set, out_buffer, in_buffer[j], filter))!= PIPELINE_SUCCESS)
         {
             return result;

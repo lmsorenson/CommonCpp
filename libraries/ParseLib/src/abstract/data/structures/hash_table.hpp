@@ -26,7 +26,7 @@ class plHashValue
 
 public:
     plHashValue();
-    plHashValue(std::string aValue, std::string aParentKey);
+    plHashValue(const std::string &aValue, const std::string &aParentKey);
     ~plHashValue();
 
     bool is_valid();
