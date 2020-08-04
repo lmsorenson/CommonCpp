@@ -1,6 +1,6 @@
 <a href="https://app.codacy.com/manual/lmsorenson/CommonCpp?utm_source=github.com&utm_medium=referral&utm_content=lmsorenson/CommonCpp&utm_campaign=Badge_Grade_Dashboard">
   <img alt="Codacy badge"
-       src="https://api.codacy.com/project/badge/Grade/c2d0837a40894b0b8965167d325bc722"/>
+       src="https://api.codacy.com/project/badge/Grade/c2d0837a40894b0b8965167d325bc722?branch=create-parser-components"/>
 </a>
 
 <a href="https://scan.coverity.com/projects/lmsorenson-commoncpp">
