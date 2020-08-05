@@ -11,9 +11,20 @@ enum : int32_t
     UNKNOWN_ERROR
 };
 
-struct Error
+class Error
 {
-    int code;
+public:
+    explicit Error(int16_t code)
+    : code_(code)
+    {}
+
+    int16_t code()
+    {
+        return code_;
+    }
+
+private:
+    int code_;
 };
 
 }// namespace sdg

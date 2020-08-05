@@ -47,7 +47,7 @@ void Sequence::add_element(shared_ptr<SequenceElement> a_new_type)
 void Sequence::handle_error(int32_t error_code, const string &message) const
 {
     cout << message << endl;
-    context_->handle_error({error_code});
+    context_->handle_error(Error(error_code));
 };
 
 void Sequence::go_to_next_item()

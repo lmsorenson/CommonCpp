@@ -57,7 +57,7 @@ void Parser::parse()
         else
         {
             cout << "Error: The token ( " << token << " ) was not expected in this scope. " << endl;
-            handle_error({UNKNOWN_ERROR});
+            handle_error(Error(UNKNOWN_ERROR));
         }
     }
 
@@ -86,7 +86,7 @@ shared_ptr<SyntaxNode> Parser::produce_child_node(shared_ptr<SyntaxNode> node, s
     if (!new_node)
     {
         cout << "ERROR FOUND: could not assign token to node." << endl;
-        handle_error({UNKNOWN_ERROR});
+        handle_error(Error(UNKNOWN_ERROR));
     }
     
     return new_node;

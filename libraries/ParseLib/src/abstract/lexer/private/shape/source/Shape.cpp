@@ -90,7 +90,7 @@ void Shape::run(bool &should_buffer, char ch)
     else
     {
         cout << "shape error: the shape is not properly configured to process characters." << endl;
-        this->handle_error({UNKNOWN_ERROR});
+        this->handle_error(Error(UNKNOWN_ERROR));
     }
 }
 

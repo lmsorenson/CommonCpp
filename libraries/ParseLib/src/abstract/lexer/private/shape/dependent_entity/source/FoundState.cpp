@@ -42,7 +42,7 @@ int32_t FoundDependent::perform_scan(char ch)
 
     if( ctx->matches_shape_delimiter(ch) && token_size_ <= 0 )
     {
-        context_->handle_error({FILE_FORMAT_INVALID});
+        context_->handle_error(Error(FILE_FORMAT_INVALID));
         return DependentEntity::StateTransition::None;
     }
     else if ( ctx->matches_shape_delimiter(ch) )

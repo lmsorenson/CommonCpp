@@ -64,7 +64,7 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, vect
         //if there is an error return an empty.
         ds = sdg::DataSet(sdg::DataSet::DATA_SET_EMPTY);
 
-        switch(err.code)
+        switch(err.code())
         {
             case 1: return FILE_FORMAT_INVALID;
             break;

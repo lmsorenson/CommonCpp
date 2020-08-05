@@ -59,7 +59,7 @@ void SemanticAnalyzer::check_nodes(const shared_ptr<const SyntaxNode> node, std:
 
                 if(err.size() > 0)
                 {
-                    this->handle_error({FILE_FORMAT_INVALID});
+                    this->handle_error(Error(FILE_FORMAT_INVALID));
                 }
             }
 
