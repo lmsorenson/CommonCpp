@@ -26,7 +26,7 @@ class plHashValue
 
 public:
     plHashValue();
-    plHashValue(const std::string &aValue, const std::string &aParentKey);
+    explicit plHashValue(const std::string &aValue, const std::string &aParentKey);
     ~plHashValue();
 
     bool is_valid();
@@ -67,7 +67,7 @@ private:
 
 public:
     plHashElementIterator() = default;                            
-    plHashElementIterator(const std::string &key, plHashValue aValue);
+    plHashElementIterator(const std::string &key, const plHashValue &aValue);
     ~plHashElementIterator();                                     
 
     //returns a const pointer to the next element in the linked list.
@@ -79,7 +79,7 @@ public:
     bool has_next() const;
 
     //this method adds another element 'e' to the end of this linked list.
-    void set_last(plHashElementIterator e);
+    void set_last(const plHashElementIterator &e);
 
     //this method finds a specific element in the linked list by its key.
     std::string find(std::string a_key) const;
@@ -88,7 +88,7 @@ public:
     //the whole hash value along with it's metadata.
     plHashValue find_hash_value(const std::string &a_key) const;
 
-    plHashValue assign_value_to_existing_key(const std::string &a_key, plHashValue a_value);
+    plHashValue assign_value_to_existing_key(const std::string &a_key, const plHashValue &a_value);
 
     //returns the value of the key.
     std::string get_key() const;

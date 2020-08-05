@@ -30,8 +30,8 @@ class Descriptor : public Thing
 {
 
 public:
-    Descriptor(const std::string &a_name);
-    Descriptor(const std::string &a_name, const std::string &a_id);
+    explicit Descriptor(const std::string &a_name);
+    explicit Descriptor(const std::string &a_name, const std::string &a_id);
     ~Descriptor()=default;
 
 private:
@@ -50,7 +50,7 @@ class Link : public Descriptor
     OneLink<Entity> link_subject;
 
 public:
-    Link(const std::string &a_name, std::shared_ptr<Entity> a_entity, const std::string &a_link_label="");
+    explicit Link(const std::string &a_name, std::shared_ptr<Entity> a_entity, const std::string &a_link_label="");
     ~Link()=default;
 
     std::vector<hash::DescriptorID> get_descriptor_IDs();
@@ -72,7 +72,7 @@ public:
         Unknown
     } ;
 
-    Attribute(const std::string &a_name, const std::string &a_label, Scale a_scale);
+    explicit Attribute(const std::string &a_name, const std::string &a_label, Scale a_scale);
     ~Attribute()=default;
 
     bool IsRequired();
