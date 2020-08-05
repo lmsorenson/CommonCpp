@@ -3,12 +3,12 @@ The Lexical Analyzer(lexer) scans a character stream for tokens.  The order of t
 
 ## Specifications
 <ol>
-<li>The Lexer shall continuously process a stream of characters.</li>
+<li>The Lexer shall continuously process a stream of characters.
 <ol>
     <li>When a target exists and new characters are added to the input stream, the Lexer should begin filtering the stream into tokens. </li> 
     <li>The Lexer should stop processing when it's owner or another external party issues a stop signal to the Lexer.</li> 
 </ol>
-<li> The Lexer shall produce a stream of tokens.</li>
+<li> The Lexer shall produce a stream of tokens.
 <ol>
     <li>If a Target is provided. </li>
 </ol>
