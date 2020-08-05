@@ -1,4 +1,6 @@
 # Intermediate Structures
 
-1. Stream
-1. Abstract Syntax Tree
+<ol>
+    <li>Stream</li>
+    <li>Abstract Syntax Tree</li>
+</ol>
