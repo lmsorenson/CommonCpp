@@ -2,7 +2,7 @@
 #include "../Tests.hpp"
 #include <memory>
 
-#include "../../../../../src/abstract/semantic_analyzer/SemanticAnalyzer.hpp"
+#include "../../../../../src/concrete/csv/csv_net.hpp"
 
 #include <gtest/gtest.h>
 
@@ -10,10 +10,10 @@
 TEST_F(SemanticAnalyzerComponentTests, add_item_no_precedent )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
     
     //pass in certain node properties.
-    auto actual_item = net.add_item(::sdg::NodeProperties("R", "root", 5), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("R", "root", 5), err);
 
     actual_item->print_line();
 
@@ -25,11 +25,11 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_no_precedent )
 TEST_F(SemanticAnalyzerComponentTests, add_item_matches_precedent )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    net.add_item(::sdg::NodeProperties("R", "root", 5), err);
-    auto actual_item = net.add_item(::sdg::NodeProperties("R", "root", 5), err);
+    net->add_item(::sdg::NodeProperties("R", "root", 5), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("R", "root", 5), err);
 
     actual_item->print_line();
 
@@ -41,11 +41,11 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_matches_precedent )
 TEST_F(SemanticAnalyzerComponentTests, add_item_does_not_match_precedent )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    net.add_item(::sdg::NodeProperties("R", "root", 4), err);
-    auto actual_item = net.add_item(::sdg::NodeProperties("R", "root", 5), err);
+    net->add_item(::sdg::NodeProperties("R", "root", 4), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("R", "root", 5), err);
 
     //assert that it produces a valid item of the correct type.
     ASSERT_EQ(actual_item, nullptr);
@@ -54,11 +54,11 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_does_not_match_precedent )
 TEST_F(SemanticAnalyzerComponentTests, add_item_matches_precedent_empty_payload )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    net.add_item(::sdg::NodeProperties("R", "root", 5), err);
-    auto actual_item = net.add_item(::sdg::NodeProperties("R", "root", 5), err);
+    net->add_item(::sdg::NodeProperties("R", "root", 5), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("R", "root", 5), err);
 
     actual_item->print_line();
 
@@ -70,11 +70,11 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_matches_precedent_empty_payload 
 TEST_F(SemanticAnalyzerComponentTests, add_item_value_no_precedent )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    net.add_item(::sdg::NodeProperties("R", "root", 0), err);
-    auto actual_item = net.add_item(::sdg::NodeProperties("F(aaa)", "R", 0), err);
+    net->add_item(::sdg::NodeProperties("R", "root", 0), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("F(aaa)", "R", 0), err);
     actual_item->print_line();
 
     //assert that it produces a valid item of the correct type.
@@ -85,11 +85,11 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_value_no_precedent )
 TEST_F(SemanticAnalyzerComponentTests, add_item_value_matches )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    net.add_item(::sdg::NodeProperties("R", "root", 5), err);
-    auto actual_item = net.add_item(::sdg::NodeProperties("F(bbb)", "R", 0), err);
+    net->add_item(::sdg::NodeProperties("R", "root", 5), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("F(bbb)", "R", 0), err);
     actual_item->print_line();
 
     //assert that it produces a valid item of the correct type.
@@ -100,11 +100,11 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_value_matches )
 TEST_F(SemanticAnalyzerComponentTests, add_item_value_does_not_match_regular_expression )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    net.add_item(::sdg::NodeProperties("R", "root", 4), err);
-    auto actual_item = net.add_item(::sdg::NodeProperties("F", "R", 0), err);
+    net->add_item(::sdg::NodeProperties("R", "root", 4), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("F", "R", 0), err);
 
     //assert that it produces a valid item of the correct type.
     ASSERT_EQ(actual_item, nullptr);
@@ -113,11 +113,11 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_value_does_not_match_regular_exp
 TEST_F(SemanticAnalyzerComponentTests, add_item_value_valid_payload )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    net.add_item(::sdg::NodeProperties("R", "root", 5), err);
-    auto actual_item = net.add_item(::sdg::NodeProperties("F(bbb)", "R", 0), err);
+    net->add_item(::sdg::NodeProperties("R", "root", 5), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("F(bbb)", "R", 0), err);
     actual_item->print_line();
 
     //assert that it produces a valid item of the correct type.
@@ -128,10 +128,10 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_value_valid_payload )
 TEST_F(SemanticAnalyzerComponentTests, add_item_header_no_precedent )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    auto actual_item = net.add_item(::sdg::NodeProperties("H", "root", 5), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("H", "root", 5), err);
     actual_item->print_line();
 
     //assert that it produces a valid item of the correct type.
@@ -142,10 +142,10 @@ TEST_F(SemanticAnalyzerComponentTests, add_item_header_no_precedent )
 TEST_F(SemanticAnalyzerComponentTests, add_item_header_empty_payload )
 {
     ::std::vector<std::string> err;
-    ::sdg::SemanticNet net = ::sdg::SemanticNet();
+    ::std::shared_ptr<::sdg::SemanticNet> net = std::make_shared<::sdg::CSVNet>();
 
     //pass in certain node properties.
-    auto actual_item = net.add_item(::sdg::NodeProperties("H", "root", 5), err);
+    auto actual_item = net->add_item(::sdg::NodeProperties("H", "root", 5), err);
     actual_item->print_line();
 
     //assert that it produces a valid item of the correct type.

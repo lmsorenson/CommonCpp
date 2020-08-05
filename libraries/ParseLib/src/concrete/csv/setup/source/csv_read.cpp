@@ -8,6 +8,7 @@
 #include "../../HeaderToken.hpp"
 #include "../../RecordToken.hpp"
 #include "../../ValueToken.hpp"
+#include "../../csv_net.hpp"
 #include "../../csv_filters.hpp"
 
 using ::std::shared_ptr;
@@ -77,10 +78,10 @@ void Read::configure_parser(Parser &parser, shared_ptr<SyntaxNode> syntax_tree, 
 void Read::configure_analyzer(SemanticAnalyzer &semantic_analyzer, DataSet *data_set, std::shared_ptr<SyntaxNode> syntax_tree, pipeline::Stream<Error> &error_queue_) const
 {
     semantic_analyzer.set_source<SyntaxTreeSource>(syntax_tree);
-
     semantic_analyzer.set_target<DataSetTarget>(data_set);
-
     semantic_analyzer.set_error_queue<analyzer::ErrorQueue>( &error_queue_ );
+
+    semantic_analyzer.set_semantic_net<CSVNet>();
 }
 
 int32_t sdg::csv::Read::set_read_options(vector<option> read_options)

@@ -17,12 +17,6 @@ using ::sdg::hash::KeyInstance;
 
 
 
-
-SemanticAnalyzer::SemanticAnalyzer()
-: net_(make_shared<SemanticNet>())
-{
-}
-
 void SemanticAnalyzer::receive_event()
 {
     this->analyze();

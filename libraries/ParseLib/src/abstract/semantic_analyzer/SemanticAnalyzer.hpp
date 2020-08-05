@@ -36,7 +36,7 @@ class SemanticAnalyzer : public pattern::Observer
     void check_nodes(const std::shared_ptr<const SyntaxNode> node, std::shared_ptr<DataSetTarget> target);
 
 public:
-    SemanticAnalyzer();
+    SemanticAnalyzer() = default;
     virtual ~SemanticAnalyzer() = default;
 
     virtual void receive_event() override;
@@ -57,6 +57,12 @@ public:
     void set_target(DataSet *data_set)
     {
         target_ = std::shared_ptr<T>( new T( data_set ) );
+    }
+
+    template<class T>
+    void set_semantic_net()
+    {
+        net_ = std::shared_ptr<T>( new T() );
     }
 
     template<class T>
