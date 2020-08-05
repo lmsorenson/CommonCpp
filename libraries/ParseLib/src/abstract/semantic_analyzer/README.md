@@ -6,16 +6,25 @@ Given an abstract syntax tree a dataset needs to be constructed in a way that is
 ## Solution
 A blackboard architecture could potentially do well to solve this problem.  A Semantic Net can be created incrementally by strategically placing lexical items from the abstract syntax tree onto a graph and noting conceptual dependencies as they are placed.
 
-1. Lexical Item
-    1. Entity
-    1. Concept
-    1. Relation
-    1. Predicate
+<ol>
+<li>Lexical Item
+<ol>
+    <li>Entity</li>
+    <li>Concept</li>
+    <li>Relation</li>
+    <li>Predicate</li>
+</ol>
+</ol>
 
-1. Lexical Semantics  
-    1. Classification.  
-    1. Decomposition.  
-    1. Compare and Contrast.
+<ol>
+<li>Lexical Semantics
+<ol>
+    <li>Classification</li>
+    <li>Concept</li>
+    <li>Decomposition</li>
+    <li>Compare and Contrast.</li>
+</ol>
+</ol>
 
 First order predicate logic (FOPL)  
 Semantic Nets  
