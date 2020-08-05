@@ -65,7 +65,7 @@ int32_t Sequence::add_subsequence(const std::string &name, Cardinality cardinali
     for (long unsigned int i=0; i<position_vector.size(); i++)
     {
         std::shared_ptr dependent = std::dynamic_pointer_cast<DependentEntity>(position_vector[i]->item());
-        if (dependent && (i-1)>=0)
+        if (dependent)
         {
             std::shared_ptr object = std::dynamic_pointer_cast<TokenType>(position_vector[i-1]->item());
             if(object)
