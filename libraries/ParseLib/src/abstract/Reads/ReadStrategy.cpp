@@ -74,42 +74,42 @@ int32_t ReadStrategy::execute_read(const char * filepath, sdg::DataSet &ds, vect
     }
 
 
-    t = clock(); 
-    CSV test(100);
+//    t = clock();
+//    CSV test(100);
 
     // load text
-    string raw_text;
-    if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
-    {
-        ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
-        return FILE_NOT_FOUND;
-    }
-
-    shared_ptr<sdg::SyntaxNode> n = make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
-    
-    //decrypt
-    
-    // Configure pipeline
-    ParserPipeline pipeline;
-    this->configure_pipeline(pipeline);
-
-    
-    int32_t err;
-    if( (err=pipeline.execute(n, test)) )
-    {
-        switch (err)
-        {
-            case ParserPipeline::PIPELINE_FORMAT_ERROR: 
-            return FILE_FORMAT_INVALID; 
-            break;
-
-            default: return UNKNOWN_ERROR;
-        }
-    }
-
-    t = clock() - t; 
-    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    cout<< fixed <<"time taken: "<<time_taken<<endl;
+//    string raw_text;
+//    if ((raw_text=utils::loadText(filepath))==LOAD_ERROR_STR)
+//    {
+//        ds = sdg::DataSet(sdg::DataSet::DATA_SET_BAD);
+//        return FILE_NOT_FOUND;
+//    }
+//
+//    shared_ptr<sdg::SyntaxNode> n = make_shared<sdg::SyntaxNode>(sdg::SyntaxNode(raw_text, nullptr));
+//
+//    //decrypt
+//
+//    // Configure pipeline
+//    ParserPipeline pipeline;
+//    this->configure_pipeline(pipeline);
+//
+//
+//    int32_t err;
+//    if( (err=pipeline.execute(n, test)) )
+//    {
+//        switch (err)
+//        {
+//            case ParserPipeline::PIPELINE_FORMAT_ERROR:
+//            return FILE_FORMAT_INVALID;
+//            break;
+//
+//            default: return UNKNOWN_ERROR;
+//        }
+//    }
+//
+//    t = clock() - t;
+//    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+//    cout<< fixed <<"time taken: "<<time_taken<<endl;
 
     return SUCCESS;
 }

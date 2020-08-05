@@ -65,7 +65,15 @@ int8_t CSVNet::compare_semantics( const std::shared_ptr<const LexicalItem> item,
 
     if (header_props != nullptr)
     {
-        return SemanticNet::Success;
+        if ( header_props->number_of_values() == 0 )
+        {
+            err.push_back("A record must contain one or more fields.");
+            return SemanticNet::Failure;
+        }
+        else
+        {
+            return SemanticNet::Success;
+        }
     }
     else if (record_props != nullptr)
     {
@@ -74,8 +82,16 @@ int8_t CSVNet::compare_semantics( const std::shared_ptr<const LexicalItem> item,
         // if this lexical item type has no precedent, set the precedent.
         if ( (expected = std::dynamic_pointer_cast<const RecordProperties>(precedent_[item->type()])) == nullptr )
         {
-            precedent_[item->type()] = item->properties();
-            return SemanticNet::Success;
+            if ( record_props->number_of_values() == 0 )
+            {
+                err.push_back("A record must contain one or more fields.");
+                return SemanticNet::Failure;
+            }
+            else
+            {
+                precedent_[item->type()] = item->properties();
+                return SemanticNet::Success;
+            }
         }
 
         if ( record_props->number_of_values() != expected->number_of_values() )

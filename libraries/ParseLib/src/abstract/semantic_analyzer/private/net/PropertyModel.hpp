@@ -42,7 +42,7 @@ protected:
 class NodeProperties : public PropertySetBase
 {
 public:
-    NodeProperties(const std::string &value, const std::string &parent_value, int32_t child_num)
+    explicit NodeProperties(const std::string &value, const std::string &parent_value, int32_t child_num)
     : PropertySetBase(value)
     , parent_value_(parent_value)
     , child_num_(child_num)
@@ -83,7 +83,7 @@ private:
 class RecordProperties : public PropertySetBase
 {
 public:
-    RecordProperties(const std::string &value, int32_t position, int32_t value_num)
+    explicit RecordProperties(const std::string &value, int32_t position, int32_t value_num)
     : PropertySetBase(value)
     , set_position_(position)
     , value_num_(value_num)
@@ -95,7 +95,7 @@ public:
     , value_num_(old.number_of_children())
     {}
 
-    RecordProperties(const RecordProperties &properties)
+    explicit RecordProperties(const RecordProperties &properties)
     : PropertySetBase(properties.value_)
     , set_position_(properties.set_position_)
     , value_num_(properties.value_num_)
@@ -121,7 +121,7 @@ private:
 class HeaderProperties : public PropertySetBase
 {
 public:
-    HeaderProperties(const std::string &value, int32_t position, int32_t value_num)
+    explicit HeaderProperties(const std::string &value, int32_t position, int32_t value_num)
         : PropertySetBase(value)
         , set_position_(position)
         , value_num_(value_num)
@@ -133,7 +133,7 @@ public:
         , value_num_(old.number_of_children())
     {}
 
-    HeaderProperties(const HeaderProperties &properties)
+    explicit HeaderProperties(const HeaderProperties &properties)
         : PropertySetBase(properties.value_)
         , set_position_(properties.set_position_)
         , value_num_(properties.value_num_)
@@ -160,7 +160,7 @@ private:
 class ValueProperties : public PropertySetBase
 {
 public:
-    ValueProperties(const std::string &value, int32_t position, int32_t value_num)
+    explicit ValueProperties(const std::string &value, int32_t position, int32_t value_num)
             : PropertySetBase(value)
             , set_position_(position)
     {}
@@ -170,14 +170,14 @@ public:
             , set_position_(-1)
     {}
 
-    ValueProperties(const ValueProperties &properties)
+    explicit ValueProperties(const ValueProperties &properties)
             : PropertySetBase(properties.value_)
             , set_position_(properties.set_position_)
     {}
 
     virtual ~ValueProperties() = default;
 
-    virtual void print()
+    virtual void print() const override
     {
         std::cout << "value: " << value_ << " set position value: " << set_position_;
     }

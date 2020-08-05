@@ -33,7 +33,7 @@ shared_ptr<LexicalItem> MakeLexicalItem(ItemType type, shared_ptr<const NodeProp
             break;
 
         case ItemType::Value:
-            return make_shared<LexicalItem>(props->get_token_value(), type, make_shared<const ::sdg::RecordProperties>(*props));
+            return make_shared<LexicalItem>(props->get_token_value(), type, make_shared<const ::sdg::ValueProperties>(*props));
             break;
 
         default:

@@ -5,7 +5,13 @@
 
 <ol>
 <li><h2>Introduction: </h2></li>
-<li><h2>Test Items: </h2></li>
+<li><h2>Test Items: </h2>
+<ul>
+    <li>Lexer</li>
+    <li>Parser</li>
+    <li>Semantic Analyzer</li>
+    <li>Serializer</li>
+</ul>
 <li><h2>Features to be tested: </h2></li>
 <li><h2>Features not to be tested: </h2></li>
 <li><h2>Approach: </h2>
