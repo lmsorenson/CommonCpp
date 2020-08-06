@@ -9,3 +9,4 @@
 #include "SemanticAnalyzerComponentTests/Tests.hpp"
 #include "SemanticAnalyzerComponentTests/AnalyzerTests/AnalyzerTests.hpp"
 #include "SemanticAnalyzerComponentTests/NetTests/SemanticNetTests.hpp"
+#include "DataSetTests/Tests.hpp"
