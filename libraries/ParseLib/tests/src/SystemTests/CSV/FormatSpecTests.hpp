@@ -195,6 +195,7 @@ TEST_F(CSVFormatTests, TestR4_1)//at least one field.
 } 
 TEST_F(CSVFormatTests, TestR4_1_WithHeader)//at least one field.
 {
+    //todo - bad test, succeeds when it should fail
     DataSet ds;
     
     int32_t return_code;
@@ -232,7 +233,6 @@ TEST_F(CSVFormatTests, TestR4_2_WithHeader)//Each line should contain the same n
 }
 TEST_F(CSVFormatTests, TestR4_3)//must not be followed by a comma
 {   
-
     DataSet ds;
     int32_t return_code;
 
@@ -341,7 +341,7 @@ TEST_F(CSVFormatTests, TestR6_1)
         field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
-    ASSERT_EQ(field2.get(), "b\r\rbb");
+    ASSERT_EQ(field2.get(), "b\r\nbb");
     ASSERT_EQ(field3.get(), "ccc");
 }  
 TEST_F(CSVFormatTests, TestR6_1_WithHeader)
@@ -357,7 +357,7 @@ TEST_F(CSVFormatTests, TestR6_1_WithHeader)
         field3 = ds["R0"]["F2"];
 
     ASSERT_EQ(field1.get(), "aaa");
-    ASSERT_EQ(field2.get(), "b\r\r\rbb");
+    ASSERT_EQ(field2.get(), "b\r\nbb");
     ASSERT_EQ(field3.get(), "ccc");
 } 
 TEST_F(CSVFormatTests, TestR6_2)//commas can be enclosed in double quotes

@@ -19,8 +19,8 @@ class CSV : public sdg::DataSet
 
 public:
     CSV();
-    CSV(int32_t hash_table_size);
-    ~CSV();
+    explicit CSV(int32_t hash_table_size);
+    virtual ~CSV();
 
     virtual void assign();
     virtual void add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position=-1) override;

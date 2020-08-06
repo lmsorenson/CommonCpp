@@ -14,7 +14,7 @@ using ::sdg::Model;
 
 int32_t sdg::DataSet::IsDescriptorRequired(hash::DescriptorID a_descriptor_id) const
 {
-    int32_t r=-1;
+    int32_t r;
 
     bool b_descriptor_found = false;
 
@@ -29,7 +29,7 @@ int32_t sdg::DataSet::IsDescriptorRequired(hash::DescriptorID a_descriptor_id) c
 
             std::shared_ptr<Attribute> attribute = dynamic_pointer_cast<Attribute>(descriptor);
 
-            r=( attribute && (attribute->get_scale() != Attribute::Scale::Boolean) );
+            r = ( attribute && (attribute->get_scale() != Attribute::Scale::Boolean) );
         }
     }
 

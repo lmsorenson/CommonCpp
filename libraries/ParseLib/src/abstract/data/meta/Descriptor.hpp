@@ -19,15 +19,19 @@ class Identifier;
 
 class Degree
 {
-    int32_t datum;
+public:
+    Degree():datum_(0){}
+
+private:
+    int32_t datum_;
 };
 
 class Descriptor : public Thing
 {
 
 public:
-    Descriptor(std::string a_name);
-    Descriptor(std::string a_name, std::string a_id);
+    explicit Descriptor(const std::string &a_name);
+    explicit Descriptor(const std::string &a_name, const std::string &a_id);
     ~Descriptor()=default;
 
 private:
@@ -46,7 +50,7 @@ class Link : public Descriptor
     OneLink<Entity> link_subject;
 
 public:
-    Link(std::string a_name, std::shared_ptr<Entity> a_entity, std::string a_link_label="");
+    explicit Link(const std::string &a_name, std::shared_ptr<Entity> a_entity, const std::string &a_link_label="");
     ~Link()=default;
 
     std::vector<hash::DescriptorID> get_descriptor_IDs();
@@ -68,7 +72,7 @@ public:
         Unknown
     } ;
 
-    Attribute(std::string a_name, std::string a_label, Scale a_scale);
+    explicit Attribute(const std::string &a_name, const std::string &a_label, Scale a_scale);
     ~Attribute()=default;
 
     bool IsRequired();

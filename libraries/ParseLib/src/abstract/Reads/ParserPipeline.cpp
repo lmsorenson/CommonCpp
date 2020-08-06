@@ -4,9 +4,16 @@
 #include <vector>
 
 
+#include "../../utils/stopwatch.hpp"
+
+
 using std::shared_ptr;
 using std::vector;
 using std::string;
+using std::cout;
+using std::endl;
+using std::fixed;
+using std::flush;
 using sdg::SyntaxNode;
 using sdg::ParserPipeline;
 
@@ -27,6 +34,9 @@ int32_t ParserPipeline::add_output(shared_ptr<ParserOutput> output)
 //execute will populate the DataSet
 int32_t ParserPipeline::execute(std::shared_ptr<SyntaxNode>& text, sdg::DataSet& data_store)
 {
+    utils::Stopwatch sw;
+    sw.start();
+
     int32_t result;
 
     vector<vector<shared_ptr<SyntaxNode>>> in_buffer;
@@ -45,13 +55,16 @@ int32_t ParserPipeline::execute(std::shared_ptr<SyntaxNode>& text, sdg::DataSet&
     in_buffer.clear();
     out_buffer.clear();
     
+    sw.stop();
+    cout << fixed << "ParserPipeline takes: " <<  sw.read_seconds() << "s" << endl;
+
     //message the output
     output->execute(text, data_store);
 
     return PIPELINE_SUCCESS;
 }
 
-int32_t ParserPipeline::inverse(std::vector<std::vector<std::string>> vector_vector, std::string &text)
+int32_t ParserPipeline::inverse(const std::vector<std::vector<std::string>> &vector_vector, std::string &text)
 {
     std::string compiled_buffer;
     std::vector<std::vector<std::string>> vector_in_buffer;
@@ -142,8 +155,6 @@ int32_t ParserPipeline::ProcessIndividual(sdg::DataSet &data_set, SyntaxNodeSet 
 
 int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, SyntaxNodeBuffer &out_buffer, SyntaxNodeSet &in_buffer, std::shared_ptr<ParserFilter> filter)
 {
-    int32_t result;
-
     // Apply filters to all nodes in the SyntaxNode set.
     for (int k=0; k < in_buffer.size(); ++k)
     {
@@ -163,6 +174,7 @@ int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, SyntaxNodeBuffer &o
             }
         }
 
+        int32_t result;
         if ((result=this->ProcessIndividual(data_set, filter_result_set, vn, in_buffer[k], filter))!=PIPELINE_SUCCESS)
         {
             return result;
@@ -177,11 +189,10 @@ int32_t ParserPipeline::ProcessNodes(sdg::DataSet &data_set, SyntaxNodeBuffer &o
 
 int32_t ParserPipeline::ProcessNodeSets(sdg::DataSet &data_set, SyntaxNodeBuffer &out_buffer, SyntaxNodeBuffer &in_buffer, shared_ptr<ParserFilter> filter)
 {
-    int32_t result;
-
     // Apply filters to all SyntaxNode sets.
     for(int j=0; j < in_buffer.size(); ++j)
     {
+        int32_t result;
         if ((result=ProcessNodes(data_set, out_buffer, in_buffer[j], filter))!= PIPELINE_SUCCESS)
         {
             return result;

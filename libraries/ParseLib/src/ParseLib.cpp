@@ -7,10 +7,7 @@
 
 #include <formats/csv_data_set.hpp>
 #include "abstract/Reads/ReadStrategy.hpp"
-#include "concrete/csv/csv_factory.hpp"
-
-
-
+#include "concrete/csv/setup/csv_factory.hpp"
 
 int32_t sdg::ParseLib::read_file(sdg::DataSet& data_store, const char * filepath, std::vector<sdg::option> read_options)
 {
@@ -52,18 +49,9 @@ int32_t sdg::ParseLib::read_file(sdg::DataSet& data_store, const char * filepath
 
 int32_t sdg::ParseLib::write_file(sdg::DataSet& data_store, const char * filepath, std::vector<sdg::option> read_options)
 {
-    //STEP 1 -- FACTORY.
     //-----------------------|   Generate strategies & Data   |-----------------------//
     csv::Factory factory;                    //TODO-->make factory producer
-    auto data = factory.make_data();         //use the factory to initialize the data variable.
     auto strategy = factory.make_write();     //initialize appropriate read strategy
-    
-    //STEP 2 -- READ the file.
-    // this->read_file();
-
-    //STEP 3 -- MODIFY the data.
-
-    //STEP 4 -- WRITE the file.
     strategy->execute_write(data_store, filepath);
 
     return 0;

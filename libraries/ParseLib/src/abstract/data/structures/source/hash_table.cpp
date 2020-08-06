@@ -8,6 +8,8 @@ using std::make_shared;
 using std::vector;
 using std::endl;
 using std::cout;
+using std::fixed;
+using std::flush;
 using sdg::plHashTable;
 using sdg::plHashValue;
 using sdg::hash::KeyInstance;
@@ -43,7 +45,7 @@ int32_t plHashTable::compute_index(string value) const
     return index;
 }
 
-bool plHashTable::key_value_exists(KeyInstance a_key)
+bool plHashTable::key_value_exists(const KeyInstance &a_key)
 {
     int32_t index = compute_index(a_key.as_string());
 
@@ -52,9 +54,10 @@ bool plHashTable::key_value_exists(KeyInstance a_key)
     return !(value=="NULL");
 }
 
-plHashValue plHashTable::insert(KeyInstance key, plHashValue value)
+plHashValue plHashTable::insert(const KeyInstance &key, plHashValue value)
 {
     int32_t index = compute_index(key.as_string());
+
     shared_ptr<plHashElementIterator> e (table[index]);
 
     plHashValue replaced_key_value;
@@ -62,7 +65,11 @@ plHashValue plHashTable::insert(KeyInstance key, plHashValue value)
     //if the bucket is NOT null
     if (e!=nullptr)
     {
-        if(this->key_value_exists(key))
+        stopwatch_.start();
+        bool keyExists = this->key_value_exists(key);
+        stopwatch_.stop();
+
+        if(keyExists)
         {
             replaced_key_value = e->assign_value_to_existing_key(key.as_string(), value);
         }
@@ -83,7 +90,7 @@ plHashValue plHashTable::insert(KeyInstance key, plHashValue value)
     return replaced_key_value;
 }
 
-plHashValue plHashTable::move(KeyInstance old_key, KeyInstance new_key)
+plHashValue plHashTable::move(const KeyInstance &old_key, const KeyInstance &new_key)
 {
     plHashValue replaced_value;
 
@@ -96,19 +103,19 @@ plHashValue plHashTable::move(KeyInstance old_key, KeyInstance new_key)
     return replaced_value;
 }
 
-void plHashTable::delete_value(KeyInstance a_key)
+void plHashTable::delete_value(const KeyInstance &a_key)
 {
     table[compute_index(a_key.as_string())]->remove_value(a_key.as_string());
 }
 
 //returns the string value of a key in the hash table.
-string plHashTable::get(KeyInstance a_key) const
+string plHashTable::get(const KeyInstance &a_key) const
 {
     return table[compute_index(a_key.as_string())]->find(a_key.as_string());
 }
 
 //returns a plHashValue value from by a key from the hash_table.
-plHashValue plHashTable::get_hash_value(KeyInstance a_key) const
+plHashValue plHashTable::get_hash_value(const KeyInstance &a_key) const
 {
     return table[compute_index(a_key.as_string())]->find_hash_value(a_key.as_string());
 }
@@ -119,6 +126,7 @@ std::vector<KeyInstance> plHashTable::GetMatchingKeys(KeyInstance a_key_subset) 
     vector<KeyInstance> return_list;
     vector<KeyInstance> local_hash_keys = hash_key_list;
     vector<KeyInstance> local_hash_key_buffer;
+
 
     std::string local_key_subset = a_key_subset.as_string();
 

@@ -7,8 +7,7 @@
 
 
 
-namespace sdg 
-{
+namespace sdg {
 
 
 struct option

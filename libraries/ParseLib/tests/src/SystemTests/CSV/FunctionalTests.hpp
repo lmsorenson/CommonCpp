@@ -122,7 +122,7 @@ TEST_F(CSVFunctionalSpec, TestR3_1_1)
 {
     DataSet ds;
     
-    int32_t exit_code = ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
+    ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     
     Instance str = ds["R100000"]["F0"];
     
@@ -134,7 +134,7 @@ TEST_F(CSVFunctionalSpec, TestR3_1_2)
 {
     DataSet ds;
     
-    int32_t exit_code = ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
+    ParseLib().read_file(ds, this->path("test_data/test1.csv").c_str());
     
     Instance str = ds["R0"]["F0"];
     

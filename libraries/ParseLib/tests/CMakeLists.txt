@@ -1,10 +1,17 @@
 cmake_minimum_required (VERSION 2.6)
 
+if (POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif (POLICY CMP0048)
+
 project (tests)
 
 set (CMAKE_CXX_STANDARD 17)
-set (CMAKE_CXX_FLAGS "-g")
-# set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
+set (CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
+set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
+set (CMAKE_C_FLAGS "-g")
+set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 
 
 include_directories(${PROJECT_SOURCE_DIR}/../include/)
@@ -17,13 +24,13 @@ add_subdirectory(
 include_directories(
 	tests
 	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest/include/concrete
+	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googlemock/include
 )
 
 
 add_subdirectory(
-	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/googletest 
-	lib/
+	${PROJECT_SOURCE_DIR}/../../../submodules/googletest/ 
+	gtest_lib/
 )
 
 set( 
@@ -31,8 +38,12 @@ set(
 	${PROJECT_SOURCE_DIR}
 )
 
-add_executable(TestAll ${PROJECT_SOURCE_DIR}/src/TestAll.cpp)
-add_executable(TestComponents ${PROJECT_SOURCE_DIR}/src/TestComponents.cpp)
+add_executable(TestAll 
+	${PROJECT_SOURCE_DIR}/src/TestAll.cpp
+	${PROJECT_SOURCE_DIR}/src/ComponentTests/LexerComponent/test_lexer_filters.cpp)
+add_executable(TestComponents 
+	${PROJECT_SOURCE_DIR}/src/TestComponents.cpp
+	${PROJECT_SOURCE_DIR}/src/ComponentTests/LexerComponent/test_lexer_filters.cpp)
 add_executable(TestIntegration ${PROJECT_SOURCE_DIR}/src/TestIntegration.cpp)
 add_executable(TestSystem ${PROJECT_SOURCE_DIR}/src/TestSystem.cpp)
 
@@ -107,23 +118,27 @@ target_include_directories(
 target_link_libraries(
 	TestAll
 	gtest
+	gmock
 	parse
 )
 
 target_link_libraries(
 	TestComponents
 	gtest
+	gmock
 	parse
 )
 
 target_link_libraries(
 	TestIntegration
 	gtest
+	gmock
 	parse
 )
 
 target_link_libraries(
 	TestSystem
 	gtest
+	gmock
 	parse
 )

@@ -11,7 +11,7 @@ plHashValue::plHashValue()
 : value("")
 , parent_key("")
 {}
-plHashValue::plHashValue(string aValue, string aParentString)
+plHashValue::plHashValue(const string &aValue, const string &aParentString)
 : value(aValue)
 , parent_key(aParentString)
 {}

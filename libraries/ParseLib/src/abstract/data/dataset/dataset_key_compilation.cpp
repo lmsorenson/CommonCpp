@@ -1,5 +1,7 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <objects/data_set.hpp>
+#include <string.h>
+#include <stdio.h>
 
 #include "../types/types.hpp"
 
@@ -56,8 +58,9 @@ sdg::hash::KeyInstance sdg::DataSet::id_lexer(
         //iterate over expected descriptors
         for(int i=0; i<identifying_descriptors.size(); ++i)
         {
+            auto descriptor = identifying_descriptors[i];
             //Check if the token's key matches the current descriptor's label.
-            if (strcmp(identifying_descriptors[i]->get_id().c_str(), scanned_label)==0)
+            if (descriptor && descriptor->get_id().compare(scanned_label)==0)
             {
                 //if the token was a match, it was expected
                 b_token_recognized = true;
@@ -187,7 +190,7 @@ void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, hash::
     }
 }
 
-sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::DescriptorInstance> expected_descriptors) const
+sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::DescriptorInstance> &expected_descriptors) const
 {
 
     std::string compiled_key;

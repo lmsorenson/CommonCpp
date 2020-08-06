@@ -16,7 +16,7 @@ sdg::DataSet::DataSet(State a_state)
 
 sdg::DataSet::DataSet(int32_t hash_table_size)
 : hash_table(hash_table_size)
-, state(DATA_SET_GOOD) {}
+, state(DATA_SET_EMPTY) {}
 
 
 

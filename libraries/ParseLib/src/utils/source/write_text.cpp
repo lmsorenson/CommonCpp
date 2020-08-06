@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <string.h>
+#include <stdio.h>
 #include "sys/types.h"
 #include "unistd.h"
 #include <fcntl.h>
@@ -18,7 +20,7 @@ string sdg::utils::writeText(string filepath, string contents)
     ofstream file (filepath.c_str());
     if (file.is_open())
     {
-        file.write(contents.c_str(), std::strlen(contents.c_str()));
+        file.write(contents.c_str(), contents.size());
 
         file.close();
     }

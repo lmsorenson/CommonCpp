@@ -21,7 +21,7 @@ class Entity : public Thing
     ManyLink<Identifier> identifier_array; 
 
 public:
-    Entity(std::string a_entity_id, std::string a_name);
+    Entity(const std::string &a_entity_id, const std::string &a_name);
     ~Entity()=default;
 
     void add_descriptor(std::shared_ptr<Descriptor> a_descriptor, bool b_is_identifying_descriptor = false, int32_t identifier_index = 0);

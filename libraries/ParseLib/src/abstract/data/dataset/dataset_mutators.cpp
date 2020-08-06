@@ -20,6 +20,8 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
     case DATA_SET_GOOD: 
         //todo -- investigate difference between key and subset key.
         hash_table.insert(a_key, plHashValue(a_value));
+        //todo -- the following function call is linked to a crash if called
+        //on a generic dataset
         this->update_descriptor_counts(a_key);
         return 0; 
         break;
@@ -96,7 +98,7 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::De
 
 
 
-void sdg::DataSet::add_instance(hash::EntityID entity_id, std::vector<std::string> entity_values, int32_t position)
+void sdg::DataSet::add_instance(hash::EntityID a_entity_id, std::vector<std::string> a_entity_values, int32_t a_position)
 {
     //todo-->handle definition of this function
 }
@@ -106,7 +108,7 @@ void sdg::DataSet::remove_instance(hash::KeyInstance a_key_subset)
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t position)
+void sdg::DataSet::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t a_position)
 {
     //todo-->handle definition of this function
 }
@@ -118,20 +120,20 @@ void sdg::DataSet::reposition_instance(hash::DescriptorInstance a_descriptor, in
 
 void sdg::DataSet::update_descriptor_counts(hash::KeyInstance a_key)
 {
-    std::string copy = a_key.as_string();
-    
-    auto function = [&](const std::string callback_token)
+    //defines the procedure to run on every descriptor in the key.
+    auto function = [&](const std::string &callback_token)
     {
         char scanned_descriptor_id[1];
         int32_t scanned_descriptor_value;
         sscanf(callback_token.c_str(), "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
 
-        auto descriptor = hash::DescriptorInstance(scanned_descriptor_id, Attribute::Scale::Numeric);
-        descriptor.set_value(scanned_descriptor_value);
+        auto local_descriptor = hash::DescriptorInstance(scanned_descriptor_id, Attribute::Scale::Numeric);
+        local_descriptor.set_value(scanned_descriptor_value);
     
-        logical_data_structure.found_descriptor(descriptor);
+        this->logical_data_structure.found_descriptor(local_descriptor);
     };
 
+    //runs function in every descriptor.
     a_key.for_each_descriptor(function);
 }
 
@@ -141,13 +143,11 @@ sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_k
 {
     using namespace sdg::hash;
 
-    KeyInstance copy = a_key;
-
     DescriptorInstance local_descriptor = DescriptorInstance("NULL", sdg::Attribute::Scale::Numeric);
 
     auto function = [&](const std::string callback_token)
     {
-        if(std::string(callback_token).substr(0,1).compare(a_descriptor_id.as_string())==0)
+        if(string(callback_token).substr(0,1).compare(a_descriptor_id.as_string())==0)
         {
             DescriptorInstance descriptor = DescriptorInstance(std::string(callback_token).substr(0,1), sdg::Attribute::Scale::Numeric);
             descriptor.set_value(std::stoi(std::string(callback_token).substr(1,1)));
@@ -157,7 +157,7 @@ sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_k
         }
     };
 
-    copy.for_each_descriptor(function);
+    a_key.for_each_descriptor(function);
 
     return local_descriptor;
 }
