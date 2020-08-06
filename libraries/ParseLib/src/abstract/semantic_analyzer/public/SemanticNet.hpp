@@ -1,11 +1,10 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #pragma once
-#include "../private/net/PropertyModel.hpp"
+#include "PropertyModel.hpp"
 #include "../private/net/LexicalItem.hpp"
 #include "../private/net/SemanticRule.hpp"
 #include <string>
 #include <unordered_map>
-
 
 namespace sdg {
 
@@ -29,6 +28,8 @@ private:
     virtual int16_t classify( std::shared_ptr<const PropertySetBase> properties ) const = 0;
     virtual ItemPayload decompose( ::std::shared_ptr<LexicalItem> item ) = 0;
     virtual int8_t compare_semantics( const std::shared_ptr<const LexicalItem> item, std::vector<std::string> &err ) = 0;
+
+    virtual std::shared_ptr<LexicalItem> MakeLexicalItem(ItemType type, std::shared_ptr<const NodeProperties> props, std::vector<std::string> &error) = 0;
 };
 
 }// namespace sdg

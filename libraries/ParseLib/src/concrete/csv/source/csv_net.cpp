@@ -1,17 +1,25 @@
 // Copyright 2020, Lucas Sorenson, All rights reserved.
 #include "../csv_net.hpp"
-
+#include "../HeaderProperties.hpp"
+#include "../RecordProperties.hpp"
+#include "../ValueProperties.hpp"
 
 using ::sdg::CSVNet;
 using ::sdg::ItemPayload;
+using ::sdg::LexicalItem;
+using ::sdg::HeaderProperties;
+using ::sdg::RecordProperties;
+using ::sdg::ValueProperties;
 using ::std::string;
 using ::std::vector;
 using ::std::shared_ptr;
+using ::std::make_shared;
+using ::std::dynamic_pointer_cast;
 
 int16_t CSVNet::classify( shared_ptr<const PropertySetBase> properties ) const
 {
     shared_ptr<const NodeProperties> props;
-    if ( (props = std::dynamic_pointer_cast<const NodeProperties>(properties))==nullptr )
+    if ( (props = dynamic_pointer_cast<const NodeProperties>(properties))==nullptr )
         return ItemType::Undefined;
 
     if (props->child_of_root_node() && props->compare_token_label("R"))
@@ -53,15 +61,15 @@ ItemPayload CSVNet::decompose( shared_ptr<LexicalItem> token )
     }
 }
 
-int8_t CSVNet::compare_semantics( const std::shared_ptr<const LexicalItem> item, vector<string> &err )
+int8_t CSVNet::compare_semantics( const shared_ptr<const LexicalItem> item, vector<string> &err )
 {
     //There should be no precedent for undefined items.
     if ( !item || item->type() == ItemType::Undefined )
         return SemanticNet::Failure;
 
-    auto header_props = std::dynamic_pointer_cast<const HeaderProperties>(item->properties());
-    auto record_props = std::dynamic_pointer_cast<const RecordProperties>(item->properties());
-    auto value_props = std::dynamic_pointer_cast<const ValueProperties>(item->properties());
+    auto header_props = dynamic_pointer_cast<const HeaderProperties>(item->properties());
+    auto record_props = dynamic_pointer_cast<const RecordProperties>(item->properties());
+    auto value_props = dynamic_pointer_cast<const ValueProperties>(item->properties());
 
     if (header_props != nullptr)
     {
@@ -110,5 +118,31 @@ int8_t CSVNet::compare_semantics( const std::shared_ptr<const LexicalItem> item,
     else
     {
         return SemanticNet::Failure;
+    }
+}
+
+shared_ptr<LexicalItem> CSVNet::MakeLexicalItem(ItemType type, shared_ptr<const NodeProperties> props, vector<string> &error)
+{
+    if (props == nullptr)
+        return nullptr;
+
+    switch (type) {
+        case ItemType::Header:
+            return make_shared<LexicalItem>(props->get_token_value(), type, make_shared<const ::sdg::HeaderProperties>(*props));
+            break;
+
+        case ItemType::Record:
+            return make_shared<LexicalItem>(props->get_token_value(), type, make_shared<const ::sdg::RecordProperties>(*props));
+            break;
+
+        case ItemType::Value:
+            return make_shared<LexicalItem>(props->get_token_value(), type, make_shared<const ::sdg::ValueProperties>(*props));
+            break;
+
+        default:
+        case ItemType::Undefined:
+            error.push_back("unknown type");
+            return nullptr;
+            break;
     }
 }
