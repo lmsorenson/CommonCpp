@@ -25,4 +25,4 @@ addons:
         build_command: 
             - ./build-scripts/generate-tests-makefile.sh
             - ./build-scripts/build-tests.sh
-        branch_pattern: create-parser-components
+        branch_pattern: branch-name
