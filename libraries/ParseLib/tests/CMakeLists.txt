@@ -43,7 +43,8 @@ add_executable(TestAll
 	${PROJECT_SOURCE_DIR}/src/ComponentTests/LexerComponent/test_lexer_filters.cpp)
 add_executable(TestComponents 
 	${PROJECT_SOURCE_DIR}/src/TestComponents.cpp
-	${PROJECT_SOURCE_DIR}/src/ComponentTests/LexerComponent/test_lexer_filters.cpp)
+	${PROJECT_SOURCE_DIR}/src/ComponentTests/LexerComponent/test_lexer_filters.cpp
+	${PROJECT_SOURCE_DIR}/src/ComponentTests/Mocks/test_data_set.cpp)
 add_executable(TestIntegration ${PROJECT_SOURCE_DIR}/src/TestIntegration.cpp)
 add_executable(TestSystem ${PROJECT_SOURCE_DIR}/src/TestSystem.cpp)
 

@@ -7,6 +7,7 @@
 
 #include <gtest/gtest.h>
 #include <ParseLib.hpp>
+#include "../Mocks/test_data_set.hpp"
 
 #include "../../TestFramework.hpp"
 #include "../../../../src/abstract/lexer/Lexer.hpp"
@@ -38,9 +39,17 @@ protected:
 
 };
 
-TEST_F(DataSetTests, data_set_test_1 )
+TEST_F(DataSetTests, data_set_add )
 {
-    ::sdg::SemanticAnalyzer analyzer = ::sdg::SemanticAnalyzer();
+    TestDataSet dataset = TestDataSet();
 
-    ASSERT_EQ(1,2);
+    auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
+    descA.set_value(1);
+
+    auto descB = ::sdg::hash::DescriptorInstance("B", ::sdg::Attribute::Scale::Ordinal);
+    descB.set_value(1);
+
+    dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("hello world", ""));
+
+    ASSERT_EQ("hello world",dataset.get(::sdg::hash::KeyInstance("A1-B1")).get());
 }
