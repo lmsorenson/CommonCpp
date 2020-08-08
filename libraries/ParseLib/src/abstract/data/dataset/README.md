@@ -14,14 +14,17 @@
     </ol>
     <li>The program shall be able to add key-value pairs to the DataSet.
     <ol>
-        <li>If a value exists for the key that is added, the course of action will depend on the type of the descriptor:
+        <li>Key-value pairs can be added to a specific position within a set.</li>
+        <li>If a key-value pair exists at the specified position, the course of action will depend on the parameters of the entity being added.
         <ol>
-            <li>If there is an ORDINAL descriptor the overwritten key's descriptor will be incremented in order to reposition the item within the set.  </li>
-            <li>If there is not an ordinal descriptor, the overwritten key will be lost.  </li>
+            <li>If the entity has multiplicity, overwritten item will be repositioned within the set.
+            <li>If the entity does not have multiplicity, the overwritten key will be lost.  </li>
+            <li>The DataSet shall be configurable, such that additions can permanently overwrite keys. </li>
         </ol>
+        <li>If a desired position is not specified the dataset shall add the key-value pair to the end of the set.  </li>
     </ol>
     <li>The program shall be able to remove key-value pairs from the DataSet.  </li>
-    <li>The program shall be able to </li>
+    <li>The program shall be able to reposition key-value pairs in the DataSet. </li>
 </ol>
  
 ***
