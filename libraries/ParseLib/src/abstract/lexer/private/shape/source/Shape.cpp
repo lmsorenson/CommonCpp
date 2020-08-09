@@ -50,7 +50,7 @@ void Shape::run(bool &should_buffer, char ch)
         int32_t transition_code = 0;
         const auto original_state = current_state_;
 
-        //remember history so no state loops are created
+        //remember history so no state_ loops are created
         map<TransitionID, Transition> history;
 
         do
@@ -81,7 +81,7 @@ void Shape::run(bool &should_buffer, char ch)
         } while (transition_code != 0);
 
         // check if buffering the current character is allowed
-        // in this state.
+        // in this state_.
         current_state_->should_buffer(should_buffer, ch);
 
         original_state->update();

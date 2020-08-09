@@ -3,9 +3,11 @@
 using ::std::make_shared;
 using ::std::shared_ptr;
 
-TestDataSet::TestDataSet()
+TestDataSet::TestDataSet(::sdg::DataSet::State state)
 : ::sdg::DataSet(100)
 {
+    state_ = state;
+
     shared_ptr<::sdg::Entity>
             entityA = make_shared<::sdg::Entity>("A", "entity a"),
             entityB = make_shared<::sdg::Entity>("B", "entity b"),

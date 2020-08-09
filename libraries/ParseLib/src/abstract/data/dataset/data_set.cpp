@@ -9,14 +9,18 @@
 
 //-- Constructors ----------------------------------
 sdg::DataSet::DataSet()
-: state(DATA_SET_EMPTY) {}
+: state_(DATA_SET_EMPTY)
+, hash_table_(100)
+{}
 
 sdg::DataSet::DataSet(State a_state)
-: state(a_state) {}
+: state_(a_state)
+, hash_table_(1)
+{}
 
 sdg::DataSet::DataSet(int32_t hash_table_size)
-: hash_table(hash_table_size)
-, state(DATA_SET_EMPTY) {}
+: hash_table_(hash_table_size)
+, state_(DATA_SET_EMPTY) {}
 
 
 

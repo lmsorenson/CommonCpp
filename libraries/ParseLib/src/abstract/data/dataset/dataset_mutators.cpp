@@ -13,13 +13,16 @@ sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_k
 
 int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
 {
-    switch (state)
+    if (a_key.is_default())
+        return -1;
+
+    switch (state_)
     {
-    case DATA_SET_EMPTY: 
-        state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
+    case DATA_SET_EMPTY:
+        state_ = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
         //todo -- investigate difference between key and subset key.
-        hash_table.insert(a_key, plHashValue(a_value));
+        hash_table_.insert(a_key, plHashValue(a_value));
         //todo -- the following function call is linked to a crash if called
         //on a generic dataset
         this->update_descriptor_counts(a_key);
@@ -41,14 +44,14 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::De
     hash::DescriptorID copy_descriptor_id = a_descriptor_id;
     hash::DescriptorInstance new_descriptor;
 
-    switch (state)
+    switch (state_)
     {
-    case DATA_SET_EMPTY: 
-        state = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
+    case DATA_SET_EMPTY:
+        state_ = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
     case DATA_SET_GOOD: 
 
         //returns a copy of the value that was replaced in the operation.
-        replaced_value = hash_table.insert(a_key, plHashValue(a_value));
+        replaced_value = hash_table_.insert(a_key, plHashValue(a_value));
 
         //maintains count for the list
         this->update_descriptor_counts(a_key);
@@ -60,7 +63,7 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::De
             
             new_key = increment_descriptor_in_key(new_descriptor, a_key, 0);
 
-            replaced_value = hash_table.insert(new_key, plHashValue(replaced_value));
+            replaced_value = hash_table_.insert(new_key, plHashValue(replaced_value));
             
             this->update_descriptor_counts(new_key);
             

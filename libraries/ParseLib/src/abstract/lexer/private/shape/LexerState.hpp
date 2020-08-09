@@ -53,8 +53,8 @@ protected:
 
 private:
     
-    int32_t occurances_;        //occurances refer to the number of times this state is used.
-    int32_t char_num_;          //char_num_ refers to the number of characters scanned in the current session of this state.
+    int32_t occurances_;        //occurances refer to the number of times this state_ is used.
+    int32_t char_num_;          //char_num_ refers to the number of characters scanned in the current session of this state_.
     int32_t code_;
 };
 

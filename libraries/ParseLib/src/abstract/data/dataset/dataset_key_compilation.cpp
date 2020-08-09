@@ -183,7 +183,7 @@ void sdg::DataSet::displace_overwritten_keys( plHashValue replaced_value, hash::
         new_key=increment_descriptor_in_key(a_descriptor, new_key, 1);
 
         //apply the previously replaced value and assign the newly replaced value(if one exists) 
-        replaced=this->hash_table.insert(new_key, replaced);
+        replaced=this->hash_table_.insert(new_key, replaced);
 
         //update the count of descriptors.
         this->update_descriptor_counts(new_key);

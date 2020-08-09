@@ -32,6 +32,10 @@ KeyInstance::KeyInstance(std::vector<DescriptorInstance> descriptors, bool a_is_
     }
 }
 
+bool KeyInstance::is_default() const
+{
+    return (value_.empty() && is_partial_key_ == false);
+}
 
 bool KeyInstance::is_partial_key() const
 {

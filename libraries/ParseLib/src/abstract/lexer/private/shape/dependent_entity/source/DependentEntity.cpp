@@ -35,7 +35,7 @@ pair<string, string> map_delimiter_pair(const pair<char, char> from)
 
 inline void DependentEntity::construct_states()
 {
-    //the first state added is the first scanned.
+    //the first state_ added is the first scanned.
     this->add_state<StartIndependentEntity>( SetIndependentEntityBegin );
     this->add_state<Scanning>( SetScanningCharacters );
     this->add_state<DelimiterFound>( SetDelimiterFound );

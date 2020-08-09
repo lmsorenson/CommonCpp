@@ -220,16 +220,16 @@ void CSV::add_instance(hash::EntityID entity_id, std::vector<std::string> entity
 void CSV::remove_instance(hash::KeyInstance a_key_subset)
 {
     //searches the hash table for a list of Keys that match the descriptors provided
-    for (auto key : hash_table.GetMatchingKeys(a_key_subset))
+    for (auto key : hash_table_.GetMatchingKeys(a_key_subset))
     {
-        hash_table.delete_value(key);
+        hash_table_.delete_value(key);
     }
 }
 
 void CSV::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t position)
 {
     //iterates through all keys matching the passed in entity_id
-    for (auto key : hash_table.GetMatchingKeys(hash::KeyInstance({a_descriptor})))
+    for (auto key : hash_table_.GetMatchingKeys(hash::KeyInstance({a_descriptor})))
     {
         bool done=false;
         hash::KeyInstance new_key;
@@ -238,7 +238,7 @@ void CSV::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t pos
         //todo -- this can only apply to numeric attributes, so far attributes exist in both boolean and numberic type
         new_key=increment_descriptor_in_key(a_descriptor, key, position);
 
-        replaced_value = hash_table.move(key, new_key);
+        replaced_value = hash_table_.move(key, new_key);
 
         update_descriptor_counts(new_key);
 

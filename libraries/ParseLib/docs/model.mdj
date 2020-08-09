@@ -8821,7 +8821,7 @@
 											"top": 196,
 											"width": 120,
 											"height": 13,
-											"text": "-state",
+											"text": "-state_",
 											"horizontalAlignment": 0
 										}
 									],
@@ -15525,7 +15525,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFsea5SRsEpaN0="
 							},
-							"name": "state",
+							"name": "state_",
 							"visibility": "private",
 							"type": ""
 						}
@@ -31043,7 +31043,7 @@
 										"$ref": "AAAAAAFy4rBJg0q/lOw="
 									},
 									"edgePosition": 1,
-									"text": "#current state"
+									"text": "#current state_"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -31934,7 +31934,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFy4qUYajZtSbE="
 							},
-							"name": "current state",
+							"name": "current state_",
 							"end1": {
 								"_type": "UMLAssociationEnd",
 								"_id": "AAAAAAFy4rBJgkq8bFA=",

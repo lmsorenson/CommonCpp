@@ -20,7 +20,7 @@ public:
     //attaches an observer to a "distribution list".
     void attach_observer( Observer *new_observer );
 
-    //notifies observers that the state of the subject has changed.
+    //notifies observers that the state_ of the subject has changed.
     void notify_observers();
 };
 

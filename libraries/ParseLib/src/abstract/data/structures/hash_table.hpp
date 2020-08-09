@@ -152,7 +152,7 @@ public:
     //returns the string value of a key in the hash table.
     std::string get(const hash::KeyInstance &a_key) const;
 
-    //returns a plHashValue value from by a key from the hash_table.
+    //returns a plHashValue value from by a key from the hash_table_.
     plHashValue get_hash_value(const hash::KeyInstance &a_key) const;
 
     //returns a list of keys that matches the passed in descriptors.(hyphen delimited)

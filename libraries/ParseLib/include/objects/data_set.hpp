@@ -40,7 +40,7 @@ public:
         DATA_SET_BAD,
         DATA_SET_EMPTY,
         UNKNOWN
-    } state;
+    } state_;
 
     //constructors//---------------------------------------------
     DataSet();
@@ -107,7 +107,7 @@ protected:
     Model logical_data_structure;
 
     //a hash table to store the data in.
-    plHashTable hash_table;
+    plHashTable hash_table_;
 
     //overwrites an entity record.  recursively repositions all overwritten elements
     void displace_overwritten_keys( plHashValue replaced_value, hash::DescriptorInstance a_descriptor, hash::KeyInstance new_key);

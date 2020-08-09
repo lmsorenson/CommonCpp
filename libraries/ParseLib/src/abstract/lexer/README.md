@@ -1,5 +1,5 @@
 # Lexer Design
-The Lexical Analyzer(lexer) scans a character stream for tokens.  The order of tokens matters, therefor the meaning or interpretation of a token depends on its context (or which types of tokens came before and after).  This design uses a series of state systems to track the context of characters.
+The Lexical Analyzer(lexer) scans a character stream for tokens.  The order of tokens matters, therefor the meaning or interpretation of a token depends on its context (or which types of tokens came before and after).  This design uses a series of state_ systems to track the context of characters.
 
 ## Specifications
 <ol>

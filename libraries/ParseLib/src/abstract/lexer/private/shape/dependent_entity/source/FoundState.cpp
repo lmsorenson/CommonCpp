@@ -20,7 +20,7 @@ using ::std::string;
 
 
 
-//called every time the state is set.
+//called every time the state_ is set.
 void FoundDependent::initialize(char ch)
 {
     LexerState::initialize();

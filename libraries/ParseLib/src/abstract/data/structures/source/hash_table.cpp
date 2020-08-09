@@ -114,7 +114,7 @@ string plHashTable::get(const KeyInstance &a_key) const
     return table[compute_index(a_key.as_string())]->find(a_key.as_string());
 }
 
-//returns a plHashValue value from by a key from the hash_table.
+//returns a plHashValue value from by a key from the hash_table_.
 plHashValue plHashTable::get_hash_value(const KeyInstance &a_key) const
 {
     return table[compute_index(a_key.as_string())]->find_hash_value(a_key.as_string());

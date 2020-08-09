@@ -21,9 +21,9 @@
             <li>If the entity does not have multiplicity, the overwritten key will be lost.  </li>
             <li>The DataSet shall be configurable, such that additions can permanently overwrite keys. </li>
         </ol>
-        <li>If a desired position is not specified the dataset shall add the key-value pair to the end of the set.  </li>
-        <li>If the dataset is in a bad state, the key-value pair shall not be added to the dataset and an error will be thrown. </li>
-        <li>If the dataset is in a unknown state, the key-value pair shall not be added to the dataset and an error will be thrown. </li>
+        <li>If the key is not specified the key and value shall not be added to the set.  </li>
+        <li>If the dataset is in a bad state_, the key-value pair shall not be added to the dataset and an error will be thrown. </li>
+        <li>If the dataset is in a unknown state_, the key-value pair shall not be added to the dataset and an error will be thrown. </li>
     </ol>
     <li>The program shall be able to remove key-value pairs from the DataSet.  </li>
     <li>The program shall be able to reposition key-value pairs in the DataSet. </li>

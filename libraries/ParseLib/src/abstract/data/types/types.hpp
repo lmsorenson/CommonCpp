@@ -20,6 +20,7 @@ public:
 
     bool is_partial_key() const;
     std::string as_string() const;
+    bool is_default() const;
 
     void for_each_descriptor(std::function<void(const std::string&)> callback);
 

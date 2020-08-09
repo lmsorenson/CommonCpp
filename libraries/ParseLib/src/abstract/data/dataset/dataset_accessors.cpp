@@ -82,7 +82,7 @@ sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string va
 
 sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor_list) const
 {
-    if (state == DATA_SET_BAD)
+    if (state_ == DATA_SET_BAD)
         return Instance(this, Instance::NO_FILE);
 
     //initializing a valid instance return buffer.
@@ -97,21 +97,21 @@ sdg::Instance sdg::DataSet::get(hash::KeyInstance a_descriptor_list) const
     //does this key contain all necessary descriptors for a query?
     if ( generated_key.is_partial_key() )
     {
-        vector<hash::KeyInstance> matching_keys = hash_table.GetMatchingKeys(generated_key);
+        vector<hash::KeyInstance> matching_keys = hash_table_.GetMatchingKeys(generated_key);
         for(int i=0; i<matching_keys.size(); ++i)
         {
-            return_buffer.add_value(hash_table.get(matching_keys[i]));
+            return_buffer.add_value(hash_table_.get(matching_keys[i]));
         }
     }
     else 
     {
         //return the value at the generated key
-        return_buffer.add_value(hash_table.get(generated_key));
+        return_buffer.add_value(hash_table_.get(generated_key));
     }
         
     
 
-    return (state==DATA_SET_GOOD)
+    return (state_ == DATA_SET_GOOD)
 
     //success
     ? return_buffer

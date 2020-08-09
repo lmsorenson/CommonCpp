@@ -47,7 +47,7 @@ void dependent_run_helper(char ch, ::sdg::DependentEntity &mock_dependent, MockL
 
 //input types
 //-----------
-//state
+//state_
 //lexer character buffer
 //parent entity id
 //cardinality
@@ -156,7 +156,7 @@ TEST_F(LexerComponentTests, lexer_dependent_entity_run_escaped_state_through_del
     dependent_entity.run(actual_should_buffer, '\"');
     ASSERT_EQ(expected_should_buffer, actual_should_buffer);
 
-    dependent_entity.run(actual_should_buffer, 'a');//transition goes through AllowEscapeCharacter state
+    dependent_entity.run(actual_should_buffer, 'a');//transition goes through AllowEscapeCharacter state_
     
     //---- assert --------------------------------
     ASSERT_EQ(true, actual_should_buffer);
