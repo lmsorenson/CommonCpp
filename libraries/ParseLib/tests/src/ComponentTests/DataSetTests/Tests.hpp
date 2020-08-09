@@ -49,18 +49,20 @@ TEST_F(DataSetTests, data_set_SET_function_while_good )
     auto descB = ::sdg::hash::DescriptorInstance("B", ::sdg::Attribute::Scale::Ordinal);
     descB.set_value(1);
 
-    dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("hello world", ""));
+    auto result = dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("hello world", ""));
 
     ASSERT_EQ("hello world",dataset.get(::sdg::hash::KeyInstance("A1-B1")).get());
+    ASSERT_EQ(0, result);
 }
 
 TEST_F(DataSetTests, data_set_SET_function_while_empty )
 {
     TestDataSet dataset = TestDataSet();
 
-    dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue("hello world", ""));
+    auto result = dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue("hello world", ""));
 
     ASSERT_EQ("hello world",dataset.get(::sdg::hash::KeyInstance("A1-B1")).get());
+    ASSERT_EQ(0, result);
 }
 
 TEST_F(DataSetTests, data_set_SET_function_default_KeyInstance )
@@ -69,11 +71,22 @@ TEST_F(DataSetTests, data_set_SET_function_default_KeyInstance )
 
     auto result = dataset.set(::sdg::hash::KeyInstance(), ::sdg::plHashValue("hello world", ""));
 
-    ASSERT_EQ(-1, result);
+
     ASSERT_EQ("NULL",dataset.get(::sdg::hash::KeyInstance("A1-B1")).get());
+    ASSERT_EQ(-1, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_function_displaces_a_value )
+TEST_F(DataSetTests, data_set_SET_function_default_hashValue )
+{
+    TestDataSet dataset = TestDataSet();
+
+    auto result = dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue());
+
+    ASSERT_EQ("",dataset.get(::sdg::hash::KeyInstance("A1-B1")).get());
+    ASSERT_EQ(0, result);
+}
+
+TEST_F(DataSetTests, data_set_SET_function_overwrites_a_value )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -86,9 +99,10 @@ TEST_F(DataSetTests, data_set_SET_function_displaces_a_value )
     dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("hello world", ""));
 
 
-    dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("new value", ""));
+    auto result = dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("new value", ""));
 
     ASSERT_EQ("new value",dataset.get(::sdg::hash::KeyInstance("A1-B1")).get());
+    ASSERT_EQ(0, result);
 }
 
 
