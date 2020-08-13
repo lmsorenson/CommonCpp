@@ -11,6 +11,10 @@ using std::make_shared;
 
 sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_key, sdg::hash::DescriptorID a_descriptor_id);
 
+///
+/// \param a_key describes the key-location in the dataset to place the value.
+/// \param a_value the value to write to the dataset.
+/// \return a status code indicating success or failure.
 int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
 {
     if (a_key.is_default())
@@ -20,13 +24,13 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
     {
     case DATA_SET_EMPTY:
         state_ = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
-    case DATA_SET_GOOD: 
+    case DATA_SET_GOOD:
         //todo -- investigate difference between key and subset key.
         hash_table_.insert(a_key, plHashValue(a_value));
         //todo -- the following function call is linked to a crash if called
         //on a generic dataset
         this->update_descriptor_counts(a_key);
-        return 0; 
+        return 0;
         break;
     case DATA_SET_BAD: return DATA_SET_BAD; break;
     default:
@@ -35,9 +39,16 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
 }
 
 
-
+///
+/// \param a_key a_key describes the key-location in the dataset to place the value.
+/// \param a_value the value to write to the dataset.
+/// \param a_descriptor_id specifies the descriptor to increment when the key overwrites an existing value.
+/// \return a status code indicating success or failure.
 int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::DescriptorID a_descriptor_id)
 {
+    if (a_key.is_default())
+        return -1;
+
     plHashValue replaced_value;
     hash::KeyInstance new_key;
 
@@ -58,7 +69,6 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::De
 
         if(replaced_value.is_valid())
         {
-            //
             new_descriptor = get_matching_descriptor(a_key, copy_descriptor_id);
             
             new_key = increment_descriptor_in_key(new_descriptor, a_key, 0);
