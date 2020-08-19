@@ -52,7 +52,6 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::De
     plHashValue replaced_value;
     hash::KeyInstance new_key;
 
-    hash::DescriptorID copy_descriptor_id = a_descriptor_id;
     hash::DescriptorInstance new_descriptor;
 
     switch (state_)
@@ -69,7 +68,7 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::De
 
         if(replaced_value.is_valid())
         {
-            new_descriptor = get_matching_descriptor(a_key, copy_descriptor_id);
+            new_descriptor = get_matching_descriptor(a_key, a_descriptor_id);
             
             new_key = increment_descriptor_in_key(new_descriptor, a_key, 0);
 

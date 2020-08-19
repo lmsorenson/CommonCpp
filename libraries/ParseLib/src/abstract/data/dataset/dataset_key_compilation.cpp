@@ -77,7 +77,7 @@ sdg::hash::KeyInstance sdg::DataSet::id_lexer(
                 std::shared_ptr<const Attribute> attr_descriptor = dynamic_pointer_cast<const Attribute>(identifying_descriptors[i]);
 
                 //run the callback
-                if (attr_descriptor && (attr_descriptor->get_scale() == Attribute::Scale::Numeric ))
+                if (attr_descriptor && (attr_descriptor->get_scale() == Attribute::Scale::Ordinal ))
                 {
                     callback_desc_found(i, scanned_index, attr_descriptor->get_id());
                 }
@@ -156,7 +156,7 @@ sdg::hash::KeyInstance sdg::DataSet::increment_descriptor_in_key(hash::Descripto
         else
         {
             std::string token_as_string(callback_token);
-            hash::DescriptorInstance local_descriptor(token_as_string.substr(0,1), Attribute::Scale::Numeric);
+            hash::DescriptorInstance local_descriptor(token_as_string.substr(0,1), Attribute::Scale::Ordinal);
             local_descriptor.set_value(std::stoi(token_as_string.substr(1,1)));
 
             descriptor_list.push_back(local_descriptor);
@@ -212,7 +212,7 @@ sdg::hash::KeyInstance sdg::DataSet::compile_hash_key(const std::vector<hash::De
             //push key to the format.
             compiled_key.append(expected_descriptors[i].get_descriptor_id());
             
-            if( expected_descriptors[i].get_scale() == Attribute::Scale::Numeric)
+            if( expected_descriptors[i].get_scale() == Attribute::Scale::Ordinal)
                 compiled_key.append(std::to_string(expected_descriptors[i].get_descriptor_value()));
         }
 
@@ -268,7 +268,7 @@ std::vector<sdg::hash::DescriptorInstance> sdg::DataSet::get_descriptors_from_de
         key_buffer, 
         [&](int32_t key_i,int32_t index, string found_label)
         {
-            if (buffer[key_i].get_scale() == Attribute::Scale::Numeric)
+            if (buffer[key_i].get_scale() == Attribute::Scale::Ordinal)
             {
                 buffer[key_i].set_value(index);
             }

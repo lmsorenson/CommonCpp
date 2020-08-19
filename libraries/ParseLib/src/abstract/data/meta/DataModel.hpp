@@ -32,6 +32,7 @@ public:
     std::vector<std::shared_ptr<Descriptor>> get_identifier_of_granular_entity() const;
 
     //increment the counter for the entity specified
+    //todo -- these members are related to runtime instances.  These are not part of the model, they should be relocated.
     void found_descriptor(hash::DescriptorInstance a_descriptor);
     int32_t get_entity_count(hash::EntityID a_entity_id) const;
 
@@ -39,7 +40,7 @@ public:
 private:
     ManyLink<Thing> thing_array;
 
-    std::shared_ptr<Entity> get_entity(hash::EntityID a_entity_id) const;\
+    std::shared_ptr<Entity> get_entity(hash::EntityID a_entity_id) const;
 };
 
 }// namespace sdg

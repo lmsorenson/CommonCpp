@@ -67,7 +67,7 @@ string Instance::at(int8_t index) const
 {
     if(state_ == VALID_INST && value_.size()!= 0)
     {
-        if(value_.size()>=(index+1))
+        if(value_.size() >= (index+1))
             return value_[index];
 
         else

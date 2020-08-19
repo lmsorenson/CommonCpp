@@ -25,10 +25,10 @@ void CSV::csv_model()
         eField_field_id,
         eField_name_value;
 
-    eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("record_id", "R", Attribute::Scale::Numeric)), true);
-    eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value", "V", Attribute::Scale::Numeric)));
+    eRecord->add_descriptor(eRecord_line_id=make_shared<Attribute>(Attribute("record_id", "R", Attribute::Scale::Ordinal)), true);
+    eCell->add_descriptor(eCell_value=make_shared<Attribute>(Attribute("value", "V", Attribute::Scale::Ordinal)));
     eCell->add_descriptor( eCell_BE_header=make_shared<Attribute>(Attribute("is_a_header", "H", Attribute::Scale::Boolean)), true );
-    eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id", "F", Attribute::Scale::Numeric)), true);
+    eField->add_descriptor(eField_field_id=make_shared<Attribute>(Attribute("field_id", "F", Attribute::Scale::Ordinal)), true);
     eField_name->add_descriptor(eField_name_value=make_shared<Attribute>(Attribute("name", "N", Attribute::Scale::Nominal)));
 
     shared_ptr<Relationship>

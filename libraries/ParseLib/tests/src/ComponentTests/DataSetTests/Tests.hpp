@@ -190,10 +190,10 @@ TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_overwrites_a_value )
 {
     TestDataSet dataset = TestDataSet();
 
-    auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
+    auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Numeric);
     descA.set_value(1);
 
-    auto descB = ::sdg::hash::DescriptorInstance("B", ::sdg::Attribute::Scale::Ordinal);
+    auto descB = ::sdg::hash::DescriptorInstance("B", ::sdg::Attribute::Scale::Numeric);
     descB.set_value(1);
 
     dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("hello world", ""));
@@ -201,7 +201,7 @@ TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_overwrites_a_value )
 
     auto result = dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("new value", ""), ::sdg::hash::DescriptorID("A"));
 
-    ASSERT_EQ("new value",dataset.get(::sdg::hash::KeyInstance("A1-B1")).get());
+    ASSERT_EQ("hello world",dataset.get(::sdg::hash::KeyInstance("A2-B1")).get());
     ASSERT_EQ(0, result);
 }
 

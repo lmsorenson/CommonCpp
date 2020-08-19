@@ -10,3 +10,5 @@
 #include "SemanticAnalyzerComponentTests/AnalyzerTests/AnalyzerTests.hpp"
 #include "SemanticAnalyzerComponentTests/NetTests/SemanticNetTests.hpp"
 #include "DataSetTests/Tests.hpp"
+#include "DataSetTests/InstanceTests/Tests.hpp"
+#include "DataSetTests/MetadataTests/Tests.hpp"
