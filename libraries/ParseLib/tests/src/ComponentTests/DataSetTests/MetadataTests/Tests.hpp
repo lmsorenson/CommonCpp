@@ -47,9 +47,10 @@ TEST_F(MetadataTests, metadata_add_two_entities_with_the_same_id )
             entityB = ::std::make_shared<::sdg::Entity>("G", "entity b");
 
     model.add_thing(entityA);
-    model.add_thing(entityB);
+    auto result = model.add_thing(entityB);
 
     ASSERT_EQ(1, model.size());
+    ASSERT_EQ(1, result);
 }
 
 TEST_F(MetadataTests, metadata_test_1 )

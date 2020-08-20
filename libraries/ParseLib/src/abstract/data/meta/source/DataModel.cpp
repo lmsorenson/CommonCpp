@@ -17,7 +17,7 @@ using sdg::Descriptor;
 
 size_t Model::size()
 {
-    return thing_array.size();
+    return thing_array_.size();
 }
 
 int8_t Model::add_thing(shared_ptr<Thing> a_thing)
@@ -25,7 +25,7 @@ int8_t Model::add_thing(shared_ptr<Thing> a_thing)
     //if the key can be found in the array do not add it again.
     if (::std::find(key_array_.begin(), key_array_.end(), a_thing->get_id()) == key_array_.end())
     {
-        thing_array.push_back(a_thing);
+        thing_array_.push_back(a_thing);
         key_array_.push_back(a_thing->get_id());
         return 0;
     }
@@ -40,7 +40,7 @@ shared_ptr<Entity> Model::get_entity(sdg::hash::EntityID a_entity_id) const
     shared_ptr<Entity> result;
 
     //get the entity.
-    for(auto thing : this->thing_array)
+    for(auto thing : this->thing_array_)
     {
         shared_ptr<Entity> found_entity = nullptr;
 

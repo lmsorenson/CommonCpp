@@ -40,7 +40,7 @@ public:
 
 
 private:
-    ManyLink<Thing> thing_array;
+    ManyLink<Thing> thing_array_;
     ::std::vector<::std::string> key_array_;
 
     std::shared_ptr<Entity> get_entity(hash::EntityID a_entity_id) const;
