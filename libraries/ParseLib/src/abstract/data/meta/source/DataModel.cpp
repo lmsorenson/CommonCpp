@@ -15,9 +15,24 @@ using sdg::Model;
 using sdg::Entity;
 using sdg::Descriptor;
 
-void Model::add_thing(shared_ptr<Thing> a_thing)
+size_t Model::size()
 {
-    thing_array.push_back(a_thing);
+    return thing_array.size();
+}
+
+int8_t Model::add_thing(shared_ptr<Thing> a_thing)
+{
+    //if the key can be found in the array do not add it again.
+    if (::std::find(key_array_.begin(), key_array_.end(), a_thing->get_id()) == key_array_.end())
+    {
+        thing_array.push_back(a_thing);
+        key_array_.push_back(a_thing->get_id());
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
 }
 
 shared_ptr<Entity> Model::get_entity(sdg::hash::EntityID a_entity_id) const

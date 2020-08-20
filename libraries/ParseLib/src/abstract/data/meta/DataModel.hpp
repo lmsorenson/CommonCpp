@@ -24,8 +24,10 @@ public:
     Model()=default;
     ~Model()=default;
 
+    size_t size();
+
     //add a thing to the data model.
-    void add_thing(std::shared_ptr<Thing> a_thing);
+    int8_t add_thing(std::shared_ptr<Thing> a_thing);
 
     //get a list of descriptor IDs representing identifying descriptors of the entity specified.
     std::vector<hash::DescriptorID> get_entity_identifier(hash::EntityID a_entity_id) const;
@@ -39,6 +41,7 @@ public:
 
 private:
     ManyLink<Thing> thing_array;
+    ::std::vector<::std::string> key_array_;
 
     std::shared_ptr<Entity> get_entity(hash::EntityID a_entity_id) const;
 };
