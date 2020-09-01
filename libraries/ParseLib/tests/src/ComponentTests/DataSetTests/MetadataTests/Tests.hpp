@@ -116,3 +116,39 @@ TEST_F(MetadataTests, metadata_test_2 )
 
     ASSERT_EQ(1, actualList.size());
 }
+
+TEST_F(MetadataTests, metadata_test_3 )
+{
+    ::sdg::Model model;
+
+    ::std::shared_ptr<::sdg::Entity>
+            entityA = ::std::make_shared<::sdg::Entity>("A", "entity a"),
+            entityB = ::std::make_shared<::sdg::Entity>("B", "entity b"),
+            entityC = ::std::make_shared<::sdg::Entity>("G", "entity c");
+
+    ::std::shared_ptr<::sdg::Attribute>
+            a_id_attribute,
+            b_id_attribute;
+
+    entityA->add_descriptor(a_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_id", "A", ::sdg::Attribute::Scale::Ordinal)), true);
+    entityB->add_descriptor(b_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("b_id", "B", ::sdg::Attribute::Scale::Ordinal)), true);
+    entityB->add_descriptor(b_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("c_id", "C", ::sdg::Attribute::Scale::Nominal)), false);
+
+    ::std::shared_ptr<::sdg::Relationship>
+            C_A = make_shared<::sdg::Relationship>("c_to_a", entityC, entityA, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1),
+            C_B = make_shared<::sdg::Relationship>("c_to_b", entityC, entityB, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1);
+
+    model.add_thing(entityA);
+    model.add_thing(entityB);
+    model.add_thing(entityC);
+    model.add_thing(C_A);
+    model.add_thing(C_B);
+
+    auto found_descriptor = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
+    found_descriptor.set_value(5);
+    model.found_descriptor(found_descriptor);
+
+    auto actualCount = model.get_entity_count(::sdg::hash::EntityID("A"));
+
+    ASSERT_EQ(6, actualCount);
+}
