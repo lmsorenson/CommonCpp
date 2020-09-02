@@ -19,7 +19,6 @@ namespace sdg {
 
 class Model 
 {
-
 public:
     Model()=default;
     ~Model()=default;
@@ -37,8 +36,7 @@ public:
     //todo -- these members are related to runtime instances.  These are not part of the model, they should be relocated.
     void found_descriptor(hash::DescriptorInstance a_descriptor);
     int32_t get_entity_count(hash::EntityID a_entity_id) const;
-
-
+    
 private:
     ManyLink<Thing> thing_array_;
     ::std::vector<::std::string> key_array_;
