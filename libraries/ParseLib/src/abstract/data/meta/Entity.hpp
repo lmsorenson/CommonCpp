@@ -17,8 +17,8 @@ class Identifier;
 
 class Entity : public Thing
 {
-    ManyLink<Descriptor> descriptor_array; 
-    ManyLink<Identifier> identifier_array; 
+    ManyLink<Descriptor> descriptor_array_;
+    ManyLink<Identifier> identifier_array_;
 
 public:
     Entity(const std::string &a_entity_id, const std::string &a_name);
@@ -31,8 +31,8 @@ public:
 
 class Identifier 
 {
-    OneLink<Entity> owning_entity;
-    ManyLink<Descriptor> descriptor_array; 
+    OneLink<Entity> owning_entity_;
+    ManyLink<Descriptor> descriptor_array_;
 
 public:
     Identifier(std::shared_ptr<Entity> a_owner);

@@ -99,6 +99,11 @@ DescriptorInstance& DescriptorInstance::operator++( int n )
     return *this;
 }
 
+bool DescriptorID::operator==(const DescriptorID& rhs) const
+{
+    return (this->id_.compare(rhs.id_) == 0);
+}
+
 
 int32_t DescriptorInstance::get_descriptor_value() const
 {

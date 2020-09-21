@@ -32,7 +32,6 @@ file(
     ${PROJECT_SOURCE_DIR}/abstract/data/dataset/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/instance/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/types/source/*.cpp
-    ${PROJECT_SOURCE_DIR}/abstract/data/meta/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/data/structures/source/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Reads/*.cpp
     ${PROJECT_SOURCE_DIR}/abstract/Reads/Streams/source/*.cpp
@@ -48,9 +47,10 @@ file(
 add_library(parse ${Mods})
 
 target_link_libraries(parse 
-    lexer
-    parser
-    analyzer
+        lexer
+        parser
+        analyzer
+        data-core
     )
 
 if(ENABLE_DEBUG)
@@ -61,5 +61,6 @@ file(
     ${PROJECT_SOURCE_DIR}/../include/*.hpp
     ${PROJECT_SOURCE_DIR}/../include/concrete/*.hpp
     )
+
 endif()
 

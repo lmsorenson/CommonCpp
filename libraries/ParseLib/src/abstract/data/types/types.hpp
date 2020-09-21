@@ -39,6 +39,8 @@ public:
 
     std::string as_string() const;
 
+    bool operator==(const DescriptorID& rhs) const;
+
 private:
     std::string id_;
 };
