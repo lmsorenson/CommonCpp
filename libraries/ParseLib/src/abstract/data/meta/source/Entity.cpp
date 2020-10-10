@@ -114,7 +114,7 @@ vector<std::shared_ptr<Descriptor>> Identifier::get_descriptors()
 
         else if((l=dynamic_pointer_cast<Link>(this->descriptor_array_[i])))
         {
-            for( auto descriptor : l->get_descriptors())
+            for( auto descriptor : l->get_identifying_descriptors())
             {
                 result.push_back(descriptor);
             }

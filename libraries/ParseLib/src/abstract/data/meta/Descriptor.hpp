@@ -58,10 +58,18 @@ public:
     explicit Link(const std::string &a_name, std::shared_ptr<Entity> a_entity, const std::string &a_link_label="");
     ~Link()=default;
 
+    /**
+     * Gets ids for identifying descriptor.
+     * @return a list of descriptor ids.
+     */
     std::vector<hash::DescriptorID> get_identifying_descriptor_IDs();
-    std::vector<std::shared_ptr<Descriptor>> get_descriptors();
-};
 
+    /**
+     * Gets pointers to identifying descriptors.
+     * @return a list of pointers to descriptors.
+     */
+    std::vector<std::shared_ptr<Descriptor>> get_identifying_descriptors();
+};
 
 
 class Attribute : public Descriptor
@@ -83,7 +91,7 @@ public:
      * @param a_scale The scale of the attribute.
      */
     explicit Attribute(const std::string &a_name, const std::string &a_label, Scale a_scale);
-    ~Attribute()=default;
+    ~Attribute() = default;
 
     bool IsRequired();
 

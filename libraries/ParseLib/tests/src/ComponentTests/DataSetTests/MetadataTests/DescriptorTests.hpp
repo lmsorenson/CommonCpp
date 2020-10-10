@@ -79,7 +79,7 @@ TEST_F(MetadataDescriptorTests, link_get_descriptor_ids )
 
     ::std::shared_ptr<::sdg::Link> link = ::std::make_shared<::sdg::Link>("link", entityA);
 
-    ::std::vector<::std::shared_ptr<::sdg::Descriptor>> actual_identifier = link->get_descriptors();
+    ::std::vector<::std::shared_ptr<::sdg::Descriptor>> actual_identifier = link->get_identifying_descriptors();
     ::std::vector<::std::shared_ptr<::sdg::Descriptor>> expected_identifier
     {
         a_id_1_attribute,

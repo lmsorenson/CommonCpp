@@ -50,7 +50,7 @@ vector<DescriptorID> Link::get_identifying_descriptor_IDs()
     return r_descriptor_labels;
 }
 
-std::vector<std::shared_ptr<Descriptor>> Link::get_descriptors()
+std::vector<std::shared_ptr<Descriptor>> Link::get_identifying_descriptors()
 {
     using std::vector;
     using std::string;
