@@ -49,6 +49,12 @@ class Link : public Descriptor
     OneLink<Entity> link_subject_;
 
 public:
+    /**
+     * Constructor for a link.
+     * @param a_name The parameter.
+     * @param a_entity A pointer to the linked-to entity.
+     * @param a_link_label An optional label for the link.
+     */
     explicit Link(const std::string &a_name, std::shared_ptr<Entity> a_entity, const std::string &a_link_label="");
     ~Link()=default;
 
@@ -60,7 +66,6 @@ public:
 
 class Attribute : public Descriptor
 {
-
 public:
     enum Scale
     {
@@ -71,6 +76,12 @@ public:
         Unknown
     };
 
+    /**
+     * The constructor for an given a name, label and scale.
+     * @param a_name System name for the attribute.
+     * @param a_label Label used by the key generator.
+     * @param a_scale The scale of the attribute.
+     */
     explicit Attribute(const std::string &a_name, const std::string &a_label, Scale a_scale);
     ~Attribute()=default;
 
@@ -81,8 +92,7 @@ public:
 
 private:
     
-    Scale attr_scale_;
-
+    Scale attribute_scale_;
     std::string attribute_label_;
 };
 

@@ -15,7 +15,6 @@ template <class T> using OneLink = std::shared_ptr<T>;
 
 class Thing
 {
-
 public:
     Thing(const std::string &a_name);
     Thing(const std::string &a_name, const std::string &a_label);
@@ -28,11 +27,9 @@ public:
     int32_t get_count() const;
 
 private:
-    std::string name;
-    std::string thing_id;
-
-    int32_t counter; 
-
+    std::string name_;
+    std::string thing_id_;
+    int32_t counter_;
 };
 
 }// namespace sdg

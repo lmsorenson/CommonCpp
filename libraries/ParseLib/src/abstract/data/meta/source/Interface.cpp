@@ -13,36 +13,37 @@ using std::string;
 
 
 Thing::Thing(const string &a_name)
-: name(a_name)
-, counter(0)
+: name_(a_name)
+, thing_id_(string())
+, counter_(0)
 {
 }
 
 Thing::Thing(const string &a_name, const string &a_label)
-: name(a_name)
-, thing_id(a_label)
-, counter(0)
+: name_(a_name)
+, thing_id_(a_label)
+, counter_(0)
 {
 }
 
 void Thing::set_counter(int32_t a_value)
 {
-    counter = a_value;
+    counter_ = a_value;
 }
 
 void Thing::print()
 {
-    std::cout << this->name << std::endl;
+    std::cout << this->name_ << std::endl;
 }
 
 std::string Thing::get_id() const
 {
-    return thing_id;
+    return thing_id_;
 }
 
 int32_t Thing::get_count() const
 {
-    return counter;
+    return counter_;
 }
 
 

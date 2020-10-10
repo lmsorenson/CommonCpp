@@ -20,6 +20,11 @@ size_t Model::size()
     return thing_array_.size();
 }
 
+/**
+ * Adds a thing to the model.
+ * @param a_thing thing to add to the model.
+ * @return 0 if the operation succeeded, 1 if the operation failed.
+ */
 int8_t Model::add_thing(shared_ptr<Thing> a_thing)
 {
     //if the key can be found in the array do not add it again.
@@ -31,6 +36,7 @@ int8_t Model::add_thing(shared_ptr<Thing> a_thing)
     }
     else
     {
+        //error code
         return 1;
     }
 }

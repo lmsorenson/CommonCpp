@@ -2,6 +2,7 @@
 #include "../Entity.hpp"
 #include "../Descriptor.hpp"
 #include "../../types/types.hpp"
+#include <iostream>
 
 using std::vector;
 using std::shared_ptr;
@@ -9,13 +10,20 @@ using std::make_shared;
 using std::dynamic_pointer_cast;
 using std::string;
 
-using sdg::Entity;
-using sdg::Descriptor;
-using sdg::Identifier;
+using ::sdg::Entity;
+using ::sdg::Descriptor;
+using ::sdg::Identifier;
+using ::std::vector;
+using ::std::cout;
+using ::std::endl;
 
 Entity::Entity(const string &a_entity_id, const string &a_name)
 : Thing(a_name, a_entity_id )
+, identifier_array_(0, nullptr )
+, descriptor_array_(0, nullptr )
 {
+    auto id = make_shared<Identifier>(Identifier(this));
+    identifier_array_.push_back(id);
 }
 
 //default param for identifier index is 0
@@ -27,12 +35,12 @@ void Entity::add_descriptor(shared_ptr<Descriptor> a_descriptor, bool b_is_ident
     {
         //todo -- something could go wrong if the supplied index greater than size+1 
         if(!identifier_array_.empty() && (identifier_array_.size()-1) >= identifier_index)
+        {
             identifier_array_[identifier_index]->add_descriptor(a_descriptor);
+        }
         else
         {
-            auto id = make_shared<Identifier>(Identifier(shared_ptr<Entity>(this)));
-            id->add_descriptor(a_descriptor);
-            identifier_array_.push_back(id);
+            cout << "The identifier index was out of range." << endl;
         }
     }
 }
@@ -63,7 +71,7 @@ vector<shared_ptr<Descriptor>> Entity::get_identifying_descriptor_set()
 
 
 
-Identifier::Identifier(shared_ptr<Entity> a_owner)
+Identifier::Identifier(Entity * a_owner)
 : owning_entity_(a_owner)
 {
 }

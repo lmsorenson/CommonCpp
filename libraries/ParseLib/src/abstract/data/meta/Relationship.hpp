@@ -25,13 +25,12 @@ public:
         LINK_2
     };
 
-
     Relationship(const std::string &a_name, std::shared_ptr<Entity> a_linked_entity, std::shared_ptr<Entity> a_linked_entity_2, bool a_be = false, IDENTIFY_BY ID_BY = NO_ID);
     ~Relationship()=default;
 
 private:
-    bool to_be_flag;
-    ManyLink<Link> link_array;
+    bool to_be_flag_;
+    ManyLink<Link> link_array_;
 };
 
 } // namespace sdg

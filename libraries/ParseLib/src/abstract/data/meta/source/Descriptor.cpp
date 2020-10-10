@@ -9,14 +9,14 @@
 #include "../Relationship.hpp"
 #include "../../types/types.hpp"
 
-using sdg::Entity;
-using sdg::Descriptor;
-using sdg::Attribute;
-using sdg::Link;
-using std::string;
-using std::vector;
-using std::string;
-using sdg::hash::DescriptorID;
+using ::sdg::Entity;
+using ::sdg::Descriptor;
+using ::sdg::Attribute;
+using ::sdg::Link;
+using ::std::string;
+using ::std::vector;
+using ::std::string;
+using ::sdg::hash::DescriptorID;
 
 
 
@@ -67,7 +67,7 @@ std::vector<std::shared_ptr<Descriptor>> Link::get_descriptors()
 Attribute::Attribute(const string &a_name, const string &a_label, Attribute::Scale a_scale)
 : Descriptor(a_name, a_label)
 , attribute_label_(a_label)
-, attr_scale_(a_scale)
+, attribute_scale_(a_scale)
 {}
 
 std::string Attribute::get_label() const
@@ -77,5 +77,5 @@ std::string Attribute::get_label() const
 
 Attribute::Scale Attribute::get_scale() const
 {
-    return attr_scale_;
+    return attribute_scale_;
 }

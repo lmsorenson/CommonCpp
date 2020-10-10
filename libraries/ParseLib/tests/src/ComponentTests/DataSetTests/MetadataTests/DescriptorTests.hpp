@@ -39,19 +39,51 @@ protected:
 
 };
 
+/**
+ *
+ */
+TEST_F(MetadataDescriptorTests, link_get_identifying_descriptor_ids )
+{
+    ::std::shared_ptr<::sdg::Entity> entityA = ::std::make_shared<::sdg::Entity>("A", "entity a");
+    ::std::shared_ptr<::sdg::Attribute> a_id_attribute;
+
+    entityA->add_descriptor(a_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_id_1", "A1", ::sdg::Attribute::Scale::Ordinal)), true);
+    entityA->add_descriptor(a_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_id_2", "A2", ::sdg::Attribute::Scale::Ordinal)), true);
+    entityA->add_descriptor(a_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_desc_3", "A3", ::sdg::Attribute::Scale::Ordinal)), false);
+
+    ::std::shared_ptr<::sdg::Link> link = ::std::make_shared<::sdg::Link>("link", entityA);
+
+    ::std::vector<::sdg::hash::DescriptorID> actual_identifier = link->get_identifying_descriptor_IDs();
+    ::std::vector<::sdg::hash::DescriptorID> expected_identifier
+    {
+            ::sdg::hash::DescriptorID("A1"),
+            ::sdg::hash::DescriptorID("A2")
+    };
+
+    ASSERT_THAT(actual_identifier, ::testing::ContainerEq(expected_identifier));
+}
+
+/**
+ *
+ */
 TEST_F(MetadataDescriptorTests, link_get_descriptor_ids )
 {
-    //creates an entity with a single attribute.
-    std::shared_ptr<sdg::Entity> a = std::make_shared<sdg::Entity>("A", "EntityA");
-    std::shared_ptr<sdg::Entity> b = std::make_shared<sdg::Entity>("B", "EntityB");
-    std::shared_ptr<sdg::Descriptor> c = std::make_shared<sdg::Attribute>("DescriptorC", "C", sdg::Attribute::Scale::Ordinal);
-    a->add_descriptor(c, true);
+    ::std::shared_ptr<::sdg::Entity> entityA = ::std::make_shared<::sdg::Entity>("A", "entity a");
+    ::std::shared_ptr<::sdg::Attribute> a_id_attribute;
 
-//    std::shared_ptr<sdg::Link> c = std::make_shared<sdg::Link>("LinkToEntityA", a);
+    entityA->add_descriptor(a_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_id_1", "A1", ::sdg::Attribute::Scale::Ordinal)), true);
+    entityA->add_descriptor(a_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_id_2", "A2", ::sdg::Attribute::Scale::Ordinal)), true);
+    entityA->add_descriptor(a_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_desc_3", "A3", ::sdg::Attribute::Scale::Ordinal)), false);
 
-//    ASSERT_THAT(c->get_identifying_descriptor_IDs(), ::testing::ElementsAre(sdg::hash::DescriptorID("B")));
-//    int size = c->get_identifying_descriptor_IDs().size();
+    ::std::shared_ptr<::sdg::Link> link = ::std::make_shared<::sdg::Link>("link", entityA);
 
-    ASSERT_EQ(1,1);
-//    ASSERT_EQ(size, 1);
+    ::std::vector<::std::shared_ptr<::sdg::Descriptor>> actual_identifier = link->get_descriptors();
+    ::std::vector<::std::shared_ptr<::sdg::Descriptor>> expected_identifier
+    {
+
+        ::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_id_1", "A1", ::sdg::Attribute::Scale::Ordinal)),
+        ::std::make_shared<::sdg::Attribute>(::sdg::Attribute("a_id_2", "A2", ::sdg::Attribute::Scale::Ordinal))
+    };
+
+    ASSERT_THAT(actual_identifier, ::testing::ContainerEq(expected_identifier));
 }
