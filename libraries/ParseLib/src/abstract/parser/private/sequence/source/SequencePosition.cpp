@@ -59,6 +59,7 @@ std::shared_ptr<Sequence> SequencePosition::get_sequence()
 {
     return dynamic_pointer_cast<Sequence>(element_);
 }
+
 std::shared_ptr<TokenType> SequencePosition::get_token()
 {
     return dynamic_pointer_cast<TokenType>(element_);

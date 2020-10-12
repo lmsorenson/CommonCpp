@@ -40,5 +40,11 @@ protected:
 
 TEST_F(MetadataThingTests, metadata_test_entity_doesnt_exist )
 {
-    ASSERT_EQ(1, 2);
+    auto thing = new ::sdg::Thing("name");
+
+    ASSERT_NO_FATAL_FAILURE({
+        thing->print();
+    });
+
+    delete thing;
 }
