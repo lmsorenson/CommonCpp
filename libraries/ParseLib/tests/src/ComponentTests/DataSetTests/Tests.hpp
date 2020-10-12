@@ -39,7 +39,7 @@ protected:
 
 };
 
-TEST_F(DataSetTests, data_set_SET_function_while_good )
+TEST_F(DataSetTests, data_set__SET__function_while_good )
 {
     TestDataSet dataset = TestDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
 
@@ -55,7 +55,7 @@ TEST_F(DataSetTests, data_set_SET_function_while_good )
     ASSERT_EQ(0, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_function_while_empty )
+TEST_F(DataSetTests, data_set__SET__function_while_empty )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -65,7 +65,7 @@ TEST_F(DataSetTests, data_set_SET_function_while_empty )
     ASSERT_EQ(0, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_function_default_KeyInstance )
+TEST_F(DataSetTests, data_set__SET__function_default_KeyInstance )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -76,7 +76,7 @@ TEST_F(DataSetTests, data_set_SET_function_default_KeyInstance )
     ASSERT_EQ(-1, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_function_default_hashValue )
+TEST_F(DataSetTests, data_set__SET__function_default_hashValue )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -86,7 +86,7 @@ TEST_F(DataSetTests, data_set_SET_function_default_hashValue )
     ASSERT_EQ(0, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_function_overwrites_a_value )
+TEST_F(DataSetTests, data_set__SET__function_overwrites_a_value )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -107,7 +107,7 @@ TEST_F(DataSetTests, data_set_SET_function_overwrites_a_value )
 
 
 
-TEST_F(DataSetTests, data_set_SET_function_while_in_bad_state_returns_bad_state_status )
+TEST_F(DataSetTests, data_set__SET__function_while_in_bad_state_returns_bad_state_status )
 {
     TestDataSet dataset = TestDataSet(::sdg::DataSet::DATA_SET_BAD);
 
@@ -123,7 +123,7 @@ TEST_F(DataSetTests, data_set_SET_function_while_in_bad_state_returns_bad_state_
     ASSERT_EQ(::sdg::DataSet::DATA_SET_BAD, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_function_while_in_unknown_state_returns_unknown_state_status )
+TEST_F(DataSetTests, data_set__SET__function_while_in_unknown_state_returns_unknown_state_status )
 {
     TestDataSet dataset = TestDataSet(::sdg::DataSet::UNKNOWN);
 
@@ -139,7 +139,7 @@ TEST_F(DataSetTests, data_set_SET_function_while_in_unknown_state_returns_unknow
     ASSERT_EQ(::sdg::DataSet::UNKNOWN, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_while_good )
+TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_good )
 {
     TestDataSet dataset = TestDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
 
@@ -155,7 +155,7 @@ TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_while_good )
     ASSERT_EQ(0, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_while_empty )
+TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_empty )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -165,7 +165,7 @@ TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_while_empty )
     ASSERT_EQ(0, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_default_KeyInstance )
+TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_default_KeyInstance )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -176,7 +176,7 @@ TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_default_KeyInstance )
     ASSERT_EQ(-1, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_default_hashValue )
+TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_default_hashValue )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -186,7 +186,7 @@ TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_default_hashValue )
     ASSERT_EQ(0, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_overwrites_a_value )
+TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_overwrites_a_value )
 {
     TestDataSet dataset = TestDataSet();
 
@@ -207,7 +207,7 @@ TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_overwrites_a_value )
 
 
 
-TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_while_in_bad_state_returns_bad_state_status )
+TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_in_bad_state_returns_bad_state_status )
 {
     TestDataSet dataset = TestDataSet(::sdg::DataSet::DATA_SET_BAD);
 
@@ -223,7 +223,7 @@ TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_while_in_bad_state_re
     ASSERT_EQ(::sdg::DataSet::DATA_SET_BAD, result);
 }
 
-TEST_F(DataSetTests, data_set_SET_WITH_DESCRIPTOR_function_while_in_unknown_state_returns_unknown_state_status )
+TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_in_unknown_state_returns_unknown_state_status )
 {
     TestDataSet dataset = TestDataSet(::sdg::DataSet::UNKNOWN);
 
