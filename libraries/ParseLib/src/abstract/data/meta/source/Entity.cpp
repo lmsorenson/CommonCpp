@@ -68,6 +68,20 @@ vector<shared_ptr<Descriptor>> Entity::get_identifying_descriptor_set()
     return result;
 }
 
+size_t Entity::num_descriptors() const
+{
+    return descriptor_array_.size();
+}
+
+size_t Entity::num_identifying_descriptors(int32_t a_identifier_index) const
+{
+    if (identifier_array_[a_identifier_index] != nullptr)
+        return identifier_array_[a_identifier_index]->num_descriptors();
+
+    else
+        return 0;
+}
+
 
 
 
@@ -89,7 +103,9 @@ vector<sdg::hash::DescriptorID> Identifier::get_descriptor_ids()
         shared_ptr<Attribute> a;
         shared_ptr<Link> l;
         if((a=dynamic_pointer_cast<Attribute>(this->descriptor_array_[i])))
-            result.push_back(hash::DescriptorID( a->get_label() ));
+        {
+            result.push_back(hash::DescriptorID(a->get_label()));
+        }
 
         else if((l=dynamic_pointer_cast<Link>(this->descriptor_array_[i])))
         {
@@ -121,4 +137,9 @@ vector<std::shared_ptr<Descriptor>> Identifier::get_descriptors()
         }
     }
     return result;
+}
+
+size_t Identifier::num_descriptors() const
+{
+    return descriptor_array_.size();
 }
