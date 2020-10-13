@@ -63,6 +63,8 @@ int32_t ParseLib::write_file(sdg::DataSet& data_store, const char * filepath, st
     //-----------------------|   Generate strategies & Data   |-----------------------//
     factory_ = this->produce_factory();
     auto strategy = factory_->make_write();     //initialize appropriate read strategy
+
+    //-----------------------|   Execute write   |-----------------------//
     strategy->execute_write(data_store, filepath);
 
     //-----------------------|   Clean up   |-----------------------//
