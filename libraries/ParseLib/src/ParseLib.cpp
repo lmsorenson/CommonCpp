@@ -4,21 +4,31 @@
 
 #include <iostream>
 #include <string>
+#include <memory>
 
 #include <formats/csv_data_set.hpp>
+#include "abstract/Factories/AbstractFactory.hpp"
 #include "abstract/Reads/ReadStrategy.hpp"
 #include "concrete/csv/setup/csv_factory.hpp"
 
-int32_t sdg::ParseLib::read_file(sdg::DataSet& data_store, const char * filepath, std::vector<sdg::option> read_options)
+using ::sdg::ParseLib;
+using ::sdg::AbstractFactory;
+using ::sdg::ReadStrategy;
+using ::sdg::WriteStrategy;
+using ::std::make_unique;
+using ::std::unique_ptr;
+
+unique_ptr<AbstractFactory> ParseLib::produce_factory()
 {
+    return make_unique<csv::Factory>();
+}
 
-    //-----------------------|   Parse file path   |-----------------------//
-
-
+int32_t ParseLib::read_file(sdg::DataSet& data_store, const char * filepath, std::vector<sdg::option> read_options)
+{
     //-----------------------|   Generate strategies & Data   |-----------------------//
-    csv::Factory factory;                    //TODO-->make factory producer
-    auto data = factory.make_data();         //use the factory to initialize the data variable.
-    auto strategy = factory.make_read();     //initialize appropriate read strategy
+    factory_ = this->produce_factory();
+    auto data = factory_->make_data();         //use the factory to initialize the data variable.
+    auto strategy = factory_->make_read();     //initialize appropriate read strategy
 
     //-----------------------|   Execute read   |-----------------------//
     int32_t return_code;
@@ -41,19 +51,24 @@ int32_t sdg::ParseLib::read_file(sdg::DataSet& data_store, const char * filepath
     }
 
     //-----------------------|   Clean up   |-----------------------//
+    factory_ = nullptr;
 
     //-----------------------|   Return   |-----------------------//
     data_store = *data;
     return READ_SUCCESSFUL;
 }
 
-int32_t sdg::ParseLib::write_file(sdg::DataSet& data_store, const char * filepath, std::vector<sdg::option> read_options)
+int32_t ParseLib::write_file(sdg::DataSet& data_store, const char * filepath, std::vector<sdg::option> read_options)
 {
     //-----------------------|   Generate strategies & Data   |-----------------------//
-    csv::Factory factory;                    //TODO-->make factory producer
-    auto strategy = factory.make_write();     //initialize appropriate read strategy
+    factory_ = this->produce_factory();
+    auto strategy = factory_->make_write();     //initialize appropriate read strategy
     strategy->execute_write(data_store, filepath);
 
-    return 0;
+    //-----------------------|   Clean up   |-----------------------//
+    factory_ = nullptr;
+
+    //-----------------------|   Return   |-----------------------//
+    return WRITE_SUCCESSFUL;
 }
 

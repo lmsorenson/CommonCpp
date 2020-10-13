@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <objects/data_set.hpp>
 #include <formats/csv_data_set.hpp>
+#include "../src/abstract/Factories/AbstractFactory.hpp"
 #include <memory>
 
 
@@ -33,6 +34,11 @@ public:
         WRITE_SUCCESSFUL,
         UNKNOWN_ERROR
     };
+
+private:
+    std::unique_ptr<class AbstractFactory> produce_factory();
+
+    std::unique_ptr<class AbstractFactory> factory_;
 };
 
 } // namespace sdg
