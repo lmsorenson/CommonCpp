@@ -18,7 +18,7 @@ using ::sdg::WriteStrategy;
 using ::std::make_unique;
 using ::std::unique_ptr;
 
-unique_ptr<AbstractFactory> ParseLib::produce_factory()
+unique_ptr<AbstractFactory> ParseLib::produce_factory() const
 {
     return make_unique<csv::Factory>();
 }

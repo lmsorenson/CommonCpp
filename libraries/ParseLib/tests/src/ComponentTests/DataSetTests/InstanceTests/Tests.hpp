@@ -7,7 +7,7 @@
 
 #include <gtest/gtest.h>
 #include <ParseLib.hpp>
-#include "../../Mocks/test_data_set.hpp"
+#include "../../Mocks/mock_data_set.hpp"
 
 #include "../../../TestFramework.hpp"
 

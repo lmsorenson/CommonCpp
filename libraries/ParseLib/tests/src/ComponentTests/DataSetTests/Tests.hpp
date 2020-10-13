@@ -8,7 +8,7 @@
 #include <gtest/gtest.h>
 #include <ParseLib.hpp>
 #include <objects/data_set.hpp>
-#include "../Mocks/test_data_set.hpp"
+#include "../Mocks/mock_data_set.hpp"
 
 #include "../../TestFramework.hpp"
 #include "../../../../src/abstract/lexer/Lexer.hpp"
@@ -42,7 +42,7 @@ protected:
 
 TEST_F(DataSetTests, data_set__SET__function_while_good )
 {
-    TestDataSet dataset = TestDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
+    MockDataSet dataset = MockDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);
@@ -58,7 +58,7 @@ TEST_F(DataSetTests, data_set__SET__function_while_good )
 
 TEST_F(DataSetTests, data_set__SET__function_while_empty )
 {
-    TestDataSet dataset = TestDataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto result = dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue("hello world", ""));
 
@@ -68,7 +68,7 @@ TEST_F(DataSetTests, data_set__SET__function_while_empty )
 
 TEST_F(DataSetTests, data_set__SET__function_default_KeyInstance )
 {
-    TestDataSet dataset = TestDataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto result = dataset.set(::sdg::hash::KeyInstance(), ::sdg::plHashValue("hello world", ""));
 
@@ -79,7 +79,7 @@ TEST_F(DataSetTests, data_set__SET__function_default_KeyInstance )
 
 TEST_F(DataSetTests, data_set__SET__function_default_hashValue )
 {
-    TestDataSet dataset = TestDataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto result = dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue());
 
@@ -89,7 +89,7 @@ TEST_F(DataSetTests, data_set__SET__function_default_hashValue )
 
 TEST_F(DataSetTests, data_set__SET__function_overwrites_a_value )
 {
-    TestDataSet dataset = TestDataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);
@@ -110,7 +110,7 @@ TEST_F(DataSetTests, data_set__SET__function_overwrites_a_value )
 
 TEST_F(DataSetTests, data_set__SET__function_while_in_bad_state_returns_bad_state_status )
 {
-    TestDataSet dataset = TestDataSet(::sdg::DataSet::DATA_SET_BAD);
+    MockDataSet dataset = MockDataSet(::sdg::DataSet::DATA_SET_BAD);
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);
@@ -126,7 +126,7 @@ TEST_F(DataSetTests, data_set__SET__function_while_in_bad_state_returns_bad_stat
 
 TEST_F(DataSetTests, data_set__SET__function_while_in_unknown_state_returns_unknown_state_status )
 {
-    TestDataSet dataset = TestDataSet(::sdg::DataSet::UNKNOWN);
+    MockDataSet dataset = MockDataSet(::sdg::DataSet::UNKNOWN);
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);
@@ -142,7 +142,7 @@ TEST_F(DataSetTests, data_set__SET__function_while_in_unknown_state_returns_unkn
 
 TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_good )
 {
-    TestDataSet dataset = TestDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
+    MockDataSet dataset = MockDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);
@@ -158,7 +158,7 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_good )
 
 TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_empty )
 {
-    TestDataSet dataset = TestDataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto result = dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue("hello world", ""), ::sdg::hash::DescriptorID("A"));
 
@@ -168,7 +168,7 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_empty )
 
 TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_default_KeyInstance )
 {
-    TestDataSet dataset = TestDataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto result = dataset.set(::sdg::hash::KeyInstance(), ::sdg::plHashValue("hello world", ""), ::sdg::hash::DescriptorID("A"));
 
@@ -179,7 +179,7 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_default_KeyInstance
 
 TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_default_hashValue )
 {
-    TestDataSet dataset = TestDataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto result = dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue(), ::sdg::hash::DescriptorID("A"));
 
@@ -189,7 +189,7 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_default_hashValue )
 
 TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_overwrites_a_value )
 {
-    TestDataSet dataset = TestDataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Numeric);
     descA.set_value(1);
@@ -210,7 +210,7 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_overwrites_a_value 
 
 TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_in_bad_state_returns_bad_state_status )
 {
-    TestDataSet dataset = TestDataSet(::sdg::DataSet::DATA_SET_BAD);
+    MockDataSet dataset = MockDataSet(::sdg::DataSet::DATA_SET_BAD);
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);
@@ -226,7 +226,7 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_in_bad_state_
 
 TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_in_unknown_state_returns_unknown_state_status )
 {
-    TestDataSet dataset = TestDataSet(::sdg::DataSet::UNKNOWN);
+    MockDataSet dataset = MockDataSet(::sdg::DataSet::UNKNOWN);
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);
@@ -243,20 +243,20 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_in_unknown_st
 TEST_F(DataSetTests, data_set__DEFAULT_CONSTRUCTOR__does_not_create_fatal_error )
 {
     ASSERT_NO_FATAL_FAILURE({
-        TestDataSet dataset = TestDataSet();
+        MockDataSet dataset = MockDataSet();
     });
 }
 
 TEST_F(DataSetTests, data_set__INITIAL_STATE_CONSTRUCTOR__does_not_create_fatal_error )
 {
     ASSERT_NO_FATAL_FAILURE({
-        TestDataSet dataset = TestDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
+        MockDataSet dataset = MockDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
     });
 }
 
 TEST_F(DataSetTests, data_set__INDEX_OPERATOR__)
 {
-    TestDataSet dataset = TestDataSet(::sdg::DataSet::UNKNOWN);
+    MockDataSet dataset = MockDataSet(::sdg::DataSet::UNKNOWN);
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);

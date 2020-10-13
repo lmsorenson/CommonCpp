@@ -10,7 +10,6 @@
 #include "../../TestFramework.hpp"
 #include "../../../../src/abstract/lexer/Lexer.hpp"
 #include "../../../../src/abstract/intermediate/Stream.hpp"
-#include "test_lexer_filters.hpp"
 
 using sdg::Lexer;
 using std::deque;

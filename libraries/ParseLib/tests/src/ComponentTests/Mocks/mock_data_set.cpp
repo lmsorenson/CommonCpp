@@ -1,9 +1,9 @@
-#include "test_data_set.hpp"
+#include "mock_data_set.hpp"
 
 using ::std::make_shared;
 using ::std::shared_ptr;
 
-TestDataSet::TestDataSet(::sdg::DataSet::State state)
+MockDataSet::MockDataSet(::sdg::DataSet::State state)
 : ::sdg::DataSet(100)
 {
     state_ = state;

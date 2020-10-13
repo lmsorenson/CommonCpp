@@ -7,17 +7,17 @@
 #include "../csv_read.hpp"
 #include "../csv_write.hpp"
 
-std::shared_ptr<sdg::ReadStrategy> sdg::csv::Factory::make_read()
+std::shared_ptr<sdg::ReadStrategy> sdg::csv::Factory::make_read() const
 {
     return std::make_shared<Read>(Read());
 }
 
-std::shared_ptr<sdg::WriteStrategy> sdg::csv::Factory::make_write()
+std::shared_ptr<sdg::WriteStrategy> sdg::csv::Factory::make_write() const
 {
     return std::make_shared<Write>(Write());
 }
 
-std::shared_ptr<sdg::DataSet> sdg::csv::Factory::make_data()
+std::shared_ptr<sdg::DataSet> sdg::csv::Factory::make_data() const
 {
     return std::make_shared<CSV>(CSV(100));
 }

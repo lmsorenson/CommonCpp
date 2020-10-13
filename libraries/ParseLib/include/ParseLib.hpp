@@ -36,7 +36,7 @@ public:
     };
 
 private:
-    std::unique_ptr<class AbstractFactory> produce_factory();
+    virtual std::unique_ptr<class AbstractFactory> produce_factory() const;
 
     std::unique_ptr<class AbstractFactory> factory_;
 };
