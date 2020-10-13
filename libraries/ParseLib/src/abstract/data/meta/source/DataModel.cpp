@@ -113,6 +113,9 @@ void Model::found_descriptor(sdg::hash::DescriptorInstance a_descriptor)
 int32_t Model::get_entity_count(sdg::hash::EntityID a_entity_id) const
 {
     shared_ptr<Entity> e = this->get_entity(a_entity_id);
-    
-    return e->get_count();
+
+
+    return (e != nullptr)
+    ? e->get_count()
+    : 0;
 }

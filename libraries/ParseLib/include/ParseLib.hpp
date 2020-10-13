@@ -25,7 +25,7 @@ public:
     int32_t write_file(sdg::DataSet& data_store, const char * filepath, std::vector<option> read_options=DEFAULT_OPTION_VECTOR);
 
     //READ CODES
-    enum : int32_t
+    enum : int8_t
     {
         READ_SUCCESSFUL,
         READ_FORMAT_INVALID,

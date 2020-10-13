@@ -96,11 +96,10 @@ sdg::DataSet sdg::DataSet::Read(std::string a_path, std::vector<sdg::option> rea
  */
 void sdg::DataSet::Write(std::string a_path, int32_t * status_code)
 {
-    int32_t return_code;
+    int32_t return_code = 0;
     return_code = ParseLib().write_file(*this, a_path.c_str());
     if(status_code!=nullptr)
         *status_code = return_code;
-
 }
 
 /**

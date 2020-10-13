@@ -7,6 +7,7 @@
 
 #include <gtest/gtest.h>
 #include <ParseLib.hpp>
+#include <objects/data_set.hpp>
 #include "../Mocks/test_data_set.hpp"
 
 #include "../../TestFramework.hpp"
@@ -271,7 +272,7 @@ TEST_F(DataSetTests, data_set__INDEX_OPERATOR__)
 
 TEST_F(DataSetTests, data_set__READ__)
 {
-    TestDataSet dataset = TestDataSet();
+    ::sdg::DataSet dataset = ::sdg::DataSet();
 
     int32_t err;
 
@@ -282,12 +283,35 @@ TEST_F(DataSetTests, data_set__READ__)
 
 TEST_F(DataSetTests, data_set__READ__pass_in_options)
 {
-    TestDataSet dataset = TestDataSet();
+    ::sdg::DataSet dataset = ::sdg::DataSet();
 
     std::vector<::sdg::option> options;
     int32_t err;
 
     ASSERT_NO_FATAL_FAILURE({
         dataset.Read("path/to/file", options, &err);
+    });
+}
+
+TEST_F(DataSetTests, data_set__Write__)
+{
+    ::sdg::DataSet dataset = ::sdg::DataSet();
+
+    int32_t err;
+
+    ASSERT_NO_FATAL_FAILURE({
+        dataset.Write("path/to/file", &err);
+    });
+}
+
+TEST_F(DataSetTests, data_set__Write__pass_in_options)
+{
+    ::sdg::DataSet dataset = ::sdg::DataSet();
+
+    std::vector<::sdg::option> options;
+    int32_t err;
+
+    ASSERT_NO_FATAL_FAILURE({
+        dataset.Write("path/to/file", options, &err);
     });
 }
