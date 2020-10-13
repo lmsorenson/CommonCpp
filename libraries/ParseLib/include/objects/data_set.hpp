@@ -32,7 +32,6 @@ class DescriptorInstance;
 
 class DataSet
 {
-
 public:
     enum State : int32_t
     {
@@ -40,7 +39,7 @@ public:
         DATA_SET_BAD,
         DATA_SET_EMPTY,
         UNKNOWN
-    } state_;
+    };
 
     //constructors//---------------------------------------------
     DataSet();
@@ -56,8 +55,6 @@ public:
     DataSet Read(std::string a_path, std::vector<option> read_options, int32_t * status_code=nullptr);
     void Write(std::string a_path, int32_t * status_code=nullptr);
     void Write(std::string a_path, std::vector<option> write_options, int32_t * status_code=nullptr);
-    
-
 
     //accessors//------------------------------------------------
     Instance get(hash::KeyInstance a_key_subset) const;
@@ -74,8 +71,6 @@ public:
     
     //returns the number of instances of the chosen entity
     int32_t number_of_entity_instances(hash::EntityID entity_id) const;
-
-
 
     //Mutators//-------------------------------------------------
     //add an atomic value to the store identified by a list of descriptors
@@ -108,6 +103,8 @@ protected:
 
     //a hash table to store the data in.
     plHashTable hash_table_;
+
+    State state_;
 
     //overwrites an entity record.  recursively repositions all overwritten elements
     void displace_overwritten_keys( plHashValue replaced_value, hash::DescriptorInstance a_descriptor, hash::KeyInstance new_key);

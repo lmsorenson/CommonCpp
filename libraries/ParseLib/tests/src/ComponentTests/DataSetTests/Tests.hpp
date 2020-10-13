@@ -238,3 +238,56 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_in_unknown_st
     ASSERT_EQ("NULL",dataset.get(::sdg::hash::KeyInstance("A1-B1")).get());
     ASSERT_EQ(::sdg::DataSet::UNKNOWN, result);
 }
+
+TEST_F(DataSetTests, data_set__DEFAULT_CONSTRUCTOR__does_not_create_fatal_error )
+{
+    ASSERT_NO_FATAL_FAILURE({
+        TestDataSet dataset = TestDataSet();
+    });
+}
+
+TEST_F(DataSetTests, data_set__INITIAL_STATE_CONSTRUCTOR__does_not_create_fatal_error )
+{
+    ASSERT_NO_FATAL_FAILURE({
+        TestDataSet dataset = TestDataSet(::sdg::DataSet::State::DATA_SET_GOOD);
+    });
+}
+
+TEST_F(DataSetTests, data_set__INDEX_OPERATOR__)
+{
+    TestDataSet dataset = TestDataSet(::sdg::DataSet::UNKNOWN);
+
+    auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
+    descA.set_value(1);
+
+    auto descB = ::sdg::hash::DescriptorInstance("B", ::sdg::Attribute::Scale::Ordinal);
+    descB.set_value(1);
+
+    auto result = dataset.set(::sdg::hash::KeyInstance({descA,descB}), ::sdg::plHashValue("new value", ""), ::sdg::hash::DescriptorID("A"));
+
+    ASSERT_EQ("NULL",dataset["A1"]["B1"].get());
+    ASSERT_EQ(::sdg::DataSet::UNKNOWN, result);
+}
+
+TEST_F(DataSetTests, data_set__READ__)
+{
+    TestDataSet dataset = TestDataSet();
+
+    int32_t err;
+
+    ASSERT_NO_FATAL_FAILURE({
+        dataset.Read("path/to/file", &err);
+    });
+}
+
+TEST_F(DataSetTests, data_set__READ__pass_in_options)
+{
+    TestDataSet dataset = TestDataSet();
+
+    std::vector<::sdg::option> options;
+    int32_t err;
+
+    ASSERT_NO_FATAL_FAILURE({
+        dataset.Read("path/to/file", options, &err);
+    });
+}
