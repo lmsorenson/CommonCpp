@@ -15,12 +15,12 @@ using ::sdg::ParseLib;
 using ::sdg::AbstractFactory;
 using ::sdg::ReadStrategy;
 using ::sdg::WriteStrategy;
-using ::std::make_unique;
-using ::std::unique_ptr;
+using ::std::make_shared;
+using ::std::shared_ptr;
 
-unique_ptr<AbstractFactory> ParseLib::produce_factory() const
+shared_ptr<AbstractFactory> ParseLib::produce_factory() const
 {
-    return make_unique<csv::Factory>();
+    return make_shared<csv::Factory>();
 }
 
 int32_t ParseLib::read_file(sdg::DataSet& data_store, const char * filepath, std::vector<sdg::option> read_options)

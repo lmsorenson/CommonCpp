@@ -1,10 +1,10 @@
 // Copyright 2019, Lucas Sorenson, All rights reserved.
 #include <objects/data_set.hpp>
 #include <iostream>
-
 #include <ParseLib.hpp>
 
 
+using ::std::make_shared;
 
 
 //-- Constructors ----------------------------------
@@ -14,6 +14,7 @@
 sdg::DataSet::DataSet()
 : state_(DATA_SET_EMPTY)
 , hash_table_(100)
+, facade_(make_shared<ParseLib>())
 {}
 
 /**
@@ -23,6 +24,7 @@ sdg::DataSet::DataSet()
 sdg::DataSet::DataSet(State a_state)
 : state_(a_state)
 , hash_table_(1)
+, facade_(make_shared<ParseLib>())
 {}
 
 /**
@@ -32,6 +34,7 @@ sdg::DataSet::DataSet(State a_state)
 sdg::DataSet::DataSet(int32_t hash_table_size)
 : hash_table_(hash_table_size)
 , state_(DATA_SET_EMPTY)
+, facade_(make_shared<ParseLib>())
 {}
 
 
@@ -65,7 +68,7 @@ sdg::Instance sdg::DataSet::operator[](std::string i)
 sdg::DataSet sdg::DataSet::Read(std::string a_path, int32_t * status_code)
 {
     int32_t return_code;
-    return_code = ParseLib().read_file(*this, a_path.c_str());
+    return_code = facade_->read_file(*this, a_path.c_str());
     if(status_code!=nullptr)
         *status_code = return_code;
 
@@ -82,7 +85,7 @@ sdg::DataSet sdg::DataSet::Read(std::string a_path, int32_t * status_code)
 sdg::DataSet sdg::DataSet::Read(std::string a_path, std::vector<sdg::option> read_options, int32_t * status_code)
 {
     int32_t return_code;
-    return_code = ParseLib().read_file(*this, a_path.c_str(), read_options);
+    return_code = facade_->read_file(*this, a_path.c_str(), read_options);
     if(status_code!=nullptr)
         *status_code = return_code;
 
@@ -97,7 +100,7 @@ sdg::DataSet sdg::DataSet::Read(std::string a_path, std::vector<sdg::option> rea
 void sdg::DataSet::Write(std::string a_path, int32_t * status_code)
 {
     int32_t return_code = 0;
-    return_code = ParseLib().write_file(*this, a_path.c_str());
+    return_code = facade_->write_file(*this, a_path.c_str());
     if(status_code!=nullptr)
         *status_code = return_code;
 }
@@ -111,7 +114,7 @@ void sdg::DataSet::Write(std::string a_path, int32_t * status_code)
 void sdg::DataSet::Write(std::string a_path, std::vector<option> write_options, int32_t * status_code)
 {
     int32_t return_code;
-    return_code = ParseLib().write_file(*this, a_path.c_str(), write_options);
+    return_code = facade_->write_file(*this, a_path.c_str(), write_options);
     if(status_code!=nullptr)
         *status_code = return_code;
 }

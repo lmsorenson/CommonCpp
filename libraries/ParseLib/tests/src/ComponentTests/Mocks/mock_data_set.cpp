@@ -1,4 +1,5 @@
 #include "mock_data_set.hpp"
+#include <ParseLib.hpp>
 
 using ::std::make_shared;
 using ::std::shared_ptr;
@@ -29,4 +30,9 @@ MockDataSet::MockDataSet(::sdg::DataSet::State state)
     logical_data_structure.add_thing(entityC);
     logical_data_structure.add_thing(C_A);
     logical_data_structure.add_thing(C_B);
+}
+
+void MockDataSet::use_mock_facade(std::shared_ptr<::sdg::ParseLib> facade)
+{
+    facade_ = facade;
 }

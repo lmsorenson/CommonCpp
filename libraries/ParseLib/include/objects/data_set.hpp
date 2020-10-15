@@ -106,6 +106,8 @@ protected:
 
     State state_;
 
+    std::shared_ptr<class ParseLib> facade_;
+
     //overwrites an entity record.  recursively repositions all overwritten elements
     void displace_overwritten_keys( plHashValue replaced_value, hash::DescriptorInstance a_descriptor, hash::KeyInstance new_key);
 

@@ -43,7 +43,7 @@ class ReadStrategy
 public:
     ReadStrategy() : syntax_tree_(std::make_shared<SyntaxNode>("root", nullptr)) {}
     virtual ~ReadStrategy() = default;
-    int32_t execute_read(const char * path, sdg::DataSet &ds, std::vector<sdg::option> read_options);
+    virtual int32_t execute_read(const char * path, sdg::DataSet &ds, std::vector<sdg::option> read_options);
 
     enum : int32_t
     {

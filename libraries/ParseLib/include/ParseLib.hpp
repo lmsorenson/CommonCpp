@@ -36,9 +36,9 @@ public:
     };
 
 private:
-    virtual std::unique_ptr<class AbstractFactory> produce_factory() const;
+    virtual std::shared_ptr<class AbstractFactory> produce_factory() const;
 
-    std::unique_ptr<class AbstractFactory> factory_;
+    std::shared_ptr<class AbstractFactory> factory_;
 };
 
 } // namespace sdg
