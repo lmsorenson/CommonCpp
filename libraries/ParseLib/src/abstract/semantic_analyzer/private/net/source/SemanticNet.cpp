@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 using ::sdg::SemanticNet;
 using ::sdg::LexicalItem;
@@ -13,6 +14,7 @@ using ::sdg::ItemType;
 using ::std::string;
 using ::std::vector;
 using ::std::shared_ptr;
+using ::std::dynamic_pointer_cast;
 using ::std::make_shared;
 using ::std::cout;
 using ::std::endl;

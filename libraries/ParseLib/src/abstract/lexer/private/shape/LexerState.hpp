@@ -2,6 +2,7 @@
 #pragma once
 #include <stdint.h>
 #include <vector>
+#include <functional>
 
 namespace sdg {
 

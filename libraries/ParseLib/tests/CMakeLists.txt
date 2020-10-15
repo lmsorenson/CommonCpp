@@ -43,7 +43,12 @@ add_executable(TestAll
 	${PROJECT_SOURCE_DIR}/src/ComponentTests/Mocks/mock_data_set.cpp)
 add_executable(TestComponents 
 	${PROJECT_SOURCE_DIR}/src/TestComponents.cpp
-	${PROJECT_SOURCE_DIR}/src/ComponentTests/Mocks/mock_data_set.cpp)
+#	${PROJECT_SOURCE_DIR}/src/ComponentTests/Mocks/mock_abstract_factory.cpp
+	${PROJECT_SOURCE_DIR}/src/ComponentTests/Mocks/mock_data_set.cpp
+#	${PROJECT_SOURCE_DIR}/src/ComponentTests/Mocks/mock_facade.cpp
+#	${PROJECT_SOURCE_DIR}/src/ComponentTests/Mocks/mock_read_strategy.cpp
+#	${PROJECT_SOURCE_DIR}/src/ComponentTests/Mocks/mock_write_strategy.cpp
+)
 add_executable(TestIntegration ${PROJECT_SOURCE_DIR}/src/TestIntegration.cpp)
 add_executable(TestSystem ${PROJECT_SOURCE_DIR}/src/TestSystem.cpp)
 

@@ -19,7 +19,7 @@ public:
 
     bool succeeded(const std::shared_ptr<const T> A, const std::shared_ptr<const T> B) const
     {
-
+        return false;
     }
 private:
 

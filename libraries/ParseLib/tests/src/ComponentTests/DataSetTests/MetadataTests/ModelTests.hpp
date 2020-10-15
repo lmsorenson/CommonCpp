@@ -71,8 +71,8 @@ TEST_F(MetadataTests, metadata_test_1 )
     entityB->add_descriptor(b_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("c_id", "C", ::sdg::Attribute::Scale::Nominal)), false);
 
     ::std::shared_ptr<::sdg::Relationship>
-            C_A = make_shared<::sdg::Relationship>("c_to_a", entityC, entityA, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1),
-            C_B = make_shared<::sdg::Relationship>("c_to_b", entityC, entityB, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1);
+            C_A = ::std::make_shared<::sdg::Relationship>("c_to_a", entityC, entityA, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1),
+            C_B = ::std::make_shared<::sdg::Relationship>("c_to_b", entityC, entityB, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1);
 
     model.add_thing(entityA);
     model.add_thing(entityB);
@@ -103,8 +103,8 @@ TEST_F(MetadataTests, metadata_test_2 )
     entityB->add_descriptor(b_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("c_id", "C", ::sdg::Attribute::Scale::Nominal)), false);
 
     ::std::shared_ptr<::sdg::Relationship>
-            C_A = make_shared<::sdg::Relationship>("c_to_a", entityC, entityA, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1),
-            C_B = make_shared<::sdg::Relationship>("c_to_b", entityC, entityB, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1);
+            C_A = ::std::make_shared<::sdg::Relationship>("c_to_a", entityC, entityA, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1),
+            C_B = ::std::make_shared<::sdg::Relationship>("c_to_b", entityC, entityB, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1);
 
     model.add_thing(entityA);
     model.add_thing(entityB);
@@ -135,8 +135,8 @@ TEST_F(MetadataTests, metadata_test_3 )
     entityB->add_descriptor(b_id_attribute=::std::make_shared<::sdg::Attribute>(::sdg::Attribute("c_id", "C", ::sdg::Attribute::Scale::Nominal)), false);
 
     ::std::shared_ptr<::sdg::Relationship>
-            C_A = make_shared<::sdg::Relationship>("c_to_a", entityC, entityA, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1),
-            C_B = make_shared<::sdg::Relationship>("c_to_b", entityC, entityB, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1);
+            C_A = ::std::make_shared<::sdg::Relationship>("c_to_a", entityC, entityA, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1),
+            C_B = ::std::make_shared<::sdg::Relationship>("c_to_b", entityC, entityB, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1);
 
     model.add_thing(entityA);
     model.add_thing(entityB);

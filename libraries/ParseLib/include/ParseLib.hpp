@@ -28,7 +28,7 @@ public:
     //READ CODES
     enum : int8_t
     {
-        READ_SUCCESSFUL,
+        READ_SUCCESSFUL = 0,
         READ_FORMAT_INVALID,
         READ_FILE_NOT_FOUND,
         WRITE_SUCCESSFUL,
