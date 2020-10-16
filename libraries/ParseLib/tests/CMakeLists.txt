@@ -6,7 +6,7 @@ endif (POLICY CMP0048)
 
 project (tests)
 
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
 set (CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 set (CMAKE_C_FLAGS "-g")
