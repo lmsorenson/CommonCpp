@@ -37,8 +37,8 @@ protected:
 
 };
 
-TEST_F(InstanceTests, instance_test_1 )
-{
-    ASSERT_EQ(0, 2);
-}
+//TEST_F(InstanceTests, instance_test_1 )
+//{
+//    ASSERT_EQ(0, 2);
+//}
 

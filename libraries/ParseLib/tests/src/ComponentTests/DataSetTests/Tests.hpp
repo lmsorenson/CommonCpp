@@ -9,10 +9,10 @@
 #include <ParseLib.hpp>
 #include <objects/data_set.hpp>
 #include "../Mocks/mock_data_set.hpp"
-//#include "../Mocks/mock_facade.hpp"
-//#include "../Mocks/mock_abstract_factory.hpp"
-//#include "../Mocks/mock_read_strategy.hpp"
-//#include "../Mocks/mock_write_strategy.hpp"
+#include "../Mocks/mock_facade.hpp"
+#include "../Mocks/mock_abstract_factory.hpp"
+#include "../Mocks/mock_read_strategy.hpp"
+#include "../Mocks/mock_write_strategy.hpp"
 
 #include "../../TestFramework.hpp"
 #include "../../../../src/abstract/lexer/Lexer.hpp"
@@ -276,23 +276,23 @@ TEST_F(DataSetTests, data_set__INDEX_OPERATOR__)
 
 TEST_F(DataSetTests, data_set__READ__returns_an_unknown_error)
 {
-//    ::std::shared_ptr<MockFacade> mockParseLib = ::std::make_shared<MockFacade>();
-//    ::std::shared_ptr<MockAbstractFactory> mockFactory = ::std::make_shared<MockAbstractFactory>();
-//    ::std::shared_ptr<MockReadStrategy> mockRead = ::std::make_shared<MockReadStrategy>();
-//    MockWriteStrategy mockWrite = MockWriteStrategy();
-//
+    ::std::shared_ptr<MockFacade> mockParseLib = ::std::make_shared<MockFacade>();
+    ::std::shared_ptr<MockAbstractFactory> mockFactory = ::std::make_shared<MockAbstractFactory>();
+    ::std::shared_ptr<MockReadStrategy> mockRead = ::std::make_shared<MockReadStrategy>();
+    MockWriteStrategy mockWrite = MockWriteStrategy();
+
     ::std::shared_ptr<MockDataSet> mock_data_set = ::std::make_shared<MockDataSet>();
 //    mock_data_set->use_mock_facade(mockParseLib);
-//
+
 //    ::std::vector<::sdg::option> options;
 //    ON_CALL(*mockRead, execute_read).WillByDefault(::testing::Return(-1));
 //    ON_CALL(*mockFactory, make_read).WillByDefault(::testing::Return(mockRead));
 //    ON_CALL(*mockFactory, make_data()).WillByDefault(::testing::Return(mock_data_set));
-//    ON_CALL(*mockParseLib, produce_factory).WillByDefault(::testing::Return(mockFactory));
+//    ON_CALL(*mockParseLib, produce_factory).WillByDefault(::testing::sReturn(mockFactory));
 
     int32_t err = 0;
     mock_data_set->Read("path/to/file", &err);
-//    ASSERT_EQ(err, 4);
+    ASSERT_EQ(err, 4);
 }
 
 //TEST_F(DataSetTests, data_set__READ__returns_an_an_invalid_format_error)
