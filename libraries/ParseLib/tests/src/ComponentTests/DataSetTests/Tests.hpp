@@ -93,7 +93,7 @@ TEST_F(DataSetTests, data_set__SET__function_default_hashValue )
 
 TEST_F(DataSetTests, data_set__SET__function_overwrites_a_value )
 {
-    ::sdg::DataSet dataset = ::sdg::DataSet();
+    MockDataSet dataset = MockDataSet();
 
     auto descA = ::sdg::hash::DescriptorInstance("A", ::sdg::Attribute::Scale::Ordinal);
     descA.set_value(1);
