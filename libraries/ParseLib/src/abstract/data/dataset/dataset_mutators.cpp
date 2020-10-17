@@ -3,19 +3,32 @@
 
 
 
-using std::string;
-using std::vector;
-using std::function;
-using std::make_shared;
+using ::std::string;
+using ::std::vector;
+using ::std::function;
+using ::std::make_shared;
+using ::sdg::hash::DescriptorID;
+using ::sdg::hash::DescriptorInstance;
+using ::sdg::hash::KeyInstance;
+using ::sdg::hash::EntityID;
+using ::sdg::DataSet;
+using ::sdg::Attribute;
 
+/**
+ * gets a copy of the descriptor within a key matching the descriptor id if one exists.
+ * @param a_key
+ * @param a_descriptor_id
+ * @return
+ */
+DescriptorInstance get_matching_descriptor(KeyInstance a_key, DescriptorID a_descriptor_id);
 
-sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_key, sdg::hash::DescriptorID a_descriptor_id);
-
-///
-/// \param a_key describes the key-location in the dataset to place the value.
-/// \param a_value the value to write to the dataset.
-/// \return a status code indicating success or failure.
-int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
+/**
+ * Adds an element to the dataset if the dataset is in a good state.
+ * @param a_key The key for the element.
+ * @param a_value The element value to add to the dataset.
+ * @return A status code for the operation.
+ */
+int32_t DataSet::set(KeyInstance a_key, plHashValue a_value)
 {
     if (a_key.is_default())
         return -1;
@@ -23,7 +36,7 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
     switch (state_)
     {
     case DATA_SET_EMPTY:
-        state_ = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
+        state_ = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protocol.
     case DATA_SET_GOOD:
         //todo -- investigate difference between key and subset key.
         hash_table_.insert(a_key, plHashValue(a_value));
@@ -38,26 +51,26 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value)
     }
 }
 
-
-///
-/// \param a_key a_key describes the key-location in the dataset to place the value.
-/// \param a_value the value to write to the dataset.
-/// \param a_descriptor_id specifies the descriptor to increment when the key overwrites an existing value.
-/// \return a status code indicating success or failure.
-int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::DescriptorID a_descriptor_id)
+/**
+ * Adds an element to the dataset, displaces the next element if one exists at the keyed location.
+ * @param a_key The keyed location to add to the dataset.
+ * @param a_value The The element value to add to the dataset.
+ * @param a_descriptor_id The descriptor id for the dimension used to displace replaced objects.
+ * @return A status code for the operation.
+ */
+int32_t DataSet::set(KeyInstance a_key, plHashValue a_value, DescriptorID a_descriptor_id)
 {
     if (a_key.is_default())
         return -1;
 
     plHashValue replaced_value;
-    hash::KeyInstance new_key;
-
-    hash::DescriptorInstance new_descriptor;
+    KeyInstance new_key;
+    DescriptorInstance new_descriptor;
 
     switch (state_)
     {
     case DATA_SET_EMPTY:
-        state_ = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protecol
+        state_ = DATA_SET_GOOD; //Empty data sets should also implement DATA_SET_GOOD protocol.
     case DATA_SET_GOOD: 
 
         //returns a copy of the value that was replaced in the operation.
@@ -88,58 +101,50 @@ int32_t sdg::DataSet::set(hash::KeyInstance a_key, plHashValue a_value, hash::De
     }
 }
 
-
-
-
-
-// int32_t sdg::DataSet::register_descriptor(std::string a_new_descriptor)
-// {
-//     expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor)));
-
-//     return 0;
-// }
-
-// int32_t sdg::DataSet::add_optional_flag(std::string a_new_descriptor)
-// {
-//     expected_descriptors.push_back(make_shared<EntityKey>(EntityKey(a_new_descriptor, false, false)));
-
-//     return 0;
-// }
-
-
-
-
-
-void sdg::DataSet::add_instance(hash::EntityID a_entity_id, std::vector<std::string> a_entity_values, int32_t a_position)
+/**
+ *
+ * @param a_entity_id
+ * @param a_entity_values
+ * @param a_position
+ */
+void DataSet::add_instance(EntityID a_entity_id, vector<string> a_entity_values, int32_t a_position)
 {
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::remove_instance(hash::KeyInstance a_key_subset)
+/**
+ * Removes an element from the dataset.
+ * @param a_key_subset A unique identifier for the element to be removed.
+ */
+void DataSet::remove_instance(KeyInstance a_key_subset)
 {
     //todo-->handle definition of this function
 }
 
-void sdg::DataSet::reposition_instance(hash::DescriptorInstance a_descriptor, int32_t a_position)
+/**
+ * Base implementation for the reposition instance.
+ * @param a_descriptor
+ * @param a_position
+ */
+void DataSet::reposition_instance(DescriptorInstance a_descriptor, int32_t a_position)
 {
     //todo-->handle definition of this function
 }
 
-
-
-
-
-
-void sdg::DataSet::update_descriptor_counts(hash::KeyInstance a_key)
+/**
+ *
+ * @param a_key
+ */
+void DataSet::update_descriptor_counts(KeyInstance a_key)
 {
     //defines the procedure to run on every descriptor in the key.
-    auto function = [&](const std::string &callback_token)
+    auto function = [&](const string &callback_token)
     {
         char scanned_descriptor_id[1];
         int32_t scanned_descriptor_value;
         sscanf(callback_token.c_str(), "%1s%i", scanned_descriptor_id, &scanned_descriptor_value);
 
-        auto local_descriptor = hash::DescriptorInstance(scanned_descriptor_id, Attribute::Scale::Numeric);
+        auto local_descriptor = DescriptorInstance(scanned_descriptor_id, Attribute::Scale::Numeric);
         local_descriptor.set_value(scanned_descriptor_value);
     
         this->logical_data_structure.found_descriptor(local_descriptor);
@@ -149,19 +154,23 @@ void sdg::DataSet::update_descriptor_counts(hash::KeyInstance a_key)
     a_key.for_each_descriptor(function);
 }
 
-
-//gets a copy of the descriptor within a key matching the descriptor id if one exists.
-sdg::hash::DescriptorInstance get_matching_descriptor(sdg::hash::KeyInstance a_key, sdg::hash::DescriptorID a_descriptor_id)
+/**
+ * Gets a copy of the descriptor within a key matching the descriptor id if one exists.
+ * @param a_key A key
+ * @param a_descriptor_id
+ * @return
+ */
+DescriptorInstance get_matching_descriptor(KeyInstance a_key, DescriptorID a_descriptor_id)
 {
     using namespace sdg::hash;
 
-    DescriptorInstance local_descriptor = DescriptorInstance("NULL", sdg::Attribute::Scale::Numeric);
+    DescriptorInstance local_descriptor = DescriptorInstance("NULL", Attribute::Scale::Numeric);
 
     auto function = [&](const std::string callback_token)
     {
         if(string(callback_token).substr(0,1).compare(a_descriptor_id.as_string())==0)
         {
-            DescriptorInstance descriptor = DescriptorInstance(std::string(callback_token).substr(0,1), sdg::Attribute::Scale::Numeric);
+            DescriptorInstance descriptor = DescriptorInstance(string(callback_token).substr(0,1), sdg::Attribute::Scale::Numeric);
             descriptor.set_value(std::stoi(std::string(callback_token).substr(1,1)));
 
             local_descriptor=descriptor;

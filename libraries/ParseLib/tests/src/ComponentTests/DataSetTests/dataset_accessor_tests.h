@@ -55,3 +55,45 @@ TEST_F(DataSetTests, dataset__WHERE__key_exists )
     //result of -1 means error.
     ASSERT_EQ(result.get(), "key");
 }
+
+TEST_F(DataSetTests, dataset__WHERE__expected_value_not_found )
+{
+    MockDataSet dataset = MockDataSet();
+
+    dataset.set(::sdg::hash::KeyInstance("A1-B0"), ::sdg::plHashValue("value", ""));
+    dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue("value", ""));
+    dataset.set(::sdg::hash::KeyInstance("A1-B2"), ::sdg::plHashValue("value", ""));
+
+    ::sdg::Instance result = dataset.where(::sdg::hash::KeyInstance("A1"), "key");
+
+    //result of -1 means error.
+    ASSERT_EQ(result.get(), "NULL");
+}
+
+TEST_F(DataSetTests, dataset__WHERE__searching_with_full_key )
+{
+    MockDataSet dataset = MockDataSet();
+
+    dataset.set(::sdg::hash::KeyInstance("A1-B0"), ::sdg::plHashValue("value", ""));
+    dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue("value", ""));
+    dataset.set(::sdg::hash::KeyInstance("A1-B2"), ::sdg::plHashValue("value", ""));
+
+    ::sdg::Instance result = dataset.where(::sdg::hash::KeyInstance("A1-B1"), "key");
+
+    //result of -1 means error.
+    ASSERT_EQ(result.get(), "NULL");
+}
+
+TEST_F(DataSetTests, dataset__WHERE__missing_more_than_one_descriptor )
+{
+    MockDataSet dataset = MockDataSet();
+
+    dataset.set(::sdg::hash::KeyInstance("A1-B0"), ::sdg::plHashValue("value", ""));
+    dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue("key", ""));
+    dataset.set(::sdg::hash::KeyInstance("A1-B2"), ::sdg::plHashValue("value", ""));
+
+    ::sdg::Instance result = dataset.where(::sdg::hash::KeyInstance("U"), "key");
+
+    //result of -1 means error.
+    ASSERT_EQ(result.get(), "NULL");
+}
