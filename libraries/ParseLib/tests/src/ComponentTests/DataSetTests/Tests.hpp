@@ -110,8 +110,6 @@ TEST_F(DataSetTests, data_set__SET__function_overwrites_a_value )
     ASSERT_EQ(0, result);
 }
 
-
-
 TEST_F(DataSetTests, data_set__SET__function_while_in_bad_state_returns_bad_state_status )
 {
     MockDataSet dataset = MockDataSet(::sdg::DataSet::DATA_SET_BAD);
@@ -209,8 +207,6 @@ TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_overwrites_a_value 
     ASSERT_EQ("hello world",dataset.get(::sdg::hash::KeyInstance("A2-B1")).get());
     ASSERT_EQ(0, result);
 }
-
-
 
 TEST_F(DataSetTests, data_set__SET__WITH_DESCRIPTOR_function_while_in_bad_state_returns_bad_state_status )
 {
