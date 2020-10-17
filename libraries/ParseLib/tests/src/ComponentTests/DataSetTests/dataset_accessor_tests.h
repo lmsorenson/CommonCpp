@@ -32,7 +32,7 @@ TEST_F(DataSetTests, dataset__IsDescriptorRequired__nonexistant_descriptor_retur
     ASSERT_EQ(result, -1);
 }
 
-TEST_F(DataSetTests, dataset__zx__nonexistant_descriptor_returns_error )
+TEST_F(DataSetTests, dataset__WHERE__key_doesnt_exist )
 {
     MockDataSet dataset = MockDataSet();
 
@@ -40,4 +40,18 @@ TEST_F(DataSetTests, dataset__zx__nonexistant_descriptor_returns_error )
 
     //result of -1 means error.
     ASSERT_EQ(result.get(), "NULL");
+}
+
+TEST_F(DataSetTests, dataset__WHERE__key_exists )
+{
+    MockDataSet dataset = MockDataSet();
+
+    dataset.set(::sdg::hash::KeyInstance("A1-B0"), ::sdg::plHashValue("value", ""));
+    dataset.set(::sdg::hash::KeyInstance("A1-B1"), ::sdg::plHashValue("key", ""));
+    dataset.set(::sdg::hash::KeyInstance("A1-B2"), ::sdg::plHashValue("value", ""));
+
+    ::sdg::Instance result = dataset.where(::sdg::hash::KeyInstance("A1"), "key");
+
+    //result of -1 means error.
+    ASSERT_EQ(result.get(), "key");
 }

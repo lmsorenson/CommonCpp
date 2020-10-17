@@ -193,17 +193,17 @@ bool Instance::is_valid() const
 
 
 
-int32_t Instance::FindIndexOfValue(std::string a_value_to_search_for, int32_t offset) const
+int32_t Instance::find_index_of(std::string a_value_to_search_for, int32_t offset) const
 {
     //------------------------------------------
     //      step through value iterator
     //------------------------------------------
     //start at the first value in the set
     auto itr = this->value_.cbegin();
-    int32_t pos=offset;
+    int32_t pos = offset;
 
     //find the current instance if it exists.
-    while(( (itr!=this->value_.cend()) && (*itr) != a_value_to_search_for ))
+    while(( (itr != this->value_.cend()) && (*itr) != a_value_to_search_for ))
     {
         itr++;
         pos++;

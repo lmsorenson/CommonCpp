@@ -42,7 +42,7 @@ public:
     Instance GetRelatedInstance(hash::EntityID a_entity_id) const;           //returns a related entity.
     
     bool is_valid() const;                                      //tells us if the instance is valid.
-    int32_t FindIndexOfValue(std::string a_value_to_search_for, int32_t offset=0) const;    //finds the index of a certain value within the instance if it exists.
+    int32_t find_index_of(std::string a_value_to_search_for, int32_t offset= 0) const;    //finds the index of a certain value within the instance if it exists.
 
 
     //-- Mutators --

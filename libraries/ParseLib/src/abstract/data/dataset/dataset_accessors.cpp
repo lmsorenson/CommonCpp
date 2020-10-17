@@ -46,19 +46,30 @@ Model sdg::DataSet::get_data_model() const
     return logical_data_structure;
 }
 
-
-sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string value) const
+/**
+ * Finds a complete set of descriptors, for a descriptor subset where the associated value matches
+ * some expected value.
+ * @param a_key_subset An identifier for another entity which identifies the granular entity.
+ * @param expected_value The value expected.
+ * @return Return an instance.
+ */
+sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string expected_value) const
 {
-    Instance ret;
+    Instance keyed_instance;
 
-    if(!(ret = this->get(a_key_subset)).is_valid())
+    //get the keyed instanced, if it doesn't exist return a null instance.
+    if ( !(keyed_instance = this->get(a_key_subset)).is_valid() )
         return sdg::Instance(this, sdg::Instance::NULL_INST);
 
-    int32_t pos = ret.FindIndexOfValue(value);
+    //todo --> error prone: it depends on ordinal descriptors with indexes
+    // starting at 0.
+    int32_t pos = keyed_instance.find_index_of(expected_value);
 
     vector<string> missing_desc = this->get_missing_descriptors(a_key_subset);        
 
-    if(missing_desc.size()==1)
+    //todo --> needs to be verified, presumably it is necessary to leave only
+    // one missing descriptor.
+    if( missing_desc.size() == 1 )
     {
         string generated_identifier;
         generated_identifier.append(missing_desc[0]);
@@ -66,8 +77,10 @@ sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string va
 
         return this->get(hash::KeyInstance(generated_identifier));
     }
-    //todo-->so far this should never happen
-    else if(missing_desc.size()>1)
+
+    //todo --> error prone: if multiple descriptors are unspecified
+    // the specific instance cannot be resolved.
+    else if( missing_desc.size() > 1 )
     {
         return sdg::Instance(this, Instance::NULL_INST);
     }
