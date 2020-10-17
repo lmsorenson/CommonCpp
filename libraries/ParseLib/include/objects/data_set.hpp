@@ -67,7 +67,7 @@ public:
 
     //is this descriptor required to uniquely identify a value
     //in the hash table.
-    int32_t IsDescriptorRequired(hash::DescriptorID a_descriptor_id) const;
+    int32_t is_descriptor_required(hash::DescriptorID a_descriptor_id) const;
     
     //returns the number of instances of the chosen entity
     int32_t number_of_entity_instances(hash::EntityID entity_id) const;

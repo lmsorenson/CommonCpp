@@ -16,10 +16,12 @@ MockDataSet::MockDataSet(::sdg::DataSet::State state)
 
     shared_ptr<::sdg::Attribute>
             a_id_attribute,
-            b_id_attribute;
+            b_id_attribute,
+            b_bool_attribute;
 
     entityA->add_descriptor(a_id_attribute=make_shared<::sdg::Attribute>(::sdg::Attribute("a_id", "A", ::sdg::Attribute::Scale::Ordinal)), true);
     entityB->add_descriptor(b_id_attribute=make_shared<::sdg::Attribute>(::sdg::Attribute("b_id", "B", ::sdg::Attribute::Scale::Ordinal)), true);
+    entityC->add_descriptor(b_bool_attribute=make_shared<::sdg::Attribute>(::sdg::Attribute("b_boolean", "U", ::sdg::Attribute::Scale::Boolean)), true);
 
     shared_ptr<::sdg::Relationship>
             C_A = make_shared<::sdg::Relationship>("c_to_a", entityC, entityA, false, ::sdg::Relationship::IDENTIFY_BY::LINK_1),

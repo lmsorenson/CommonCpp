@@ -102,7 +102,7 @@ Instance Instance::GetRelatedInstance(hash::EntityID a_entity_id) const
             attr_buffer.append(this->GetDescriptorByDescriptorID(identifier[i]));
         }
 
-        else if( !kOwner_->IsDescriptorRequired(identifier[i]) )
+        else if( !kOwner_->is_descriptor_required(identifier[i]) )
         {
             if(!attr_buffer.empty())
                 attr_buffer.append("-");

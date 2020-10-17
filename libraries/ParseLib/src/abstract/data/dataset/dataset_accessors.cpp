@@ -12,28 +12,28 @@ using ::std::dynamic_pointer_cast;
 using ::std::make_shared;
 using ::sdg::Model;
 
-int32_t sdg::DataSet::IsDescriptorRequired(hash::DescriptorID a_descriptor_id) const
+/**
+ * Checks if the descriptor specified is required.
+ * @param a_descriptor_id A unique identifier for the descriptor to locate.
+ * @return True, false, or error:  1 = true, 0 = false, -1 = error
+ */
+int32_t sdg::DataSet::is_descriptor_required(hash::DescriptorID a_descriptor_id) const
 {
-    int32_t r;
-
-    bool b_descriptor_found = false;
-
     //go through IDs of all expected descriptors
     for( auto descriptor : this->logical_data_structure.get_identifier_of_granular_entity() )
     {
+        // =>
         //if the current descriptor is a match with the argument...
         if(descriptor->get_id() == a_descriptor_id.as_string())//if this is never called return an error.
-        {       
-            if (b_descriptor_found)//if this is ever called return an error.
-                r=-1;
-
+        {
             std::shared_ptr<Attribute> attribute = dynamic_pointer_cast<Attribute>(descriptor);
 
-            r = ( attribute && (attribute->get_scale() != Attribute::Scale::Boolean) );
+            return ( attribute && ( attribute->get_scale() != Attribute::Scale::Boolean ) );
         }
     }
 
-    return r;
+    //if the program gets through all descriptors without finding a match then there was an error.
+    return -1;
 }
 
 int32_t sdg::DataSet::number_of_entity_instances(hash::EntityID a_entity_id) const
@@ -51,8 +51,6 @@ sdg::Instance sdg::DataSet::where(hash::KeyInstance a_key_subset, std::string va
 {
     Instance ret;
 
-    //1. get owning entity instance
-    //2. check if the instance is valid before continuing
     if(!(ret = this->get(a_key_subset)).is_valid())
         return sdg::Instance(this, sdg::Instance::NULL_INST);
 

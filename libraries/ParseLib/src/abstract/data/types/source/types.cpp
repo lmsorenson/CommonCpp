@@ -66,7 +66,9 @@ void KeyInstance::for_each_descriptor(std::function<void(const string&)> callbac
 
 DescriptorID::DescriptorID(const string& a_id)
 : id_(a_id)
-{}
+{
+
+}
 
 string DescriptorID::as_string() const
 {
